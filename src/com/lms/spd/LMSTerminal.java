@@ -43,9 +43,31 @@ public class LMSTerminal {
                 } while (flag);
                 break;
             case "3":
+                System.out.println("Please enter the number of the lecture you want to delete");
 
+                boolean flagDelete;
+                do {
+                    flagDelete = false;
+                    int number = Integer.parseInt(reader.readLine());
+                    ls.removeLecture(number);
+                    System.out.println("Lecture deleted want to delete another one? " +
+                            "if yes then enter " + "\u001B[31m" + "\"+\" " + "\u001B[0m" +
+                            "if you return to the menu " + "\u001B[32m" + "\"-\"" + "\u001B[0m" + ""+ " or \u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+                    String deleteOrNot = reader.readLine();
+                    if (deleteOrNot.equalsIgnoreCase("+")) {
+                        flagDelete = true;
+                        System.out.println("Delete another enter the number");
+                    } else {
+                        if (deleteOrNot.equalsIgnoreCase("-")) {
+                            startLMS();
+                        } else {
+                            if (deleteOrNot.equalsIgnoreCase("EXIT")) {
+                                System.exit(0);
+                            }
+                        }
+                    }
+                } while (flagDelete);
                 break;
-
             default:
                 throw new IllegalStateException("Unexpected value: " + reader.readLine());
         }
