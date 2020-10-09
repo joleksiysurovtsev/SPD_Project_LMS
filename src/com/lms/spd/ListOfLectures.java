@@ -52,6 +52,4 @@ public class ListOfLectures {
         lecture = newArray3;
     }
 
-
-
 }
