@@ -6,7 +6,7 @@ public class ListOfLectures {
             {/*0*/"Java Core", "Head First Java", "Java. Руководство для начинающих"},
             {/*1*/"Core Java API", "Java. Полное руководство", "Java SE 9. Базовый курс", "Java. Методы программирования"},
             {/*2*/"Class design", "Effective Java", "Философия Java"},
-            {/*3*/"Тест"}};
+            {/*3*/"Test"}};
 
     // METHODS FOR WORKING WITH MASSIVE LECTURE
 
