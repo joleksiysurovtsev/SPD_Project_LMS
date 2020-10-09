@@ -19,8 +19,33 @@ public class LMSTerminal {
                 lectureOutputMenu();
                 break;
             case "2":
+                System.out.println("Please enter name for new lecture");
+                boolean flag;
+                do {
+                    flag = false;
+                    String name = reader.readLine();
+                    ls.addLecture(name);
+                    System.out.println("You have entered a new lecture if you want to add more " +
+                            "enter " + "\u001B[32m" + "\"+\"" + "\u001B[0m" + " \nor " + "\u001B[31m" + "\"-\"" + "\u001B[0m" + " to return to the main menu   ");
+                    String addOrNot = reader.readLine();
+                    if (addOrNot.equalsIgnoreCase("+")) {
+                        flag = true;
+                        System.out.println("add more");
+                    } else {
+                        if (addOrNot.equalsIgnoreCase("-")) {
+                            startLMS();
+                        } else {
+                            if (addOrNot.equalsIgnoreCase("EXIT")) {
+                                System.exit(0);
+                            }
+                        }
+                    }
+                } while (flag);
+                break;
+            case "3":
 
                 break;
+
             default:
                 throw new IllegalStateException("Unexpected value: " + reader.readLine());
         }
@@ -43,7 +68,7 @@ public class LMSTerminal {
     /**
      * menu for working with the selected lecture
      */
-    private static void choiceOfLecture()  {
+    private static void choiceOfLecture() {
         System.out.println("введите номер лекции, информацию о которой вы хотите посмотреть если передумали для выхода в меню введите " + "\u001B[31m" + "0" + "\u001B[0m");
         System.out.println("Какие дальнейшие дейсвия?");
         System.out.println("1. --> просмотреть список литературы");
