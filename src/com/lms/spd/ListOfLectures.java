@@ -1,15 +1,8 @@
 package com.lms.spd;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 public class ListOfLectures {
 
     private int selectedLecture;
-
-    static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     private String[][] lecture = {
             {/*0*/"Java Core", "Head First Java", "Java. Руководство для начинающих"},
@@ -22,7 +15,7 @@ public class ListOfLectures {
     /**
      * The method prints the list of lectures to the console
      */
-     void getLectureList() {
+    void getLectureList() {
         for (int i = 0; i < lecture.length; i++) {
             int numbOfLecture = i + 1;
             String nameOfLecture = lecture[i][0];
@@ -34,9 +27,8 @@ public class ListOfLectures {
     /**
      * Adds a new lecture to an array
      */
-     void addLecture(String lectureAddName) {
+    void addLecture(String lectureAddName) {
         String[][] newArray = new String[lecture.length + 1][];
-        // из    начиная с  в новый  начиная с  по предпоследний (последний пустой)
         System.arraycopy(lecture, 0, newArray, 0, newArray.length - 1);
 
         String[] newLecture = {lectureAddName};
@@ -47,7 +39,7 @@ public class ListOfLectures {
     /**
      * Remove lecture from array
      */
-     void removeLecture(int lectureRemove) {
+    void removeLecture(int lectureRemove) {
         String[][] newArray1 = new String[lectureRemove - 1][];
         System.arraycopy(lecture, 0, newArray1, 0, newArray1.length);
 
@@ -70,34 +62,28 @@ public class ListOfLectures {
     /**
      * the method throws the number of the selected lecture into the variable
      */
-      void setSelectedLecture(int selected) throws IOException {
-        //проверить есть ли такая лекция
-        if (selected > getArrLectureLength()) {
-            System.out.println("lectures with this number do not exist in total in the base of " + getArrLectureLength() + " lectures.");
-            setSelectedLecture(Integer.parseInt(reader.readLine()));
-        } else {
-            selectedLecture = selected;
-        }
+    void setSelectedLecture(int selected) {
+        selectedLecture = selected;
     }
 
     /**
      * the method gets from the variable the number of the selected lecture
      */
-     int getSelectedLecture() {
+    int getSelectedLecture() {
         return selectedLecture;
     }
 
     /**
      * the method returns the number of lectures
      */
-      int getArrLectureLength() {
+    int getArrLectureLength() {
         return lecture.length;
     }
 
     /**
      * the method returns the name of the lecture that we selected earlier
      */
-      String getNameSelectedLecture() {
+    String getNameSelectedLecture() {
         int x = getSelectedLecture();
         return lecture[x][0];
     }
@@ -105,7 +91,7 @@ public class ListOfLectures {
     /**
      * the method returns a list of references from the previously selected lecture
      */
-        void getListLit(int numbLecture) {
+    void getListLit(int numbLecture) {
         if (lecture[numbLecture].length == 1) {
             System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
         } else {
@@ -115,5 +101,34 @@ public class ListOfLectures {
         }
     }
 
+    /**
+     * the method adds new literature to the previously selected lecture
+     */
+    void addNewLiterature(String newLit) {
+        String[] newArrLit = new String[lecture[selectedLecture].length + 1];
+
+        System.arraycopy(lecture[selectedLecture], 0, newArrLit, 0, lecture[selectedLecture].length);
+        newArrLit[newArrLit.length - 1] = newLit;
+
+        lecture[selectedLecture] = newArrLit;
+    }
+
+    /**
+     * method removes literature by number from a previously selected lecture
+     */
+    public void removeLiterature(int indexLecture) {
+        String[] result = new String[lecture[selectedLecture].length - 1];
+        if (indexLecture > result.length) {
+            System.out.println("The book with this number does not exist in the list");
+        } else {
+            for (int i = 0, j = 0; i < lecture[selectedLecture].length - 1; i++, j++) {
+                if (i == indexLecture) {
+                    j++;
+                }
+                result[i] = lecture[selectedLecture][j];
+            }
+            lecture[selectedLecture] = result;
+        }
+    }
 
 }
