@@ -28,29 +28,29 @@ public class ListOfLectures {
      * Adds a new lecture to an array
      */
     void addLecture(String lectureAddName) {
-        String[][] newArray = new String[lecture.length + 1][];
-        System.arraycopy(lecture, 0, newArray, 0, newArray.length - 1);
+        String[][] arrayAddedLecture = new String[lecture.length + 1][];
+        System.arraycopy(lecture, 0, arrayAddedLecture, 0, arrayAddedLecture.length - 1);
 
         String[] newLecture = {lectureAddName};
-        newArray[newArray.length - 1] = newLecture;
-        lecture = newArray;
+        arrayAddedLecture[arrayAddedLecture.length - 1] = newLecture;
+        lecture = arrayAddedLecture;
     }
 
     /**
      * Remove lecture from array
      */
     void removeLecture(int lectureRemove) {
-        String[][] newArray1 = new String[lectureRemove - 1][];
-        System.arraycopy(lecture, 0, newArray1, 0, newArray1.length);
+        String[][] tempArrToBeLectureRemove = new String[lectureRemove - 1][];
+        System.arraycopy(lecture, 0, tempArrToBeLectureRemove, 0, tempArrToBeLectureRemove.length);
 
-        String[][] newArray2 = new String[lecture.length - (lectureRemove)][];
-        System.arraycopy(lecture, lectureRemove, newArray2, 0, newArray2.length);
+        String[][] tempArrAfterLectureRemove = new String[lecture.length - (lectureRemove)][];
+        System.arraycopy(lecture, lectureRemove, tempArrAfterLectureRemove, 0, tempArrAfterLectureRemove.length);
 
-        String[][] newArray3 = new String[lecture.length - 1][];
-        System.arraycopy(newArray1, 0, newArray3, 0, newArray1.length);
-        System.arraycopy(newArray2, 0, newArray3, newArray1.length, newArray2.length);
+        String[][] deletedLectureArray = new String[lecture.length - 1][];
+        System.arraycopy(tempArrToBeLectureRemove, 0, deletedLectureArray, 0, tempArrToBeLectureRemove.length);
+        System.arraycopy(tempArrAfterLectureRemove, 0, deletedLectureArray, tempArrToBeLectureRemove.length, tempArrAfterLectureRemove.length);
 
-        lecture = newArray3;
+        lecture = deletedLectureArray;
     }
 
 
@@ -116,18 +116,18 @@ public class ListOfLectures {
     /**
      * method removes literature by number from a previously selected lecture
      */
-    public void removeLiterature(int indexLecture) {
-        String[] result = new String[lecture[selectedLecture].length - 1];
-        if (indexLecture > result.length) {
+    public void removeLiterature(int indexLit) {
+        String[] deletedLitArr = new String[lecture[selectedLecture].length - 1];
+        if (indexLit > deletedLitArr.length) {
             System.out.println("The book with this number does not exist in the list");
         } else {
             for (int i = 0, j = 0; i < lecture[selectedLecture].length - 1; i++, j++) {
-                if (i == indexLecture) {
+                if (i == indexLit) {
                     j++;
                 }
-                result[i] = lecture[selectedLecture][j];
+                deletedLitArr[i] = lecture[selectedLecture][j];
             }
-            lecture[selectedLecture] = result;
+            lecture[selectedLecture] = deletedLitArr;
         }
     }
 
