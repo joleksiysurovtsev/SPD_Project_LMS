@@ -46,11 +46,11 @@ public class ListOfLectures {
         String[][] tempArrAfterLectureRemove = new String[lecture.length - (lectureRemove)][];
         System.arraycopy(lecture, lectureRemove, tempArrAfterLectureRemove, 0, tempArrAfterLectureRemove.length);
 
-        String[][] deletedLectureArray = new String[lecture.length - 1][];
-        System.arraycopy(tempArrToBeLectureRemove, 0, deletedLectureArray, 0, tempArrToBeLectureRemove.length);
-        System.arraycopy(tempArrAfterLectureRemove, 0, deletedLectureArray, tempArrToBeLectureRemove.length, tempArrAfterLectureRemove.length);
+        String[][] deletedLectureArr = new String[lecture.length - 1][];
+        System.arraycopy(tempArrToBeLectureRemove, 0, deletedLectureArr, 0, tempArrToBeLectureRemove.length);
+        System.arraycopy(tempArrAfterLectureRemove, 0, deletedLectureArr, tempArrToBeLectureRemove.length, tempArrAfterLectureRemove.length);
 
-        lecture = deletedLectureArray;
+        lecture = deletedLectureArr;
     }
 
 
