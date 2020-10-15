@@ -30,6 +30,7 @@ public class ListOfLectures {
 
 
     // METHODS FOR WORKING WITH MASSIVE LECTURE
+
 //_________________________________________________________________________________________________________________//
 
     /**
@@ -90,30 +91,12 @@ public class ListOfLectures {
                 addedLecture = new Lectures(lectureAddName);
                 break;
         }
-        arrayAddedLectures[arrayAddedLectures.length -1] = addedLecture;
+        arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
 
         lectures = arrayAddedLectures;
         sortLectureArr();
     }
 
-
-    public void sortLectureArr() {
-        Lectures[] sortedArr = lectures;
-        boolean sorted = false;
-        Lectures temp;
-        while (!sorted) {
-            sorted = true;
-            for (int i = 0; i < lectures.length-1; i++) {
-                if (sortedArr[i].getNumberOfLectures() > sortedArr[i + 1].getNumberOfLectures()) {
-                    temp = sortedArr[i];
-                    sortedArr[i] = sortedArr[i + 1];
-                    sortedArr[i + 1] = temp;
-                    sorted = false;
-                }
-            }
-        }
-        lectures = sortedArr;
-    }
 
     /**
      * Adds a new lecture by number and name, to an array
@@ -133,45 +116,41 @@ public class ListOfLectures {
                 for (int i = 0; i < arrLitAdd.length; i++) {
                     arrLitAdd[i] = new Literature(strings[i]);
                 }
-                addedLecture = new Lectures(lectureNumb,(lectureAddName), arrLitAdd);
+                addedLecture = new Lectures(lectureNumb, (lectureAddName), arrLitAdd);
                 break;
             case "-":
-                addedLecture = new Lectures(lectureNumb,lectureAddName);
+                addedLecture = new Lectures(lectureNumb, lectureAddName);
                 break;
         }
-        arrayAddedLectures[arrayAddedLectures.length -1] = addedLecture;
+        arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
 
         lectures = arrayAddedLectures;
         sortLectureArr();
     }
 
 
-    void addLecture(String lectureAddName, Literature... literature) {
-        //создали масив на одну больше
-        Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
-        System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
-
-        Lectures addedLecture = new Lectures(lectureAddName, literature);
-        arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
-        lectures = arrayAddedLectures;
-    }
-
+    //______________________________________________________________________________________________________________//
 
     /**
      * Remove lecture from array
      */
-    void removeLecture(int lectureRemove) {
-        Lectures[] tempArrToBeLectureRemove = new Lectures[lectureRemove - 1];
-        System.arraycopy(lecture, 0, tempArrToBeLectureRemove, 0, tempArrToBeLectureRemove.length);
+    void removeLectures(int lectureRemove) {
+        boolean flag = false;
+        for (int i = 0; i < lectures.length; i++) {
+            int numb = lectures[i].getNumberOfLectures();
+            if (numb == lectureRemove) {
+                flag = true;
+            }
+        }
 
-        Lectures[] tempArrAfterLectureRemove = new Lectures[lecture.length - (lectureRemove)];
-        System.arraycopy(lecture, lectureRemove, tempArrAfterLectureRemove, 0, tempArrAfterLectureRemove.length);
-
-        Lectures[] deletedLectureArr = new Lectures[lecture.length - 1];
-        System.arraycopy(tempArrToBeLectureRemove, 0, deletedLectureArr, 0, tempArrToBeLectureRemove.length);
-        System.arraycopy(tempArrAfterLectureRemove, 0, deletedLectureArr, tempArrToBeLectureRemove.length, tempArrAfterLectureRemove.length);
-
-        lectures = deletedLectureArr;
+        if (flag == false) {
+            System.out.println("Lectures under this number do not exist");
+            System.out.println("try again");
+            return;
+        }
+        Lectures[] deletedLecturesArr = Arrays.stream(lectures).filter(x -> !(x.getNumberOfLectures() == lectureRemove)).toArray(Lectures[]::new);
+        System.out.println("successfully");
+        lectures = deletedLecturesArr;
     }
 
 
@@ -197,7 +176,7 @@ public class ListOfLectures {
      * the method returns the number of lectures
      */
     int getArrLectureLength() {
-        return lecture.length;
+        return lectures.length;
     }
 
     /**
@@ -251,4 +230,22 @@ public class ListOfLectures {
         }
     }
 
+
+    public void sortLectureArr() {
+        Lectures[] sortedArr = lectures;
+        boolean sorted = false;
+        Lectures temp;
+        while (!sorted) {
+            sorted = true;
+            for (int i = 0; i < lectures.length - 1; i++) {
+                if (sortedArr[i].getNumberOfLectures() > sortedArr[i + 1].getNumberOfLectures()) {
+                    temp = sortedArr[i];
+                    sortedArr[i] = sortedArr[i + 1];
+                    sortedArr[i + 1] = temp;
+                    sorted = false;
+                }
+            }
+        }
+        lectures = sortedArr;
+    }
 }

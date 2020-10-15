@@ -226,41 +226,37 @@ public class LMSTerminal {
 
     private void removalLecture() {
         System.out.println("Please enter the number of the lecture you want to delete");
-        int numbLectureToDel = 0;
         try {
-            numbLectureToDel = Integer.parseInt(reader.readLine());
+            listOfLectures.removeLectures(Integer.parseInt(reader.readLine()));
+            subMenuRemovalLecture();
+        } catch (IOException e) {
+            removalLecture();
+        }
+    }
+
+    private void subMenuRemovalLecture() {
+        System.out.println("Do you want to delete another one? \n" +
+                "if yes then enter " + "\u001B[31m" + "\"+\" " +
+                "\u001B[0m" + "if you wont return to the menu " + "\u001B[32m" + "\"-\"" +
+                "\u001B[0m" + "" + " or \u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+        try {
+            switch (reader.readLine().toUpperCase()) {
+                case "+":
+                    removalLecture();
+                    break;
+                case "-":
+                    startLMS();
+                    break;
+                case "EXIT":
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("please make the right choice \"+\" \"-\" or \"EXIT\"");
+                    subMenuRemovalLecture();
+                    break;
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        if (numbLectureToDel > listOfLectures.getArrLectureLength()) {
-            System.out.println("Lectures under this name do not exist");
-            System.out.println("total in the database: " + listOfLectures.getArrLectureLength() + " lectures try again");
-            removalLecture();
-        } else {
-            listOfLectures.removeLecture(numbLectureToDel);
-            System.out.println("Lecture deleted, do you want to delete another one? \n" +
-                    "if yes then enter " + "\u001B[31m" + "\"+\" " +
-                    "\u001B[0m" + "if you wont return to the menu " + "\u001B[32m" + "\"-\"" +
-                    "\u001B[0m" + "" + " or \u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
-            try {
-                switch (reader.readLine().toUpperCase()) {
-                    case "+":
-                        removalLecture();
-                        break;
-                    case "-":
-                        startLMS();
-                        break;
-                    case "EXIT":
-                        System.exit(0);
-                        break;
-                    default:
-                        System.out.println("please make the right choice \"+\" \"-\" or \"EXIT\"");
-                        //subMenuAddingLectureList();
-                        break;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
