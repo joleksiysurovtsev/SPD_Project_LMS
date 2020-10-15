@@ -30,15 +30,15 @@ public class LMSTerminal {
                                 break;
                             case "-":
                                 System.out.println("Enter numbers separated by commas");
-                                //добавить метод по номерам
+                                listOfLectures.getLectureList(reader.readLine());
                             default:
+
                                 break;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                    System.out.println("The list brought out what to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+                    System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                     lectureOutputMenu();
                     break;
                 case "2":
@@ -88,37 +88,70 @@ public class LMSTerminal {
     /**
      * adding new lectures
      */
-    private void addingLecture() {
-        String name;
-        int numberOfLecture = 0;
-        System.out.print("Please enter number for new lecture: ");
-        try {
-            numberOfLecture = Integer.parseInt(reader.readLine());
-            boolean flag = true;
-            while (flag) {
-                for (Lectures x : ListOfLectures.lectures) {
-                    if (numberOfLecture == x.getNumberOfLectures()) {
-                        System.out.println("lecture under this number exists, try again");
-                        addingLecture();
-                    } else {
-                        flag = false;
-                    }
-                }
-            }
+    private void addingLecture() throws IOException {
+        System.out.println("Entering a new lecture");
+        System.out.println("If you want add new lecture only name press 1 or press 2 if you want add name and number of lecture");
 
-        } catch (IOException | NumberFormatException e) {
-            System.out.print("\u001B[31m" + "You decided not to enter the number or entered the wrong number format the number will be assigned automatically" + "\u001B[0m \n");
+        switch (reader.readLine()) {
+            case "1":
+                addingLectureListOnlyName();
+                break;
+            case "2":
+                System.out.print("Please enter number for new lecture: ");
+
+                break;
+
         }
 
+
+//        try {
+//            numberOfLecture = Integer.parseInt(reader.readLine());
+//            boolean flag = true;
+//            while (flag) {
+//                Lectures[] lectures = ListOfLectures.lectures;
+//                for (int i = 0, lecturesLength = lectures.length; i < lecturesLength; i++) {
+//                    Lectures x = lectures[i];
+//                    if (numberOfLecture == x.getNumberOfLectures()) {
+//                        System.out.println("lecture under this number exists, try again");
+//                        addingLecture();
+//                    } else {
+//                        flag = false;
+//                    }
+//                }
+//            }
+//
+//        } catch (IOException | NumberFormatException e) {
+//            System.out.print("\u001B[31m" + "You decided not to enter the number or entered the wrong number format the number will be assigned automatically" + "\u001B[0m \n");
+//        }
+
+
+
+
+    }
+
+    private void addingLectureListOnlyName() throws IOException {
+        System.out.println("Entering name a new lecture");
+        listOfLectures.addLecture(reader.readLine());
+
+        System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+        subMenuAddingLectureListOnlyName();
+    }
+
+    private void subMenuAddingLectureListOnlyName(){
         try {
-            System.out.print("Please enter name for new lecture: ");
-            name = reader.readLine();
-            if (numberOfLecture != 0) {
-                listOfLectures.addLecture(numberOfLecture, name);
-                subMenuAddingLectureList();
-            } else {
-                listOfLectures.addLecture(name);
-                subMenuAddingLectureList();
+            switch (reader.readLine().toUpperCase()) {
+                case "+":
+                    addingLectureListOnlyName();
+                case "0":
+                    startLMS();
+                    break;
+                case "EXIT":
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("you must enter either \"+\" \"0\" or EXIT");
+                    lectureOutputMenu();
+                    break;
             }
         } catch (IOException e) {
             e.printStackTrace();

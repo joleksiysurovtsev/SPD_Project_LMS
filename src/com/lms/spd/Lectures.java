@@ -3,7 +3,9 @@ package com.lms.spd;
 public class Lectures {
     private String nameOfLectures;
     private int numberOfLectures;
-    private String[] literature;
+    private Literature[] literature;
+
+    //lecture constructor____________________________________________________________________________________________//
 
     /**
      * lecture constructor with name only
@@ -11,8 +13,40 @@ public class Lectures {
     public Lectures(String nameOfLectures) {
         this.nameOfLectures = nameOfLectures;
         this.numberOfLectures = generateNumberOfLectures();
-
     }
+
+    /**
+     * lecture constructor with number and name
+     */
+    public Lectures(int numberOfLectures, String nameOfLectures) {
+        this.nameOfLectures = nameOfLectures;
+
+        this.numberOfLectures = numberOfLectures;
+    }
+
+    /**
+     * lecture constructor with name and literature
+     */
+    public Lectures(String nameOfLectures, Literature...lit) {
+        this.nameOfLectures = nameOfLectures;
+        this.literature = lit;
+        this.numberOfLectures = generateNumberOfLectures();
+    }
+
+    /**
+     * lecture constructor with name and literature
+     */
+    public Lectures(int numberOfLectures, String nameOfLectures, Literature...lit) {
+        this.nameOfLectures = nameOfLectures;
+        this.literature = lit;
+        this.numberOfLectures = numberOfLectures;
+    }
+
+
+
+    //_______________________________________________________________________________________________________________//
+
+
 
     private int generateNumberOfLectures() {
         int setNumber = 1;
@@ -25,20 +59,6 @@ public class Lectures {
         }
         return setNumber;
     }
-
-
-
-
-    public Lectures(int numberOfLectures, String nameOfLectures) {
-        this.nameOfLectures = nameOfLectures;
-        this.numberOfLectures = numberOfLectures;
-    }
-
-    public Lectures(String nameOfLectures, String[] literature) {
-        this.nameOfLectures = nameOfLectures;
-        this.literature = literature;
-    }
-
 
 
     public int getNumberOfLectures() {
