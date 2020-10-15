@@ -3,6 +3,7 @@ package com.lms.spd;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class ListOfLectures {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -28,7 +29,7 @@ public class ListOfLectures {
     // METHODS FOR WORKING WITH MASSIVE LECTURE
 
     /**
-     * The method prints the list of lectures to the console
+     * The method prints the list of all lectures to the console
      */
     void getLectureList() {
         for (Lectures value : lectures) {
@@ -36,6 +37,33 @@ public class ListOfLectures {
         }
         System.out.println("______________________");
     }
+
+    void getLectureListByNumbers(String s){
+        String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
+
+        for (int i = 0; i < strings.length; i++) {
+            strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
+        }
+
+        String[]arr= cleanArray(strings); // масив чисел
+
+        for (String z : arr) {
+            System.out.println(z);
+        }
+
+        //итерируемся по масиву лекций
+        for (int i = 0; i < arr.length; i++) {
+
+        }
+
+
+    }
+
+    private static String[] cleanArray(String[] array) {
+        return Arrays.stream(array).filter(x -> !(x.isEmpty())).toArray(String[]::new);
+    }
+
+
 
     /**
      * Adds a new lecture to an array

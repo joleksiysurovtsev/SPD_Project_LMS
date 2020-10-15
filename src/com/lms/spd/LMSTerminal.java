@@ -11,7 +11,7 @@ public class LMSTerminal {
     public void startLMS() {
         System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" + "\"" + ": learning management system" + "\u001B[0m");
         System.out.println("Please make your choice from the offered options\n"
-                + "1. Display all available lectures (number and title)\n"
+                + "1. Display lectures (number and title)\n"
                 + "2. Add a new lecture\n"
                 + "3. Delete a lecture by its number\n"
                 + "4. Choose a lecture\n"
@@ -20,7 +20,24 @@ public class LMSTerminal {
         try {
             switch (reader.readLine()) {
                 case "1":
-                    listOfLectures.getLectureList();
+                    System.out.print("Display all lectures \"+\" or \"-\" specifically some by numbers? ");
+                    try {
+                        switch (reader.readLine()) {
+                            case "+":
+                                listOfLectures.getLectureList();
+                                System.out.println("The list brought out what to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+                                lectureOutputMenu();
+                                break;
+                            case "-":
+                                System.out.println("Enter numbers separated by commas");
+                                //добавить метод по номерам
+                            default:
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     System.out.println("The list brought out what to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                     lectureOutputMenu();
                     break;
@@ -90,7 +107,7 @@ public class LMSTerminal {
             }
 
         } catch (IOException | NumberFormatException e) {
-            System.out.print("\u001B[31m" + "Wrong number format the number will be assigned automatically" + "\u001B[0m \n");
+            System.out.print("\u001B[31m" + "You decided not to enter the number or entered the wrong number format the number will be assigned automatically" + "\u001B[0m \n");
         }
 
         try {
@@ -107,6 +124,7 @@ public class LMSTerminal {
             e.printStackTrace();
         }
     }
+
 
     /**
      * sub menu adding lecture
