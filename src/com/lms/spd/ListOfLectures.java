@@ -3,9 +3,7 @@ package com.lms.spd;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class ListOfLectures {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -27,7 +25,7 @@ public class ListOfLectures {
     static public Lectures[] lectures = {
             new Lectures(1, "Java Core"),
             new Lectures(2, "Class design"),
-            new Lectures(3, "Core Java API"),
+            new Lectures(5, "Core Java API"),
     };
 
 
@@ -92,42 +90,61 @@ public class ListOfLectures {
                 addedLecture = new Lectures(lectureAddName);
                 break;
         }
-        arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
+        arrayAddedLectures[arrayAddedLectures.length -1] = addedLecture;
+
         lectures = arrayAddedLectures;
+        sortLectureArr();
     }
 
 
-//    private Lectures[] sortLectureArr(Lectures[] lArr) {
-//        Lectures[] sortedArr = new Lectures[lArr.length];
-//        boolean sorted = false;
-//        Lectures temp;
-//        while (!sorted) {
-//            sorted = true;
-//            for (int i = 0; i < lArr.length+1; i++) {
-//                if (sortedArr[i].getNumberOfLectures() > sortedArr[i + 1].getNumberOfLectures()) {
-//                    temp = sortedArr[i];
-//                    sortedArr[i] = sortedArr[i + 1];
-//                    sortedArr[i + 1] = temp;
-//                    sorted = false;
-//                }
-//            }
-//        }
-//        return sortedArr;
-//    }
+    public void sortLectureArr() {
+        Lectures[] sortedArr = lectures;
+        boolean sorted = false;
+        Lectures temp;
+        while (!sorted) {
+            sorted = true;
+            for (int i = 0; i < lectures.length-1; i++) {
+                if (sortedArr[i].getNumberOfLectures() > sortedArr[i + 1].getNumberOfLectures()) {
+                    temp = sortedArr[i];
+                    sortedArr[i] = sortedArr[i + 1];
+                    sortedArr[i + 1] = temp;
+                    sorted = false;
+                }
+            }
+        }
+        lectures = sortedArr;
+    }
 
     /**
      * Adds a new lecture by number and name, to an array
      */
-    void addLecture(int lectureNumb, String lectureAddName) {
-        //создали масив на одну больше
+    void addLecture(int lectureNumb, String lectureAddName) throws IOException {
         Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
+        Lectures addedLecture = null;
+        System.out.println("Добавляем литературу + да - нет");
+        switch (reader.readLine()) {
+            case "+":
+                System.out.println("Введите список литературы через запятую");
+                String literatures = reader.readLine();
+                String[] strings = literatures.replaceAll("\\s+", "").split(",(?!\\s)");
 
-        Lectures addedLecture = new Lectures(lectureNumb, lectureAddName);
+                Literature[] arrLitAdd = new Literature[strings.length];
+                for (int i = 0; i < arrLitAdd.length; i++) {
+                    arrLitAdd[i] = new Literature(strings[i]);
+                }
+                addedLecture = new Lectures(lectureNumb,(lectureAddName), arrLitAdd);
+                break;
+            case "-":
+                addedLecture = new Lectures(lectureNumb,lectureAddName);
+                break;
+        }
+        arrayAddedLectures[arrayAddedLectures.length -1] = addedLecture;
 
-        arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
         lectures = arrayAddedLectures;
+        sortLectureArr();
     }
+
 
     void addLecture(String lectureAddName, Literature... literature) {
         //создали масив на одну больше
