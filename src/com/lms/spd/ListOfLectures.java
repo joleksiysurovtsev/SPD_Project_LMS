@@ -1,14 +1,29 @@
 package com.lms.spd;
 
-public class ListOfLectures {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+public class ListOfLectures {
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private int selectedLecture;
 
     private String[][] lecture = {
             {/*0*/"Java Core", "Head First Java", "Java. Руководство для начинающих"},
             {/*1*/"Core Java API", "Java. Полное руководство", "Java SE 9. Базовый курс", "Java. Методы программирования"},
             {/*2*/"Class design", "Effective Java", "Философия Java"},
-            {/*3*/"Test"}};
+            {/*3*/"Test"}
+    };
+
+
+
+
+   static public Lectures[] lectures = {
+            new Lectures(1,"Java Core"),
+            new Lectures(2,"Core Java API"),
+            new Lectures(3,"Class design")
+    };
+
 
     // METHODS FOR WORKING WITH MASSIVE LECTURE
 
@@ -16,10 +31,8 @@ public class ListOfLectures {
      * The method prints the list of lectures to the console
      */
     void getLectureList() {
-        for (int i = 0; i < lecture.length; i++) {
-            int numbOfLecture = i + 1;
-            String nameOfLecture = lecture[i][0];
-            System.out.println("Lecture №" + numbOfLecture + ". " + nameOfLecture);
+        for (Lectures value : lectures) {
+            System.out.println(value.toString());
         }
         System.out.println("______________________");
     }
@@ -28,29 +41,44 @@ public class ListOfLectures {
      * Adds a new lecture to an array
      */
     void addLecture(String lectureAddName) {
-        String[][] arrayAddedLecture = new String[lecture.length + 1][];
-        System.arraycopy(lecture, 0, arrayAddedLecture, 0, arrayAddedLecture.length - 1);
+        //создали масив на одну больше
+        Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
+        System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
 
-        String[] newLecture = {lectureAddName};
-        arrayAddedLecture[arrayAddedLecture.length - 1] = newLecture;
-        lecture = arrayAddedLecture;
+        Lectures addedLecture = new Lectures(lectureAddName);
+
+        arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
+        lectures = arrayAddedLectures;
     }
+
+    void addLecture(int lectureNumb, String lectureAddName) {
+        //создали масив на одну больше
+        Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
+        System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
+
+        Lectures addedLecture = new Lectures(lectureNumb,lectureAddName);
+
+        arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
+        lectures = arrayAddedLectures;
+    }
+
+
 
     /**
      * Remove lecture from array
      */
     void removeLecture(int lectureRemove) {
-        String[][] tempArrToBeLectureRemove = new String[lectureRemove - 1][];
+        Lectures[] tempArrToBeLectureRemove = new Lectures[lectureRemove - 1];
         System.arraycopy(lecture, 0, tempArrToBeLectureRemove, 0, tempArrToBeLectureRemove.length);
 
-        String[][] tempArrAfterLectureRemove = new String[lecture.length - (lectureRemove)][];
+        Lectures[] tempArrAfterLectureRemove = new Lectures[lecture.length - (lectureRemove)];
         System.arraycopy(lecture, lectureRemove, tempArrAfterLectureRemove, 0, tempArrAfterLectureRemove.length);
 
-        String[][] deletedLectureArr = new String[lecture.length - 1][];
+        Lectures[] deletedLectureArr = new Lectures[lecture.length - 1];
         System.arraycopy(tempArrToBeLectureRemove, 0, deletedLectureArr, 0, tempArrToBeLectureRemove.length);
         System.arraycopy(tempArrAfterLectureRemove, 0, deletedLectureArr, tempArrToBeLectureRemove.length, tempArrAfterLectureRemove.length);
 
-        lecture = deletedLectureArr;
+        lectures = deletedLectureArr;
     }
 
 
@@ -58,19 +86,18 @@ public class ListOfLectures {
       methods block of working with a specific lecture
       */
 
+    /**
+     * the method gets from the variable the number of the selected lecture
+     */
+    int getSelectedLecture() {
+        return selectedLecture;
+    }
 
     /**
      * the method throws the number of the selected lecture into the variable
      */
     void setSelectedLecture(int selected) {
         selectedLecture = selected;
-    }
-
-    /**
-     * the method gets from the variable the number of the selected lecture
-     */
-    int getSelectedLecture() {
-        return selectedLecture;
     }
 
     /**

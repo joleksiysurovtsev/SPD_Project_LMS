@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class LMSTerminal {
-    ListOfLectures listOfLectures = new ListOfLectures();
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    ListOfLectures listOfLectures = new ListOfLectures();
 
     public void startLMS() {
         System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" + "\"" + ": learning management system" + "\u001B[0m");
@@ -25,10 +25,10 @@ public class LMSTerminal {
                     lectureOutputMenu();
                     break;
                 case "2":
-                    addingLectureList();
+                    addingLecture();
                     break;
                 case "3":
-                    removalLectureList();
+                    removalLecture();
                     break;
                 case "4":
                     subFourthMenu();
@@ -67,20 +67,45 @@ public class LMSTerminal {
         }
     }
 
+
     /**
      * adding new lectures
      */
-    private void addingLectureList() {
-        System.out.println("Please enter name for new lecture");
+    private void addingLecture() {
         String name;
+        int numberOfLecture = 0;
+        System.out.print("Please enter number for new lecture: ");
         try {
+            numberOfLecture = Integer.parseInt(reader.readLine());
+            boolean flag = true;
+            while (flag) {
+                for (Lectures x : ListOfLectures.lectures) {
+                    if (numberOfLecture == x.getNumberOfLectures()) {
+                        System.out.println("lecture under this number exists, try again");
+                        addingLecture();
+                    } else {
+                        flag = false;
+                    }
+                }
+            }
+
+        } catch (IOException | NumberFormatException e) {
+            System.out.print("\u001B[31m" + "Wrong number format the number will be assigned automatically" + "\u001B[0m \n");
+        }
+
+        try {
+            System.out.print("Please enter name for new lecture: ");
             name = reader.readLine();
-            listOfLectures.addLecture(name);
-            subMenuAddingLectureList();
+            if (numberOfLecture != 0) {
+                listOfLectures.addLecture(numberOfLecture, name);
+                subMenuAddingLectureList();
+            } else {
+                listOfLectures.addLecture(name);
+                subMenuAddingLectureList();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -96,7 +121,7 @@ public class LMSTerminal {
             switch (reader.readLine().toUpperCase()) {
                 case "+":
                     System.out.println("add more");
-                    addingLectureList();
+                    addingLecture();
                     subMenuAddingLectureList();
                     break;
                 case "-":
@@ -119,7 +144,7 @@ public class LMSTerminal {
      * method deleting the lecture list
      */
 
-    private void removalLectureList() {
+    private void removalLecture() {
         System.out.println("Please enter the number of the lecture you want to delete");
         int numbLectureToDel = 0;
         try {
@@ -130,7 +155,7 @@ public class LMSTerminal {
         if (numbLectureToDel > listOfLectures.getArrLectureLength()) {
             System.out.println("Lectures under this name do not exist");
             System.out.println("total in the database: " + listOfLectures.getArrLectureLength() + " lectures try again");
-            removalLectureList();
+            removalLecture();
         } else {
             listOfLectures.removeLecture(numbLectureToDel);
             System.out.println("Lecture deleted, do you want to delete another one? \n" +
@@ -140,7 +165,7 @@ public class LMSTerminal {
             try {
                 switch (reader.readLine().toUpperCase()) {
                     case "+":
-                        removalLectureList();
+                        removalLecture();
                         break;
                     case "-":
                         startLMS();
