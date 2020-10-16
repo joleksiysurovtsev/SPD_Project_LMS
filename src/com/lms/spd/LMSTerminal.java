@@ -20,12 +20,12 @@ public class LMSTerminal {
         try {
             switch (reader.readLine()) {
                 case "1":
-                    System.out.print("Display all lectures \"+\" or \"-\" specifically some by numbers? ");
+                    System.out.print("Display all lectures \u001b[36;1m\"+\"" + "\u001B[0m" + " or \u001b[31;1m\"-\" \u001B[0mspecifically some by numbers? ");
                     try {
                         switch (reader.readLine()) {
                             case "+":
                                 listOfLectures.getLectureList();
-                                System.out.println("The list brought out what to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+                                System.out.println("The List shown what to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                                 lectureOutputMenu();
                                 break;
                             case "-":
@@ -91,7 +91,7 @@ public class LMSTerminal {
      */
     private void addingLecture() throws IOException {
         System.out.println("Entering a new lecture");
-        System.out.println("If you want add new lecture only name press 1 or press 2 if you want add name and number of lecture");
+        System.out.println("If you want add new lecture only name press \u001b[32;1m\"1\"\u001b[0m or press \u001b[36;1m\"2\"\u001b[0m if you want add name and number of lecture");
 
         switch (reader.readLine()) {
             case "1":
@@ -107,7 +107,7 @@ public class LMSTerminal {
                 }
                 break;
             default:
-                System.out.println("Please enter only \"1\" or \"2\"");
+                System.out.println("\u001b[31;1mPlease enter only \"1\" or \"2\"\u001b[0m");
                 addingLecture();
         }
     }
@@ -136,7 +136,8 @@ public class LMSTerminal {
     }
 
     private void subMenuAddingLectureListNameAndNumb() {
-        System.out.println("what to do next: add another one? entering \"+\" or " + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+        System.out.println("what to do next: add another one? entering \"+\" or " + "\u001B[32m" + "\"0\"" + "\u001B[0m"
+                + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         try {
             switch (reader.readLine().toUpperCase()) {
                 case "+":
@@ -162,7 +163,8 @@ public class LMSTerminal {
         System.out.println("Entering name a new lecture");
         listOfLectures.addLecture(reader.readLine());
 
-        System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+        System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m"
+                + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         subMenuAddingLectureListOnlyName();
     }
 
@@ -224,13 +226,15 @@ public class LMSTerminal {
      * method deleting the lecture list
      */
 
-    private void removalLecture() {
-        System.out.println("Please enter the number of the lecture you want to delete");
+    private void removalLecture() throws IOException {
+        System.out.println("Please enter the number of the lecture you want to delete one or more comma separated ");
+        String numbRemovalLecture = reader.readLine();
         try {
-            listOfLectures.removeLectures(Integer.parseInt(reader.readLine()));
+            listOfLectures.removeLectures(Integer.parseInt(numbRemovalLecture));
             subMenuRemovalLecture();
-        } catch (IOException e) {
-            removalLecture();
+        } catch (NumberFormatException e) {
+            listOfLectures.removeLectures(numbRemovalLecture);
+            subMenuRemovalLecture();
         }
     }
 

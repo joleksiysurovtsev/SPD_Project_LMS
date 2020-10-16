@@ -6,26 +6,22 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class ListOfLectures {
+    static public Literature[] literatures = {
+            new Literature("\"Effective Java\""),
+            new Literature("\"Философия Java\"")
+    };
+    static public Lectures[] lectures = {
+            new Lectures(1, "Java Core"),
+            new Lectures(2, "Class design"),
+            new Lectures(5, "Core Java API"),
+    };
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private int selectedLecture;
-
     private String[][] lecture = {
             {/*0*/"Java Core", "Head First Java", "Java. Руководство для начинающих"},
             {/*1*/"Core Java API", "Java. Полное руководство", "Java SE 9. Базовый курс", "Java. Методы программирования"},
             {/*2*/"Class design", "Effective Java", "Философия Java"},
             {/*3*/"Test"}
-    };
-
-    static public Literature[] literatures = {
-            new Literature("\"Effective Java\""),
-            new Literature("\"Философия Java\"")
-    };
-
-
-    static public Lectures[] lectures = {
-            new Lectures(1, "Java Core"),
-            new Lectures(2, "Class design"),
-            new Lectures(5, "Core Java API"),
     };
 
 
@@ -74,10 +70,10 @@ public class ListOfLectures {
         Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
         Lectures addedLecture = null;
-        System.out.println("Добавляем литературу + да - нет");
+        System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
-                System.out.println("Введите список литературы через запятую");
+                System.out.println("Enter literature separated by commas");
                 String literatures = reader.readLine();
                 String[] strings = literatures.replaceAll("\\s+", "").split(",(?!\\s)");
 
@@ -105,10 +101,10 @@ public class ListOfLectures {
         Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
         Lectures addedLecture = null;
-        System.out.println("Добавляем литературу + да - нет");
+        System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
-                System.out.println("Введите список литературы через запятую");
+                System.out.println("Enter literature separated by commas");
                 String literatures = reader.readLine();
                 String[] strings = literatures.replaceAll("\\s+", "").split(",(?!\\s)");
 
@@ -121,6 +117,8 @@ public class ListOfLectures {
             case "-":
                 addedLecture = new Lectures(lectureNumb, lectureAddName);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + reader.readLine());
         }
         arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
 
@@ -136,27 +134,60 @@ public class ListOfLectures {
      */
     void removeLectures(int lectureRemove) {
         boolean flag = false;
-        for (int i = 0; i < lectures.length; i++) {
-            int numb = lectures[i].getNumberOfLectures();
+        for (Lectures value : lectures) {
+            int numb = value.getNumberOfLectures();
             if (numb == lectureRemove) {
                 flag = true;
+                break;
             }
         }
 
-        if (flag == false) {
+        if (!flag) {
             System.out.println("Lectures under this number do not exist");
             System.out.println("try again");
             return;
         }
-        Lectures[] deletedLecturesArr = Arrays.stream(lectures).filter(x -> !(x.getNumberOfLectures() == lectureRemove)).toArray(Lectures[]::new);
         System.out.println("successfully");
-        lectures = deletedLecturesArr;
+        lectures = Arrays.stream(lectures).filter(x -> !(x.getNumberOfLectures() == lectureRemove)).toArray(Lectures[]::new);
     }
 
 
-    /*
-      methods block of working with a specific lecture
-      */
+    void removeLectures(String lectureRemove) {
+        String[] strings = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
+
+        for (int i = 0; i < strings.length; i++) {
+            strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
+        }
+
+        String[] numbToDisplay = Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
+        StringBuilder stringContains = new StringBuilder("Lectures by numbers: ");
+
+        for (int i = 0; i < numbToDisplay.length; i++) {
+            boolean flag = false;
+            for (Lectures value : lectures) {
+                int numb = value.getNumberOfLectures();
+                if (numb == Integer.parseInt(numbToDisplay[i])) {
+                    stringContains.append("\u001b[33;1m\"").append(numbToDisplay[i]).append("\"\u001b[0m, ");
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        stringContains.append("successfully removed the rest are missing.");
+        System.out.println(stringContains);
+
+        for (String s : numbToDisplay) {
+            int z = Integer.parseInt(s);
+            lectures = Arrays.stream(lectures).filter(x -> !(x.getNumberOfLectures() == z)).toArray(Lectures[]::new);
+        }
+
+
+    }
+
+
+    //______________________________________________________________________________________________________________//
+
+    // methods block of working with a specific lecture
 
     /**
      * the method gets from the variable the number of the selected lecture
