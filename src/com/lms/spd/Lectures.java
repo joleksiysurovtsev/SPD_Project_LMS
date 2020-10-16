@@ -46,8 +46,6 @@ public class Lectures {
 
     //_______________________________________________________________________________________________________________//
 
-
-
     private int generateNumberOfLectures() {
         int setNumber = 1;
         for (Lectures x : ListOfLectures.lectures) {
@@ -69,6 +67,9 @@ public class Lectures {
         this.numberOfLectures = numberOfLectures;
     }
 
+    public Literature[] getLiterature() {
+        return literature;
+    }
 
     @Override
     public String toString() {
