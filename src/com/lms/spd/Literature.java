@@ -27,7 +27,7 @@ public class Literature {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Literature that = (Literature) o;
-        return Objects.equals(name, that.name);
+        return name.equals(that.name);
     }
 
     @Override

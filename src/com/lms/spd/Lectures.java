@@ -1,6 +1,7 @@
 package com.lms.spd;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Lectures {
     private String nameOfLectures;
@@ -124,9 +125,7 @@ public class Lectures {
             literature = new Literature[0];
         } else {
             Literature litTuDel = literature[indexLit-1];
-            //Literature[] arrWichDellLit = new Literature[literature.length - 1]; // Array which will contain the result.
             literature = Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(Literature[]::new);
-
         }
     }
 
@@ -136,5 +135,20 @@ public class Lectures {
                 ". " + nameOfLectures;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lectures lectures = (Lectures) o;
+        return numberOfLectures == lectures.numberOfLectures &&
+                nameOfLectures.equals(lectures.nameOfLectures) &&
+                Arrays.equals(literature, lectures.literature);
+    }
 
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(nameOfLectures, numberOfLectures);
+        result = 31 * result + Arrays.hashCode(literature);
+        return result;
+    }
 }

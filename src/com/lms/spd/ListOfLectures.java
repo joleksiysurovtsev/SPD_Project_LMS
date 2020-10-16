@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class ListOfLectures {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    BufferedReader reader;
     private int selectedLectures;
 
     static public Lectures[] lectures = {
