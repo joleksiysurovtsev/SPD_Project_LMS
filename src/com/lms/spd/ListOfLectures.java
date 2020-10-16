@@ -6,16 +6,12 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class ListOfLectures {
-    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private int selectedLectures;
 
-    static public Literature[] literatures = {
-            new Literature("\"Effective Java\""),
-            new Literature("\"Философия Java\"")
-    };
     static public Lectures[] lectures = {
             new Lectures(1, "Java Core"),
-            new Lectures(2, "Class design",literatures),
+            new Lectures(2, "Class design"),
             new Lectures(5, "Core Java API"),
     };
 
@@ -71,11 +67,7 @@ public class ListOfLectures {
                 String literatures = reader.readLine();
                 String[] strings = literatures.replaceAll("\\s+", "").split(",(?!\\s)");
 
-                Literature[] arrLitAdd = new Literature[strings.length];
-                for (int i = 0; i < arrLitAdd.length; i++) {
-                    arrLitAdd[i] = new Literature(strings[i]);
-                }
-                addedLecture = new Lectures((lectureAddName), arrLitAdd);
+                addedLecture = new Lectures((lectureAddName), strings);
                 break;
             case "-":
                 addedLecture = new Lectures(lectureAddName);
@@ -94,7 +86,7 @@ public class ListOfLectures {
     void addLecture(int lectureNumb, String lectureAddName) throws IOException {
         Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
-        Lectures addedLecture = null;
+        Lectures addedLecture;
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
@@ -102,11 +94,7 @@ public class ListOfLectures {
                 String literatures = reader.readLine();
                 String[] strings = literatures.replaceAll("\\s+", "").split(",(?!\\s)");
 
-                Literature[] arrLitAdd = new Literature[strings.length];
-                for (int i = 0; i < arrLitAdd.length; i++) {
-                    arrLitAdd[i] = new Literature(strings[i]);
-                }
-                addedLecture = new Lectures(lectureNumb, (lectureAddName), arrLitAdd);
+                addedLecture = new Lectures(lectureNumb, (lectureAddName), strings);
                 break;
             case "-":
                 addedLecture = new Lectures(lectureNumb, lectureAddName);
@@ -156,13 +144,11 @@ public class ListOfLectures {
         String[] numbToDisplay = Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
         StringBuilder stringContains = new StringBuilder("Lectures by numbers: ");
 
-        for (int i = 0; i < numbToDisplay.length; i++) {
-            boolean flag = false;
+        for (String item : numbToDisplay) {
             for (Lectures value : lectures) {
                 int numb = value.getNumberOfLectures();
-                if (numb == Integer.parseInt(numbToDisplay[i])) {
-                    stringContains.append("\u001b[33;1m\"").append(numbToDisplay[i]).append("\"\u001b[0m, ");
-                    flag = true;
+                if (numb == Integer.parseInt(item)) {
+                    stringContains.append("\u001b[33;1m\"").append(item).append("\"\u001b[0m, ");
                     break;
                 }
             }
@@ -196,7 +182,7 @@ public class ListOfLectures {
     }
 
     /**
-     * the method returns the number of lectures
+     * the method returns the lectures amt
      */
     int getArrLectureLength() {
         return lectures.length;
@@ -214,10 +200,8 @@ public class ListOfLectures {
      * the method returns a list of references from the previously selected lecture
      */
     void getListLit(int numbLecture) {
-           lectures[numbLecture].printLitList();
+        lectures[numbLecture].printLitList();
     }
-
-
 
     /**
      * the method adds new literature to the previously selected lecture
@@ -231,18 +215,6 @@ public class ListOfLectures {
      */
     public void removeLiterature(int indexLit) {
         lectures[getSelectedLecture()].deleteLit(indexLit);
-//        String[] deletedLitArr = new String[lecture[selectedLecture].length - 1];
-//        if (indexLit > deletedLitArr.length) {
-//            System.out.println("The book with this number does not exist in the list");
-//        } else {
-//            for (int i = 0, j = 0; i < lecture[selectedLecture].length - 1; i++, j++) {
-//                if (i == indexLit) {
-//                    j++;
-//                }
-//                deletedLitArr[i] = lecture[selectedLecture][j];
-//            }
-//            lecture[selectedLecture] = deletedLitArr;
-//        }
     }
 
 
@@ -258,6 +230,17 @@ public class ListOfLectures {
                     sortedArr[i] = sortedArr[i + 1];
                     sortedArr[i + 1] = temp;
                     sorted = false;
+                }
+            }
+        }
+
+        boolean flag = false;
+        while (!flag) {
+            flag = true;
+            for (int i = 0; i < lectures.length - 1; i++) {
+                if (sortedArr[i].getNumberOfLectures() == sortedArr[i + 1].getNumberOfLectures()) {
+                    sortedArr[i + 1].setNumberOfLectures((sortedArr[i + 1].getNumberOfLectures()) + 1);
+                    flag = false;
                 }
             }
         }

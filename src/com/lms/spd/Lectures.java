@@ -30,19 +30,29 @@ public class Lectures {
     /**
      * lecture constructor with name and literature
      */
-    public Lectures(String nameOfLectures, Literature... lit) {
+    public Lectures(String nameOfLectures, String...lit) {
         this.nameOfLectures = nameOfLectures;
-        this.literature = lit;
         this.numberOfLectures = generateNumberOfLectures();
+
+        Literature[] arrAddLit = new Literature[lit.length];
+        for (int i = 0; i < arrAddLit.length; i++) {
+            arrAddLit[i] = new Literature(lit[i]);
+        }
+        this.literature = arrAddLit;
+
     }
 
     /**
      * lecture constructor with name and literature
      */
-    public Lectures(int numberOfLectures, String nameOfLectures, Literature... lit) {
+    public Lectures(int numberOfLectures, String nameOfLectures, String... lit) {
         this.nameOfLectures = nameOfLectures;
-        this.literature = lit;
         this.numberOfLectures = numberOfLectures;
+        Literature[] arrAddLit = new Literature[lit.length];
+        for (int i = 0; i < arrAddLit.length; i++) {
+            arrAddLit[i] = new Literature(lit[i]);
+        }
+        this.literature = arrAddLit;
     }
 
 

@@ -13,6 +13,10 @@ public class Literature {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return " Book= " + name;

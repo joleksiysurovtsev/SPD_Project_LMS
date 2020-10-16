@@ -112,7 +112,7 @@ public class LMSTerminal {
         }
     }
 
-    private void addingLectureListNameAndNumber() throws IOException {
+    private void addingLectureListNameAndNumber() {
         System.out.println("Number: ");
         int numberOfLecture = 0;
         String namelect;
@@ -188,37 +188,6 @@ public class LMSTerminal {
             e.printStackTrace();
         }
     }
-
-
-//    /**
-//     * sub menu adding lecture
-//     */
-//    private void subMenuAddingLectureList() {
-//        System.out.println("You have entered a new lecture if you want to add more " +
-//                "enter " + "\u001B[32m" + "\"+\"" + "\u001B[0m" + " \nor "
-//                + "\u001B[31m" + "\"-\"" + "\u001B[0m" + " to return to the main menu or \"EXIT\"  ");
-//        try {
-//            switch (reader.readLine().toUpperCase()) {
-//                case "+":
-//                    System.out.println("add more");
-//                    addingLecture();
-//                   // subMenuAddingLectureList();
-//                    break;
-//                case "-":
-//                    startLMS();
-//                    break;
-//                case "EXIT":
-//                    System.exit(0);
-//                    break;
-//                default:
-//                    System.out.println("please make the right choice \"+\" \"-\" or \"EXIT\"");
-//                    subMenuAddingLectureList();
-//                    break;
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     //_______________________________________________________________________________________________________________//
 
