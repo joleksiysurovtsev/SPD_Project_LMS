@@ -1,6 +1,7 @@
 package com.lms.spd;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -10,9 +11,9 @@ public class ListOfLectures {
     private int selectedLectures;
 
     static public Lectures[] lectures = {
-            new Lectures(1, "Java Core"),
-            new Lectures(2, "Class design"),
-            new Lectures(5, "Core Java API"),
+            new Lectures(1, "BufferedReader - Reads text from a character-input stream, buffering characters so as to provide for the efficient reading of characters, arrays, and lines."),
+            new Lectures(2, "Writes text to a character-output stream, buffering characters so as to provide for the efficient writing of single characters, arrays, and strings."),
+            new Lectures(3, "Core Java API"),
     };
 
     // METHODS FOR WORKING WITH MASSIVE LECTURE
@@ -28,6 +29,18 @@ public class ListOfLectures {
         }
         System.out.println("______________________");
     }
+
+    void getPreviewLectureList() {
+        for (Lectures value : lectures) {
+            if (value.toString().length() > 50) {
+                System.out.println(value.toString().substring(0, 50));
+            } else {
+                System.out.println(value.toString());
+            }
+        }
+        System.out.println("______________________");
+    }
+
 
     /**
      * The method prints the list lectures to the console by number

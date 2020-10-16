@@ -20,9 +20,9 @@ public class LMSTerminal {
         try {
             switch (reader.readLine()) {
                 case "1":
-                    System.out.print("Display all lectures \u001b[36;1m\"+\"" + "\u001B[0m" + " or \u001b[31;1m\"-\" \u001B[0mspecifically some by numbers? ");
+                    System.out.println("Display all lectures \u001b[36;1m\"+\"" + "\u001B[0m" + " or \u001b[31;1m\"-\" \u001B[0mspecifically some by numbers?" + " enter \u001B[32m\"small\"\u001B[0m to preview lectures");
                     try {
-                        switch (reader.readLine()) {
+                        switch (reader.readLine().toLowerCase()) {
                             case "+":
                                 listOfLectures.getLectureList();
                                 System.out.println("The List shown what to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
@@ -31,6 +31,9 @@ public class LMSTerminal {
                             case "-":
                                 System.out.println("Enter numbers separated by commas");
                                 listOfLectures.getLectureList(reader.readLine());
+                            case "small":
+                                System.out.println("Lecture preview");
+                                listOfLectures.getPreviewLectureList();
                             default:
 
                                 break;
@@ -89,27 +92,32 @@ public class LMSTerminal {
     /**
      * adding new lectures
      */
-    private void addingLecture() throws IOException {
+    private void addingLecture()  {
         System.out.println("Entering a new lecture");
         System.out.println("If you want add new lecture only name press \u001b[32;1m\"1\"\u001b[0m or press \u001b[36;1m\"2\"\u001b[0m if you want add name and number of lecture");
+        try {
+            switch (reader.readLine()) {
+                case "1":
+                    addingLectureListOnlyName();
+                    break;
+                case "2":
+                    try {
+                        System.out.print("Please enter number for new lecture: ");
+                        addingLectureListNameAndNumber();
 
-        switch (reader.readLine()) {
-            case "1":
-                addingLectureListOnlyName();
-                break;
-            case "2":
-                try {
-                    System.out.print("Please enter number for new lecture: ");
-                    addingLectureListNameAndNumber();
-
-                } catch (NumberFormatException e) {
-                    addingLectureListNameAndNumber();
-                }
-                break;
-            default:
-                System.out.println("\u001b[31;1mPlease enter only \"1\" or \"2\"\u001b[0m");
-                addingLecture();
+                    } catch (NumberFormatException e) {
+                        addingLectureListNameAndNumber();
+                    }
+                    break;
+                default:
+                    System.out.println("\u001b[31;1mPlease enter only \"1\" or \"2\"\u001b[0m");
+                    addingLecture();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            addingLecture();
         }
+
     }
 
     private void addingLectureListNameAndNumber() {
@@ -159,13 +167,16 @@ public class LMSTerminal {
     }
 
 
-    private void addingLectureListOnlyName() throws IOException {
-        System.out.println("Entering name a new lecture");
-        listOfLectures.addLecture(reader.readLine());
-
-        System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m"
-                + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
-        subMenuAddingLectureListOnlyName();
+    private void addingLectureListOnlyName() {
+        try {
+            System.out.println("Entering name a new lecture");
+            listOfLectures.addLecture(reader.readLine());
+            System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m"
+                    + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+            subMenuAddingLectureListOnlyName();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void subMenuAddingLectureListOnlyName() {
@@ -195,10 +206,16 @@ public class LMSTerminal {
      * method deleting the lecture list
      */
 
-    private void removalLecture() throws IOException {
+    private void removalLecture() {
         System.out.println("Please enter the number of the lecture you want to delete one or more comma separated ");
-        String numbRemovalLecture = reader.readLine();
+        String numbRemovalLecture = null;
         try {
+            numbRemovalLecture = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert numbRemovalLecture != null;
             listOfLectures.removeLectures(Integer.parseInt(numbRemovalLecture));
             subMenuRemovalLecture();
         } catch (NumberFormatException e) {

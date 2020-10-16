@@ -103,9 +103,9 @@ public class Lectures {
 
     public void addNewLit(String newBook) {
         Literature newLit = new Literature(newBook);
-        Literature[] newArray = Arrays.copyOf(literature, literature.length + 1);
-        newArray[newArray.length - 1] = newLit;
-        literature = newArray;
+        Literature[] newArrayLiterature = Arrays.copyOf(literature, literature.length + 1);
+        newArrayLiterature[newArrayLiterature.length - 1] = newLit;
+        literature = newArrayLiterature;
     }
 
     public void deleteLit(int indexLit) {
