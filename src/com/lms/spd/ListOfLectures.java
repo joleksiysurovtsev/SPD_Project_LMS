@@ -19,10 +19,6 @@ public class ListOfLectures {
             new Lectures(5, "Core Java API"),
     };
 
-
-
-
-
     // METHODS FOR WORKING WITH MASSIVE LECTURE
 
 //_________________________________________________________________________________________________________________//
@@ -218,33 +214,23 @@ public class ListOfLectures {
      * the method returns a list of references from the previously selected lecture
      */
     void getListLit(int numbLecture) {
-        Literature[] choisenLit = lectures[numbLecture].getLiterature();
-        try {
-            for (int i = 1; i < choisenLit.length; i++) {
-                System.out.println(i + "." + choisenLit[i].toString());
-            }
-        }catch (NullPointerException e){
-            System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
-        }
+           lectures[numbLecture].printLitList();
     }
+
 
 
     /**
      * the method adds new literature to the previously selected lecture
      */
     void addNewLiterature(String newLit) {
-//        String[] newArrLit = new String[lecture[selectedLecture].length + 1];
-//
-//        System.arraycopy(lecture[selectedLecture], 0, newArrLit, 0, lecture[selectedLecture].length);
-//        newArrLit[newArrLit.length - 1] = newLit;
-//
-//        lecture[selectedLecture] = newArrLit;
+        lectures[getSelectedLecture()].addNewLit(newLit);
     }
 
     /**
      * method removes literature by number from a previously selected lecture
      */
     public void removeLiterature(int indexLit) {
+        lectures[getSelectedLecture()].deleteLit(indexLit);
 //        String[] deletedLitArr = new String[lecture[selectedLecture].length - 1];
 //        if (indexLit > deletedLitArr.length) {
 //            System.out.println("The book with this number does not exist in the list");

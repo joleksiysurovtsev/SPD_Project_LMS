@@ -1,5 +1,7 @@
 package com.lms.spd;
 
+import java.util.Arrays;
+
 public class Lectures {
     private String nameOfLectures;
     private int numberOfLectures;
@@ -13,6 +15,7 @@ public class Lectures {
     public Lectures(String nameOfLectures) {
         this.nameOfLectures = nameOfLectures;
         this.numberOfLectures = generateNumberOfLectures();
+        this.literature = new Literature[0];
     }
 
     /**
@@ -20,14 +23,14 @@ public class Lectures {
      */
     public Lectures(int numberOfLectures, String nameOfLectures) {
         this.nameOfLectures = nameOfLectures;
-
         this.numberOfLectures = numberOfLectures;
+        this.literature = new Literature[0];
     }
 
     /**
      * lecture constructor with name and literature
      */
-    public Lectures(String nameOfLectures, Literature...lit) {
+    public Lectures(String nameOfLectures, Literature... lit) {
         this.nameOfLectures = nameOfLectures;
         this.literature = lit;
         this.numberOfLectures = generateNumberOfLectures();
@@ -36,12 +39,11 @@ public class Lectures {
     /**
      * lecture constructor with name and literature
      */
-    public Lectures(int numberOfLectures, String nameOfLectures, Literature...lit) {
+    public Lectures(int numberOfLectures, String nameOfLectures, Literature... lit) {
         this.nameOfLectures = nameOfLectures;
         this.literature = lit;
         this.numberOfLectures = numberOfLectures;
     }
-
 
 
     //_______________________________________________________________________________________________________________//
@@ -71,9 +73,58 @@ public class Lectures {
         return literature;
     }
 
+    public void setLiterature(Literature[] literature) {
+        this.literature = literature;
+    }
+
+    //show listLit
+    public void printLitList() {
+        if (literature.length > 0) {
+            int i = 1;
+            for (Literature x : literature
+            ) {
+                System.out.println(i + "." + x.toString());
+                i++;
+            }
+        } else {
+            System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
+        }
+    }
+
+    public void addNewLit(String newBook) {
+        Literature newLit = new Literature(newBook);
+        Literature[] newArray = Arrays.copyOf(literature, literature.length + 1);
+        newArray[newArray.length - 1] = newLit;
+        literature = newArray;
+    }
+
+    public void deleteLit(int indexLit) {
+        boolean flag = false;
+        if (literature.length >= indexLit) {
+            flag = true;
+        }
+        if (!flag) {
+            System.out.println("Literature under this number do not exist");
+            System.out.println("try again");
+            return;
+        }
+        System.out.println("successfully");
+
+        if (literature.length == 1) {
+            literature = new Literature[0];
+        } else {
+            Literature litTuDel = literature[indexLit-1];
+            //Literature[] arrWichDellLit = new Literature[literature.length - 1]; // Array which will contain the result.
+            literature = Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(Literature[]::new);
+
+        }
+    }
+
     @Override
     public String toString() {
         return "Lecture №" + numberOfLectures +
                 ". " + nameOfLectures;
     }
+
+
 }

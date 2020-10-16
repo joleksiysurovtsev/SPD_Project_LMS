@@ -5,9 +5,6 @@ import java.util.Objects;
 public class Literature {
     private String name;
 
-    public Literature() {
-    }
-
     public Literature(String name) {
         this.name = name;
     }
@@ -16,13 +13,9 @@ public class Literature {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
-        return " Literature=" + name;
+        return " Book= " + name;
     }
 
     @Override
