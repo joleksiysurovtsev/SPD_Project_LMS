@@ -1,9 +1,7 @@
 package com.lms.spd;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class ListOfLectures {
@@ -13,8 +11,10 @@ public class ListOfLectures {
     static public Lectures[] lectures = {
             new Lectures(1, "BufferedReader - Reads text from a character-input stream, buffering characters so as to provide for the efficient reading of characters, arrays, and lines."),
             new Lectures(2, "Writes text to a character-output stream, buffering characters so as to provide for the efficient writing of single characters, arrays, and strings."),
-            new Lectures(3, "Core Java API"),
+            new Lectures(5, "Core Java API"),
+            new Lectures(7, "Core Java API"),
     };
+
 
     // METHODS FOR WORKING WITH MASSIVE LECTURE
 
@@ -23,13 +23,16 @@ public class ListOfLectures {
     /**
      * The method prints the list of all lectures to the console
      */
-    void getLectureList() {
+    public void getLectureList() {
         for (Lectures value : lectures) {
             System.out.println(value.toString());
         }
         System.out.println("______________________");
     }
 
+    /**
+     * The method print Preview Lecture list
+     */
     void getPreviewLectureList() {
         for (Lectures value : lectures) {
             if (value.toString().length() > 50) {
@@ -45,7 +48,7 @@ public class ListOfLectures {
     /**
      * The method prints the list lectures to the console by number
      */
-    void getLectureList(String s) {
+    public void getLectureList(String s) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
 
         for (int i = 0; i < strings.length; i++) {
@@ -69,7 +72,7 @@ public class ListOfLectures {
     /**
      * Adds a new lecture by only name, to an array
      */
-    void addLecture(String lectureAddName) throws IOException {
+    public void addLecture(String lectureAddName) throws IOException {
         Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
         Lectures addedLecture = null;
@@ -96,7 +99,7 @@ public class ListOfLectures {
     /**
      * Adds a new lecture by number and name, to an array
      */
-    void addLecture(int lectureNumb, String lectureAddName) throws IOException {
+    public void addLecture(int lectureNumb, String lectureAddName) throws IOException {
         Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
         Lectures addedLecture;
@@ -127,7 +130,7 @@ public class ListOfLectures {
     /**
      * Remove lecture from array
      */
-    void removeLectures(int lectureRemove) {
+    public void removeLectures(int lectureRemove) {
         boolean flag = false;
         for (Lectures value : lectures) {
             int numb = value.getNumberOfLectures();
@@ -147,7 +150,7 @@ public class ListOfLectures {
     }
 
 
-    void removeLectures(String lectureRemove) {
+    public void removeLectures(String lectureRemove) {
         String[] strings = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
 
         for (int i = 0; i < strings.length; i++) {
@@ -183,28 +186,21 @@ public class ListOfLectures {
     /**
      * the method gets from the variable the number of the selected lecture
      */
-    int getSelectedLecture() {
+    public int getSelectedLecture() {
         return selectedLectures;
     }
 
     /**
      * the method throws the number of the selected lecture into the variable
      */
-    void setSelectedLecture(int selected) {
+    public void setSelectedLecture(int selected) {
         selectedLectures = selected;
-    }
-
-    /**
-     * the method returns the lectures amt
-     */
-    int getArrLectureLength() {
-        return lectures.length;
     }
 
     /**
      * the method returns the name of the lecture that we selected earlier
      */
-    String getNameSelectedLecture() {
+    public String getNameSelectedLecture() {
         int x = getSelectedLecture();
         return lectures[x].toString();
     }
@@ -212,14 +208,14 @@ public class ListOfLectures {
     /**
      * the method returns a list of references from the previously selected lecture
      */
-    void getListLit(int numbLecture) {
+    public void getListLit(int numbLecture) {
         lectures[numbLecture].printLitList();
     }
 
     /**
      * the method adds new literature to the previously selected lecture
      */
-    void addNewLiterature(String newLit) {
+    public void addNewLiterature(String newLit) {
         lectures[getSelectedLecture()].addNewLit(newLit);
     }
 
@@ -258,5 +254,16 @@ public class ListOfLectures {
             }
         }
         lectures = sortedArr;
+    }
+
+    public boolean checkNumberLecture(int numbOfLectures) {
+        boolean flag = false;
+        for (Lectures lecture : lectures) {
+            if (lecture.getNumberOfLectures() == numbOfLectures) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 }
