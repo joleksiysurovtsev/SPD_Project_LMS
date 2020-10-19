@@ -76,19 +76,21 @@ public class ListOfLectures {
     public void addLecture(String lectureAddName) throws IOException {
         Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
-        Lectures addedLecture = null;
+        Lectures addedLecture = new Lectures(lectureAddName);
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
                 System.out.println("Enter literature separated by commas");
                 String literatures = reader.readLine();
                 String[] strings = literatures.replaceAll("\\s+", "").split(",(?!\\s)");
-
                 addedLecture = new Lectures((lectureAddName), strings);
                 break;
             case "-":
                 addedLecture = new Lectures(lectureAddName);
                 break;
+            default:
+                System.out.println("Something wrong");
+                addLecture(lectureAddName);
         }
         arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
 
@@ -100,10 +102,10 @@ public class ListOfLectures {
     /**
      * Adds a new lecture by number and name, to an array
      */
-    public void addLecture(int lectureNumb, String lectureAddName) throws IOException {
+    public void addLecturePlusNumber(int lectureNumb, String lectureAddName) throws IOException {
         Lectures[] arrayAddedLectures = new Lectures[lectures.length + 1];
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
-        Lectures addedLecture;
+        Lectures addedLecture = new Lectures(lectureNumb,lectureAddName);
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
@@ -117,7 +119,8 @@ public class ListOfLectures {
                 addedLecture = new Lectures(lectureNumb, lectureAddName);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + reader.readLine());
+                System.out.println("Something wrong");
+                //addLecturePlusNumber(lectureNumb,lectureAddName);
         }
         arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
 
@@ -245,7 +248,7 @@ public class ListOfLectures {
         while (!sorted) {
             sorted = true;
             for (int i = 0; i < lectures.length - 1; i++) {
-                if (sortedArr[i].getNumberOfLectures() > sortedArr[i + 1].getNumberOfLectures()) {
+                if (sortedArr[i].getNumberOfLectures() >= sortedArr[i + 1].getNumberOfLectures()) {
                     temp = sortedArr[i];
                     sortedArr[i] = sortedArr[i + 1];
                     sortedArr[i + 1] = temp;

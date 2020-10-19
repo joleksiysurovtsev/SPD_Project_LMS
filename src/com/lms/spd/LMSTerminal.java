@@ -148,7 +148,7 @@ public class LMSTerminal {
         }
         try {
             System.out.println("Enter the title of the lecture");
-            listOfLectures.addLecture(numberOfLecture, reader.readLine());
+            listOfLectures.addLecturePlusNumber(numberOfLecture, reader.readLine());
             subMenuAddingLectureListNameAndNumb();
         } catch (IOException e) {
             System.out.print("\u001B[31m" + "Something wrong " + "\u001B[0m \n" + "Lets try again ");
