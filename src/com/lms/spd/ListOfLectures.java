@@ -48,7 +48,6 @@ public class ListOfLectures {
         System.out.println("______________________");
     }
 
-
     /**
      * The method prints the list lectures to the console by number
      */
@@ -257,13 +256,6 @@ public class ListOfLectures {
     // methods block of working with a specific lecture
 
     /**
-     * the method gets from the variable the number of the selected lecture
-     */
-    public int getNumbSelectedLecture() {
-        return selectedLecture.getNumberOfLectures();
-    }
-
-    /**
      * the method throws the number of the selected lecture into the variable
      */
     public void setSelectedLecture(int selected) {
@@ -280,13 +272,7 @@ public class ListOfLectures {
         selectedLecture = select;
     }
 
-    /**
-     * the method returns the name of the lecture that we selected earlier
-     */
-
-
     //_______________________________________________________________________________________________//
-
 
     /**
      * the method returns a list of references from the previously selected lecture
@@ -341,7 +327,6 @@ public class ListOfLectures {
     }
     //________________________________________________________________________________________________//
 
-
     public void sortLectureArr() {
         Lecture[] sortedArr = lectures;
         boolean flag = false;
@@ -357,7 +342,6 @@ public class ListOfLectures {
         lectures = sortedArr;
     }
 
-
     private void sortLectureArrAfterRemove() {
         Lecture[] sortedArr = lectures;
 
@@ -366,7 +350,6 @@ public class ListOfLectures {
         }
         lectures = sortedArr;
     }
-
 
     public boolean checkNumberLecture(int numbOfLectures) {
         boolean flag = false;
