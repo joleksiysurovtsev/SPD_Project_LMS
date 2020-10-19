@@ -60,14 +60,17 @@ public class LMSTerminal {
             case "-":
                 System.out.println("Enter numbers separated by commas");
                 listOfLectures.getLectureList(reader.readLine());
+                System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+                break;
             case "small":
                 System.out.println("Lecture preview");
                 listOfLectures.getPreviewLectureList();
+                System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+                break;
             default:
                 point1MainMenuShowLectures();
                 break;
         }
-        System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         subMenuShowLectures();
     }
 
@@ -245,6 +248,7 @@ public class LMSTerminal {
         int numbOfLecture = 0;
         boolean flag = true;
         while (flag) {
+            //проверили ввели ли номер
             try {
                 numbOfLecture = Integer.parseInt(reader.readLine());
                 flag = false;
@@ -256,6 +260,7 @@ public class LMSTerminal {
         if (numbOfLecture == 0) {
             startLMS();
         } else {
+
             if (!listOfLectures.checkNumberLecture(numbOfLecture)) {
                 System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
                 point4MainMenuChoiceOfLecture();

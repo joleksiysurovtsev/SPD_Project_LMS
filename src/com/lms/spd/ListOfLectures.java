@@ -2,18 +2,18 @@ package com.lms.spd;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class ListOfLectures {
-    BufferedReader reader;
-    private int selectedLectures;
-
     static public Lectures[] lectures = {
             new Lectures(1, "BufferedReader - Reads text from a character-input stream, buffering characters so as to provide for the efficient reading of characters, arrays, and lines."),
-            new Lectures(2, "Writes text to a character-output stream, buffering characters so as to provide for the efficient writing of single characters, arrays, and strings."),
+            new Lectures(3, "Writes text to a character-output stream, buffering characters so as to provide for the efficient writing of single characters, arrays, and strings."),
             new Lectures(5, "Core Java API"),
             new Lectures(7, "Core Java API"),
     };
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private Lectures selectedLectures;
 
 
     // METHODS FOR WORKING WITH MASSIVE LECTURE
@@ -62,10 +62,11 @@ public class ListOfLectures {
             for (Lectures item : lectures) {
                 if (Integer.parseInt(value) == (item.getNumberOfLectures())) {
                     System.out.println(item.toString());
-                    break;
                 }
             }
         }
+
+
     }
 //_________________________________________________________________________________________________________________//
 
@@ -187,22 +188,32 @@ public class ListOfLectures {
      * the method gets from the variable the number of the selected lecture
      */
     public int getSelectedLecture() {
-        return selectedLectures;
+        return selectedLectures.getNumberOfLectures();
     }
 
     /**
      * the method throws the number of the selected lecture into the variable
      */
     public void setSelectedLecture(int selected) {
-        selectedLectures = selected;
+        //
+        Lectures select = new Lectures("");
+
+        for (Lectures lecture : lectures) {
+            if (lecture.getNumberOfLectures() == selected+1) {
+                select = lecture;
+                break;
+            }
+        }
+
+
+        selectedLectures = select;
     }
 
     /**
      * the method returns the name of the lecture that we selected earlier
      */
     public String getNameSelectedLecture() {
-        int x = getSelectedLecture();
-        return lectures[x].toString();
+        return selectedLectures.toString();
     }
 
     /**
@@ -256,6 +267,7 @@ public class ListOfLectures {
         lectures = sortedArr;
     }
 
+    //проверка есть ли номер такой лекции
     public boolean checkNumberLecture(int numbOfLectures) {
         boolean flag = false;
         for (Lectures lecture : lectures) {
