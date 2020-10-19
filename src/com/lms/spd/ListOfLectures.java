@@ -116,11 +116,12 @@ public class ListOfLectures {
                 addedLecture = new Lectures(lectureNumb, (lectureAddName), strings);
                 break;
             case "-":
-                addedLecture = new Lectures(lectureNumb, lectureAddName);
+                addedLecture = new Lectures(lectureNumb,lectureAddName);
                 break;
             default:
                 System.out.println("Something wrong");
-                //addLecturePlusNumber(lectureNumb,lectureAddName);
+                addLecturePlusNumber(lectureNumb,lectureAddName);
+                break;
         }
         arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
 
