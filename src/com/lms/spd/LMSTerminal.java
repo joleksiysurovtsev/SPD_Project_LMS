@@ -1,4 +1,5 @@
 package com.lms.spd;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -112,7 +113,7 @@ public class LMSTerminal {
 
     private void addingLectureListOnlyName() throws IOException {
         System.out.println("Entering name a new lecture");
-        listOfLectures.addLecture(reader.readLine());
+        listOfLectures.addLecture();
         System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m"
                 + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         subMenuAddingLectureListOnlyName();
@@ -134,46 +135,28 @@ public class LMSTerminal {
                 break;
         }
     }
+    //____________________________________________________________________________________________________//
 
-    private void addingLectureListNameAndNumber() {
-        System.out.print("Please enter number for new lecture, ");
-        System.out.println("Number: ");
-        int numberOfLecture = 0;
-        try {
-            numberOfLecture = Integer.parseInt(reader.readLine());
-        } catch (IOException | NumberFormatException e) {
-            System.out.print("\u001B[31m" + "wrong number format " + "\u001B[0m \n");
-            System.out.println("Lets try again ");
-            addingLectureListNameAndNumber();
-        }
-        try {
-            System.out.println("Enter the title of the lecture");
-            listOfLectures.addLecturePlusNumber(numberOfLecture, reader.readLine());
-            subMenuAddingLectureListNameAndNumb();
-        } catch (IOException e) {
-            System.out.print("\u001B[31m" + "Something wrong " + "\u001B[0m \n" + "Lets try again ");
-            addingLectureListNameAndNumber();
-        }
-
+    private void addingLectureListNameAndNumber() throws IOException {
+        listOfLectures.addLecturePlusNumber();
+        subMenuAddingLectureListNameAndNumb();
     }
 
+
     private void subMenuAddingLectureListNameAndNumb() throws IOException {
-        System.out.println("what to do next: add another one? entering \"+\" or \"-\" add lecture by only name" + "\u001B[32m" + "\"0\"" + "\u001B[0m"
-                + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+        System.out.println("what to do next: add another one? entering \"+\" or \"-\"  go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         switch (reader.readLine().toUpperCase()) {
             case "+":
-                addingLectureListNameAndNumber();
+                point2MainMenuAddingLecture();
             case "-":
-                addingLectureListOnlyName();
-            case "0":
                 startLMS();
                 break;
             case "EXIT":
                 System.exit(0);
                 break;
             default:
-                System.out.println("you must enter either \"+\" \"-\" \"0\" or EXIT");
-                subMenuShowLectures();
+                System.out.println("you must enter either \"+\" \"-\" or EXIT");
+                subMenuAddingLectureListNameAndNumb();
                 break;
         }
     }
@@ -266,7 +249,7 @@ public class LMSTerminal {
                 point4MainMenuChoiceOfLecture();
             } else {
                 listOfLectures.setSelectedLecture(numbOfLecture - 1);
-                System.out.println("Selected lecture " + "\u001B[35m" + "\"" + listOfLectures.getNameSelectedLecture() + "\"" + "\u001B[0m");
+                System.out.println("Selected lecture " + "\u001B[35m" + "\"" + listOfLectures.getSelectedLecture().toString() + "\"" + "\u001B[0m");
                 System.out.println("What are the next actions?");
                 System.out.println("__________________________");
             }
@@ -312,7 +295,7 @@ public class LMSTerminal {
     }
 
     private void point4_2ViewListOfLit() throws IOException {
-        listOfLectures.getListLit(listOfLectures.getSelectedLecture());
+        listOfLectures.getListLit();
         System.out.println("_______________________");
         System.out.println("what do we do with the bibliography");
         showFourthMenu();
