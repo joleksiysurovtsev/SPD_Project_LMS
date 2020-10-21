@@ -9,3 +9,6 @@
 /httpRequests/
 .idea/vcs.xml
 /src/resorses/
+
+.gradle
+build
