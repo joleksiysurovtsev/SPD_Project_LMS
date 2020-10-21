@@ -5,4 +5,5 @@ public class Main {
         LMSTerminal lmsTerminal = new LMSTerminal();
         lmsTerminal.startLMS();
     }
+
 }
