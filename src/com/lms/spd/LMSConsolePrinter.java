@@ -2,11 +2,11 @@ package com.lms.spd;
 
 import java.util.Arrays;
 
-public class LMSPrintConsole {
+public class LMSConsolePrinter {
     /**
      * The method prints the list of all lectures to the console
      */
-    public void getLectureList(Lecture[] lectures) {
+    public void printLectureList(Lecture[] lectures) {
         for (Lecture value : lectures) {
             System.out.println(value.toString());
         }
@@ -16,7 +16,7 @@ public class LMSPrintConsole {
     /**
      * The method print Preview Lecture list
      */
-    void getPreviewLectureList(Lecture[] lectures) {
+    public void printPreviewLectureList(Lecture[] lectures) {
         for (Lecture value : lectures) {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
@@ -30,7 +30,7 @@ public class LMSPrintConsole {
     /**
      * The method prints the list lectures to the console by number
      */
-    public void getLectureList(String s,Lecture[] lectures) {
+    public void printLectureList(String s, Lecture[] lectures) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
 
         for (int i = 0; i < strings.length; i++) {
@@ -54,7 +54,7 @@ public class LMSPrintConsole {
     /**
      * the method returns a list of references from the previously selected lecture
      */
-    public void getListLit(Lecture selectedLecture) {
+    public void printListLit(Lecture selectedLecture) {
         Literature[] litArr = selectedLecture.getLiterature();
         if (litArr.length > 0) {
             int i = 1;

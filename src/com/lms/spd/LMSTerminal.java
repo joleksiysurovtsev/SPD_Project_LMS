@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 public class LMSTerminal {
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LectureService lectureService = new LectureService();
-    LMSPrintConsole lmsPrintConsole = new LMSPrintConsole();
+    LMSConsolePrinter lmsConsolePrinter = new LMSConsolePrinter();
 
     private void showStartMenu() {
         System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" + "\"" + ": learning management system" + "\u001B[0m");
@@ -56,17 +56,17 @@ public class LMSTerminal {
         System.out.println("Display all lectures \u001b[36;1m\"+\"" + "\u001B[0m" + " or \u001b[31;1m\"-\" \u001B[0mspecifically some by numbers?" + " enter \u001B[32m\"small\"\u001B[0m to preview lectures");
         switch (reader.readLine().toLowerCase()) {
             case "+":
-                lmsPrintConsole.getLectureList(lectureService.getLectures());
+                lmsConsolePrinter.printLectureList(lectureService.getLectures());
                 System.out.println("The List shown what to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                 break;
             case "-":
                 System.out.println("Enter numbers separated by commas");
-                lmsPrintConsole.getLectureList(reader.readLine(), lectureService.getLectures());
+                lmsConsolePrinter.printLectureList(reader.readLine(), lectureService.getLectures());
                 System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                 break;
             case "small":
                 System.out.println("Lecture preview");
-                lmsPrintConsole.getPreviewLectureList(lectureService.getLectures());
+                lmsConsolePrinter.printPreviewLectureList(lectureService.getLectures());
                 System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                 break;
             default:
@@ -364,7 +364,7 @@ public class LMSTerminal {
     }
 
     private void point4_2ViewListOfLit() throws IOException {
-        lmsPrintConsole.getListLit(lectureService.getSelectedLecture());
+        lmsConsolePrinter.printListLit(lectureService.getSelectedLecture());
         System.out.println("what do we do with the bibliography");
         showFourthMenu();
         subMenu2Point4();
