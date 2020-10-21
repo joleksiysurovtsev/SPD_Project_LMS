@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class LectureService {
 
-    public Lecture[] lectures = {
+    private Lecture[] lectures = {
             new Lecture(1, "BufferedReader."),
             new Lecture(2, "Writes text to."),
             new Lecture(3, "Core Java API"),
@@ -149,7 +149,7 @@ public class LectureService {
     }
     //________________________________________________________________________________________________//
 
-    public void sortLectureArr() {
+    private void sortLectureArr() {
         Lecture[] sortedArr = lectures;
         boolean flag = false;
         while (!flag) {
