@@ -1,5 +1,6 @@
 plugins{
     id 'application'
+    id 'jacoco'
 }
 
 repositories {
@@ -8,11 +9,12 @@ repositories {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 dependencies{
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testImplementation"org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly"org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
 
