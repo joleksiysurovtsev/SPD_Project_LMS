@@ -138,12 +138,12 @@ public class LectureService {
     /**
      * method removes literature by number from a previously selected lecture
      */
-    public void removeLiterature(int indexLit) {
+    public void removeLiterature(int numberLit) {
         if (selectedLecture.getLiterature().length == 1) {
             selectedLecture.setLiterature(new Literature[0]);
         } else {
             Literature[] literature = selectedLecture.getLiterature();
-            Literature litTuDel = literature[indexLit - 1];
+            Literature litTuDel = literature[numberLit - 1];
             selectedLecture.setLiterature(Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(Literature[]::new));
         }
     }

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Lecture Service")
@@ -21,6 +23,57 @@ class LectureServiceTest {
         };
         lectureService.setLectures(lectures);
     }
+
+
+    @Test
+    void addNewLiterature() {
+        lectureService.setSelectedLecture(0);
+        String newBook = "New Book";
+        Literature[] arrLit = {new Literature("New Book")};
+        lectureService.addNewLiterature(newBook);
+        assertArrayEquals(lectureService.getSelectedLecture().getLiterature(), arrLit);
+    }
+
+    @Test
+    void removeLiterature() {
+        //Выбрали лекциию
+        lectureService.setSelectedLecture(0);
+        String newBook = "New Book";
+        String newBook2 = "New Book2";
+        //Добавили в неё книги
+        lectureService.addNewLiterature(newBook);
+        lectureService.addNewLiterature(newBook2);
+        //Удалили первую (метод удаляет по номеру)
+        lectureService.removeLiterature(1);
+        Literature[] testArrLit = {new Literature("New Book2")};
+        assertArrayEquals(lectureService.getSelectedLecture().getLiterature(), testArrLit);
+    }
+
+    @Test
+    void removeLiterature2() {
+        //Выбрали лекциию
+        lectureService.setSelectedLecture(0);
+        String newBook = "New Book";
+        //Добавили в неё книги
+        lectureService.addNewLiterature(newBook);
+        //Удалили первую (метод удаляет по номеру)
+        lectureService.removeLiterature(1);
+        Literature[] testArrLit = new Literature[0];
+        assertArrayEquals(lectureService.getSelectedLecture().getLiterature(), testArrLit);
+    }
+
+
+
+
+
+    @Test
+    @DisplayName("setSelectedLecture method selects by position in the array")
+    void getSelectedLecture() {
+        lectureService.setSelectedLecture(0);
+        Lecture expectedLecture = new Lecture(1, "BufferedReader.");
+        assertEquals(expectedLecture, lectureService.getSelectedLecture());
+    }
+
 
     @Test
     @DisplayName("Add new lecture to array only name: "
@@ -76,7 +129,7 @@ class LectureServiceTest {
         String expectedString = "Lectures: \u001B[33;1m\"2\"\u001B[0m, \u001B[33;1m\"3\"\u001B[0m, successfully removed the rest are missing.";
         assertAll(
                 () -> assertArrayEquals(lecturesAssert, lectureService.getLectures()),
-                () -> assertEquals(expectedString,actualString)
+                () -> assertEquals(expectedString, actualString)
         );
     }
 
@@ -104,4 +157,6 @@ class LectureServiceTest {
             assertEquals("Lectures: are missing.", lectureService.removeLectures("1,2"));
         }
     }
+
+
 }
