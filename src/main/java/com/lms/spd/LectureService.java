@@ -95,7 +95,7 @@ public class LectureService {
     public String removeLectures(String lectureRemove) {
         String[] strings = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
         for (int i = 0; i < strings.length; i++) {
-            strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
+            strings[i] = strings[i].replaceAll("[a-zA-Zа]*", "");
         }
         String[] numbToDisplay = Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
         StringBuilder stringContains = new StringBuilder("Lectures: ");
