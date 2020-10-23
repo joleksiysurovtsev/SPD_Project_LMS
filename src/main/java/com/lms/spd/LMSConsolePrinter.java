@@ -10,7 +10,6 @@ public class LMSConsolePrinter {
         for (Lecture value : lectures) {
             System.out.println(value.toString());
         }
-        System.out.println("______________________");
     }
 
     /**
@@ -24,7 +23,6 @@ public class LMSConsolePrinter {
                 System.out.println(value.toString());
             }
         }
-        System.out.println("______________________");
     }
 
     /**
@@ -32,13 +30,10 @@ public class LMSConsolePrinter {
      */
     public void printLectureList(String s, Lecture[] lectures) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
-
         for (int i = 0; i < strings.length; i++) {
             strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
         }
-
         String[] numbToDisplay = Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
-
         //iterate over the array of lectures and output if there are matches by lecture numbers
         for (String value : numbToDisplay) {
             for (int j = 0; j < lectures.length; j++) {

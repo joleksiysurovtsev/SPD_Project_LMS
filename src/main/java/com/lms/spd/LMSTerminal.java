@@ -139,7 +139,7 @@ public class LMSTerminal {
                 break;
         }
     }
-    //____________________________________________________________________________________________________//
+    //______________________________________________________________________________________________________________//
 
     private void addingLectureListNameAndNumber() throws IOException {
         int lectureNumb = enterTheLectureNumber();
@@ -442,6 +442,4 @@ public class LMSTerminal {
                 break;
         }
     }
-
-
 }

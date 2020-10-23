@@ -1,5 +1,22 @@
 plugins{
     id 'application'
+    id 'jacoco'
 }
 
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+dependencies{
+    testImplementation"org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly"org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+}
+
+
 mainClassName = "com.lms.spd.Main"
+

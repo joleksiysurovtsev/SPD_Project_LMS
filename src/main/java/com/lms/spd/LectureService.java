@@ -95,7 +95,7 @@ public class LectureService {
     public String removeLectures(String lectureRemove) {
         String[] strings = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
         for (int i = 0; i < strings.length; i++) {
-            strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
+            strings[i] = strings[i].replaceAll("[a-zA-Zа]*", "");
         }
         String[] numbToDisplay = Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
         StringBuilder stringContains = new StringBuilder("Lectures: ");
@@ -138,12 +138,12 @@ public class LectureService {
     /**
      * method removes literature by number from a previously selected lecture
      */
-    public void removeLiterature(int indexLit) {
+    public void removeLiterature(int numberLit) {
         if (selectedLecture.getLiterature().length == 1) {
             selectedLecture.setLiterature(new Literature[0]);
         } else {
             Literature[] literature = selectedLecture.getLiterature();
-            Literature litTuDel = literature[indexLit - 1];
+            Literature litTuDel = literature[numberLit - 1];
             selectedLecture.setLiterature(Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(Literature[]::new));
         }
     }
