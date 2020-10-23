@@ -5,20 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LiteratureTest {
-
-    @Test
-    void getName() {
-        Literature testLit = new Literature("Test");
-        assertEquals("Test", testLit.getName());
-    }
-
-    @Test
-    void setName() {
-        Literature testLit = new Literature("Test");
-        testLit.setName("New name");
-        assertEquals(new Literature("New name"), testLit);
-    }
-
     @Test
     void testToString() {
         Literature testLit = new Literature("Test");

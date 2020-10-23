@@ -442,6 +442,4 @@ public class LMSTerminal {
                 break;
         }
     }
-
-
 }

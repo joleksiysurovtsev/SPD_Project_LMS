@@ -21,10 +21,6 @@ class LMSTerminalTest {
     }
 
     @Test
-    void startLMS() {
-    }
-
-    @Test
     void testCheckNumberLecture() {
         assertEquals(true, lmsTerminal.checkNumberLecture(1));
     }
