@@ -1,8 +1,10 @@
 package com.lms.spd;
 
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class LMSTerminal {
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -105,14 +107,20 @@ public class LMSTerminal {
 
     private void addingLectureListOnlyName() throws IOException {
         String lectureName = enterTheLectureName();
-        System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
-        Literature[] arrAddLit = literatureService.addLitOrNot(this);
+        Literature[] arrAddLit = addLitOrNot();
         lectureService.addLecture(lectureName, arrAddLit);
         System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m"
                 + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         subMenuAddingLectureListOnlyName();
     }
 
+    private void addingLectureListNameAndNumber() throws IOException {
+        int lectureNumb = enterTheLectureNumber();
+        String lectureName = enterTheLectureName();
+        Literature[] arrAddLit = addLitOrNot();
+        lectureService.addLecturePlusNumber(lectureNumb, lectureName, arrAddLit);
+        subMenuAddingLectureListNameAndNumb();
+    }
 
     private void subMenuAddingLectureListOnlyName() throws IOException {
         switch (reader.readLine().toUpperCase()) {
@@ -130,17 +138,63 @@ public class LMSTerminal {
                 break;
         }
     }
-    //______________________________________________________________________________________________________________//
 
-    private void addingLectureListNameAndNumber() throws IOException {
-        int lectureNumb = enterTheLectureNumber();
-        String lectureName = enterTheLectureName();
-        //добавляем литературу ???
+
+    public Literature[] addLitOrNot() throws IOException {
+        Literature[] result = new Literature[0];
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
-        Literature[] arrAddLit = literatureService.addLitOrNot(this);
-        lectureService.addLecturePlusNumber(lectureNumb, lectureName, arrAddLit);
-        subMenuAddingLectureListNameAndNumb();
+        switch (reader.readLine()) {
+            case "+":
+                boolean flag = true;
+                while (flag) {
+                    result = addLitToArr(result);
+                    System.out.println("Добавляем ещё? если нет введите минус");
+                    if (reader.readLine().equals("-")) {
+                        flag = false;
+                    }
+                }
+                break;
+            case "-":
+                break;
+            default:
+                System.out.println("Something wrong");
+                addLitOrNot();
+        }
+        return result;
     }
+
+    private Literature[] addLitToArr(Literature[] arrAddLit) throws IOException {
+        Literature[] addLit = arrAddLit;
+        System.out.println("what type of literature do you want to add ?");
+        System.out.println("1.Book, 2.Journal article, 3.Internet article");
+        //если выбрали то
+        switch (Integer.parseInt(reader.readLine())) {
+            case 1:
+                Literature newLit = literatureService.createBook();
+                Literature[] newArrayLiterature = Arrays.copyOf(addLit, addLit.length + 1);
+                newArrayLiterature[newArrayLiterature.length - 1] = newLit;
+                addLit = newArrayLiterature;
+                break;
+            case 2:
+                Literature newLit2 = literatureService.createJournal();
+                Literature[] newArrayLiterature2 = Arrays.copyOf(addLit, addLit.length + 1);
+                newArrayLiterature2[newArrayLiterature2.length - 1] = newLit2;
+                addLit = newArrayLiterature2;
+                break;
+            case 3:
+                Literature newLit3 = literatureService.createInternetArticles();
+                Literature[] newArrayLiterature3 = Arrays.copyOf(addLit, addLit.length + 1);
+                newArrayLiterature3[newArrayLiterature3.length - 1] = newLit3;
+                addLit = newArrayLiterature3;
+                break;
+            default:
+                System.out.println("Try again");
+                addLitToArr(arrAddLit);
+                break;
+        }
+        return addLit;
+    }
+
 
     private void subMenuAddingLectureListNameAndNumb() throws IOException {
         System.out.println("what to do next: add another one? entering \"+\" or \"-\"  go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
@@ -161,13 +215,12 @@ public class LMSTerminal {
 
     private String enterTheLectureName() throws IOException {
         System.out.println("Enter the title of the lecture");
-        String lectureName;
-        while ((lectureName = reader.readLine()) != null) {
-            return lectureName;
+        String lectureName = reader.readLine();
+        while ((lectureName.isEmpty())) {
+            System.out.println("Something wrong try again");
+            enterTheLectureName();
         }
-        System.out.println("Something wrong try again");
-        enterTheLectureName();
-        return null;
+        return lectureName;
     }
 
 
@@ -411,4 +464,6 @@ public class LMSTerminal {
                 break;
         }
     }
+
+
 }

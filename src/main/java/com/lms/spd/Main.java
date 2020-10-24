@@ -6,6 +6,7 @@ public class Main {
         lmsTerminal.startLMS();
         Literature inter = new JournalArticle("Ахота","Проблемы рыбалки","fff", 5);
         System.out.println(inter.toString());
+
     }
 
 }
