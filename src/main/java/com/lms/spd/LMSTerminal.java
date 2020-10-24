@@ -7,20 +7,12 @@ import java.io.InputStreamReader;
 public class LMSTerminal {
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LectureService lectureService = new LectureService();
+    LiteratureService literatureService = new LiteratureService();
     LMSConsolePrinter lmsConsolePrinter = new LMSConsolePrinter();
 
-    private void showStartMenu() {
-        System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" + "\"" + ": learning management system" + "\u001B[0m");
-        System.out.println("Please make your choice from the offered options\n"
-                + "1. Display lectures (number and title)\n"
-                + "2. Add a new lecture\n"
-                + "3. Delete a lecture by its number\n"
-                + "4. Choose a lecture\n"
-                + "0. \u001B[31mExit.\n\u001B[0m");
-    }
 
     public void startLMS() {
-        showStartMenu();
+        lmsConsolePrinter.showStartMenu();
         try {
             switch (reader.readLine()) {
                 case "1":
@@ -44,7 +36,6 @@ public class LMSTerminal {
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
-
     }
 
     //______________________________________________________________________________________________________________//
@@ -115,7 +106,7 @@ public class LMSTerminal {
     private void addingLectureListOnlyName() throws IOException {
         String lectureName = enterTheLectureName();
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
-        Literature[] arrAddLit = addLitOrNot();
+        Literature[] arrAddLit = literatureService.addLitOrNot(this);
         lectureService.addLecture(lectureName, arrAddLit);
         System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m"
                 + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
@@ -146,7 +137,7 @@ public class LMSTerminal {
         String lectureName = enterTheLectureName();
         //добавляем литературу ???
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
-        Literature[] arrAddLit = addLitOrNot();
+        Literature[] arrAddLit = literatureService.addLitOrNot(this);
         lectureService.addLecturePlusNumber(lectureNumb, lectureName, arrAddLit);
         subMenuAddingLectureListNameAndNumb();
     }
@@ -168,39 +159,17 @@ public class LMSTerminal {
         }
     }
 
-    private String enterTheLectureName() {
+    private String enterTheLectureName() throws IOException {
         System.out.println("Enter the title of the lecture");
-        String lectureName = "";
-        try {
-            lectureName = reader.readLine();
-        } catch (IOException e) {
-            System.out.println("Something wrong try again");
-            enterTheLectureName();
+        String lectureName;
+        while ((lectureName = reader.readLine()) != null) {
+            return lectureName;
         }
-        return lectureName;
+        System.out.println("Something wrong try again");
+        enterTheLectureName();
+        return null;
     }
 
-
-    private Literature[] addLitOrNot() throws IOException {
-        Literature[] arrAddLit = new Literature[0];
-        switch (reader.readLine()) {
-            case "+":
-                System.out.println("Enter literature separated by commas");
-                String literatures = reader.readLine();
-                String[] strings = literatures.replaceAll("\\s+", "").split(",(?!\\s)");
-                arrAddLit = new Literature[strings.length];
-                for (int i = 0; i < arrAddLit.length; i++) {
-                    arrAddLit[i] = new Literature(strings[i]);
-                }
-                break;
-            case "-":
-                break;
-            default:
-                System.out.println("Something wrong");
-                addLitOrNot();
-        }
-        return arrAddLit;
-    }
 
     private int enterTheLectureNumber() {
         System.out.print("Please enter number for new lecture, ");
@@ -406,8 +375,8 @@ public class LMSTerminal {
         System.out.println("Please enter the number of the book you want to delete");
         int indexLit = 0;
         try {
-             indexLit = Integer.parseInt(reader.readLine());
-        }catch (NumberFormatException e){
+            indexLit = Integer.parseInt(reader.readLine());
+        } catch (NumberFormatException e) {
             System.out.println("Please enter a number");
             point4_4DeleteLit();
         }

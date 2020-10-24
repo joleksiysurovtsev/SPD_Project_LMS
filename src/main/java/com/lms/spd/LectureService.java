@@ -129,11 +129,13 @@ public class LectureService {
      */
     public void addNewLiterature(String newBook) {
         Literature[] litArr = selectedLecture.getLiterature();
-        Literature newLit = new Literature(newBook);
+    //fix    Literature newLit = new Literature(newBook);
         Literature[] newArrayLiterature = Arrays.copyOf(litArr, litArr.length + 1);
-        newArrayLiterature[newArrayLiterature.length - 1] = newLit;
+    //fix    newArrayLiterature[newArrayLiterature.length - 1] = newLit;
         selectedLecture.setLiterature(newArrayLiterature);
     }
+
+
 
     /**
      * method removes literature by number from a previously selected lecture

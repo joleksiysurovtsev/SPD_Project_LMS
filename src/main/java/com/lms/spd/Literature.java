@@ -1,37 +1,28 @@
 package com.lms.spd;
 
-import java.util.Objects;
 
-public class Literature {
-    private String name;
 
-    public Literature(String name) {
-        this.name = name;
+public abstract class Literature {
+    private String title;
+    private String author;
+
+    public String getTitle() {
+        return title;
     }
 
-    public String getName() {
-        return name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getAuthor() {
+        return author;
     }
 
-    @Override
-    public String toString() {
-        return " Book= " + name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Literature that = (Literature) o;
-        return name.equals(that.name);
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
+    public abstract String toString();
 }
+

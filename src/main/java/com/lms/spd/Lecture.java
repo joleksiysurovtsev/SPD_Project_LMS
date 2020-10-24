@@ -1,12 +1,15 @@
 package com.lms.spd;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Objects;
 
 public class Lecture {
     private String nameOfLectures;
+    private String specialistsName;
     private int numberOfLectures;
     private Literature[] literature;
+    private Date lectureDate;
 
     //lecture constructor____________________________________________________________________________________________//
 
@@ -27,7 +30,7 @@ public class Lecture {
         this.literature = new Literature[0];
     }
 
-     /**
+    /**
      * lecture constructor with name and literature
      */
     public Lecture(int numberOfLectures, String nameOfLectures, Literature... lit) {

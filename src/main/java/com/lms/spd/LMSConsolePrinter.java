@@ -47,7 +47,7 @@ public class LMSConsolePrinter {
 
 
     /**
-     * the method returns a list of references from the previously selected lecture
+     * the method print a list of references from the previously selected lecture
      */
     public void printListLit(Lecture selectedLecture) {
         Literature[] litArr = selectedLecture.getLiterature();
@@ -61,5 +61,15 @@ public class LMSConsolePrinter {
         } else {
             System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
         }
+    }
+
+    void showStartMenu() {
+        System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" + "\"" + ": learning management system" + "\u001B[0m");
+        System.out.println("Please make your choice from the offered options\n"
+                + "1. Display lectures (number and title)\n"
+                + "2. Add a new lecture\n"
+                + "3. Delete a lecture by its number\n"
+                + "4. Choose a lecture\n"
+                + "0. \u001B[31mExit.\n\u001B[0m");
     }
 }
