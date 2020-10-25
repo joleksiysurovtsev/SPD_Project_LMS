@@ -6,14 +6,14 @@ public class JournalArticle extends Literature {
     String titleOfArticle;
     int issueOfTheJournal;
 
-    public JournalArticle(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal ) {
+    public JournalArticle(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
         setAuthor(author);
         setTitle(titleJournal);
         this.titleOfArticle = titleOfArticle;
         this.issueOfTheJournal = issueOfTheJournal;
     }
 
-    public JournalArticle(String titleOfArticle, String author, String titleJournal ) {
+    public JournalArticle(String titleOfArticle, String author, String titleJournal) {
         setAuthor(author);
         setTitle(titleJournal);
         this.titleOfArticle = titleOfArticle;
@@ -25,6 +25,13 @@ public class JournalArticle extends Literature {
         setTitle("N/A");
         this.titleOfArticle = titleOfArticle;
         this.issueOfTheJournal = 0;
+    }
+
+    public JournalArticle(String titleOfArticle, String author, int issueOfTheJournal) {
+        setAuthor(author);
+        setTitle(titleOfArticle);
+        this.titleOfArticle = "N/A";
+        this.issueOfTheJournal = issueOfTheJournal;
     }
 
 
@@ -42,6 +49,23 @@ public class JournalArticle extends Literature {
 
     public void setIssueOfTheJournal(int issueOfTheJournal) {
         this.issueOfTheJournal = issueOfTheJournal;
+    }
+
+    @Override
+    public void print() {
+        StringBuilder printString = new StringBuilder();
+        if (!titleOfArticle.equals("N/A")) {
+            printString.append("Article: ").append(titleOfArticle);
+        }
+
+        if (!getTitle().equals("N/A")) {
+            printString.append(" In the journal ").append(getTitle());
+        }
+
+        if (issueOfTheJournal != 0) {
+            printString.append(" Journal №: ").append(issueOfTheJournal);
+        }
+        System.out.println(printString);
     }
 
     @Override

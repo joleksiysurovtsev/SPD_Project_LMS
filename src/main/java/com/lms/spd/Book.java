@@ -3,6 +3,7 @@ package com.lms.spd;
 import java.util.Objects;
 
 public class Book extends Literature {
+
     private String genre;
     private int publishedInYear;
 
@@ -12,7 +13,8 @@ public class Book extends Literature {
         setTitle(title);
         setAuthor(author);
     }
-    public Book(String title, String author,String genre) {
+
+    public Book(String title, String author, String genre) {
         this.genre = genre;
         this.publishedInYear = 0;
         setTitle(title);
@@ -23,6 +25,13 @@ public class Book extends Literature {
         this.genre = genre;
         this.publishedInYear = publishedInYear;
         setTitle(title);
+        setAuthor(author);
+    }
+
+    public Book(String nameBook, String author, int year) {
+        this.genre = "N/A";
+        this.publishedInYear = year;
+        setTitle(nameBook);
         setAuthor(author);
     }
 
@@ -40,6 +49,18 @@ public class Book extends Literature {
 
     public void setPublishedInYear(int publishedInYear) {
         this.publishedInYear = publishedInYear;
+    }
+
+    @Override
+    public void print() {
+        StringBuilder printString = new StringBuilder("Book: "+ getTitle() + " Author: "+ getAuthor());
+        if (!genre.equals("N/A")){
+            printString.append(" Genre: ").append(genre);
+        }
+        if (publishedInYear != 0){
+            printString.append(" Year of publishing: ").append(publishedInYear);
+        }
+        System.out.println(printString);
     }
 
     @Override

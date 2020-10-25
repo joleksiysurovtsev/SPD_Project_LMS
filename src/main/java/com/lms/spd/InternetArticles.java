@@ -11,12 +11,27 @@ public class InternetArticles extends Literature {
         this.urlAddress = urlAddress;
     }
 
+    public InternetArticles(String titleOfArticle, String author) {
+        setAuthor(author);
+        setTitle(titleOfArticle);
+        this.urlAddress = "N/A";
+    }
+
     public String getUrlAddress() {
         return urlAddress;
     }
 
     public void setUrlAddress(String urlAddress) {
         this.urlAddress = urlAddress;
+    }
+
+    @Override
+    public void print() {
+        StringBuilder printString = new StringBuilder("Title: "+ getTitle() + " Author: "+ getAuthor());
+        if (!urlAddress.equals("N/A")){
+            printString.append(" Web address: ").append(urlAddress);
+        }
+        System.out.println(printString);
     }
 
     @Override

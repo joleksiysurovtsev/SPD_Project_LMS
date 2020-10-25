@@ -7,17 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LMSTerminalTest {
     LMSTerminal lmsTerminal = new LMSTerminal();
-    private LectureService lectureService;
+    private LectureServiceImpl lectureServiceImpl;
 
     @BeforeEach
     void createLectureService() {
-        lectureService = new LectureService();
-        Lecture[] lectures = {
-                new Lecture(1, "BufferedReader."),
-                new Lecture(2, "Writes text to."),
-                new Lecture(3, "Core Java API"),
+        lectureServiceImpl = new LectureServiceImpl();
+        LectureImpl[] lectures = {
+                new LectureImpl(1, "BufferedReader."),
+                new LectureImpl(2, "Writes text to."),
+                new LectureImpl(3, "Core Java API"),
         };
-        lectureService.setLectures(lectures);
+        lectureServiceImpl.setLectures(lectures);
     }
 
     @Test

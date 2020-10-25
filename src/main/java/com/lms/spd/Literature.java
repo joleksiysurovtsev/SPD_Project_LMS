@@ -22,6 +22,8 @@ public abstract class Literature {
         this.author = author;
     }
 
+    public abstract void print();
+
     @Override
     public abstract String toString();
 }

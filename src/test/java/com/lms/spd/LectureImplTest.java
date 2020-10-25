@@ -6,25 +6,25 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Lecture Test")
-class LectureTest {
+class LectureImplTest {
     @Test
     void testToString() {
-        Lecture testLecture = new Lecture(1, "Test");
+        LectureImpl testLecture = new LectureImpl(1, "Test");
         assertEquals("Lecture №1. Test",testLecture.toString());
     }
 
     @Test
     void testEquals() {
-        Lecture testLecture = new Lecture(1, "Test");
-        Lecture testLecture2 = new Lecture(1, "Test");
-        Lecture testLecture3 = new Lecture( "Test2");
+        LectureImpl testLecture = new LectureImpl(1, "Test");
+        LectureImpl testLecture2 = new LectureImpl(1, "Test");
+        LectureImpl testLecture3 = new LectureImpl( "Test2");
         assertTrue(testLecture.equals(testLecture2));
         assertFalse(testLecture.equals(testLecture3));
     }
 
     @Test
     void testHashCode() {
-        Lecture testLecture = new Lecture(1, "Test");
+        LectureImpl testLecture = new LectureImpl(1, "Test");
         int hashCode = testLecture.hashCode();
         assertEquals(hashCode,testLecture.hashCode());
     }

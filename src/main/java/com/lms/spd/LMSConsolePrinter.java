@@ -6,8 +6,8 @@ public class LMSConsolePrinter {
     /**
      * The method prints the list of all lectures to the console
      */
-    public void printLectureList(Lecture[] lectures) {
-        for (Lecture value : lectures) {
+    public void printLectureList(LectureImpl[] lectures) {
+        for (LectureImpl value : lectures) {
             System.out.println(value.toString());
         }
     }
@@ -15,8 +15,8 @@ public class LMSConsolePrinter {
     /**
      * The method print Preview Lecture list
      */
-    public void printPreviewLectureList(Lecture[] lectures) {
-        for (Lecture value : lectures) {
+    public void printPreviewLectureList(LectureImpl[] lectures) {
+        for (LectureImpl value : lectures) {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
             } else {
@@ -28,7 +28,7 @@ public class LMSConsolePrinter {
     /**
      * The method prints the list lectures to the console by number
      */
-    public void printLectureList(String s, Lecture[] lectures) {
+    public void printLectureList(String s, LectureImpl[] lectures) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
         for (int i = 0; i < strings.length; i++) {
             strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
@@ -37,7 +37,7 @@ public class LMSConsolePrinter {
         //iterate over the array of lectures and output if there are matches by lecture numbers
         for (String value : numbToDisplay) {
             for (int j = 0; j < lectures.length; j++) {
-                Lecture item = lectures[j];
+                LectureImpl item = lectures[j];
                 if (Integer.parseInt(value) == (j + 1)) {
                     System.out.println(item.toString());
                 }
@@ -49,13 +49,14 @@ public class LMSConsolePrinter {
     /**
      * the method print a list of references from the previously selected lecture
      */
-    public void printListLit(Lecture selectedLecture) {
-        Literature[] litArr = selectedLecture.getLiterature();
+    public void printListLit(LectureImpl selectedLecture) {
+        Literature[] litArr = selectedLecture.getLiteratures();
         if (litArr.length > 0) {
             int i = 1;
             for (Literature x : litArr
             ) {
-                System.out.println(i + "." + x.toString());
+                System.out.print(i + "." );
+                x.print();
                 i++;
             }
         } else {
