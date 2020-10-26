@@ -3,6 +3,8 @@ package com.lms.spd.interfaces;
 import com.lms.spd.LectureImpl;
 import com.lms.spd.Literature;
 
+import java.util.Date;
+
 public interface LectureService {
     LectureImpl[] getLectures();
 
@@ -12,9 +14,7 @@ public interface LectureService {
 
     void setSelectedLecture(int selected);
 
-    void addLecture(String name, Literature[] literature);
-
-    void addLecturePlusNumber(int number, String name, Literature[] literature);
+    void addLecture(int numberOfLec, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate);
 
     boolean removeLectures(int lectureRemove);
 

@@ -39,13 +39,14 @@ public class LectureImpl implements Lecture {
         this.lectorName = lectorName;
     }
 
-    public LectureImpl(String nameOfLecture, int numberOfLecture, Literature[] literatures, Date lectureDate, String lectorName) {
+    public LectureImpl(int numberOfLecture, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
     }
+
 
     //_______________________________________________________________________________________________________________//
 

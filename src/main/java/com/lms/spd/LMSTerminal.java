@@ -1,15 +1,12 @@
 package com.lms.spd;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class LMSTerminal {
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -25,7 +22,7 @@ public class LMSTerminal {
                 case "1":
                     point1MainMenuShowLectures();
                 case "2":
-                    point2MainMenuAddingLecture();
+                    point2MainMenuAddingLecture2();
                     break;
                 case "3":
                     point3MainMenuRemovalLecture();
@@ -40,12 +37,12 @@ public class LMSTerminal {
                     startLMS();
                     break;
             }
-        } catch (IOException | NullPointerException e) {
+        } catch (IOException | NullPointerException | ParseException e) {
             e.printStackTrace();
         }
     }
 
-    //______________________________________________________________________________________________________________//
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     /**
      * point 1 main menu: view a list of lectures
@@ -95,7 +92,7 @@ public class LMSTerminal {
      * point 2 main menu: adding new lectures
      */
 
-    private void point2MainMenuAddingLecture2() throws IOException {
+    private void point2MainMenuAddingLecture2() throws IOException, ParseException {
         int numberOfLecture;
         String nameOfLecture;
         Literature[] literatures;
@@ -105,91 +102,45 @@ public class LMSTerminal {
         System.out.println("Entering a new lecture");
 
         numberOfLecture = enterTheLectureNumber();
-        nameOfLecture = enterTheLectureName();
+        nameOfLecture = enterTheLectureTitle();
         literatures = addLitOrNot();
         lectorName = enterLektorName();
         lectureDate = enterTheLectureDate();
 
+        lectureServiceImpl.addLecture(numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
+
+        subMenuAddingLectureToList();
     }
 
-    private Date enterTheLectureDate() {
-        System.out.println("Enter the lecture date");
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        System.out.println("please enter the month of the lecture");
-        int month = Integer.parseInt();
-        while (true){
-            gregorianCalendar.set(2020, Calendar.JANUARY,30);
-            
-            Date date = new Date();
-            DateFormat dateFormat = new SimpleDateFormat(pattern);
-
+    /*1*/
+    private int enterTheLectureNumber() {
+        System.out.println("Please enter number for new lecture if you don't want to press enter ");
+        System.out.print("Number: ");
+        int numberOfLecture = 21474836;
+        try {
+            numberOfLecture = Integer.parseInt(reader.readLine());
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
         }
-
-
-
-        gregorianCalendar.set();
-
-
-
+        return numberOfLecture;
     }
 
-    private String enterLektorName() throws IOException {
-        System.out.println("Enter  lecturer name");
-        return reader.readLine();
-    }
-
-
-    private void point2MainMenuAddingLecture() throws IOException {
-        System.out.println("Entering a new lecture");
-        System.out.println("If you want add new lecture only name press \u001b[32;1m\"1\"\u001b[0m or press \u001b[36;1m\"2\"\u001b[0m if you want add name and number of lecture");
-        switch (reader.readLine()) {
-            case "1":
-                addingLectureListOnlyName();
+    /*2*/
+    private String enterTheLectureTitle() throws IOException {
+        String lectureName;
+        while (true) {
+            System.out.println("Enter the title of the lecture");
+            lectureName = reader.readLine();
+            //если не пустая выпрыгиваем из цикла
+            if (!lectureName.isEmpty()) {
                 break;
-            case "2":
-                addingLectureListNameAndNumber();
-                break;
-            default:
-                System.out.println("\u001b[31;1mPlease enter only \"1\" or \"2\"\u001b[0m");
-                point2MainMenuAddingLecture();
+            }
+            System.out.println("The lecture must have a title. Try again");
         }
+        return lectureName;
     }
 
-    private void addingLectureListOnlyName() throws IOException {
-        String lectureName = enterTheLectureName();
-        Literature[] arrAddLit = addLitOrNot();
-        lectureServiceImpl.addLecture(lectureName, arrAddLit);
-        System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"0\"" + "\u001B[0m"
-                + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
-        subMenuAddingLectureListOnlyName();
-    }
-
-    private void addingLectureListNameAndNumber() throws IOException {
-        int lectureNumb = enterTheLectureNumber();
-        String lectureName = enterTheLectureName();
-        Literature[] arrAddLit = addLitOrNot();
-        lectureServiceImpl.addLecturePlusNumber(lectureNumb, lectureName, arrAddLit);
-        subMenuAddingLectureListNameAndNumb();
-    }
-
-    private void subMenuAddingLectureListOnlyName() throws IOException {
-        switch (reader.readLine().toUpperCase()) {
-            case "+":
-                addingLectureListOnlyName();
-            case "0":
-                startLMS();
-                break;
-            case "EXIT":
-                System.exit(0);
-                break;
-            default:
-                System.out.println("you must enter either \"+\" \"0\" or EXIT");
-                subMenuAddingLectureListOnlyName();
-                break;
-        }
-    }
-
-
+    /*3*/
     public Literature[] addLitOrNot() throws IOException {
         Literature[] result = new Literature[0];
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
@@ -245,12 +196,38 @@ public class LMSTerminal {
         return addLit;
     }
 
+    /*4*/
+    private String enterLektorName() throws IOException {
+        System.out.println("Enter lecturer name");
+        return reader.readLine();
+    }
 
-    private void subMenuAddingLectureListNameAndNumb() throws IOException {
-        System.out.println("what to do next: add another one? entering \"+\" or \"-\"  go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+    /*5*/
+    private Date enterTheLectureDate() throws IOException {
+        System.out.println("Enter the lecture date for example: 19-10-1986");
+        Date d1 = new Date();
+        String dateInString;
+        dateInString = reader.readLine();
+        if (dateInString.matches("[0-9]{2}[-][0-9]{2}[-][0-9]{4}")) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            sdf.setLenient(false);
+            try {
+                d1 = sdf.parse(dateInString);
+            } catch (ParseException e) {
+                //e.printStackTrace();//Always going to catch block
+            }
+        } else {
+            System.out.println("Invalid date format");
+        }
+        return d1;
+    }
+
+    private void subMenuAddingLectureToList() throws IOException, ParseException {
+        System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"-\"" + "\u001B[0m"
+                + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         switch (reader.readLine().toUpperCase()) {
             case "+":
-                point2MainMenuAddingLecture();
+                point2MainMenuAddingLecture2();
             case "-":
                 startLMS();
                 break;
@@ -258,42 +235,13 @@ public class LMSTerminal {
                 System.exit(0);
                 break;
             default:
-                subMenuAddingLectureListNameAndNumb();
+                System.out.println("you must enter either \"+\" \"-\" or EXIT");
+                subMenuAddingLectureToList();
                 break;
         }
     }
 
-    private String enterTheLectureName() throws IOException {
-        String lectureName;
-        while (true) {
-            System.out.println("Enter the title of the lecture");
-            lectureName = reader.readLine();
-            if (!lectureName.isEmpty()) {
-                break;
-            }
-            System.out.println("The lecture must have a title. Try again");
-            enterTheLectureName();
-        }
-        return lectureName;
-    }
-
-
-    private int enterTheLectureNumber() {
-        System.out.print("Please enter number for new lecture, ");
-        System.out.println("Number: ");
-        int numberOfLecture = 0;
-        try {
-            numberOfLecture = Integer.parseInt(reader.readLine());
-        } catch (IOException | NumberFormatException e) {
-            System.out.print("\u001B[31m" + "wrong number format " + "\u001B[0m \n");
-            System.out.println("Lets try again ");
-            enterTheLectureNumber();
-        }
-        return numberOfLecture;
-    }
-
-
-    //_______________________________________________________________________________________________________________//
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     /**
      * point 3 main menu: method deleting the lecture list

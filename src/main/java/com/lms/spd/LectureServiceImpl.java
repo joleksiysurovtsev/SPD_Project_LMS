@@ -5,6 +5,7 @@ package com.lms.spd;
 import com.lms.spd.interfaces.LectureService;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class LectureServiceImpl implements LectureService {
 
@@ -50,28 +51,19 @@ public class LectureServiceImpl implements LectureService {
     /**
      * Adds a new lecture by only name, to an array
      */
-    @Override
-    public void addLecture(String name, Literature[] literature) {
-        LectureImpl[] arrayAddedLectures = new LectureImpl[lectures.length + 1];
-        System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
-        LectureImpl addedLecture = new LectureImpl(arrayAddedLectures.length, name, literature);
-        arrayAddedLectures[arrayAddedLectures.length - 1] = addedLecture;
-        lectures = arrayAddedLectures;
-    }
 
-    /**
-     * Adds a new lecture by number and name, to an array
-     */
+    public void addLecture(int numberOfLec, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
+        int numberOfLecture = numberOfLec;
 
-    @Override
-    public void addLecturePlusNumber(int number, String name, Literature[] literature) {
-        int numberOfLecture = number;
         LectureImpl[] arrayAddedLectures = new LectureImpl[lectures.length + 1];
+
         System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
+
         if (numberOfLecture > arrayAddedLectures.length) {
             numberOfLecture = arrayAddedLectures.length;
         }
-        LectureImpl addedLecture = new LectureImpl(numberOfLecture, name, literature);
+        LectureImpl addedLecture = new LectureImpl(numberOfLecture, nameOfLecture, literatures,lectorName,lectureDate);
+
         for (int i = arrayAddedLectures.length - 1; i > -1; i--) {
             if (i == numberOfLecture - 1) {
                 arrayAddedLectures[i] = addedLecture;
@@ -159,6 +151,7 @@ public class LectureServiceImpl implements LectureService {
         }
         lectures = sortedArr;
     }
+
 
 
 }
