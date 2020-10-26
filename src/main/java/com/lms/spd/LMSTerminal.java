@@ -1,5 +1,7 @@
 package com.lms.spd;
 
+import com.lms.spd.interfaces.Lecture;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -120,7 +122,7 @@ public class LMSTerminal {
         try {
             numberOfLecture = Integer.parseInt(reader.readLine());
         } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
+            //
         }
         return numberOfLecture;
     }
@@ -131,7 +133,6 @@ public class LMSTerminal {
         while (true) {
             System.out.println("Enter the title of the lecture");
             lectureName = reader.readLine();
-            //если не пустая выпрыгиваем из цикла
             if (!lectureName.isEmpty()) {
                 break;
             }
@@ -218,6 +219,7 @@ public class LMSTerminal {
             }
         } else {
             System.out.println("Invalid date format");
+
         }
         return d1;
     }
@@ -304,14 +306,14 @@ public class LMSTerminal {
         System.out.println("2. --> view the list of literature");
         System.out.println("3. --> add new literature");
         System.out.println("4. --> remove literature");
-        System.out.println("5. --> exit to the main menu");
+        System.out.println("5. --> view all lecture information");
+        System.out.println("6. --> exit to the main menu");
     }
 
     private void point4MainMenuChoiceOfLecture() throws IOException {
         System.out.println("Enter the number of the lecture, " +
                 "information about which you want to see " +
                 "if you change your mind to exit to the menu enter " + "\u001B[32m" + "0" + "\u001B[0m");
-
         int numbOfLecture = 0;
         boolean flag = true;
         while (flag) {
@@ -323,11 +325,9 @@ public class LMSTerminal {
                 System.out.println("You must type a lecture number!");
             }
         }
-
         if (numbOfLecture == 0) {
             startLMS();
         } else {
-
             if (!checkNumberLecture(numbOfLecture)) {
                 System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
                 point4MainMenuChoiceOfLecture();
@@ -377,7 +377,10 @@ public class LMSTerminal {
             case 4://  4. --> remove literature
                 point4_4DeleteLit();
                 break;
-            case 5:
+            case 5://  4. --> show lecture info
+                point4_5showLectureInfo();
+                break;
+            case 6:
                 startLMS();
                 break;
             default:
@@ -386,6 +389,7 @@ public class LMSTerminal {
                 break;
         }
     }
+
 
     private void point4_2ViewListOfLit() throws IOException {
         lmsConsolePrinter.printListLit(lectureServiceImpl.getSelectedLecture());
@@ -462,5 +466,19 @@ public class LMSTerminal {
                 System.out.println("please choice from the offered");
                 break;
         }
+    }
+
+    private void point4_5showLectureInfo() throws IOException {
+        LectureImpl lecture = lectureServiceImpl.getSelectedLecture();
+        StringBuilder lectureInfo = new StringBuilder("Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
+        if (lecture.getLectorName() != null) {
+            lectureInfo.append("The lecture is lecturing by: ").append(lecture.getLectorName()).append("\n");
+        }
+        if (lecture.getLectureDate() != null) {
+            lectureInfo.append("Lecture date: ").append(lecture.getLectureDate());
+        }
+        System.out.println(lectureInfo);
+        showFourthMenu();
+        subMenu2Point4();
     }
 }

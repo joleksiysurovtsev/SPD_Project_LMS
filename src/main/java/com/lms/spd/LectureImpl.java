@@ -20,23 +20,10 @@ public class LectureImpl implements Lecture {
         this.literatures = new Literature[0];
     }
 
-    public LectureImpl(int numberOfLecture, String nameOfLecture) {
-        this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
-        this.literatures = new Literature[0];
-    }
-
     public LectureImpl(int numberOfLecture, String nameOfLecture, Literature... lit) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
         this.literatures = lit;
-    }
-
-    public LectureImpl(int numberOfLecture, String nameOfLecture, Literature[] literatures, String lectorName) {
-        this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
-        this.literatures = literatures;
-        this.lectorName = lectorName;
     }
 
     public LectureImpl(int numberOfLecture, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
@@ -81,12 +68,6 @@ public class LectureImpl implements Lecture {
         this.literatures = literatures;
     }
 
-    @Override
-    public String toString() {
-        return "Lecture №" + numberOfLecture +
-                ". " + nameOfLecture;
-    }
-
     public Date getLectureDate() {
         return lectureDate;
     }
@@ -101,6 +82,12 @@ public class LectureImpl implements Lecture {
 
     public void setLectorName(String lectorName) {
         this.lectorName = lectorName;
+    }
+
+    @Override
+    public String toString() {
+        return "Lecture №" + numberOfLecture +
+                ". " + nameOfLecture;
     }
 
     @Override
