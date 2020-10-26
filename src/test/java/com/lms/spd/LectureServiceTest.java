@@ -11,18 +11,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Lecture Service")
 class LectureServiceTest {
-//    private LectureService lectureService;
+//    private LectureServiceImpl lectureService;
 //
 //    @BeforeEach
 //    void createLectureService() {
-//        lectureService = new LectureService();
-//        Lecture[] lectures = {
-//                new Lecture(1, "BufferedReader."),
-//                new Lecture(2, "Writes text to."),
-//                new Lecture(3, "Core Java API"),
+//        lectureService = new LectureServiceImpl();
+//        LectureImpl[] lectures = {
+//                new LectureImpl(1, "BufferedReader."),
+//                new LectureImpl(2, "Writes text to."),
+//                new LectureImpl(3, "Core Java API"),
 //        };
 //        lectureService.setLectures(lectures);
 //    }
+//
+//
+//    @Test
+//    @DisplayName("Remove one lecture from empty array: expected String 'Lectures: are missing.' ")
+//    void removeLecturesByStringTest() {
+//        assertEquals("Lectures: are missing.", lectureService.removeLectures("1,2"));
+//    }
+
+
 //
 //
 //    @Test
@@ -151,12 +160,7 @@ class LectureServiceTest {
 //            assertFalse(lectureService.removeLectures(1));
 //        }
 //
-//        @Test
-//        @DisplayName("Remove one lecture from empty array: expected String 'Lectures: are missing.' ")
-//        void removeLecturesByStringTest() {
-//            assertEquals("Lectures: are missing.", lectureService.removeLectures("1,2"));
-//        }
-//    }
+
 
 
 }

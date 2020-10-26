@@ -109,7 +109,7 @@ public class LectureServiceImpl implements LectureService {
                 int numb = value.getNumberOfLecture();
                 if (numb == Integer.parseInt(item)) {
                     flag = false;
-                    stringContains.append("\u001b[33;1m\"").append(item).append("\"\u001b[0m, ");
+                    stringContains.append(" ").append(item).append(" ");
                     break;
                 }
             }
