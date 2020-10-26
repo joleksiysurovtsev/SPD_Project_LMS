@@ -150,7 +150,7 @@ public class LMSTerminal {
                 boolean flag = true;
                 while (flag) {
                     result = addLitToArr(result);
-                    System.out.println("Добавляем ещё? если нет введите минус");
+                    System.out.println("Add more literature? if not enter minus");
                     if (reader.readLine().equals("-")) {
                         flag = false;
                     }

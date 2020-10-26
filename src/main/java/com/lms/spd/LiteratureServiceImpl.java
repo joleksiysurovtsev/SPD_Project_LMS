@@ -31,21 +31,25 @@ public class LiteratureServiceImpl implements LiteratureService {
         System.out.println("Please enter a titleJournal name or press Enter");
         String titleJournal = reader.readLine();
         System.out.println("Please enter a issue of the journal where the article was published");
-        int issueOfTheJournal = Integer.parseInt(reader.readLine());
+        int issueOfTheJournal = 0;
+        try {
+            issueOfTheJournal = Integer.parseInt(reader.readLine());
+        }catch (NumberFormatException | NullPointerException e){
+            //
+        }
 
         newJournal = new JournalArticle(titleOfArticle, author);
-
         if (!titleJournal.isEmpty()) {
             newJournal = new JournalArticle(titleOfArticle, author, titleJournal);
         }
         if (titleJournal.isEmpty() && issueOfTheJournal != 0) {
             newJournal = new JournalArticle(titleOfArticle, author, issueOfTheJournal);
         }
-
         if (issueOfTheJournal != 0) {
             newJournal = new JournalArticle(titleOfArticle, author, titleJournal, issueOfTheJournal);
         }
         return newJournal;
+
     }
 
     @Override
