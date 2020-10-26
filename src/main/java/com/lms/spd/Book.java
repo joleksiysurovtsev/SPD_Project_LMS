@@ -60,7 +60,7 @@ public class Book extends Literature {
         if (publishedInYear != 0){
             printString.append(" Year of publishing: ").append(publishedInYear);
         }
-        System.out.println(printString);
+        System.out.print(printString+"\n");
     }
 
     @Override
@@ -69,24 +69,22 @@ public class Book extends Literature {
         if (this.publishedInYear != 0) {
             publishedInYearStr = String.valueOf(publishedInYear);
         }
-        return "Book: " + getTitle() + '\'' +
-                ", author: '" + getAuthor() + '\'' +
-                "genre'" + genre + '\'' +
-                ", published in year " + publishedInYearStr +
-                '}';
+        return "Book: " + getTitle() + ", author: '" + getAuthor() + '\'' +" genre '" + genre + '\'' +
+                ", published in year " + publishedInYearStr;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Book)) return false;
+        if (!super.equals(o)) return false;
         Book book = (Book) o;
-        return publishedInYear == book.publishedInYear &&
-                genre.equals(book.genre);
+        return getPublishedInYear() == book.getPublishedInYear() &&
+                getGenre().equals(book.getGenre());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(genre, publishedInYear);
+        return Objects.hash(super.hashCode(), getGenre(), getPublishedInYear());
     }
 }

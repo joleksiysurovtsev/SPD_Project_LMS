@@ -1,6 +1,7 @@
 package com.lms.spd;
 
 
+import java.util.Objects;
 
 public abstract class Literature {
     private String title;
@@ -26,5 +27,19 @@ public abstract class Literature {
 
     @Override
     public abstract String toString();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Literature)) return false;
+        Literature that = (Literature) o;
+        return getTitle().equals(that.getTitle()) &&
+                getAuthor().equals(that.getAuthor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getAuthor());
+    }
 }
 

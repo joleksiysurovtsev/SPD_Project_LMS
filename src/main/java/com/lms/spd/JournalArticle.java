@@ -65,7 +65,7 @@ public class JournalArticle extends Literature {
         if (issueOfTheJournal != 0) {
             printString.append(" Journal №: ").append(issueOfTheJournal);
         }
-        System.out.println(printString);
+        System.out.print(printString+"\n");
     }
 
     @Override
@@ -79,14 +79,15 @@ public class JournalArticle extends Literature {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof JournalArticle)) return false;
+        if (!super.equals(o)) return false;
         JournalArticle that = (JournalArticle) o;
-        return issueOfTheJournal == that.issueOfTheJournal &&
-                titleOfArticle.equals(that.titleOfArticle);
+        return getIssueOfTheJournal() == that.getIssueOfTheJournal() &&
+                getTitleOfArticle().equals(that.getTitleOfArticle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(titleOfArticle, issueOfTheJournal);
+        return Objects.hash(super.hashCode(), getTitleOfArticle(), getIssueOfTheJournal());
     }
 }

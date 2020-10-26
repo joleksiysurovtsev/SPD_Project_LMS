@@ -31,28 +31,25 @@ public class InternetArticles extends Literature {
         if (!urlAddress.equals("N/A")){
             printString.append(" Web address: ").append(urlAddress);
         }
-        System.out.println(printString);
+        System.out.print(printString+"\n");
     }
 
     @Override
     public String toString() {
-        return "Internet articles: " +
-                ", title='" + getTitle() + '\'' +
-                ", author='" + getAuthor() + '\'' +
-                "urlAdrres='" + urlAddress + '\'' +
-                '}';
+        return "Internet articles: " + " " + getTitle() + ", author= " + getAuthor() + " URL " + urlAddress;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof InternetArticles)) return false;
+        if (!super.equals(o)) return false;
         InternetArticles that = (InternetArticles) o;
-        return urlAddress.equals(that.urlAddress);
+        return getUrlAddress().equals(that.getUrlAddress());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(urlAddress);
+        return Objects.hash(super.hashCode(), getUrlAddress());
     }
 }
