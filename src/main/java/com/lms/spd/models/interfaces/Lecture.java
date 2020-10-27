@@ -1,8 +1,9 @@
-package com.lms.spd.interfaces;
+package com.lms.spd.models.interfaces;
 
-import com.lms.spd.Literature;
+import com.lms.spd.models.AbstractLiterature;
 
 public interface Lecture {
+
     void setNameOfLecture(String nameOfLecture);
 
     String getNameOfLecture();
@@ -11,7 +12,7 @@ public interface Lecture {
 
     void setNumberOfLecture(int numberOfLecture);
 
-    Literature[] getLiteratures();
+    AbstractLiterature[] getLiteratures();
 
-    void setLiteratures(Literature[] literatures);
+    void setLiteratures(AbstractLiterature[] literatures);
 }

@@ -1,26 +1,29 @@
 package com.lms.spd;
 
+import com.lms.spd.models.LectureIModel;
+import com.lms.spd.models.AbstractLiterature;
+
 import java.util.Arrays;
 
 public class LMSConsolePrinter {
     /**
      * The method prints the list of all lectures to the console
      */
-    public void printLectureList(LectureImpl[] lectures) {
-        for (LectureImpl value : lectures) {
-            System.out.println(value.toString());
+    public void printLectureList(LectureIModel[] lectures) {
+        for (LectureIModel value : lectures) {
+            System.out.println(value);
         }
     }
 
     /**
      * The method print Preview Lecture list
      */
-    public void printPreviewLectureList(LectureImpl[] lectures) {
-        for (LectureImpl value : lectures) {
+    public void printPreviewLectureList(LectureIModel[] lectures) {
+        for (LectureIModel value : lectures) {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
             } else {
-                System.out.println(value.toString());
+                System.out.println(value);
             }
         }
     }
@@ -28,7 +31,7 @@ public class LMSConsolePrinter {
     /**
      * The method prints the list lectures to the console by number
      */
-    public void printLectureList(String s, LectureImpl[] lectures) {
+    public void printLectureList(String s, LectureIModel[] lectures) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
         for (int i = 0; i < strings.length; i++) {
             strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
@@ -37,9 +40,9 @@ public class LMSConsolePrinter {
         //iterate over the array of lectures and output if there are matches by lecture numbers
         for (String value : numbToDisplay) {
             for (int j = 0; j < lectures.length; j++) {
-                LectureImpl item = lectures[j];
+                LectureIModel item = lectures[j];
                 if (Integer.parseInt(value) == (j + 1)) {
-                    System.out.println(item.toString());
+                    System.out.println(item);
                 }
             }
         }
@@ -49,11 +52,11 @@ public class LMSConsolePrinter {
     /**
      * the method print a list of references from the previously selected lecture
      */
-    public void printListLit(LectureImpl selectedLecture) {
-        Literature[] litArr = selectedLecture.getLiteratures();
+    public void printListLit(LectureIModel selectedLecture) {
+        AbstractLiterature[] litArr = selectedLecture.getLiteratures();
         if (litArr.length > 0) {
             int i = 1;
-            for (Literature x : litArr
+            for (AbstractLiterature x : litArr
             ) {
                 System.out.print(i + "." );
                 x.print();
@@ -64,7 +67,7 @@ public class LMSConsolePrinter {
         }
     }
 
-    void showStartMenu() {
+    public void showStartMenu() {
         System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" + "\"" + ": learning management system" + "\u001B[0m");
         System.out.println("Please make your choice from the offered options\n"
                 + "1. Display lectures (number and title)\n"

@@ -1,5 +1,7 @@
 package com.lms.spd;
 
+import com.lms.spd.models.LectureIModel;
+import com.lms.spd.services.LectureServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +14,10 @@ class LMSTerminalTest {
     @BeforeEach
     void createLectureService() {
         lectureServiceImpl = new LectureServiceImpl();
-        LectureImpl[] lectures = {
-                new LectureImpl(1, "BufferedReader."),
-                new LectureImpl(2, "Writes text to."),
-                new LectureImpl(3, "Core Java API"),
+        LectureIModel[] lectures = {
+                new LectureIModel(1, "BufferedReader."),
+                new LectureIModel(2, "Writes text to."),
+                new LectureIModel(3, "Core Java API"),
         };
         lectureServiceImpl.setLectures(lectures);
     }

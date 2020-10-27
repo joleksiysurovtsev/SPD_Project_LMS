@@ -1,5 +1,9 @@
 package com.lms.spd;
 
+import com.lms.spd.models.BookModel;
+import com.lms.spd.models.JournalArticleModel;
+import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.services.LiteratureServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,14 +14,14 @@ class LiteratureServiceImplTest {
 
     @Test
     void removeLiterature() {
-        Literature[] literature = {
-                new Book("Java", "Unknown", "Unknown", 2020),
-                new JournalArticle("Java", "Unknown", "Unknown", 5)};
+        AbstractLiterature[] literature = {
+                new BookModel("Java", "Unknown", "Unknown", 2020),
+                new JournalArticleModel("Java", "Unknown", "Unknown", 5)};
 
         literatureService.removeLiterature(1, literature);
 
-        Literature[] expected = {
-                new JournalArticle("Java", "Unknown", "Unknown", 5)};
+        AbstractLiterature[] expected = {
+                new JournalArticleModel("Java", "Unknown", "Unknown", 5)};
 
         assertArrayEquals(expected,literatureService.removeLiterature(1, literature));
     }

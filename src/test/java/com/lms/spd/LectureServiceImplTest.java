@@ -1,5 +1,9 @@
 package com.lms.spd;
 
+import com.lms.spd.enums.LectureType;
+import com.lms.spd.models.LectureIModel;
+import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.services.LectureServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,10 +19,10 @@ class LectureServiceImplTest {
     @BeforeEach
     void createLectureService() {
         lectureService = new LectureServiceImpl();
-        LectureImpl[] lectures = {
-                new LectureImpl(1, "BufferedReader."),
-                new LectureImpl(2, "Writes text to."),
-                new LectureImpl(3, "Core Java API"),
+        LectureIModel[] lectures = {
+                new LectureIModel(1, "BufferedReader."),
+                new LectureIModel(2, "Writes text to."),
+                new LectureIModel(3, "Core Java API"),
         };
         lectureService.setLectures(lectures);
     }
@@ -43,7 +47,7 @@ class LectureServiceImplTest {
     @DisplayName("setSelectedLecture method selects by position in the array")
     void getSelectedLecture() {
         lectureService.setSelectedLecture(0);
-        LectureImpl expectedLecture = new LectureImpl(1, "BufferedReader.");
+        LectureIModel expectedLecture = new LectureIModel(1, "BufferedReader.");
         assertEquals(expectedLecture, lectureService.getSelectedLecture());
     }
 
@@ -52,14 +56,15 @@ class LectureServiceImplTest {
             + "expected: one more lecture will be added to the end of the lecture array")
     void addLecture() {
 
-        LectureImpl[] expectedLectures = {
-                new LectureImpl(1, "BufferedReader."),
-                new LectureImpl(2, "Writes text to."),
-                new LectureImpl(3, "Core Java API"),
-                new LectureImpl(4, "BufferedReader.", new Literature[0], "Egorov", new Date()),
+        LectureIModel[] expectedLectures = {
+                new LectureIModel(1, "BufferedReader."),
+                new LectureIModel(2, "Writes text to."),
+                new LectureIModel(3, "Core Java API"),
+                new LectureIModel(4, "BufferedReader.", new AbstractLiterature[0], "Egorov", new Date()),
+
         };
 
-        lectureService.addLecture(4, "BufferedReader.", new Literature[0], "Egorov", new Date());
+        lectureService.addLecture(LectureType.getValueByNumber(1),5, "BufferedReader.", new AbstractLiterature[0], "Egorov", new Date());
         assertArrayEquals(expectedLectures, lectureService.getLectures());
 
     }

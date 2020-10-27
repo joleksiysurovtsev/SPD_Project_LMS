@@ -1,34 +1,34 @@
-package com.lms.spd;
+package com.lms.spd.models;
 
 import java.util.Objects;
 
-public class Book extends Literature {
+public class BookModel extends AbstractLiterature {
 
     private String genre;
     private int publishedInYear;
 
-    public Book(String title, String author) {
+    public BookModel(String title, String author) {
         this.genre = "N/A";
         this.publishedInYear = 0;
         setTitle(title);
         setAuthor(author);
     }
 
-    public Book(String title, String author, String genre) {
+    public BookModel(String title, String author, String genre) {
         this.genre = genre;
         this.publishedInYear = 0;
         setTitle(title);
         setAuthor(author);
     }
 
-    public Book(String title, String author, String genre, int publishedInYear) {
+    public BookModel(String title, String author, String genre, int publishedInYear) {
         this.genre = genre;
         this.publishedInYear = publishedInYear;
         setTitle(title);
         setAuthor(author);
     }
 
-    public Book(String nameBook, String author, int year) {
+    public BookModel(String nameBook, String author, int year) {
         this.genre = "N/A";
         this.publishedInYear = year;
         setTitle(nameBook);
@@ -76,9 +76,9 @@ public class Book extends Literature {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Book)) return false;
+        if (!(o instanceof BookModel)) return false;
         if (!super.equals(o)) return false;
-        Book book = (Book) o;
+        BookModel book = (BookModel) o;
         return getPublishedInYear() == book.getPublishedInYear() &&
                 getGenre().equals(book.getGenre());
     }

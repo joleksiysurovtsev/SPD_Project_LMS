@@ -1,32 +1,34 @@
-package com.lms.spd;
+package com.lms.spd.models;
 
-import com.lms.spd.interfaces.Lecture;
+import com.lms.spd.enums.LectureType;
+import com.lms.spd.models.interfaces.Lecture;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
-public class LectureImpl implements Lecture {
+public class LectureIModel implements Lecture {
     private String nameOfLecture;
     private int numberOfLecture;
-    private Literature[] literatures;
+    private AbstractLiterature[] literatures;
     private Date lectureDate;
     private String lectorName;
+    private LectureType type;
 
     //lecture constructor____________________________________________________________________________________________//
 
-    public LectureImpl(String nameOfLecture) {
+    public LectureIModel(String nameOfLecture) {
         this.nameOfLecture = nameOfLecture;
-        this.literatures = new Literature[0];
+        this.literatures = new AbstractLiterature[0];
     }
 
-    public LectureImpl(int numberOfLecture, String nameOfLecture, Literature... lit) {
+    public LectureIModel(int numberOfLecture, String nameOfLecture, AbstractLiterature... lit) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
         this.literatures = lit;
     }
 
-    public LectureImpl(int numberOfLecture, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
+    public LectureIModel(int numberOfLecture, String nameOfLecture, AbstractLiterature[] literatures, String lectorName, Date lectureDate) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
         this.literatures = literatures;
@@ -59,12 +61,12 @@ public class LectureImpl implements Lecture {
     }
 
     @Override
-    public Literature[] getLiteratures() {
+    public AbstractLiterature[] getLiteratures() {
         return literatures;
     }
 
     @Override
-    public void setLiteratures(Literature[] literatures) {
+    public void setLiteratures(AbstractLiterature[] literatures) {
         this.literatures = literatures;
     }
 
@@ -84,6 +86,19 @@ public class LectureImpl implements Lecture {
         this.lectorName = lectorName;
     }
 
+
+    public LectureType getType() {
+        return type;
+    }
+
+    public void setType(LectureType type) {
+        this.type = type;
+    }
+
+
+
+
+
     @Override
     public String toString() {
         return "Lecture №" + numberOfLecture +
@@ -94,7 +109,7 @@ public class LectureImpl implements Lecture {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LectureImpl lecture = (LectureImpl) o;
+        LectureIModel lecture = (LectureIModel) o;
         return numberOfLecture == lecture.numberOfLecture &&
                 nameOfLecture.equals(lecture.nameOfLecture) &&
                 Arrays.equals(literatures, lecture.literatures);

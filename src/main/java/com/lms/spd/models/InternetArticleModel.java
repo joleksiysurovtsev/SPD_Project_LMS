@@ -1,17 +1,17 @@
-package com.lms.spd;
+package com.lms.spd.models;
 
 import java.util.Objects;
 
-public class InternetArticles extends Literature {
+public class InternetArticleModel extends AbstractLiterature {
     String urlAddress;
 
-    public InternetArticles(String title, String author, String urlAddress) {
+    public InternetArticleModel(String title, String author, String urlAddress) {
         setAuthor(author);
         setTitle(title);
         this.urlAddress = urlAddress;
     }
 
-    public InternetArticles(String titleOfArticle, String author) {
+    public InternetArticleModel(String titleOfArticle, String author) {
         setAuthor(author);
         setTitle(titleOfArticle);
         this.urlAddress = "N/A";
@@ -42,9 +42,9 @@ public class InternetArticles extends Literature {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof InternetArticles)) return false;
+        if (!(o instanceof InternetArticleModel)) return false;
         if (!super.equals(o)) return false;
-        InternetArticles that = (InternetArticles) o;
+        InternetArticleModel that = (InternetArticleModel) o;
         return getUrlAddress().equals(that.getUrlAddress());
     }
 

@@ -1,33 +1,33 @@
-package com.lms.spd;
+package com.lms.spd.models;
 
 import java.util.Objects;
 
-public class JournalArticle extends Literature {
+public class JournalArticleModel extends AbstractLiterature {
     String titleOfArticle;
     int issueOfTheJournal;
 
-    public JournalArticle(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
+    public JournalArticleModel(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
         setAuthor(author);
         setTitle(titleJournal);
         this.titleOfArticle = titleOfArticle;
         this.issueOfTheJournal = issueOfTheJournal;
     }
 
-    public JournalArticle(String titleOfArticle, String author, String titleJournal) {
+    public JournalArticleModel(String titleOfArticle, String author, String titleJournal) {
         setAuthor(author);
         setTitle(titleJournal);
         this.titleOfArticle = titleOfArticle;
         this.issueOfTheJournal = 0;
     }
 
-    public JournalArticle(String titleOfArticle, String author) {
+    public JournalArticleModel(String titleOfArticle, String author) {
         setAuthor(author);
         setTitle("N/A");
         this.titleOfArticle = titleOfArticle;
         this.issueOfTheJournal = 0;
     }
 
-    public JournalArticle(String titleOfArticle, String author, int issueOfTheJournal) {
+    public JournalArticleModel(String titleOfArticle, String author, int issueOfTheJournal) {
         setAuthor(author);
         setTitle(titleOfArticle);
         this.titleOfArticle = "N/A";
@@ -79,9 +79,9 @@ public class JournalArticle extends Literature {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof JournalArticle)) return false;
+        if (!(o instanceof JournalArticleModel)) return false;
         if (!super.equals(o)) return false;
-        JournalArticle that = (JournalArticle) o;
+        JournalArticleModel that = (JournalArticleModel) o;
         return getIssueOfTheJournal() == that.getIssueOfTheJournal() &&
                 getTitleOfArticle().equals(that.getTitleOfArticle());
     }

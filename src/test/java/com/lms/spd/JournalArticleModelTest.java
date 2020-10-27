@@ -1,5 +1,6 @@
 package com.lms.spd;
 
+import com.lms.spd.models.JournalArticleModel;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -7,13 +8,13 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JournalArticleTest {
+class JournalArticleModelTest {
 
     @Test
     void print() {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-        JournalArticle journalArticle = new JournalArticle("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
+        JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         System.setOut(new PrintStream(output));
         journalArticle.print();
 
@@ -23,16 +24,16 @@ class JournalArticleTest {
 
     @Test
     void testToString() {
-        JournalArticle journalArticle = new JournalArticle("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
+        JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         String expected = "Journal article: \"This keyword {in examples}\", in the journal \"java world\", issue of the journal: 5, author:'Dmitry Denisov'";
         assertEquals(expected, journalArticle.toString());
     }
 
     @Test
     void testEquals() {
-        JournalArticle journalArticle = new JournalArticle("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        JournalArticle journalArticle2 = new JournalArticle("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        JournalArticle journalArticle3 = new JournalArticle("This keyword {in examples}", "Dmitry Denisov", "java world");
+        JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
+        JournalArticleModel journalArticle2 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
+        JournalArticleModel journalArticle3 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world");
 
         assertTrue(journalArticle.equals(journalArticle2));
         assertFalse(journalArticle.equals(journalArticle3));
@@ -40,7 +41,7 @@ class JournalArticleTest {
 
     @Test
     void testHashCode() {
-        JournalArticle journalArticle = new JournalArticle("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
+        JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         int hashCode = journalArticle.hashCode();
         assertEquals(hashCode, journalArticle.hashCode());
     }

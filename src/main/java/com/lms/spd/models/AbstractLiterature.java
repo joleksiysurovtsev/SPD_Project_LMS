@@ -1,9 +1,9 @@
-package com.lms.spd;
+package com.lms.spd.models;
 
 
 import java.util.Objects;
 
-public abstract class Literature {
+public abstract class AbstractLiterature {
     private String title;
     private String author;
 
@@ -31,8 +31,8 @@ public abstract class Literature {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Literature)) return false;
-        Literature that = (Literature) o;
+        if (!(o instanceof AbstractLiterature)) return false;
+        AbstractLiterature that = (AbstractLiterature) o;
         return getTitle().equals(that.getTitle()) &&
                 getAuthor().equals(that.getAuthor());
     }

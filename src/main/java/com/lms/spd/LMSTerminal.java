@@ -1,19 +1,24 @@
 package com.lms.spd;
 
+import com.lms.spd.enums.LectureType;
+import com.lms.spd.models.LectureIModel;
+import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.services.LectureServiceImpl;
+import com.lms.spd.services.LiteratureServiceImpl;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
 public class LMSTerminal {
-    static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    LectureServiceImpl lectureServiceImpl = new LectureServiceImpl();
-    LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
-    LMSConsolePrinter lmsConsolePrinter = new LMSConsolePrinter();
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private LectureServiceImpl lectureServiceImpl = new LectureServiceImpl();
+    private LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
+    private LMSConsolePrinter lmsConsolePrinter = new LMSConsolePrinter();
 
 
     public void startLMS() {
@@ -48,7 +53,7 @@ public class LMSTerminal {
     /**
      * point 1 main menu: view a list of lectures
      */
-    private void point1MainMenuShowLectures() throws IOException {
+    public void point1MainMenuShowLectures() throws IOException {
         System.out.println("Display all lectures \u001b[36;1m\"+\"" + "\u001B[0m" + " or \u001b[31;1m\"-\" \u001B[0mspecifically some by numbers?" + " enter \u001B[32m\"small\"\u001B[0m to preview lectures");
         switch (reader.readLine().toLowerCase()) {
             case "+":
@@ -96,19 +101,21 @@ public class LMSTerminal {
     private void point2MainMenuAddingLecture2() throws IOException, ParseException {
         int numberOfLecture;
         String nameOfLecture;
-        Literature[] literatures;
+        AbstractLiterature[] literatures;
         Date lectureDate;
         String lectorName;
-
+        LectureType lectureType;
         System.out.println("Entering a new lecture");
+
 
         numberOfLecture = enterTheLectureNumber();
         nameOfLecture = enterTheLectureTitle();
         literatures = addLitOrNot();
         lectorName = enterLektorName();
         lectureDate = enterTheLectureDate();
+        lectureType = setLectureType();
 
-        lectureServiceImpl.addLecture(numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
+        lectureServiceImpl.addLecture(lectureType,numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
 
         subMenuAddingLectureToList();
     }
@@ -141,8 +148,8 @@ public class LMSTerminal {
     }
 
     /*3*/
-    public Literature[] addLitOrNot() throws IOException {
-        Literature[] result = new Literature[0];
+    public AbstractLiterature[] addLitOrNot() throws IOException {
+        AbstractLiterature[] result = new AbstractLiterature[0];
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
@@ -164,27 +171,27 @@ public class LMSTerminal {
         return result;
     }
 
-    public Literature[] addLitToArr(Literature[] arrAddLit) throws IOException {
-        Literature[] addLit = arrAddLit;
+    public AbstractLiterature[] addLitToArr(AbstractLiterature[] arrAddLit) throws IOException {
+        AbstractLiterature[] addLit = arrAddLit;
         System.out.println("what type of literature do you want to add ?");
         System.out.println("1.Book, 2.Journal article, 3.Internet article");
         //если выбрали то
         switch (Integer.parseInt(reader.readLine())) {
             case 1:
-                Literature newLit = literatureService.createBook();
-                Literature[] newArrayLiterature = Arrays.copyOf(addLit, addLit.length + 1);
+                AbstractLiterature newLit = literatureService.createBook();
+                AbstractLiterature[] newArrayLiterature = Arrays.copyOf(addLit, addLit.length + 1);
                 newArrayLiterature[newArrayLiterature.length - 1] = newLit;
                 addLit = newArrayLiterature;
                 break;
             case 2:
-                Literature newLit2 = literatureService.createJournal();
-                Literature[] newArrayLiterature2 = Arrays.copyOf(addLit, addLit.length + 1);
+                AbstractLiterature newLit2 = literatureService.createJournal();
+                AbstractLiterature[] newArrayLiterature2 = Arrays.copyOf(addLit, addLit.length + 1);
                 newArrayLiterature2[newArrayLiterature2.length - 1] = newLit2;
                 addLit = newArrayLiterature2;
                 break;
             case 3:
-                Literature newLit3 = literatureService.createInternetArticles();
-                Literature[] newArrayLiterature3 = Arrays.copyOf(addLit, addLit.length + 1);
+                AbstractLiterature newLit3 = literatureService.createInternetArticles();
+                AbstractLiterature[] newArrayLiterature3 = Arrays.copyOf(addLit, addLit.length + 1);
                 newArrayLiterature3[newArrayLiterature3.length - 1] = newLit3;
                 addLit = newArrayLiterature3;
                 break;
@@ -221,6 +228,20 @@ public class LMSTerminal {
 
         }
         return d1;
+    }
+
+    private LectureType setLectureType() throws IOException {
+        System.out.println("Please, choose lecture type: ");
+        System.out.println("1. " + LectureType.OPEN);
+        System.out.println("2. " + LectureType.CLOSE);
+        String numberStr = reader.readLine();
+        int number = Integer.parseInt(numberStr);
+        LectureType lectureType = LectureType.getValueByNumber(number);
+        if(lectureType == null) {
+            System.out.println("Unknown type: try again");
+            setLectureType();
+        }
+        return lectureType;
     }
 
     private void subMenuAddingLectureToList() throws IOException, ParseException {
@@ -455,13 +476,16 @@ public class LMSTerminal {
     }
 
     private void point4_5showLectureInfo() throws IOException {
-        LectureImpl lecture = lectureServiceImpl.getSelectedLecture();
+        LectureIModel lecture = lectureServiceImpl.getSelectedLecture();
         StringBuilder lectureInfo = new StringBuilder("Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
         if (lecture.getLectorName() != null) {
             lectureInfo.append("The lecture is lecturing by: ").append(lecture.getLectorName()).append("\n");
         }
         if (lecture.getLectureDate() != null) {
             lectureInfo.append("Lecture date: ").append(lecture.getLectureDate());
+        }
+        if (lecture.getType() != null) {
+            lectureInfo.append(" Lecture Type: ").append(lecture.getType());
         }
         System.out.println(lectureInfo);
         lmsConsolePrinter.showFourthMenu();

@@ -1,29 +1,35 @@
-package com.lms.spd;
+package com.lms.spd.services;
 
-import com.lms.spd.interfaces.LiteratureService;
+import com.lms.spd.models.BookModel;
+import com.lms.spd.models.InternetArticleModel;
+import com.lms.spd.models.JournalArticleModel;
+import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class LiteratureServiceImpl implements LiteratureService {
-    BufferedReader reader = LMSTerminal.reader;
-    Literature[] literatures = new Literature[0];
+
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    AbstractLiterature[] literatures = new AbstractLiterature[0];
 
     @Override
-    public Literature[] getLiteratures() {
+    public AbstractLiterature[] getLiteratures() {
         return literatures;
     }
 
     @Override
-    public void setLiteratures(Literature[] literatures) {
+    public void setLiteratures(AbstractLiterature[] literatures) {
         this.literatures = literatures;
     }
 
 
     @Override
-    public Literature createJournal() throws IOException {
-        Literature newJournal;
+    public AbstractLiterature createJournal() throws IOException {
+        AbstractLiterature newJournal;
         System.out.println("Enter a title of article");
         String titleOfArticle = reader.readLine();
         System.out.println("Please enter a author name");
@@ -38,23 +44,23 @@ public class LiteratureServiceImpl implements LiteratureService {
             //
         }
 
-        newJournal = new JournalArticle(titleOfArticle, author);
+        newJournal = new JournalArticleModel(titleOfArticle, author);
         if (!titleJournal.isEmpty()) {
-            newJournal = new JournalArticle(titleOfArticle, author, titleJournal);
+            newJournal = new JournalArticleModel(titleOfArticle, author, titleJournal);
         }
         if (titleJournal.isEmpty() && issueOfTheJournal != 0) {
-            newJournal = new JournalArticle(titleOfArticle, author, issueOfTheJournal);
+            newJournal = new JournalArticleModel(titleOfArticle, author, issueOfTheJournal);
         }
         if (issueOfTheJournal != 0) {
-            newJournal = new JournalArticle(titleOfArticle, author, titleJournal, issueOfTheJournal);
+            newJournal = new JournalArticleModel(titleOfArticle, author, titleJournal, issueOfTheJournal);
         }
         return newJournal;
 
     }
 
     @Override
-    public Literature createBook() throws IOException {
-        Literature newLit;
+    public AbstractLiterature createBook() throws IOException {
+        AbstractLiterature newLit;
         System.out.println("Enter a title of book");
         String nameBook = reader.readLine();
         System.out.println("Please enter a author name");
@@ -63,45 +69,42 @@ public class LiteratureServiceImpl implements LiteratureService {
         String genre = reader.readLine();
         System.out.println("Please enter a year of publication of the book");
         int year = Integer.parseInt(reader.readLine());
-
-        newLit = new Book(nameBook, author);
-
+        newLit = new BookModel(nameBook, author);
         if (!genre.isEmpty()) {
-            newLit = new Book(nameBook, author, genre);
+            newLit = new BookModel(nameBook, author, genre);
         }
         if (genre.isEmpty() && year != 0) {
-            newLit = new Book(nameBook, author, year);
+            newLit = new BookModel(nameBook, author, year);
         }
         if (!genre.isEmpty() && year != 0) {
-            newLit = new Book(nameBook, author, genre, year);
+            newLit = new BookModel(nameBook, author, genre, year);
         }
         return newLit;
     }
 
     @Override
-    public Literature createInternetArticles() throws IOException {
-        Literature newLit;
+    public AbstractLiterature createInternetArticles() throws IOException {
+        AbstractLiterature newLit;
         System.out.println("Enter a title of article");
         String titleOfArticle = reader.readLine();
         System.out.println("Please enter a author name");
         String author = reader.readLine();
         System.out.println("Please enter a url address or press Enter");
         String urlAddress = reader.readLine();
-
-        newLit = new InternetArticles(titleOfArticle, author);
+        newLit = new InternetArticleModel(titleOfArticle, author);
         if (!urlAddress.isEmpty()) {
-            newLit = new InternetArticles(titleOfArticle, author, urlAddress);
+            newLit = new InternetArticleModel(titleOfArticle, author, urlAddress);
         }
         return newLit;
     }
 
-    public Literature[] removeLiterature(int numberLit, Literature[] lit) {
+    public AbstractLiterature[] removeLiterature(int numberLit, AbstractLiterature[] lit) {
         if (lit.length == 1) {
-            lit = (new Literature[0]);
+            lit = (new AbstractLiterature[0]);
         } else {
-            Literature[] literature = lit;
-            Literature litTuDel = literature[numberLit - 1];
-            lit = (Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(Literature[]::new));
+            AbstractLiterature[] literature = lit;
+            AbstractLiterature litTuDel = literature[numberLit - 1];
+            lit = (Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(AbstractLiterature[]::new));
         }
         return lit;
     }
