@@ -73,4 +73,17 @@ public class LMSConsolePrinter {
                 + "4. Choose a lecture\n"
                 + "0. \u001B[31mExit.\n\u001B[0m");
     }
+
+    /**
+     * point 4 main menu: method deleting the lecture list
+     */
+
+    void showFourthMenu() {
+        System.out.println("1. --> choose another lecture");
+        System.out.println("2. --> view the list of literature");
+        System.out.println("3. --> add new literature");
+        System.out.println("4. --> remove literature");
+        System.out.println("5. --> view all lecture information");
+        System.out.println("6. --> exit to the main menu");
+    }
 }

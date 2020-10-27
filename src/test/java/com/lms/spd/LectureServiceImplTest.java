@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LectureServiceImplTest {
@@ -36,6 +38,34 @@ class LectureServiceImplTest {
         assertFalse(lectureService.removeLectures(5));
         assertTrue(lectureService.removeLectures(1));
     }
+
+    @Test
+    @DisplayName("setSelectedLecture method selects by position in the array")
+    void getSelectedLecture() {
+        lectureService.setSelectedLecture(0);
+        LectureImpl expectedLecture = new LectureImpl(1, "BufferedReader.");
+        assertEquals(expectedLecture, lectureService.getSelectedLecture());
+    }
+
+    @Test
+    @DisplayName("Add new lecture to array "
+            + "expected: one more lecture will be added to the end of the lecture array")
+    void addLecture() {
+
+        LectureImpl[] expectedLectures = {
+                new LectureImpl(1, "BufferedReader."),
+                new LectureImpl(2, "Writes text to."),
+                new LectureImpl(3, "Core Java API"),
+                new LectureImpl(4, "BufferedReader.", new Literature[0], "Egorov", new Date()),
+        };
+
+        lectureService.addLecture(4, "BufferedReader.", new Literature[0], "Egorov", new Date());
+        assertArrayEquals(expectedLectures, lectureService.getLectures());
+
+    }
+
+
+
 
 
 }

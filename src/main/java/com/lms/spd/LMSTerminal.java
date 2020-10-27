@@ -1,10 +1,9 @@
 package com.lms.spd;
 
-import com.lms.spd.interfaces.Lecture;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -297,19 +296,6 @@ public class LMSTerminal {
 
     //_______________________________________________________________________________________________________________//
 
-    /**
-     * point 4 main menu: method deleting the lecture list
-     */
-
-    private void showFourthMenu() {
-        System.out.println("1. --> choose another lecture");
-        System.out.println("2. --> view the list of literature");
-        System.out.println("3. --> add new literature");
-        System.out.println("4. --> remove literature");
-        System.out.println("5. --> view all lecture information");
-        System.out.println("6. --> exit to the main menu");
-    }
-
     private void point4MainMenuChoiceOfLecture() throws IOException {
         System.out.println("Enter the number of the lecture, " +
                 "information about which you want to see " +
@@ -338,7 +324,7 @@ public class LMSTerminal {
                 System.out.println("__________________________");
             }
         }
-        showFourthMenu();
+        lmsConsolePrinter.showFourthMenu();
         subMenu2Point4();
     }
 
@@ -394,7 +380,7 @@ public class LMSTerminal {
     private void point4_2ViewListOfLit() throws IOException {
         lmsConsolePrinter.printListLit(lectureServiceImpl.getSelectedLecture());
         System.out.println("what do we do with the bibliography");
-        showFourthMenu();
+        lmsConsolePrinter.showFourthMenu();
         subMenu2Point4();
     }
 
@@ -478,7 +464,7 @@ public class LMSTerminal {
             lectureInfo.append("Lecture date: ").append(lecture.getLectureDate());
         }
         System.out.println(lectureInfo);
-        showFourthMenu();
+        lmsConsolePrinter.showFourthMenu();
         subMenu2Point4();
     }
 }
