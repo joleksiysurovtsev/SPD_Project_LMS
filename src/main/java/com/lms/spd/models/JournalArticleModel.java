@@ -3,8 +3,8 @@ package com.lms.spd.models;
 import java.util.Objects;
 
 public class JournalArticleModel extends AbstractLiterature {
-    String titleOfArticle;
-    int issueOfTheJournal;
+    private String titleOfArticle;
+    private int issueOfTheJournal;
 
     public JournalArticleModel(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
         setAuthor(author);

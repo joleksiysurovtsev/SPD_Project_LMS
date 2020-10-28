@@ -1,7 +1,7 @@
 package com.lms.spd;
 
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.models.interfaces.Lecture;
 
 import java.util.Arrays;
 
@@ -9,8 +9,8 @@ public class LMSConsolePrinter {
     /**
      * The method prints the list of all lectures to the console
      */
-    public void printLectureList(LectureIModel[] lectures) {
-        for (LectureIModel value : lectures) {
+    public void printLectureList(Lecture[] lectures) {
+        for (Lecture value : lectures) {
             System.out.println(value);
         }
     }
@@ -18,8 +18,8 @@ public class LMSConsolePrinter {
     /**
      * The method print Preview Lecture list
      */
-    public void printPreviewLectureList(LectureIModel[] lectures) {
-        for (LectureIModel value : lectures) {
+    public void printPreviewLectureList(Lecture[] lectures) {
+        for (Lecture value : lectures) {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
             } else {
@@ -31,7 +31,7 @@ public class LMSConsolePrinter {
     /**
      * The method prints the list lectures to the console by number
      */
-    public void printLectureList(String s, LectureIModel[] lectures) {
+    public void printLectureList(String s, Lecture[] lectures) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
         for (int i = 0; i < strings.length; i++) {
             strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
@@ -40,7 +40,7 @@ public class LMSConsolePrinter {
         //iterate over the array of lectures and output if there are matches by lecture numbers
         for (String value : numbToDisplay) {
             for (int j = 0; j < lectures.length; j++) {
-                LectureIModel item = lectures[j];
+                Lecture item = lectures[j];
                 if (Integer.parseInt(value) == (j + 1)) {
                     System.out.println(item);
                 }
@@ -52,7 +52,7 @@ public class LMSConsolePrinter {
     /**
      * the method print a list of references from the previously selected lecture
      */
-    public void printListLit(LectureIModel selectedLecture) {
+    public void printListLit(Lecture selectedLecture) {
         AbstractLiterature[] litArr = selectedLecture.getLiteratures();
         if (litArr.length > 0) {
             int i = 1;

@@ -3,7 +3,6 @@ package com.lms.spd.models;
 import java.util.Objects;
 
 public class BookModel extends AbstractLiterature {
-
     private String genre;
     private int publishedInYear;
 

@@ -3,7 +3,7 @@ package com.lms.spd.models;
 import java.util.Objects;
 
 public class InternetArticleModel extends AbstractLiterature {
-    String urlAddress;
+    private String urlAddress;
 
     public InternetArticleModel(String title, String author, String urlAddress) {
         setAuthor(author);
