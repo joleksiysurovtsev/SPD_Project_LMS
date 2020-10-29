@@ -1,10 +1,12 @@
 package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
+import com.lms.spd.services.interfaces.LectureService;
+import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +18,8 @@ import java.util.Date;
 
 public class LMSTerminal {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private LectureServiceImpl lectureServiceImpl = new LectureServiceImpl();
-    private LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
+    private LectureService lectureServiceImpl = new LectureServiceImpl();
+    private LiteratureService literatureService = new LiteratureServiceImpl();
     private LMSConsolePrinter lmsConsolePrinter = new LMSConsolePrinter();
 
 
@@ -476,9 +478,9 @@ public class LMSTerminal {
     }
 
     private void point4_5showLectureInfo() throws IOException {
-        LectureIModel lecture = lectureServiceImpl.getSelectedLecture();
+        Lecture lecture = lectureServiceImpl.getSelectedLecture();
         StringBuilder lectureInfo = new StringBuilder("Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
-        if (lecture.getLectorName() != null) {
+        if (!lecture.getLectorName().isEmpty() || lecture.getLectorName() != null  ) {
             lectureInfo.append("The lecture is lecturing by: ").append(lecture.getLectorName()).append("\n");
         }
         if (lecture.getLectureDate() != null) {

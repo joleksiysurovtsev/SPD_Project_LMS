@@ -36,9 +36,16 @@ public class LectureIModel implements Lecture {
         this.lectorName = lectorName;
     }
 
+    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, AbstractLiterature[] literatures, String lectorName, Date lectureDate) {
+        this.type = type;
+        this.nameOfLecture = nameOfLecture;
+        this.numberOfLecture = numberOfLecture;
+        this.literatures = literatures;
+        this.lectureDate = lectureDate;
+        this.lectorName = lectorName;
+    }
 
     //_______________________________________________________________________________________________________________//
-
 
     @Override
     public void setNameOfLecture(String nameOfLecture) {
@@ -51,13 +58,18 @@ public class LectureIModel implements Lecture {
     }
 
     @Override
+    public void setNumberOfLecture(int numberOfLecture) {
+        this.numberOfLecture = numberOfLecture;
+    }
+
+    @Override
     public int getNumberOfLecture() {
         return this.numberOfLecture;
     }
 
     @Override
-    public void setNumberOfLecture(int numberOfLecture) {
-        this.numberOfLecture = numberOfLecture;
+    public void setLiteratures(AbstractLiterature[] literatures) {
+        this.literatures = literatures;
     }
 
     @Override
@@ -66,43 +78,38 @@ public class LectureIModel implements Lecture {
     }
 
     @Override
-    public void setLiteratures(AbstractLiterature[] literatures) {
-        this.literatures = literatures;
-    }
-
-    public Date getLectureDate() {
-        return lectureDate;
-    }
-
     public void setLectureDate(Date lectureDate) {
         this.lectureDate = lectureDate;
     }
 
-    public String getLectorName() {
-        return lectorName;
+    @Override
+    public Date getLectureDate() {
+        return lectureDate;
     }
 
+    @Override
     public void setLectorName(String lectorName) {
         this.lectorName = lectorName;
     }
 
+    @Override
+    public String getLectorName() {
+        return lectorName;
+    }
 
+    @Override
     public LectureType getType() {
         return type;
     }
-
+    @Override
     public void setType(LectureType type) {
         this.type = type;
     }
 
-
-
-
-
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
     public String toString() {
-        return "Lecture №" + numberOfLecture +
-                ". " + nameOfLecture;
+        return "Lecture №" + numberOfLecture + ". " + nameOfLecture;
     }
 
     @Override

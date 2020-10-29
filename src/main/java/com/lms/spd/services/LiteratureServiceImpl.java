@@ -26,7 +26,6 @@ public class LiteratureServiceImpl implements LiteratureService {
         this.literatures = literatures;
     }
 
-
     @Override
     public AbstractLiterature createJournal() throws IOException {
         AbstractLiterature newJournal;
@@ -68,7 +67,13 @@ public class LiteratureServiceImpl implements LiteratureService {
         System.out.println("Please enter a genre name or press Enter");
         String genre = reader.readLine();
         System.out.println("Please enter a year of publication of the book");
-        int year = Integer.parseInt(reader.readLine());
+        int year = 0;
+        try {
+            year = Integer.parseInt(reader.readLine());
+        }catch (NumberFormatException ignored){
+            //
+        }
+
         newLit = new BookModel(nameBook, author);
         if (!genre.isEmpty()) {
             newLit = new BookModel(nameBook, author, genre);
@@ -98,6 +103,7 @@ public class LiteratureServiceImpl implements LiteratureService {
         return newLit;
     }
 
+    @Override
     public AbstractLiterature[] removeLiterature(int numberLit, AbstractLiterature[] lit) {
         if (lit.length == 1) {
             lit = (new AbstractLiterature[0]);
@@ -108,6 +114,4 @@ public class LiteratureServiceImpl implements LiteratureService {
         }
         return lit;
     }
-
-
 }

@@ -14,4 +14,6 @@ public interface LiteratureService {
     AbstractLiterature createBook() throws IOException;
 
     AbstractLiterature createInternetArticles() throws IOException;
+
+    AbstractLiterature[] removeLiterature(int numberLit, AbstractLiterature[] lit);
 }

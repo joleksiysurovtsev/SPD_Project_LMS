@@ -1,17 +1,17 @@
 package com.lms.spd.services.interfaces;
 
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.models.interfaces.Lecture;
 
 import java.util.Date;
 
 public interface LectureService {
-    LectureIModel[] getLectures();
+    Lecture[] getLectures();
 
-    void setLectures(LectureIModel[] lectures);
+    void setLectures(Lecture[] lectures);
 
-    LectureIModel getSelectedLecture();
+    Lecture getSelectedLecture();
 
     void setSelectedLecture(int selected);
 

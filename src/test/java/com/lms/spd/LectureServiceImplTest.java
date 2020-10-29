@@ -3,6 +3,7 @@ package com.lms.spd;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.services.LectureServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -47,7 +48,7 @@ class LectureServiceImplTest {
     @DisplayName("setSelectedLecture method selects by position in the array")
     void getSelectedLecture() {
         lectureService.setSelectedLecture(0);
-        LectureIModel expectedLecture = new LectureIModel(1, "BufferedReader.");
+        Lecture expectedLecture = new LectureIModel(1, "BufferedReader.");
         assertEquals(expectedLecture, lectureService.getSelectedLecture());
     }
 
@@ -56,7 +57,7 @@ class LectureServiceImplTest {
             + "expected: one more lecture will be added to the end of the lecture array")
     void addLecture() {
 
-        LectureIModel[] expectedLectures = {
+        Lecture[] expectedLectures = {
                 new LectureIModel(1, "BufferedReader."),
                 new LectureIModel(2, "Writes text to."),
                 new LectureIModel(3, "Core Java API"),
