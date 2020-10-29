@@ -1,5 +1,8 @@
 package com.lms.spd;
 
+import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.models.interfaces.Lecture;
+
 import java.util.Arrays;
 
 public class LMSConsolePrinter {
@@ -8,7 +11,7 @@ public class LMSConsolePrinter {
      */
     public void printLectureList(Lecture[] lectures) {
         for (Lecture value : lectures) {
-            System.out.println(value.toString());
+            System.out.println(value);
         }
     }
 
@@ -20,7 +23,7 @@ public class LMSConsolePrinter {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
             } else {
-                System.out.println(value.toString());
+                System.out.println(value);
             }
         }
     }
@@ -39,7 +42,7 @@ public class LMSConsolePrinter {
             for (int j = 0; j < lectures.length; j++) {
                 Lecture item = lectures[j];
                 if (Integer.parseInt(value) == (j + 1)) {
-                    System.out.println(item.toString());
+                    System.out.println(item);
                 }
             }
         }
@@ -47,19 +50,43 @@ public class LMSConsolePrinter {
 
 
     /**
-     * the method returns a list of references from the previously selected lecture
+     * the method print a list of references from the previously selected lecture
      */
     public void printListLit(Lecture selectedLecture) {
-        Literature[] litArr = selectedLecture.getLiterature();
+        AbstractLiterature[] litArr = selectedLecture.getLiteratures();
         if (litArr.length > 0) {
             int i = 1;
-            for (Literature x : litArr
+            for (AbstractLiterature x : litArr
             ) {
-                System.out.println(i + "." + x.toString());
+                System.out.print(i + "." );
+                x.print();
                 i++;
             }
         } else {
             System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
         }
+    }
+
+    public void showStartMenu() {
+        System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" + "\"" + ": learning management system" + "\u001B[0m");
+        System.out.println("Please make your choice from the offered options\n"
+                + "1. Display lectures (number and title)\n"
+                + "2. Add a new lecture\n"
+                + "3. Delete a lecture by its number\n"
+                + "4. Choose a lecture\n"
+                + "0. \u001B[31mExit.\n\u001B[0m");
+    }
+
+    /**
+     * point 4 main menu: method deleting the lecture list
+     */
+
+    void showFourthMenu() {
+        System.out.println("1. --> choose another lecture");
+        System.out.println("2. --> view the list of literature");
+        System.out.println("3. --> add new literature");
+        System.out.println("4. --> remove literature");
+        System.out.println("5. --> view all lecture information");
+        System.out.println("6. --> exit to the main menu");
     }
 }
