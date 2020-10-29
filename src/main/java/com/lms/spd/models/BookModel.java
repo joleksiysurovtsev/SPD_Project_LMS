@@ -1,8 +1,12 @@
 package com.lms.spd.models;
 
+import com.lms.spd.models.interfaces.Literature;
+
 import java.util.Objects;
 
-public class BookModel extends AbstractLiterature {
+public class BookModel implements Literature {
+    private String title;
+    private String author;
     private String genre;
     private int publishedInYear;
 
@@ -51,15 +55,35 @@ public class BookModel extends AbstractLiterature {
     }
 
     @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getAuthor() {
+        return author;
+    }
+
+    @Override
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    @Override
     public void print() {
-        StringBuilder printString = new StringBuilder("Book: "+ getTitle() + " Author: "+ getAuthor());
-        if (!genre.equals("N/A")){
+        StringBuilder printString = new StringBuilder("Book: " + getTitle() + " Author: " + getAuthor());
+        if (!genre.equals("N/A")) {
             printString.append(" Genre: ").append(genre);
         }
-        if (publishedInYear != 0){
+        if (publishedInYear != 0) {
             printString.append(" Year of publishing: ").append(publishedInYear);
         }
-        System.out.print(printString+"\n");
+        System.out.print(printString + "\n");
     }
 
     @Override
@@ -68,7 +92,7 @@ public class BookModel extends AbstractLiterature {
         if (this.publishedInYear != 0) {
             publishedInYearStr = String.valueOf(publishedInYear);
         }
-        return "Book: " + getTitle() + ", author: '" + getAuthor() + '\'' +" genre '" + genre + '\'' +
+        return "Book: " + getTitle() + ", author: '" + getAuthor() + '\'' + " genre '" + genre + '\'' +
                 ", published in year " + publishedInYearStr;
     }
 

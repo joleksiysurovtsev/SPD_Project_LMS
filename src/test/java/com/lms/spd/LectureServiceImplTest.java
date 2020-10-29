@@ -2,8 +2,8 @@ package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
-import com.lms.spd.models.AbstractLiterature;
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -61,11 +61,11 @@ class LectureServiceImplTest {
                 new LectureIModel(1, "BufferedReader."),
                 new LectureIModel(2, "Writes text to."),
                 new LectureIModel(3, "Core Java API"),
-                new LectureIModel(4, "BufferedReader.", new AbstractLiterature[0], "Egorov", new Date()),
+                new LectureIModel(4, "BufferedReader.", new Literature[0], "Egorov", new Date()),
 
         };
 
-        lectureService.addLecture(LectureType.getValueByNumber(1),5, "BufferedReader.", new AbstractLiterature[0], "Egorov", new Date());
+        lectureService.addLecture(LectureType.getValueByNumber(1),5, "BufferedReader.", new Literature[0], "Egorov", new Date());
         assertArrayEquals(expectedLectures, lectureService.getLectures());
 
     }

@@ -1,7 +1,6 @@
 package com.lms.spd.models.interfaces;
 
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.models.AbstractLiterature;
 
 import java.util.Date;
 
@@ -15,9 +14,9 @@ public interface Lecture {
 
     void setNumberOfLecture(int numberOfLecture);
 
-    AbstractLiterature[] getLiteratures();
+    Literature[] getLiteratures();
 
-    void setLiteratures(AbstractLiterature[] literatures);
+    void setLiteratures(Literature[] literatures);
 
     String getLectorName();
 

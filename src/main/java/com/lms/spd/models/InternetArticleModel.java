@@ -1,8 +1,12 @@
 package com.lms.spd.models;
 
+import com.lms.spd.models.interfaces.Literature;
+
 import java.util.Objects;
 
-public class InternetArticleModel extends AbstractLiterature {
+public class InternetArticleModel implements Literature {
+    private String title;
+    private String author;
     private String urlAddress;
 
     public InternetArticleModel(String title, String author, String urlAddress) {
@@ -26,12 +30,32 @@ public class InternetArticleModel extends AbstractLiterature {
     }
 
     @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getAuthor() {
+        return author;
+    }
+
+    @Override
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    @Override
     public void print() {
-        StringBuilder printString = new StringBuilder("Title: "+ getTitle() + " Author: "+ getAuthor());
-        if (!urlAddress.equals("N/A")){
+        StringBuilder printString = new StringBuilder("Title: " + getTitle() + " Author: " + getAuthor());
+        if (!urlAddress.equals("N/A")) {
             printString.append(" Web address: ").append(urlAddress);
         }
-        System.out.print(printString+"\n");
+        System.out.print(printString + "\n");
     }
 
     @Override

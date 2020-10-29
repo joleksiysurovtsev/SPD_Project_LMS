@@ -3,7 +3,7 @@ package com.lms.spd.services;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
-import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.io.BufferedReader;
@@ -14,21 +14,21 @@ import java.util.Arrays;
 public class LiteratureServiceImpl implements LiteratureService {
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    AbstractLiterature[] literatures = new AbstractLiterature[0];
+    Literature[] literatures = new Literature[0];
 
     @Override
-    public AbstractLiterature[] getLiteratures() {
+    public Literature[] getLiteratures() {
         return literatures;
     }
 
     @Override
-    public void setLiteratures(AbstractLiterature[] literatures) {
+    public void setLiteratures(Literature[] literatures) {
         this.literatures = literatures;
     }
 
     @Override
-    public AbstractLiterature createJournal() throws IOException {
-        AbstractLiterature newJournal;
+    public Literature createJournal() throws IOException {
+        Literature newJournal;
         System.out.println("Enter a title of article");
         String titleOfArticle = reader.readLine();
         System.out.println("Please enter a author name");
@@ -58,8 +58,8 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     @Override
-    public AbstractLiterature createBook() throws IOException {
-        AbstractLiterature newLit;
+    public Literature createBook() throws IOException {
+        Literature newLit;
         System.out.println("Enter a title of book");
         String nameBook = reader.readLine();
         System.out.println("Please enter a author name");
@@ -88,8 +88,8 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     @Override
-    public AbstractLiterature createInternetArticles() throws IOException {
-        AbstractLiterature newLit;
+    public Literature createInternetArticles() throws IOException {
+        Literature newLit;
         System.out.println("Enter a title of article");
         String titleOfArticle = reader.readLine();
         System.out.println("Please enter a author name");
@@ -104,13 +104,13 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     @Override
-    public AbstractLiterature[] removeLiterature(int numberLit, AbstractLiterature[] lit) {
+    public Literature[] removeLiterature(int numberLit, Literature[] lit) {
         if (lit.length == 1) {
-            lit = (new AbstractLiterature[0]);
+            lit = (new Literature[0]);
         } else {
-            AbstractLiterature[] literature = lit;
-            AbstractLiterature litTuDel = literature[numberLit - 1];
-            lit = (Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(AbstractLiterature[]::new));
+            Literature[] literature = lit;
+            Literature litTuDel = literature[numberLit - 1];
+            lit = (Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(Literature[]::new));
         }
         return lit;
     }

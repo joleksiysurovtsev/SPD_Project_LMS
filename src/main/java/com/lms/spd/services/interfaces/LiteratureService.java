@@ -1,19 +1,19 @@
 package com.lms.spd.services.interfaces;
 
-import com.lms.spd.models.AbstractLiterature;
+import com.lms.spd.models.interfaces.Literature;
 
 import java.io.IOException;
 
 public interface LiteratureService {
-    AbstractLiterature[] getLiteratures();
+    Literature[] getLiteratures();
 
-    void setLiteratures(AbstractLiterature[] literatures);
+    void setLiteratures(Literature[] literatures);
 
-    AbstractLiterature createJournal() throws IOException;
+    Literature createJournal() throws IOException;
 
-    AbstractLiterature createBook() throws IOException;
+    Literature createBook() throws IOException;
 
-    AbstractLiterature createInternetArticles() throws IOException;
+    Literature createInternetArticles() throws IOException;
 
-    AbstractLiterature[] removeLiterature(int numberLit, AbstractLiterature[] lit);
+    Literature[] removeLiterature(int numberLit, Literature[] lit);
 }

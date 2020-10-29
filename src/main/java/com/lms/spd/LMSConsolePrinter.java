@@ -1,7 +1,8 @@
 package com.lms.spd;
 
-import com.lms.spd.models.AbstractLiterature;
+
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.models.interfaces.Literature;
 
 import java.util.Arrays;
 
@@ -53,10 +54,10 @@ public class LMSConsolePrinter {
      * the method print a list of references from the previously selected lecture
      */
     public void printListLit(Lecture selectedLecture) {
-        AbstractLiterature[] litArr = selectedLecture.getLiteratures();
+        Literature[] litArr = selectedLecture.getLiteratures();
         if (litArr.length > 0) {
             int i = 1;
-            for (AbstractLiterature x : litArr
+            for (Literature x : litArr
             ) {
                 System.out.print(i + "." );
                 x.print();

@@ -1,8 +1,8 @@
 package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.models.AbstractLiterature;
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
 import com.lms.spd.services.interfaces.LectureService;
@@ -103,7 +103,7 @@ public class LMSTerminal {
     private void point2MainMenuAddingLecture2() throws IOException, ParseException {
         int numberOfLecture;
         String nameOfLecture;
-        AbstractLiterature[] literatures;
+        Literature[] literatures;
         Date lectureDate;
         String lectorName;
         LectureType lectureType;
@@ -150,8 +150,8 @@ public class LMSTerminal {
     }
 
     /*3*/
-    public AbstractLiterature[] addLitOrNot() throws IOException {
-        AbstractLiterature[] result = new AbstractLiterature[0];
+    public Literature[] addLitOrNot() throws IOException {
+        Literature[] result = new Literature[0];
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
@@ -173,27 +173,27 @@ public class LMSTerminal {
         return result;
     }
 
-    public AbstractLiterature[] addLitToArr(AbstractLiterature[] arrAddLit) throws IOException {
-        AbstractLiterature[] addLit = arrAddLit;
+    public Literature[] addLitToArr(Literature[] arrAddLit) throws IOException {
+        Literature[] addLit = arrAddLit;
         System.out.println("what type of literature do you want to add ?");
         System.out.println("1.Book, 2.Journal article, 3.Internet article");
         //если выбрали то
         switch (Integer.parseInt(reader.readLine())) {
             case 1:
-                AbstractLiterature newLit = literatureService.createBook();
-                AbstractLiterature[] newArrayLiterature = Arrays.copyOf(addLit, addLit.length + 1);
+                Literature newLit = literatureService.createBook();
+                Literature[] newArrayLiterature = Arrays.copyOf(addLit, addLit.length + 1);
                 newArrayLiterature[newArrayLiterature.length - 1] = newLit;
                 addLit = newArrayLiterature;
                 break;
             case 2:
-                AbstractLiterature newLit2 = literatureService.createJournal();
-                AbstractLiterature[] newArrayLiterature2 = Arrays.copyOf(addLit, addLit.length + 1);
+                Literature newLit2 = literatureService.createJournal();
+                Literature[] newArrayLiterature2 = Arrays.copyOf(addLit, addLit.length + 1);
                 newArrayLiterature2[newArrayLiterature2.length - 1] = newLit2;
                 addLit = newArrayLiterature2;
                 break;
             case 3:
-                AbstractLiterature newLit3 = literatureService.createInternetArticles();
-                AbstractLiterature[] newArrayLiterature3 = Arrays.copyOf(addLit, addLit.length + 1);
+                Literature newLit3 = literatureService.createInternetArticles();
+                Literature[] newArrayLiterature3 = Arrays.copyOf(addLit, addLit.length + 1);
                 newArrayLiterature3[newArrayLiterature3.length - 1] = newLit3;
                 addLit = newArrayLiterature3;
                 break;

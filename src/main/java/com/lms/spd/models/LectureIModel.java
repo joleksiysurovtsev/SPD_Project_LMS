@@ -2,6 +2,7 @@ package com.lms.spd.models;
 
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.models.interfaces.Literature;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Objects;
 public class LectureIModel implements Lecture {
     private String nameOfLecture;
     private int numberOfLecture;
-    private AbstractLiterature[] literatures;
+    private Literature[] literatures;
     private Date lectureDate;
     private String lectorName;
     private LectureType type;
@@ -19,16 +20,16 @@ public class LectureIModel implements Lecture {
 
     public LectureIModel(String nameOfLecture) {
         this.nameOfLecture = nameOfLecture;
-        this.literatures = new AbstractLiterature[0];
+        this.literatures = new Literature[0];
     }
 
-    public LectureIModel(int numberOfLecture, String nameOfLecture, AbstractLiterature... lit) {
+    public LectureIModel(int numberOfLecture, String nameOfLecture, Literature... lit) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
         this.literatures = lit;
     }
 
-    public LectureIModel(int numberOfLecture, String nameOfLecture, AbstractLiterature[] literatures, String lectorName, Date lectureDate) {
+    public LectureIModel(int numberOfLecture, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
         this.literatures = literatures;
@@ -36,7 +37,7 @@ public class LectureIModel implements Lecture {
         this.lectorName = lectorName;
     }
 
-    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, AbstractLiterature[] literatures, String lectorName, Date lectureDate) {
+    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
@@ -68,12 +69,12 @@ public class LectureIModel implements Lecture {
     }
 
     @Override
-    public void setLiteratures(AbstractLiterature[] literatures) {
+    public void setLiteratures(Literature[] literatures) {
         this.literatures = literatures;
     }
 
     @Override
-    public AbstractLiterature[] getLiteratures() {
+    public Literature[] getLiteratures() {
         return literatures;
     }
 

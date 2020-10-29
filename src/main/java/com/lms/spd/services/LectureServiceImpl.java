@@ -3,8 +3,8 @@ package com.lms.spd.services;
 
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
-import com.lms.spd.models.AbstractLiterature;
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.interfaces.LectureService;
 
 import java.util.Arrays;
@@ -50,7 +50,7 @@ public class LectureServiceImpl implements LectureService {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-    public void addLecture(LectureType type, int numberOfLec, String nameOfLecture, AbstractLiterature[] literatures, String lectorName, Date lectureDate) {
+    public void addLecture(LectureType type, int numberOfLec, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
         int numberOfLecture = numberOfLec;
 
         Lecture[] arrayAddedLectures = new Lecture[lectures.length + 1];

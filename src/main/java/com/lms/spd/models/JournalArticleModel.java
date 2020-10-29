@@ -1,8 +1,12 @@
 package com.lms.spd.models;
 
+import com.lms.spd.models.interfaces.Literature;
+
 import java.util.Objects;
 
-public class JournalArticleModel extends AbstractLiterature {
+public class JournalArticleModel implements Literature {
+    private String title;
+    private String author;
     private String titleOfArticle;
     private int issueOfTheJournal;
 
@@ -49,6 +53,27 @@ public class JournalArticleModel extends AbstractLiterature {
 
     public void setIssueOfTheJournal(int issueOfTheJournal) {
         this.issueOfTheJournal = issueOfTheJournal;
+    }
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getAuthor() {
+        return author;
+    }
+
+    @Override
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override
