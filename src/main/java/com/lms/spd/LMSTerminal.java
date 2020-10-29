@@ -14,7 +14,6 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 public class LMSTerminal {
@@ -156,14 +155,10 @@ public class LMSTerminal {
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
-                boolean flag = true;
-                while (flag) {
-                    result = addLitToArr(result);
+                do {
+                    addLitToArr(result);
                     System.out.println("Add more literature? if not enter minus");
-                    if (reader.readLine().equals("-")) {
-                        flag = false;
-                    }
-                }
+                } while (!reader.readLine().equals("-"));
                 break;
             case "-":
                 break;

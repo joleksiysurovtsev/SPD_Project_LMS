@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,11 +62,11 @@ class LectureServiceImplTest {
                 new LectureIModel(1, "BufferedReader."),
                 new LectureIModel(2, "Writes text to."),
                 new LectureIModel(3, "Core Java API"),
-                new LectureIModel(4, "BufferedReader.", new Literature[0], "Egorov", new Date()),
+                new LectureIModel(4, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()),
 
         };
 
-        lectureService.addLecture(LectureType.getValueByNumber(1),5, "BufferedReader.", new Literature[0], "Egorov", new Date());
+        lectureService.addLecture(LectureType.getValueByNumber(1),5, "BufferedReader.", new ArrayList<>(), "Egorov", new Date());
         assertArrayEquals(expectedLectures, lectureService.getLectures());
 
     }
