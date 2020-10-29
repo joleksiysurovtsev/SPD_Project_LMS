@@ -9,20 +9,21 @@ import com.lms.spd.services.interfaces.LiteratureService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
+
 
 public class LiteratureServiceImpl implements LiteratureService {
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    Literature[] literatures = new Literature[0];
+    ArrayList<Literature> literatures = new ArrayList<>();
 
     @Override
-    public Literature[] getLiteratures() {
+    public ArrayList<Literature> getLiteratures() {
         return literatures;
     }
 
     @Override
-    public void setLiteratures(Literature[] literatures) {
+    public void setLiteratures(ArrayList<Literature> literatures) {
         this.literatures = literatures;
     }
 
@@ -39,7 +40,7 @@ public class LiteratureServiceImpl implements LiteratureService {
         int issueOfTheJournal = 0;
         try {
             issueOfTheJournal = Integer.parseInt(reader.readLine());
-        }catch (NumberFormatException | NullPointerException e){
+        } catch (NumberFormatException | NullPointerException e) {
             //
         }
 
@@ -70,7 +71,7 @@ public class LiteratureServiceImpl implements LiteratureService {
         int year = 0;
         try {
             year = Integer.parseInt(reader.readLine());
-        }catch (NumberFormatException ignored){
+        } catch (NumberFormatException ignored) {
             //
         }
 
@@ -104,13 +105,11 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     @Override
-    public Literature[] removeLiterature(int numberLit, Literature[] lit) {
-        if (lit.length == 1) {
-            lit = (new Literature[0]);
+    public ArrayList<Literature> removeLiterature(int numberLit, ArrayList<Literature> lit) {
+        if (lit.size() == 1) {
+            lit = (new ArrayList<>());
         } else {
-            Literature[] literature = lit;
-            Literature litTuDel = literature[numberLit - 1];
-            lit = (Arrays.stream(literature).filter(x -> !(x == litTuDel)).toArray(Literature[]::new));
+            lit.remove(numberLit - 1);
         }
         return lit;
     }

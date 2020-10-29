@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -103,7 +104,7 @@ public class LMSTerminal {
     private void point2MainMenuAddingLecture2() throws IOException, ParseException {
         int numberOfLecture;
         String nameOfLecture;
-        Literature[] literatures;
+        ArrayList<Literature> literatures;
         Date lectureDate;
         String lectorName;
         LectureType lectureType;
@@ -117,7 +118,7 @@ public class LMSTerminal {
         lectureDate = enterTheLectureDate();
         lectureType = setLectureType();
 
-        lectureServiceImpl.addLecture(lectureType,numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
+        lectureServiceImpl.addLecture(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
 
         subMenuAddingLectureToList();
     }
@@ -150,8 +151,8 @@ public class LMSTerminal {
     }
 
     /*3*/
-    public Literature[] addLitOrNot() throws IOException {
-        Literature[] result = new Literature[0];
+    public ArrayList<Literature> addLitOrNot() throws IOException {
+        ArrayList<Literature> result = new ArrayList<>();
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
@@ -173,36 +174,26 @@ public class LMSTerminal {
         return result;
     }
 
-    public Literature[] addLitToArr(Literature[] arrAddLit) throws IOException {
-        Literature[] addLit = arrAddLit;
+    public ArrayList<Literature> addLitToArr(ArrayList<Literature> arrAddLit) throws IOException {
         System.out.println("what type of literature do you want to add ?");
         System.out.println("1.Book, 2.Journal article, 3.Internet article");
-        //если выбрали то
+
         switch (Integer.parseInt(reader.readLine())) {
             case 1:
-                Literature newLit = literatureService.createBook();
-                Literature[] newArrayLiterature = Arrays.copyOf(addLit, addLit.length + 1);
-                newArrayLiterature[newArrayLiterature.length - 1] = newLit;
-                addLit = newArrayLiterature;
+                arrAddLit.add(literatureService.createBook());
                 break;
             case 2:
-                Literature newLit2 = literatureService.createJournal();
-                Literature[] newArrayLiterature2 = Arrays.copyOf(addLit, addLit.length + 1);
-                newArrayLiterature2[newArrayLiterature2.length - 1] = newLit2;
-                addLit = newArrayLiterature2;
+                arrAddLit.add(literatureService.createJournal());
                 break;
             case 3:
-                Literature newLit3 = literatureService.createInternetArticles();
-                Literature[] newArrayLiterature3 = Arrays.copyOf(addLit, addLit.length + 1);
-                newArrayLiterature3[newArrayLiterature3.length - 1] = newLit3;
-                addLit = newArrayLiterature3;
+                arrAddLit.add(literatureService.createInternetArticles());
                 break;
             default:
                 System.out.println("Try again");
                 addLitToArr(arrAddLit);
                 break;
         }
-        return addLit;
+        return arrAddLit;
     }
 
     /*4*/
@@ -239,7 +230,7 @@ public class LMSTerminal {
         String numberStr = reader.readLine();
         int number = Integer.parseInt(numberStr);
         LectureType lectureType = LectureType.getValueByNumber(number);
-        if(lectureType == null) {
+        if (lectureType == null) {
             System.out.println("Unknown type: try again");
             setLectureType();
         }
@@ -449,7 +440,7 @@ public class LMSTerminal {
             point4_4DeleteLit();
         }
         boolean flag = false;
-        if (lectureServiceImpl.getSelectedLecture().getLiteratures().length >= indexLit) {
+        if (lectureServiceImpl.getSelectedLecture().getLiteratures().size() >= indexLit) {
             flag = true;
         }
         if (!flag) {
@@ -480,7 +471,7 @@ public class LMSTerminal {
     private void point4_5showLectureInfo() throws IOException {
         Lecture lecture = lectureServiceImpl.getSelectedLecture();
         StringBuilder lectureInfo = new StringBuilder("Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
-        if (!lecture.getLectorName().isEmpty() || lecture.getLectorName() != null  ) {
+        if (!lecture.getLectorName().isEmpty() || lecture.getLectorName() != null) {
             lectureInfo.append("The lecture is lecturing by: ").append(lecture.getLectorName()).append("\n");
         }
         if (lecture.getLectureDate() != null) {

@@ -3,11 +3,12 @@ package com.lms.spd.services.interfaces;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public interface LiteratureService {
-    Literature[] getLiteratures();
+    ArrayList<Literature> getLiteratures();
 
-    void setLiteratures(Literature[] literatures);
+    void setLiteratures(ArrayList<Literature> literatures);
 
     Literature createJournal() throws IOException;
 
@@ -15,5 +16,5 @@ public interface LiteratureService {
 
     Literature createInternetArticles() throws IOException;
 
-    Literature[] removeLiterature(int numberLit, Literature[] lit);
+    ArrayList<Literature> removeLiterature(int numberLit, ArrayList<Literature> lit);
 }

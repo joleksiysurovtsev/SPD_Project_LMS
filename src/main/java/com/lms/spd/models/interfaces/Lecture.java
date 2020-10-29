@@ -2,6 +2,7 @@ package com.lms.spd.models.interfaces;
 
 import com.lms.spd.enums.LectureType;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public interface Lecture {
@@ -14,9 +15,9 @@ public interface Lecture {
 
     void setNumberOfLecture(int numberOfLecture);
 
-    Literature[] getLiteratures();
+    ArrayList<Literature> getLiteratures();
 
-    void setLiteratures(Literature[] literatures);
+    void setLiteratures(ArrayList<Literature> literatures);
 
     String getLectorName();
 

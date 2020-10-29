@@ -6,7 +6,7 @@ import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LiteratureServiceImpl;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
 
 class LiteratureServiceImplTest {
 
@@ -14,7 +14,7 @@ class LiteratureServiceImplTest {
 
     @Test
     void removeLiterature() {
-        Literature[] literature = {
+        ArrayList<Literature> literature = {
                 new BookModel("Java", "Unknown", "Unknown", 2020),
                 new JournalArticleModel("Java", "Unknown", "Unknown", 5)};
 

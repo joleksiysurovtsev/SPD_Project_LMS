@@ -4,6 +4,7 @@ import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import java.util.Objects;
 public class LectureIModel implements Lecture {
     private String nameOfLecture;
     private int numberOfLecture;
-    private Literature[] literatures;
+    private ArrayList<Literature> literatures;
     private Date lectureDate;
     private String lectorName;
     private LectureType type;
@@ -20,16 +21,22 @@ public class LectureIModel implements Lecture {
 
     public LectureIModel(String nameOfLecture) {
         this.nameOfLecture = nameOfLecture;
-        this.literatures = new Literature[0];
+        this.literatures = new ArrayList<>();
     }
 
-    public LectureIModel(int numberOfLecture, String nameOfLecture, Literature... lit) {
+    public LectureIModel(int numberOfLecture, String nameOfLecture ) {
+        this.nameOfLecture = nameOfLecture;
+        this.numberOfLecture = numberOfLecture;
+    }
+
+
+    public LectureIModel(int numberOfLecture, String nameOfLecture, ArrayList<Literature> lit) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
         this.literatures = lit;
     }
 
-    public LectureIModel(int numberOfLecture, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
+    public LectureIModel(int numberOfLecture, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
         this.literatures = literatures;
@@ -37,7 +44,7 @@ public class LectureIModel implements Lecture {
         this.lectorName = lectorName;
     }
 
-    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
+    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
@@ -69,12 +76,12 @@ public class LectureIModel implements Lecture {
     }
 
     @Override
-    public void setLiteratures(Literature[] literatures) {
+    public void setLiteratures(ArrayList<Literature> literatures) {
         this.literatures = literatures;
     }
 
     @Override
-    public Literature[] getLiteratures() {
+    public ArrayList<Literature> getLiteratures() {
         return literatures;
     }
 
@@ -117,16 +124,17 @@ public class LectureIModel implements Lecture {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LectureIModel lecture = (LectureIModel) o;
-        return numberOfLecture == lecture.numberOfLecture &&
-                nameOfLecture.equals(lecture.nameOfLecture) &&
-                Arrays.equals(literatures, lecture.literatures);
+        LectureIModel that = (LectureIModel) o;
+        return numberOfLecture == that.numberOfLecture &&
+                nameOfLecture.equals(that.nameOfLecture) &&
+                literatures.equals(that.literatures) &&
+                lectureDate.equals(that.lectureDate) &&
+                lectorName.equals(that.lectorName) &&
+                type == that.type;
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(nameOfLecture, numberOfLecture);
-        result = 31 * result + Arrays.hashCode(literatures);
-        return result;
+        return Objects.hash(nameOfLecture, numberOfLecture, literatures, lectureDate, lectorName, type);
     }
 }

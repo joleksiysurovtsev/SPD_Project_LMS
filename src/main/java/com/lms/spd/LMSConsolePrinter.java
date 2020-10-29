@@ -4,6 +4,7 @@ package com.lms.spd;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LMSConsolePrinter {
@@ -54,8 +55,8 @@ public class LMSConsolePrinter {
      * the method print a list of references from the previously selected lecture
      */
     public void printListLit(Lecture selectedLecture) {
-        Literature[] litArr = selectedLecture.getLiteratures();
-        if (litArr.length > 0) {
+        ArrayList<Literature> litArr = selectedLecture.getLiteratures();
+        if (litArr.size() > 0) {
             int i = 1;
             for (Literature x : litArr
             ) {

@@ -4,6 +4,7 @@ import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public interface LectureService {
@@ -15,7 +16,7 @@ public interface LectureService {
 
     void setSelectedLecture(int selected);
 
-    void addLecture(LectureType type, int numberOfLec, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate);
+    void addLecture(LectureType type, int numberOfLec, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate);
 
     boolean removeLectures(int lectureRemove);
 

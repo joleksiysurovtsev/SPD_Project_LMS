@@ -7,16 +7,14 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.interfaces.LectureService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
 public class LectureServiceImpl implements LectureService {
 
     private Lecture[] lectures = {
-            new LectureIModel(1, "BufferedReader."),
-            new LectureIModel(2, "Writes text to."),
-            new LectureIModel(3, "Core Java API"),
-            new LectureIModel(4, "Core Java API4"),
+            new LectureIModel(1,"BufferedReader."),
     };
 
     @Override
@@ -50,7 +48,7 @@ public class LectureServiceImpl implements LectureService {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-    public void addLecture(LectureType type, int numberOfLec, String nameOfLecture, Literature[] literatures, String lectorName, Date lectureDate) {
+    public void addLecture(LectureType type, int numberOfLec, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
         int numberOfLecture = numberOfLec;
 
         Lecture[] arrayAddedLectures = new Lecture[lectures.length + 1];
