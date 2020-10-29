@@ -85,7 +85,7 @@ public class LectureServiceImpl implements LectureService {
         for (Lecture value : lectures) {
             int numb = value.getNumberOfLecture();
             if (numb == lectureRemove) {
-                lectures = Arrays.stream(lectures).filter(x -> !(x.getNumberOfLecture() == lectureRemove)).toArray(Lecture[]::new);
+                lectures = Arrays.stream(lectures).filter(x -> x.getNumberOfLecture() != lectureRemove).toArray(Lecture[]::new);
                 sortLectureArrAfterRemove();
                 flag = true;
                 break;
@@ -120,7 +120,8 @@ public class LectureServiceImpl implements LectureService {
         }
         for (String s : numbToDisplay) {
             int z = Integer.parseInt(s);
-            lectures = Arrays.stream(lectures).filter(x -> !(x.getNumberOfLecture() == z)).toArray(Lecture[]::new);
+
+            lectures = Arrays.stream(lectures).filter(x -> x.getNumberOfLecture() != z).toArray(Lecture[]::new);
         }
         sortLectureArrAfterRemove();
         return stringContains.toString();
@@ -129,25 +130,21 @@ public class LectureServiceImpl implements LectureService {
     //________________________________________________________________________________________________//
 
     private void sortLectureArr() {
-        Lecture[] sortedArr = lectures;
         boolean flag = false;
         while (!flag) {
             flag = true;
             for (int i = 0; i < lectures.length - 1; i++) {
-                if (sortedArr[i].getNumberOfLecture() == sortedArr[i + 1].getNumberOfLecture()) {
-                    sortedArr[i + 1].setNumberOfLecture((sortedArr[i + 1].getNumberOfLecture()) + 1);
+                if (lectures[i].getNumberOfLecture() == lectures[i + 1].getNumberOfLecture()) {
+                    lectures[i + 1].setNumberOfLecture((lectures[i + 1].getNumberOfLecture()) + 1);
                     flag = false;
                 }
             }
         }
-        lectures = sortedArr;
     }
 
     private void sortLectureArrAfterRemove() {
-        Lecture[] sortedArr = lectures;
         for (int i = 0; i < lectures.length; i++) {
-            sortedArr[i].setNumberOfLecture(i + 1);
+            lectures[i].setNumberOfLecture(i + 1);
         }
-        lectures = sortedArr;
     }
 }
