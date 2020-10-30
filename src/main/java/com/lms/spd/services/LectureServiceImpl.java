@@ -13,7 +13,6 @@ import java.util.Date;
 
 public class LectureServiceImpl implements LectureService {
 
-
     private ArrayList<Lecture> lectures = new ArrayList<>();
 
     @Override
