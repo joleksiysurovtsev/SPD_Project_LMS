@@ -33,7 +33,7 @@ class JournalArticleModelTest {
     void testEquals() {
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         JournalArticleModel journalArticle2 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        JournalArticleModel journalArticle3 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world");
+        JournalArticleModel journalArticle3 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world",3);
 
         assertTrue(journalArticle.equals(journalArticle2));
         assertFalse(journalArticle.equals(journalArticle3));

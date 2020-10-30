@@ -5,7 +5,6 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,27 +20,11 @@ public class LectureIModel implements Lecture {
 
     public LectureIModel(String nameOfLecture) {
         this.nameOfLecture = nameOfLecture;
-        this.literatures = new ArrayList<>();
     }
 
-    public LectureIModel(int numberOfLecture, String nameOfLecture ) {
+    public LectureIModel(int numberOfLecture, String nameOfLecture) {
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
-    }
-
-
-    public LectureIModel(int numberOfLecture, String nameOfLecture, ArrayList<Literature> lit) {
-        this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
-        this.literatures = lit;
-    }
-
-    public LectureIModel(int numberOfLecture, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
-        this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
-        this.literatures = literatures;
-        this.lectureDate = lectureDate;
-        this.lectorName = lectorName;
     }
 
     public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
@@ -52,6 +35,7 @@ public class LectureIModel implements Lecture {
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
     }
+
 
     //_______________________________________________________________________________________________________________//
 
@@ -109,6 +93,7 @@ public class LectureIModel implements Lecture {
     public LectureType getType() {
         return type;
     }
+
     @Override
     public void setType(LectureType type) {
         this.type = type;
@@ -123,18 +108,18 @@ public class LectureIModel implements Lecture {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof LectureIModel)) return false;
         LectureIModel that = (LectureIModel) o;
-        return numberOfLecture == that.numberOfLecture &&
-                nameOfLecture.equals(that.nameOfLecture) &&
-                literatures.equals(that.literatures) &&
-                lectureDate.equals(that.lectureDate) &&
-                lectorName.equals(that.lectorName) &&
-                type == that.type;
+        return getNumberOfLecture() == that.getNumberOfLecture() &&
+                Objects.equals(getNameOfLecture(), that.getNameOfLecture()) &&
+                Objects.equals(getLiteratures(), that.getLiteratures()) &&
+                Objects.equals(getLectureDate(), that.getLectureDate()) &&
+                Objects.equals(getLectorName(), that.getLectorName()) &&
+                getType() == that.getType();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameOfLecture, numberOfLecture, literatures, lectureDate, lectorName, type);
+        return Objects.hash(getNameOfLecture(), getNumberOfLecture(), getLiteratures(), getLectureDate(), getLectorName(), getType());
     }
 }

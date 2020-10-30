@@ -15,12 +15,6 @@ public class InternetArticleModel implements Literature {
         this.urlAddress = urlAddress;
     }
 
-    public InternetArticleModel(String titleOfArticle, String author) {
-        setAuthor(author);
-        setTitle(titleOfArticle);
-        this.urlAddress = "N/A";
-    }
-
     public String getUrlAddress() {
         return urlAddress;
     }
@@ -67,13 +61,14 @@ public class InternetArticleModel implements Literature {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof InternetArticleModel)) return false;
-        if (!super.equals(o)) return false;
         InternetArticleModel that = (InternetArticleModel) o;
-        return getUrlAddress().equals(that.getUrlAddress());
+        return getTitle().equals(that.getTitle()) &&
+                getAuthor().equals(that.getAuthor()) &&
+                getUrlAddress().equals(that.getUrlAddress());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getUrlAddress());
+        return Objects.hash(getTitle(), getAuthor(), getUrlAddress());
     }
 }

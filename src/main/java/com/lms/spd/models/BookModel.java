@@ -10,48 +10,11 @@ public class BookModel implements Literature {
     private String genre;
     private int publishedInYear;
 
-    public BookModel(String title, String author) {
-        this.genre = "N/A";
-        this.publishedInYear = 0;
-        setTitle(title);
-        setAuthor(author);
-    }
-
-    public BookModel(String title, String author, String genre) {
-        this.genre = genre;
-        this.publishedInYear = 0;
-        setTitle(title);
-        setAuthor(author);
-    }
-
     public BookModel(String title, String author, String genre, int publishedInYear) {
         this.genre = genre;
         this.publishedInYear = publishedInYear;
         setTitle(title);
         setAuthor(author);
-    }
-
-    public BookModel(String nameBook, String author, int year) {
-        this.genre = "N/A";
-        this.publishedInYear = year;
-        setTitle(nameBook);
-        setAuthor(author);
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public int getPublishedInYear() {
-        return publishedInYear;
-    }
-
-    public void setPublishedInYear(int publishedInYear) {
-        this.publishedInYear = publishedInYear;
     }
 
     @Override
@@ -72,6 +35,22 @@ public class BookModel implements Literature {
     @Override
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public int getPublishedInYear() {
+        return publishedInYear;
+    }
+
+    public void setPublishedInYear(int publishedInYear) {
+        this.publishedInYear = publishedInYear;
     }
 
     @Override
@@ -100,14 +79,15 @@ public class BookModel implements Literature {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BookModel)) return false;
-        if (!super.equals(o)) return false;
-        BookModel book = (BookModel) o;
-        return getPublishedInYear() == book.getPublishedInYear() &&
-                getGenre().equals(book.getGenre());
+        BookModel bookModel = (BookModel) o;
+        return getPublishedInYear() == bookModel.getPublishedInYear() &&
+                getTitle().equals(bookModel.getTitle()) &&
+                getAuthor().equals(bookModel.getAuthor()) &&
+                getGenre().equals(bookModel.getGenre());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getGenre(), getPublishedInYear());
+        return Objects.hash(getTitle(), getAuthor(), getGenre(), getPublishedInYear());
     }
 }

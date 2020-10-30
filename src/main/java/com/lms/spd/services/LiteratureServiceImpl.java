@@ -30,42 +30,50 @@ public class LiteratureServiceImpl implements LiteratureService {
     public Literature createJournal() throws IOException {
         Literature newJournal;
         System.out.println("Enter a title of article");
-        String titleOfArticle = reader.readLine();
+        String title = reader.readLine();
+        if (title.isEmpty()) {
+            title = "Unknown";
+        }
         System.out.println("Please enter a author name");
         String author = reader.readLine();
+        if (author.isEmpty()) {
+            author = "Unknown";
+        }
         System.out.println("Please enter a titleJournal name or press Enter");
         String titleJournal = reader.readLine();
+        if (titleJournal.isEmpty()) {
+            titleJournal = "Unknown";
+        }
         System.out.println("Please enter a issue of the journal where the article was published");
         int issueOfTheJournal = 0;
         try {
             issueOfTheJournal = Integer.parseInt(reader.readLine());
         } catch (NumberFormatException | NullPointerException e) {
-            //
+            issueOfTheJournal = 0;
         }
 
-        newJournal = new JournalArticleModel(titleOfArticle, author);
-        if (!titleJournal.isEmpty()) {
-            newJournal = new JournalArticleModel(titleOfArticle, author, titleJournal);
-        }
-        if (titleJournal.isEmpty() && issueOfTheJournal != 0) {
-            newJournal = new JournalArticleModel(titleOfArticle, author, issueOfTheJournal);
-        }
-        if (issueOfTheJournal != 0) {
-            newJournal = new JournalArticleModel(titleOfArticle, author, titleJournal, issueOfTheJournal);
-        }
+        newJournal = new JournalArticleModel(title, author, titleJournal, issueOfTheJournal);
         return newJournal;
-
     }
 
     @Override
     public Literature createBook() throws IOException {
         Literature newLit;
         System.out.println("Enter a title of book");
-        String nameBook = reader.readLine();
+        String title = reader.readLine();
+        if (title.isEmpty()) {
+            title = "Unknown";
+        }
         System.out.println("Please enter a author name");
         String author = reader.readLine();
+        if (author.isEmpty()) {
+            author = "Unknown";
+        }
         System.out.println("Please enter a genre name or press Enter");
         String genre = reader.readLine();
+        if (genre.isEmpty()) {
+            genre = "Unknown";
+        }
         System.out.println("Please enter a year of publication of the book");
         int year = 0;
         try {
@@ -73,17 +81,7 @@ public class LiteratureServiceImpl implements LiteratureService {
         } catch (NumberFormatException ignored) {
             //
         }
-
-        newLit = new BookModel(nameBook, author);
-        if (!genre.isEmpty()) {
-            newLit = new BookModel(nameBook, author, genre);
-        }
-        if (genre.isEmpty() && year != 0) {
-            newLit = new BookModel(nameBook, author, year);
-        }
-        if (!genre.isEmpty() && year != 0) {
-            newLit = new BookModel(nameBook, author, genre, year);
-        }
+        newLit = new BookModel(title, author, genre, year);
         return newLit;
     }
 
@@ -91,15 +89,21 @@ public class LiteratureServiceImpl implements LiteratureService {
     public Literature createInternetArticles() throws IOException {
         Literature newLit;
         System.out.println("Enter a title of article");
-        String titleOfArticle = reader.readLine();
+        String title = reader.readLine();
+        if (title.isEmpty()) {
+            title = "Unknown";
+        }
         System.out.println("Please enter a author name");
         String author = reader.readLine();
+        if (author.isEmpty()) {
+            author = "Unknown";
+        }
         System.out.println("Please enter a url address or press Enter");
         String urlAddress = reader.readLine();
-        newLit = new InternetArticleModel(titleOfArticle, author);
-        if (!urlAddress.isEmpty()) {
-            newLit = new InternetArticleModel(titleOfArticle, author, urlAddress);
+        if (urlAddress.isEmpty()) {
+            urlAddress = "Unknown";
         }
+        newLit = new InternetArticleModel(title, author, urlAddress);
         return newLit;
     }
 

@@ -17,45 +17,6 @@ public class JournalArticleModel implements Literature {
         this.issueOfTheJournal = issueOfTheJournal;
     }
 
-    public JournalArticleModel(String titleOfArticle, String author, String titleJournal) {
-        setAuthor(author);
-        setTitle(titleJournal);
-        this.titleOfArticle = titleOfArticle;
-        this.issueOfTheJournal = 0;
-    }
-
-    public JournalArticleModel(String titleOfArticle, String author) {
-        setAuthor(author);
-        setTitle("N/A");
-        this.titleOfArticle = titleOfArticle;
-        this.issueOfTheJournal = 0;
-    }
-
-    public JournalArticleModel(String titleOfArticle, String author, int issueOfTheJournal) {
-        setAuthor(author);
-        setTitle(titleOfArticle);
-        this.titleOfArticle = "N/A";
-        this.issueOfTheJournal = issueOfTheJournal;
-    }
-
-
-    public String getTitleOfArticle() {
-        return titleOfArticle;
-    }
-
-    public void setTitleOfArticle(String titleOfArticle) {
-        this.titleOfArticle = titleOfArticle;
-    }
-
-    public int getIssueOfTheJournal() {
-        return issueOfTheJournal;
-    }
-
-    public void setIssueOfTheJournal(int issueOfTheJournal) {
-        this.issueOfTheJournal = issueOfTheJournal;
-    }
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
     public String getTitle() {
         return title;
@@ -75,6 +36,23 @@ public class JournalArticleModel implements Literature {
     public void setAuthor(String author) {
         this.author = author;
     }
+
+    public String getTitleOfArticle() {
+        return titleOfArticle;
+    }
+
+    public void setTitleOfArticle(String titleOfArticle) {
+        this.titleOfArticle = titleOfArticle;
+    }
+
+    public int getIssueOfTheJournal() {
+        return issueOfTheJournal;
+    }
+
+    public void setIssueOfTheJournal(int issueOfTheJournal) {
+        this.issueOfTheJournal = issueOfTheJournal;
+    }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     @Override
     public void print() {
@@ -105,14 +83,15 @@ public class JournalArticleModel implements Literature {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof JournalArticleModel)) return false;
-        if (!super.equals(o)) return false;
         JournalArticleModel that = (JournalArticleModel) o;
         return getIssueOfTheJournal() == that.getIssueOfTheJournal() &&
+                getTitle().equals(that.getTitle()) &&
+                getAuthor().equals(that.getAuthor()) &&
                 getTitleOfArticle().equals(that.getTitleOfArticle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getTitleOfArticle(), getIssueOfTheJournal());
+        return Objects.hash(getTitle(), getAuthor(), getTitleOfArticle(), getIssueOfTheJournal());
     }
 }

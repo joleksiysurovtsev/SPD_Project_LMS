@@ -14,7 +14,7 @@ import java.util.Date;
 public class LectureServiceImpl implements LectureService {
 
     private Lecture[] lectures = {
-            new LectureIModel(1,"BufferedReader."),
+            new LectureIModel("BufferedReader."),
     };
 
     @Override
