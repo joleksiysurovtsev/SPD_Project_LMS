@@ -13,17 +13,16 @@ import java.util.Date;
 
 public class LectureServiceImpl implements LectureService {
 
-    private Lecture[] lectures = {
-            new LectureIModel("BufferedReader."),
-    };
+
+    private ArrayList<Lecture> lectures = new ArrayList<>();
 
     @Override
-    public Lecture[] getLectures() {
+    public ArrayList<Lecture> getLectures() {
         return lectures;
     }
 
     @Override
-    public void setLectures(Lecture[] lectures) {
+    public void setLectures(ArrayList<Lecture> lectures) {
         this.lectures = lectures;
     }
 
@@ -49,26 +48,12 @@ public class LectureServiceImpl implements LectureService {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     public void addLecture(LectureType type, int numberOfLec, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
-        int numberOfLecture = numberOfLec;
-
-        Lecture[] arrayAddedLectures = new Lecture[lectures.length + 1];
-
-        System.arraycopy(lectures, 0, arrayAddedLectures, 0, arrayAddedLectures.length - 1);
-
-        if (numberOfLecture > arrayAddedLectures.length) {
-            numberOfLecture = arrayAddedLectures.length;
+        Lecture addedLecture = new LectureIModel(type, numberOfLec, nameOfLecture, literatures, lectorName, lectureDate);
+        if (lectures.size() == 0 || numberOfLec > lectures.size()) {
+            lectures.add(addedLecture);
+        } else {
+            lectures.add(numberOfLec - 1, addedLecture);
         }
-
-        Lecture addedLecture = new LectureIModel(type, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
-
-        for (int i = arrayAddedLectures.length - 1; i > -1; i--) {
-            if (i == numberOfLecture - 1) {
-                arrayAddedLectures[i] = addedLecture;
-                break;
-            }
-            arrayAddedLectures[i] = arrayAddedLectures[i - 1];
-        }
-        lectures = arrayAddedLectures;
         sortLectureArr();
     }
 
@@ -79,17 +64,15 @@ public class LectureServiceImpl implements LectureService {
      */
     @Override
     public boolean removeLectures(int lectureRemove) {
-        boolean flag = false;
-        for (Lecture value : lectures) {
-            int numb = value.getNumberOfLecture();
-            if (numb == lectureRemove) {
-                lectures = Arrays.stream(lectures).filter(x -> x.getNumberOfLecture() != lectureRemove).toArray(Lecture[]::new);
-                sortLectureArrAfterRemove();
-                flag = true;
-                break;
-            }
+        if (lectures.size() == 1 || lectureRemove == 1) {
+            lectures = new ArrayList<>();
+            return true;
         }
-        return flag;
+        if (!(lectureRemove < 0 || lectureRemove >= lectures.size())) {
+            lectures.remove(lectureRemove - 1);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -118,8 +101,7 @@ public class LectureServiceImpl implements LectureService {
         }
         for (String s : numbToDisplay) {
             int z = Integer.parseInt(s);
-
-            lectures = Arrays.stream(lectures).filter(x -> x.getNumberOfLecture() != z).toArray(Lecture[]::new);
+            lectures.removeIf(p -> p.getNumberOfLecture() == z);
         }
         sortLectureArrAfterRemove();
         return stringContains.toString();
@@ -131,9 +113,9 @@ public class LectureServiceImpl implements LectureService {
         boolean flag = false;
         while (!flag) {
             flag = true;
-            for (int i = 0; i < lectures.length - 1; i++) {
-                if (lectures[i].getNumberOfLecture() == lectures[i + 1].getNumberOfLecture()) {
-                    lectures[i + 1].setNumberOfLecture((lectures[i + 1].getNumberOfLecture()) + 1);
+            for (int i = 0; i < lectures.size() - 1; i++) {
+                if (lectures.get(i).getNumberOfLecture() == lectures.get(i + 1).getNumberOfLecture()) {
+                    lectures.get(i + 1).setNumberOfLecture((lectures.get(i + 1).getNumberOfLecture()) + 1);
                     flag = false;
                 }
             }
@@ -141,8 +123,8 @@ public class LectureServiceImpl implements LectureService {
     }
 
     private void sortLectureArrAfterRemove() {
-        for (int i = 0; i < lectures.length; i++) {
-            lectures[i].setNumberOfLecture(i + 1);
+        for (int i = 0; i < lectures.size(); i++) {
+            lectures.get(i).setNumberOfLecture(i + 1);
         }
     }
 }

@@ -11,7 +11,7 @@ public class LMSConsolePrinter {
     /**
      * The method prints the list of all lectures to the console
      */
-    public void printLectureList(Lecture[] lectures) {
+    public void printLectureList(ArrayList<Lecture> lectures) {
         for (Lecture value : lectures) {
             System.out.println(value);
         }
@@ -20,7 +20,7 @@ public class LMSConsolePrinter {
     /**
      * The method print Preview Lecture list
      */
-    public void printPreviewLectureList(Lecture[] lectures) {
+    public void printPreviewLectureList(ArrayList<Lecture> lectures) {
         for (Lecture value : lectures) {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
@@ -33,7 +33,7 @@ public class LMSConsolePrinter {
     /**
      * The method prints the list lectures to the console by number
      */
-    public void printLectureList(String s, Lecture[] lectures) {
+    public void printLectureList(String s, ArrayList<Lecture> lectures) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
         for (int i = 0; i < strings.length; i++) {
             strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
@@ -41,8 +41,8 @@ public class LMSConsolePrinter {
         String[] numbToDisplay = Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
         //iterate over the array of lectures and output if there are matches by lecture numbers
         for (String value : numbToDisplay) {
-            for (int j = 0; j < lectures.length; j++) {
-                Lecture item = lectures[j];
+            for (int j = 0; j < lectures.size(); j++) {
+                Lecture item = lectures.get(j);
                 if (Integer.parseInt(value) == (j + 1)) {
                     System.out.println(item);
                 }

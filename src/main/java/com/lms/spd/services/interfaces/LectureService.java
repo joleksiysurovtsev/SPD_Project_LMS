@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public interface LectureService {
-    Lecture[] getLectures();
+    ArrayList<Lecture> getLectures();
 
-    void setLectures(Lecture[] lectures);
+    void setLectures(ArrayList<Lecture> lectures);
 
     Lecture getSelectedLecture();
 
