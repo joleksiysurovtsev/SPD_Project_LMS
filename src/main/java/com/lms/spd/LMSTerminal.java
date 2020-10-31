@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -47,7 +49,7 @@ public class LMSTerminal {
                     startLMS();
                     break;
             }
-        } catch (IOException | NullPointerException | ParseException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -102,45 +104,52 @@ public class LMSTerminal {
      * point 2 main menu: adding new lectures
      */
 
-    private void point2MainMenuAddingLecture() throws IOException, ParseException {
+    private void point2MainMenuAddingLecture() throws IOException {
         System.out.println("Please enter number for new lecture if you don't want to press enter \n\"Number: \"");
         int numberOfLecture = enterTheLectureNumber();
 
+        System.out.println("Enter the title of the lecture");
         String nameOfLecture = enterTheLectureTitle();
-        Date lectureDate = enterTheLectureDate();
+
+        System.out.println("Enter lecturer name");
         String lectorName = enterLektorName();
+
         LectureType lectureType = setLectureType();
+
+        Date lectureDate = enterTheLectureDate();
+
         ArrayList<Literature> literatures = addLitOrNot();
 
-        System.out.println("Entering a new lecture");
-        lectureServiceImpl.addLecture(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
 
+
+        lectureServiceImpl.addLecture(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
+        System.out.println("Entering a new lecture");
         subMenuAddingLectureToList();
     }
 
 
-    /**If the lecture array is empty, then the first number in the lecture is assigned,
-     * if the number is too large, then a number is assigned equal to the length of the array.*/
+    /**
+     * If the lecture array is empty, then the first number in the lecture is assigned,
+     * if the number is too large, then a number is assigned equal to the length of the array.
+     */
     private int enterTheLectureNumber() {
         try {
             int x = Integer.parseInt(reader.readLine());
-            return Math.min(x, lectureServiceImpl.getLectures().size()+1);
+            return Math.min(x, lectureServiceImpl.getLectures().size() + 1);
         } catch (IOException | NumberFormatException e) {
             System.out.println("The wrong number format is entered, the last number of the lecture array will be assigned");
-            return (lectureServiceImpl.getLectures().isEmpty()) ? 1 : lectureServiceImpl.getLectures().size()+1;
+            return (lectureServiceImpl.getLectures().isEmpty()) ? 1 : lectureServiceImpl.getLectures().size() + 1;
         }
     }
 
-    /*2*/
+    /**
+     * Returns the title of the lecture after checking that it is not empty.
+     */
     private String enterTheLectureTitle() throws IOException {
-        String lectureName;
-        while (true) {
-            System.out.println("Enter the title of the lecture");
-            lectureName = reader.readLine();
-            if (!lectureName.isEmpty()) {
-                break;
-            }
+        String lectureName = reader.readLine();
+        if (lectureName.isEmpty()) {
             System.out.println("The lecture must have a title. Try again");
+            enterTheLectureTitle();
         }
         return lectureName;
     }
@@ -187,48 +196,56 @@ public class LMSTerminal {
         return arrAddLit;
     }
 
-    /*4*/
+    /**
+     * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
+     * returns the title of the lecture after checking that it is not empty.
+     */
     private String enterLektorName() throws IOException {
-        System.out.println("Enter lecturer name");
-        return reader.readLine();
+        String s = reader.readLine();
+        return (s.isEmpty()) ? "Unknown" : s;
     }
 
-    /*5*/
+    /** Method of adding the lecture date. If a date is entered,
+     * the date is set to the wrong date on the day after two months from the current*/
     private Date enterTheLectureDate() throws IOException {
         System.out.println("Enter the lecture date for example: 19-10-1986");
         Date d1 = new Date();
         String dateInString;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         dateInString = reader.readLine();
-        if (dateInString.matches("[0-9]{2}[-][0-9]{2}[-][0-9]{4}")) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        try {
             sdf.setLenient(false);
-            try {
-                d1 = sdf.parse(dateInString);
-            } catch (ParseException e) {
-                //e.printStackTrace();//Always going to catch block
-            }
-        } else {
-            System.out.println("Invalid date format");
-
+            d1 = sdf.parse(dateInString);
+        } catch (ParseException e) {
+            LocalDateTime localDateTime = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusMonths(2);
+            d1 = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            System.out.println("The date is entered incorrectly, the date of the lecture is set two months from the current");
         }
         return d1;
     }
 
-    private LectureType setLectureType() throws IOException {
+    /**
+     * Returns the lecture type implemented by type checking.
+     */
+    private LectureType setLectureType() {
         System.out.println("Please, choose lecture type: ");
         System.out.println("1. " + LectureType.OPEN);
         System.out.println("2. " + LectureType.CLOSE);
-        String numberStr = reader.readLine();
-        int number = Integer.parseInt(numberStr);
-        LectureType lectureType = LectureType.getValueByNumber(number);
-        if (lectureType == null) {
+        int number = 0;
+        try {
+            number = Integer.parseInt(reader.readLine());
+            if (number > LectureType.values().length || number <= 0) {
+                System.out.println("Unknown type: try again");
+                setLectureType();
+            }
+        } catch (IOException e) {
             System.out.println("Unknown type: try again");
             setLectureType();
         }
-        return lectureType;
+        return LectureType.getValueByNumber(number);
     }
 
-    private void subMenuAddingLectureToList() throws IOException, ParseException {
+    private void subMenuAddingLectureToList() throws IOException {
         System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"-\"" + "\u001B[0m"
                 + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         switch (reader.readLine().toUpperCase()) {

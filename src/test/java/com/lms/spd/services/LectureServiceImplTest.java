@@ -1,15 +1,15 @@
-package com.lms.spd;
+package com.lms.spd.services;
 
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.services.LectureServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,11 +21,10 @@ class LectureServiceImplTest {
     void createLectureService() {
         lectureService = new LectureServiceImpl();
         ArrayList<Lecture> lectures = new ArrayList<>();
-                {
-             lectures.add(new LectureIModel(1, "BufferedReader."));
-             lectures.add(new LectureIModel(2, "Writes text to."));
-             lectures.add(new LectureIModel(3, "Core Java API"));
-        };
+        lectures.add(new LectureIModel(1, "BufferedReader."));
+        lectures.add(new LectureIModel(2, "Writes text to."));
+        lectures.add(new LectureIModel(3, "Core Java API"));
+
         lectureService.setLectures(lectures);
     }
 
@@ -41,9 +40,15 @@ class LectureServiceImplTest {
     @Test
     @DisplayName("Remove one lecture from empty array: expected false ")
     void removeLecturesByIntTest() {
-//        assertFalse(lectureService.removeLectures(5));
-//        assertTrue(lectureService.removeLectures(1));
+        assertFalse(lectureService.removeLectures(5));
+        assertTrue(lectureService.removeLectures(1));
     }
+    @Test
+    @DisplayName("Remove one lecture from empty array: expected false ")
+    void removeLecturesByIntTest2() {
+        assertTrue(lectureService.removeLectures(2));
+    }
+
 
     @Test
     @DisplayName("setSelectedLecture method selects by position in the array")
@@ -57,22 +62,15 @@ class LectureServiceImplTest {
     @DisplayName("Add new lecture to array "
             + "expected: one more lecture will be added to the end of the lecture array")
     void addLecture() {
-
-        Lecture[] expectedLectures = {
-                new LectureIModel(1, "BufferedReader."),
-                new LectureIModel(2, "Writes text to."),
-                new LectureIModel(3, "Core Java API"),
-                new LectureIModel(LectureType.getValueByNumber(1),4, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()),
-
-        };
-
-        lectureService.addLecture(LectureType.getValueByNumber(1),4, "BufferedReader.", new ArrayList<>(), "Egorov", new Date());
-//        assertArrayEquals(expectedLectures, lectureService.getLectures());
-
+        List<Lecture> expectedLectures = new ArrayList<>();
+        {
+            expectedLectures.add(new LectureIModel(1, "BufferedReader."));
+            expectedLectures.add(new LectureIModel(2, "Writes text to."));
+            expectedLectures.add(new LectureIModel(3, "Core Java API"));
+            expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 4, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()));
+        }
+        lectureService.addLecture(LectureType.getValueByNumber(1), 4, "BufferedReader.", new ArrayList<>(), "Egorov", new Date());
+        assertEquals(expectedLectures, lectureService.getLectures());
     }
-
-
-
-
 
 }

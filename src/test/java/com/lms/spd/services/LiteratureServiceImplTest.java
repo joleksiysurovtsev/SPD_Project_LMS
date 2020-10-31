@@ -1,4 +1,4 @@
-package com.lms.spd;
+package com.lms.spd.services;
 
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.JournalArticleModel;
