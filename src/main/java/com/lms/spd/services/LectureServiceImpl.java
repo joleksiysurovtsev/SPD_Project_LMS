@@ -10,10 +10,12 @@ import com.lms.spd.services.interfaces.LectureService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.IntStream;
 
 public class LectureServiceImpl implements LectureService {
 
     private ArrayList<Lecture> lectures = new ArrayList<>();
+
 
     @Override
     public ArrayList<Lecture> getLectures() {
@@ -34,21 +36,14 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public void setSelectedLecture(int selected) {
-        Lecture select = new LectureIModel("");
-        for (Lecture lecture : lectures) {
-            if (lecture.getNumberOfLecture() == selected + 1) {
-                select = lecture;
-                break;
-            }
-        }
-        selectedLecture = select;
+        selectedLecture = lectures.stream().filter(lecture -> lecture.getNumberOfLecture() == selected + 1).findFirst().orElse(new LectureIModel(""));
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     public void addLecture(LectureType type, int numberOfLec, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
         Lecture addedLecture = new LectureIModel(type, numberOfLec, nameOfLecture, literatures, lectorName, lectureDate);
-        if (lectures.size() == 0 || numberOfLec > lectures.size()) {
+        if ((lectures.isEmpty() || numberOfLec > lectures.size())) {
             lectures.add(addedLecture);
         } else {
             lectures.add(numberOfLec - 1, addedLecture);
@@ -66,20 +61,19 @@ public class LectureServiceImpl implements LectureService {
         if (lectures.size() == 1 || lectureRemove == 1) {
             lectures = new ArrayList<>();
             return true;
-        }
-        if (!(lectureRemove < 0 || lectureRemove >= lectures.size())) {
+        } else if (!(lectureRemove < 0 || lectureRemove >= lectures.size())) {
             lectures.remove(lectureRemove - 1);
+            sortLectureArrAfterRemove();
             return true;
         }
         return false;
+
     }
 
     @Override
     public String removeLectures(String lectureRemove) {
         String[] strings = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
-        for (int i = 0; i < strings.length; i++) {
-            strings[i] = strings[i].replaceAll("[a-zA-Zа]*", "");
-        }
+        IntStream.range(0, strings.length).forEach(i -> strings[i] = strings[i].replaceAll("[a-zA-Zа]*", ""));
         String[] numbToDisplay = Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
         StringBuilder stringContains = new StringBuilder("Lectures: ");
         boolean flag = true;
@@ -93,15 +87,8 @@ public class LectureServiceImpl implements LectureService {
                 }
             }
         }
-        if (!flag) {
-            stringContains.append("successfully removed the rest are missing.");
-        } else {
-            stringContains.append("are missing.");
-        }
-        for (String s : numbToDisplay) {
-            int z = Integer.parseInt(s);
-            lectures.removeIf(p -> p.getNumberOfLecture() == z);
-        }
+        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
+        Arrays.stream(numbToDisplay).mapToInt(Integer::parseInt).forEach(z -> lectures.removeIf(p -> p.getNumberOfLecture() == z));
         sortLectureArrAfterRemove();
         return stringContains.toString();
     }
@@ -109,21 +96,13 @@ public class LectureServiceImpl implements LectureService {
     //________________________________________________________________________________________________//
 
     private void sortLectureArr() {
-        boolean flag = false;
-        while (!flag) {
-            flag = true;
-            for (int i = 0; i < lectures.size() - 1; i++) {
-                if (lectures.get(i).getNumberOfLecture() == lectures.get(i + 1).getNumberOfLecture()) {
-                    lectures.get(i + 1).setNumberOfLecture((lectures.get(i + 1).getNumberOfLecture()) + 1);
-                    flag = false;
-                }
-            }
-        }
+        IntStream.range(0, lectures.size() - 1).filter(i -> lectures.get(i).getNumberOfLecture() == lectures.get(i + 1)
+                .getNumberOfLecture()).forEach(i -> lectures.get(i + 1).setNumberOfLecture((lectures.get(i + 1)
+                .getNumberOfLecture()) + 1));
     }
 
+
     private void sortLectureArrAfterRemove() {
-        for (int i = 0; i < lectures.size(); i++) {
-            lectures.get(i).setNumberOfLecture(i + 1);
-        }
+        IntStream.range(0, lectures.size()).forEach(i -> lectures.get(i).setNumberOfLecture(i + 1));
     }
 }

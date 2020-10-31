@@ -20,12 +20,13 @@ class LectureServiceImplTest {
     @BeforeEach
     void createLectureService() {
         lectureService = new LectureServiceImpl();
-//        ArrayList<Lecture> lectures = {
-//                new LectureIModel(1, "BufferedReader."),
-//                new LectureIModel(2, "Writes text to."),
-//                new LectureIModel(3, "Core Java API"),
-//        };
-//        lectureService.setLectures(lectures);
+        ArrayList<Lecture> lectures = new ArrayList<>();
+                {
+             lectures.add(new LectureIModel(1, "BufferedReader."));
+             lectures.add(new LectureIModel(2, "Writes text to."));
+             lectures.add(new LectureIModel(3, "Core Java API"));
+        };
+        lectureService.setLectures(lectures);
     }
 
 

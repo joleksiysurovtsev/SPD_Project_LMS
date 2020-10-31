@@ -6,48 +6,45 @@ import com.lms.spd.models.interfaces.Literature;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
     /**
      * The method prints the list of all lectures to the console
      */
-    public void printLectureList(ArrayList<Lecture> lectures) {
-        for (Lecture value : lectures) {
-            System.out.println(value);
-        }
+    public void printLectureList(List<Lecture> lectures) {
+        lectures.forEach(System.out::println);
     }
 
     /**
      * The method print Preview Lecture list
      */
     public void printPreviewLectureList(ArrayList<Lecture> lectures) {
-        for (Lecture value : lectures) {
+        lectures.forEach(value -> {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
             } else {
                 System.out.println(value);
             }
-        }
+        });
     }
 
     /**
      * The method prints the list lectures to the console by number
      */
-    public void printLectureList(String s, ArrayList<Lecture> lectures) {
+    public void printLectureList(String s, List<Lecture> lectures) {
+        String[] numbToDisplay = getStringsNumberLect(s);
+        Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
+                .filter(x -> Integer.parseInt(value) == x.getNumberOfLecture())
+                .forEach(System.out::println));
+    }
+
+
+    private String[] getStringsNumberLect(String s) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
-        for (int i = 0; i < strings.length; i++) {
-            strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", "");
-        }
-        String[] numbToDisplay = Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
-        //iterate over the array of lectures and output if there are matches by lecture numbers
-        for (String value : numbToDisplay) {
-            for (int j = 0; j < lectures.size(); j++) {
-                Lecture item = lectures.get(j);
-                if (Integer.parseInt(value) == (j + 1)) {
-                    System.out.println(item);
-                }
-            }
-        }
+        IntStream.range(0, strings.length).forEach(i -> strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", ""));
+        return Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
     }
 
 
@@ -56,11 +53,10 @@ public class LMSConsolePrinter {
      */
     public void printListLit(Lecture selectedLecture) {
         ArrayList<Literature> litArr = selectedLecture.getLiteratures();
-        if (litArr.size() > 0) {
+        if (!litArr.isEmpty()) {
             int i = 1;
-            for (Literature x : litArr
-            ) {
-                System.out.print(i + "." );
+            for (Literature x : litArr) {
+                System.out.print(i + ".");
                 x.print();
                 i++;
             }
@@ -70,8 +66,10 @@ public class LMSConsolePrinter {
     }
 
     public void showStartMenu() {
-        System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" + "\"" + ": learning management system" + "\u001B[0m");
-        System.out.println("Please make your choice from the offered options\n"
+        System.out.println("\u001B[34m" + "Main menu " +
+                "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" +
+                "\"" + ": learning management system" + "\u001B[0m\n" +
+                "\"Please make your choice from the offered options\n"
                 + "1. Display lectures (number and title)\n"
                 + "2. Add a new lecture\n"
                 + "3. Delete a lecture by its number\n"
@@ -84,11 +82,11 @@ public class LMSConsolePrinter {
      */
 
     void showFourthMenu() {
-        System.out.println("1. --> choose another lecture");
-        System.out.println("2. --> view the list of literature");
-        System.out.println("3. --> add new literature");
-        System.out.println("4. --> remove literature");
-        System.out.println("5. --> view all lecture information");
-        System.out.println("6. --> exit to the main menu");
+        System.out.println("1. --> choose another lecture\n" +
+                "\"2. --> view the list of literature\n" +
+                "\"3. --> add new literature\n" +
+                "\"4. --> remove literature\n" +
+                "\"5. --> view all lecture information\n" +
+                "\"6. --> exit to the main menu");
     }
 }
