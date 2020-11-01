@@ -83,6 +83,7 @@ class LectureServiceImplTest {
             expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()));
             expectedLectures.add(new LectureIModel(4, "Core Java API"));
         }
+
         lectureService.addLecture(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new Date());
         assertEquals(expectedLectures, lectureService.getLectures());
     }
