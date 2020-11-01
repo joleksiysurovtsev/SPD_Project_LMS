@@ -1,5 +1,7 @@
 package com.lms.spd.models.interfaces;
 
+import com.lms.spd.enums.LiteratureType;
+
 public interface Literature {
     String getTitle();
 
@@ -9,6 +11,10 @@ public interface Literature {
 
     void setAuthor(String author);
 
-    void print();
+    LiteratureType getType();
+
+    void setType(LiteratureType type);
+
+    String print();
 
 }

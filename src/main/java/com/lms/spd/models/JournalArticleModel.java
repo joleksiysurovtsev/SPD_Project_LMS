@@ -1,5 +1,6 @@
 package com.lms.spd.models;
 
+import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.util.Objects;
@@ -9,6 +10,7 @@ public class JournalArticleModel implements Literature {
     private String author;
     private String titleOfArticle;
     private int issueOfTheJournal;
+    private LiteratureType type;
 
     public JournalArticleModel(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
         setAuthor(author);
@@ -37,6 +39,16 @@ public class JournalArticleModel implements Literature {
         this.author = author;
     }
 
+    @Override
+    public LiteratureType getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(LiteratureType type) {
+        this.type = type;
+    }
+
     public String getTitleOfArticle() {
         return titleOfArticle;
     }
@@ -55,20 +67,20 @@ public class JournalArticleModel implements Literature {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     @Override
-    public void print() {
+    public String print() {
         StringBuilder printString = new StringBuilder();
-        if (!titleOfArticle.equals("N/A")) {
+        if (!titleOfArticle.equals("Unknown")) {
             printString.append("Article: ").append(titleOfArticle);
         }
 
-        if (!getTitle().equals("N/A")) {
+        if (!getTitle().equals("Unknown")) {
             printString.append(" In the journal ").append(getTitle());
         }
 
         if (issueOfTheJournal != 0) {
             printString.append(" Journal №: ").append(issueOfTheJournal);
         }
-        System.out.print(printString+"\n");
+        return printString.toString();
     }
 
     @Override

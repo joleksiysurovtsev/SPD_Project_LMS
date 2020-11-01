@@ -1,6 +1,7 @@
 package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
+import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
@@ -17,11 +18,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class LMSTerminal {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private LectureService lectureServiceImpl = new LectureServiceImpl();
-    private LiteratureService literatureService = new LiteratureServiceImpl();
+    private LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
     private LMSConsolePrinter lmsConsolePrinter = new LMSConsolePrinter();
 
 
@@ -121,7 +123,6 @@ public class LMSTerminal {
         ArrayList<Literature> literatures = addLitOrNot();
 
 
-
         lectureServiceImpl.addLecture(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
         System.out.println("Entering a new lecture");
         subMenuAddingLectureToList();
@@ -174,25 +175,33 @@ public class LMSTerminal {
         return result;
     }
 
-    public ArrayList<Literature> addLitToArr(ArrayList<Literature> arrAddLit) throws IOException {
-        System.out.println("what type of literature do you want to add ?");
-        System.out.println("1.Book, 2.Journal article, 3.Internet article");
 
-        switch (Integer.parseInt(reader.readLine())) {
-            case 1:
-                arrAddLit.add(literatureService.createBook());
+    public List<Literature> addLitToArr(List<Literature> arrAddLit) throws IOException {
+        int number = 0;
+        boolean exists = true;
+        LiteratureType typeLit = null;
+        while (exists) {
+            System.out.println("Please, choose literature type: ");
+            System.out.println("1.Book, 2.Journal article, 3.Internet article");
+            try {
+                number = Integer.parseInt(reader.readLine());
+                for (LiteratureType e : LiteratureType.values()) {
+                    if (e.ordinal() == number) {
+                        typeLit = LiteratureType.getValueByNumber(number);
+                        exists = false;
+                        break;
+                    }
+                }
+            } catch (IOException | NumberFormatException e) {
+                //
+            }
+            if (typeLit != null) {
                 break;
-            case 2:
-                arrAddLit.add(literatureService.createJournal());
-                break;
-            case 3:
-                arrAddLit.add(literatureService.createInternetArticles());
-                break;
-            default:
-                System.out.println("Try again");
-                addLitToArr(arrAddLit);
-                break;
+            }
+            System.out.println("Unknown type: try again");
         }
+        System.out.println("Type is : " + typeLit.toString());
+        arrAddLit.add(literatureServiceImpl.inputData(typeLit));
         return arrAddLit;
     }
 
@@ -205,8 +214,10 @@ public class LMSTerminal {
         return (s.isEmpty()) ? "Unknown" : s;
     }
 
-    /** Method of adding the lecture date. If a date is entered,
-     * the date is set to the wrong date on the day after two months from the current*/
+    /**
+     * Method of adding the lecture date. If a date is entered,
+     * the date is set to the wrong date on the day after two months from the current
+     */
     private Date enterTheLectureDate() throws IOException {
         System.out.println("Enter the lecture date for example: 19-10-1986");
         Date d1 = new Date();
@@ -408,7 +419,6 @@ public class LMSTerminal {
     }
 
     private void point4_3AddLit() throws IOException {
-
         System.out.println("Please enter the title of the new book");
         lectureServiceImpl.getSelectedLecture().setLiteratures(addLitToArr(lectureServiceImpl.getSelectedLecture().getLiteratures()));
         System.out.println("Book added what to do next");
@@ -457,8 +467,9 @@ public class LMSTerminal {
             System.out.println("try again");
             return;
         }
-        lectureServiceImpl.getSelectedLecture().setLiteratures(literatureService.removeLiterature(indexLit, lectureServiceImpl.getSelectedLecture().getLiteratures()));
+        lectureServiceImpl.getSelectedLecture().setLiteratures(literatureServiceImpl.removeLiterature(indexLit, lectureServiceImpl.getSelectedLecture().getLiteratures()));
         System.out.println("\"Successfully\" Delete again ?");
+        System.out.println("\"+\" YES or \"-\" NO");
         subMenuPoint4_4DeleteLit();
     }
 

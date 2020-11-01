@@ -12,14 +12,8 @@ class JournalArticleModelTest {
 
     @Test
     void print() {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        System.setOut(new PrintStream(output));
-        journalArticle.print();
-
-        assertEquals("Article: This keyword {in examples} In the journal java world Journal №: 5\n", output.toString());
-        System.setOut(null);
+        assertEquals("Article: This keyword {in examples} In the journal java world Journal №: 5", journalArticle.print());
     }
 
     @Test
@@ -33,7 +27,7 @@ class JournalArticleModelTest {
     void testEquals() {
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         JournalArticleModel journalArticle2 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        JournalArticleModel journalArticle3 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world",3);
+        JournalArticleModel journalArticle3 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 3);
 
         assertTrue(journalArticle.equals(journalArticle2));
         assertFalse(journalArticle.equals(journalArticle3));

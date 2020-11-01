@@ -12,14 +12,8 @@ class InternetArticleModelTest {
 
     @Test
     void print() {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-
         InternetArticleModel internetArticles = new InternetArticleModel("Java", "Aleksey", "google");
-        System.setOut(new PrintStream(output));
-        internetArticles.print();
-
-        assertEquals("Title: Java Author: Aleksey Web address: google\n", output.toString());
-        System.setOut(null);
+        assertEquals("Title: Java Author: Aleksey Web address: google", internetArticles.print());
     }
 
     @Test

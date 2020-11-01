@@ -73,4 +73,18 @@ class LectureServiceImplTest {
         assertEquals(expectedLectures, lectureService.getLectures());
     }
 
+    @Test
+    @DisplayName("Adding a lecture to the middle of the array")
+    void addLecture2() {
+        List<Lecture> expectedLectures = new ArrayList<>();
+        {
+            expectedLectures.add(new LectureIModel(1, "BufferedReader."));
+            expectedLectures.add(new LectureIModel(2, "Writes text to."));
+            expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()));
+            expectedLectures.add(new LectureIModel(4, "Core Java API"));
+        }
+        lectureService.addLecture(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new Date());
+        assertEquals(expectedLectures, lectureService.getLectures());
+    }
+
 }

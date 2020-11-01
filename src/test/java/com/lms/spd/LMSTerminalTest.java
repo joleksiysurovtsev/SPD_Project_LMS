@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LMSTerminalTest {
+
+
+
 //    LMSTerminal lmsTerminal = new LMSTerminal();
 //    private LectureServiceImpl lectureServiceImpl;
 //

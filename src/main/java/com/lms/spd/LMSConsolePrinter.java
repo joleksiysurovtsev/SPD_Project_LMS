@@ -4,7 +4,6 @@ package com.lms.spd;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -20,7 +19,7 @@ public class LMSConsolePrinter {
     /**
      * The method print Preview Lecture list
      */
-    public void printPreviewLectureList(ArrayList<Lecture> lectures) {
+    public void printPreviewLectureList(List<Lecture> lectures) {
         lectures.forEach(value -> {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
@@ -52,18 +51,18 @@ public class LMSConsolePrinter {
      * the method print a list of references from the previously selected lecture
      */
     public void printListLit(Lecture selectedLecture) {
-        ArrayList<Literature> litArr = selectedLecture.getLiteratures();
+        List<Literature> litArr = selectedLecture.getLiteratures();
         if (!litArr.isEmpty()) {
             int i = 1;
             for (Literature x : litArr) {
-                System.out.print(i + ".");
-                x.print();
+                System.out.println(i + x.print());
                 i++;
             }
         } else {
             System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
         }
     }
+
 
     public void showStartMenu() {
         System.out.println("\u001B[34m" + "Main menu " +

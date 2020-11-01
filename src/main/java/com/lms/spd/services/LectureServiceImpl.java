@@ -10,20 +10,21 @@ import com.lms.spd.services.interfaces.LectureService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class LectureServiceImpl implements LectureService {
 
-    private ArrayList<Lecture> lectures = new ArrayList<>();
+    private List<Lecture> lectures = new ArrayList<>();
 
 
     @Override
-    public ArrayList<Lecture> getLectures() {
+    public List<Lecture> getLectures() {
         return lectures;
     }
 
     @Override
-    public void setLectures(ArrayList<Lecture> lectures) {
+    public void setLectures(List<Lecture> lectures) {
         this.lectures = lectures;
     }
 
@@ -41,7 +42,7 @@ public class LectureServiceImpl implements LectureService {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-    public void addLecture(LectureType type, int numberOfLec, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
+    public void addLecture(LectureType type, int numberOfLec, String nameOfLecture, List<Literature> literatures, String lectorName, Date lectureDate) {
         Lecture addedLecture = new LectureIModel(type, numberOfLec, nameOfLecture, literatures, lectorName, lectureDate);
         if ((lectures.isEmpty() || numberOfLec > lectures.size())) {
             lectures.add(addedLecture);

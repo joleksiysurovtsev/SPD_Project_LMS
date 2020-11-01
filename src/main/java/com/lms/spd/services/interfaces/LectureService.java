@@ -6,17 +6,18 @@ import com.lms.spd.models.interfaces.Literature;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public interface LectureService {
-    ArrayList<Lecture> getLectures();
+    List<Lecture> getLectures();
 
-    void setLectures(ArrayList<Lecture> lectures);
+    void setLectures(List<Lecture> lectures);
 
     Lecture getSelectedLecture();
 
     void setSelectedLecture(int selected);
 
-    void addLecture(LectureType type, int numberOfLec, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate);
+    void addLecture(LectureType type, int numberOfLec, String nameOfLecture, List<Literature> literatures, String lectorName, Date lectureDate);
 
     boolean removeLectures(int lectureRemove);
 

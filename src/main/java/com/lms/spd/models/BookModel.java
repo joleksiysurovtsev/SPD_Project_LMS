@@ -1,5 +1,6 @@
 package com.lms.spd.models;
 
+import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.util.Objects;
@@ -9,6 +10,7 @@ public class BookModel implements Literature {
     private String author;
     private String genre;
     private int publishedInYear;
+    private LiteratureType type;
 
     public BookModel(String title, String author, String genre, int publishedInYear) {
         this.genre = genre;
@@ -37,6 +39,16 @@ public class BookModel implements Literature {
         this.author = author;
     }
 
+    @Override
+    public LiteratureType getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(LiteratureType type) {
+        this.type = type;
+    }
+
     public String getGenre() {
         return genre;
     }
@@ -50,19 +62,20 @@ public class BookModel implements Literature {
     }
 
     public void setPublishedInYear(int publishedInYear) {
+
         this.publishedInYear = publishedInYear;
     }
 
     @Override
-    public void print() {
+    public String print() {
         StringBuilder printString = new StringBuilder("Book: " + getTitle() + " Author: " + getAuthor());
-        if (!genre.equals("N/A")) {
+        if (!genre.equals("Unknown")) {
             printString.append(" Genre: ").append(genre);
         }
         if (publishedInYear != 0) {
-            printString.append(" Year of publishing: ").append(publishedInYear);
+            printString.append(" Publishing in: ").append(publishedInYear).append("year");
         }
-        System.out.print(printString + "\n");
+        return printString.toString();
     }
 
     @Override

@@ -4,14 +4,14 @@ import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class LectureIModel implements Lecture {
     private String nameOfLecture;
     private int numberOfLecture;
-    private ArrayList<Literature> literatures;
+    private List<Literature> literatures;
     private Date lectureDate;
     private String lectorName;
     private LectureType type;
@@ -27,7 +27,7 @@ public class LectureIModel implements Lecture {
         this.numberOfLecture = numberOfLecture;
     }
 
-    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, ArrayList<Literature> literatures, String lectorName, Date lectureDate) {
+    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Date lectureDate) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
@@ -60,12 +60,12 @@ public class LectureIModel implements Lecture {
     }
 
     @Override
-    public void setLiteratures(ArrayList<Literature> literatures) {
+    public void setLiteratures(List<Literature> literatures) {
         this.literatures = literatures;
     }
 
     @Override
-    public ArrayList<Literature> getLiteratures() {
+    public List<Literature> getLiteratures() {
         return literatures;
     }
 

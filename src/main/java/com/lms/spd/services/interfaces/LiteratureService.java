@@ -1,20 +1,23 @@
 package com.lms.spd.services.interfaces;
 
+import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface LiteratureService {
-    ArrayList<Literature> getLiteratures();
+    List<Literature> getLiteratures();
 
-    void setLiteratures(ArrayList<Literature> literatures);
+    void setLiteratures(List<Literature> literatures);
 
-    Literature createJournal() throws IOException;
+    Literature createJournal(String title, String author, String titleJournal, String issueOfTheJournal2) throws IOException;
 
-    Literature createBook() throws IOException;
+    Literature createBook(String title,String author,String genre,String year) throws IOException;
 
-    Literature createInternetArticles() throws IOException;
+    Literature createInternetArticles(String title,String author,String urlAddress) throws IOException;
 
-    ArrayList<Literature> removeLiterature(int numberLit, ArrayList<Literature> lit);
+    List<Literature> removeLiterature(int numberLit, List<Literature> lit);
+
+    Literature inputData(LiteratureType tupe) throws IOException;
 }

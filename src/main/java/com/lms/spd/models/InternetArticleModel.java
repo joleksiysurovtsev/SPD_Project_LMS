@@ -1,5 +1,6 @@
 package com.lms.spd.models;
 
+import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.util.Objects;
@@ -8,6 +9,8 @@ public class InternetArticleModel implements Literature {
     private String title;
     private String author;
     private String urlAddress;
+
+    private LiteratureType type;
 
     public InternetArticleModel(String title, String author, String urlAddress) {
         setAuthor(author);
@@ -44,12 +47,22 @@ public class InternetArticleModel implements Literature {
     }
 
     @Override
-    public void print() {
+    public LiteratureType getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(LiteratureType type) {
+        this.type = type;
+    }
+
+    @Override
+    public String print() {
         StringBuilder printString = new StringBuilder("Title: " + getTitle() + " Author: " + getAuthor());
-        if (!urlAddress.equals("N/A")) {
+        if (!urlAddress.equals("Unknown")) {
             printString.append(" Web address: ").append(urlAddress);
         }
-        System.out.print(printString + "\n");
+        return printString.toString();
     }
 
     @Override
