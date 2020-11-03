@@ -19,5 +19,5 @@ public interface LiteratureService {
 
     List<Literature> removeLiterature(int numberLit, List<Literature> lit);
 
-    Literature inputData(LiteratureType tupe) throws IOException;
+
 }

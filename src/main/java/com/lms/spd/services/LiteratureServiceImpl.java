@@ -28,7 +28,7 @@ public class LiteratureServiceImpl implements LiteratureService {
         this.literatures = literatures;
     }
 
-    private void printMessages(int message) {
+    public void printMessagesAddLit(int message) {
         if (message == 1) {System.out.println("Enter a title");}
         if (message == 2) {System.out.println("Please enter a author name");}
         if (message == 3) {System.out.println("Please enter a titleJournal name or press Enter");}
@@ -38,30 +38,30 @@ public class LiteratureServiceImpl implements LiteratureService {
         if (message == 7) {System.out.println("Please enter a year of publication of the book");}
     }
 
-    @Override
+
     public Literature inputData(LiteratureType type) throws IOException {
-        printMessages(1);
+        printMessagesAddLit(1);
         String title = reader.readLine();
-        printMessages(2);
+        printMessagesAddLit(2);
         String author = reader.readLine();
         Literature lit;
         switch (type) {
             case JOURNAL_ARTICLE:
-                printMessages(3);
+                printMessagesAddLit(3);
                 String titleJournal = reader.readLine();
-                printMessages(4);
+                printMessagesAddLit(4);
                 String issueOfTheJournal = reader.readLine();
                 lit = createJournal(title, author, titleJournal, issueOfTheJournal);
                 break;
             case INTERNET_ARTICLE:
-                printMessages(5);
+                printMessagesAddLit(5);
                 String urlAddress = reader.readLine();
                 lit = createInternetArticles(title, author, urlAddress);
                 break;
             case BOOK:
-                printMessages(6);
+                printMessagesAddLit(6);
                 String genre = reader.readLine();
-                printMessages(7);
+                printMessagesAddLit(7);
                 String year = reader.readLine();
                 lit = createBook(title, author, genre, year);
                 break;

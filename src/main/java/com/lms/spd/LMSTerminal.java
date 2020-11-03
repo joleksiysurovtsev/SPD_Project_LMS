@@ -2,6 +2,7 @@ package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.enums.LiteratureType;
+import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
@@ -17,8 +18,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class LMSTerminal {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -122,8 +125,7 @@ public class LMSTerminal {
 
         List<Literature> literatures = addLitOrNot();
 
-
-        lectureServiceImpl.addLecture(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
+        lectureServiceImpl.addLecture(new LectureIModel(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate));
         System.out.println("Entering a new lecture");
         subMenuAddingLectureToList();
     }
@@ -289,7 +291,6 @@ public class LMSTerminal {
             numbRemovalLecture = reader.readLine();
         } catch (IOException e) {
             point3MainMenuRemovalLecture();
-            e.printStackTrace();
         }
         try {
             assert numbRemovalLecture != null;
@@ -300,9 +301,32 @@ public class LMSTerminal {
             }
             subMenuRemovalLecture();
         } catch (NumberFormatException | IOException e) {
-            System.out.println(lectureServiceImpl.removeLectures(numbRemovalLecture));
+            String[] lectureRemove = stringToDelleteLit(numbRemovalLecture);
+            lectureServiceImpl.removeLectures(lectureRemove);
             subMenuRemovalLecture();
         }
+    }
+
+
+    private String[] stringToDelleteLit(String lectureRemove) {
+        String[] numbDeletedLect = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
+        IntStream.range(0, numbDeletedLect.length).forEach(i -> numbDeletedLect[i] = numbDeletedLect[i].replaceAll("[a-zA-Zа]*", ""));
+        String[] numbToDisplay = Arrays.stream(numbDeletedLect).filter(x -> !(x.isEmpty())).toArray(String[]::new);
+        StringBuilder stringContains = new StringBuilder("Lectures: ");
+        boolean flag = true;
+        for (String item : numbToDisplay) {
+            for (Lecture value : lectureServiceImpl.getLectures()) {
+                int numb = value.getNumberOfLecture();
+                if (numb == Integer.parseInt(item)) {
+                    flag = false;
+                    stringContains.append(" ").append(item).append(" ");
+                    break;
+                }
+            }
+        }
+        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
+        System.out.println(stringContains.toString());
+        return numbToDisplay;
     }
 
     private void subMenuRemovalLecture() throws IOException {
@@ -364,7 +388,7 @@ public class LMSTerminal {
 
     public boolean checkNumberLecture(int numbOfLectures) {
         boolean flag = false;
-        if (lectureServiceImpl.getLectures().size()  >= numbOfLectures-1 ) {
+        if (lectureServiceImpl.getLectures().size() >= numbOfLectures - 1) {
             flag = true;
         }
         return flag;

@@ -1,10 +1,6 @@
 package com.lms.spd.services.interfaces;
 
-import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.models.interfaces.Literature;
-
-import java.util.Date;
 import java.util.List;
 
 public interface LectureService {
@@ -16,9 +12,9 @@ public interface LectureService {
 
     void setSelectedLecture(int selected);
 
-    void addLecture(LectureType type, int numberOfLec, String nameOfLecture, List<Literature> literatures, String lectorName, Date lectureDate);
+    void addLecture(Lecture lecture);
 
     boolean removeLectures(int lectureRemove);
 
-    String removeLectures(String lectureRemove);
+    void removeLectures(String[] lectureRemove);
 }
