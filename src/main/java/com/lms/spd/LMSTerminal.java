@@ -364,7 +364,7 @@ public class LMSTerminal {
 
     public boolean checkNumberLecture(int numbOfLectures) {
         boolean flag = false;
-        if (lectureServiceImpl.getLectures().size() - 1 >= numbOfLectures - 1) {
+        if (lectureServiceImpl.getLectures().size()  >= numbOfLectures-1 ) {
             flag = true;
         }
         return flag;

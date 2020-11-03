@@ -64,6 +64,7 @@ public class JournalArticleModel implements Literature {
     public void setIssueOfTheJournal(int issueOfTheJournal) {
         this.issueOfTheJournal = issueOfTheJournal;
     }
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     @Override

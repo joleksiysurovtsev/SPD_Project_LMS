@@ -43,6 +43,7 @@ class LiteratureServiceImplTest {
     }
 
     @Test
+    @DisplayName("create Journal test")
     void createJournal() {
         Literature journal = new JournalArticleModel("Java", "Ekkel", "Programming", 2020);
         Literature journal2 = new JournalArticleModel("Unknown", "Unknown", "Unknown", 2020);
@@ -53,6 +54,7 @@ class LiteratureServiceImplTest {
     }
 
     @Test
+    @DisplayName("create Book test")
     void createBook() {
         Literature book = new BookModel("Java", "Ekkel", "Programming", 2020);
         Literature book2 = new BookModel("Unknown", "Unknown", "Unknown", 2020);
@@ -63,6 +65,7 @@ class LiteratureServiceImplTest {
     }
 
     @Test
+    @DisplayName("create InternetArticles test")
     void createInternetArticles() {
         Literature internetArticle = new InternetArticleModel("Java", "Ekkel", "Programming");
         Literature internetArticle2 = new InternetArticleModel("Unknown", "Unknown", "Unknown");

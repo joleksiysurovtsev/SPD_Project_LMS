@@ -7,16 +7,14 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.interfaces.LectureService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class LectureServiceImpl implements LectureService {
 
     private List<Lecture> lectures = new ArrayList<>();
 
+    private Lecture selectedLecture;
 
     @Override
     public List<Lecture> getLectures() {
@@ -27,8 +25,6 @@ public class LectureServiceImpl implements LectureService {
     public void setLectures(List<Lecture> lectures) {
         this.lectures = lectures;
     }
-
-    private Lecture selectedLecture;
 
     @Override
     public Lecture getSelectedLecture() {
@@ -60,7 +56,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public boolean removeLectures(int lectureRemove) {
         if (lectures.size() == 1 || lectureRemove == 1) {
-            lectures = new ArrayList<>();
+            lectures = Collections.emptyList();
             return true;
         } else if (!(lectureRemove < 0 || lectureRemove >= lectures.size())) {
             lectures.remove(lectureRemove - 1);
@@ -68,7 +64,6 @@ public class LectureServiceImpl implements LectureService {
             return true;
         }
         return false;
-
     }
 
     @Override

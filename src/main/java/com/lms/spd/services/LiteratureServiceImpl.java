@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LiteratureServiceImpl implements LiteratureService {
@@ -44,7 +45,7 @@ public class LiteratureServiceImpl implements LiteratureService {
         String title = reader.readLine();
         printMessages(2);
         String author = reader.readLine();
-        Literature lit = null;
+        Literature lit;
         switch (type) {
             case JOURNAL_ARTICLE:
                 printMessages(3);
@@ -64,6 +65,9 @@ public class LiteratureServiceImpl implements LiteratureService {
                 printMessages(7);
                 String year = reader.readLine();
                 lit = createBook(title, author, genre, year);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
         }
         lit.setType(type);
         return lit;
@@ -103,7 +107,7 @@ public class LiteratureServiceImpl implements LiteratureService {
     @Override
     public List<Literature> removeLiterature(int numberLit, List<Literature> lit) {
         if (lit.size() == 1) {
-            lit = (new ArrayList<>());
+            lit = Collections.emptyList();// (new ArrayList<>() C);
         } else {
             lit.remove(numberLit - 1);
         }

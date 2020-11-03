@@ -8,26 +8,20 @@ import org.junit.jupiter.api.Test;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LMSTerminalTest {
 
+    LMSTerminal lmsTerm = new LMSTerminal();
+    private LectureServiceImpl lectureServic;
 
-
-//    LMSTerminal lmsTerminal = new LMSTerminal();
-//    private LectureServiceImpl lectureServiceImpl;
-//
-//    @BeforeEach
-//    void createLectureService() {
-//        Lecture lecture = new LectureIModel(1, "BufferedReader");
-//        ArrayList<Lecture> lectures = new ArrayList<>();
-//        lectures.add(lecture);
-//        lectureServiceImpl.setLectures(lectures);
-//    }
-//
-//    @Test
-//    void testCheckNumberLecture() {
-//        assertTrue(lmsTerminal.checkNumberLecture(1));
-//    }
+    @Test
+    void testCheckNumberLecture() {
+        Lecture lecture = new LectureIModel(1, "BufferedReader");
+        List<Lecture> lectures = new ArrayList<>();
+        lectures.add(lecture);
+        assertTrue(lmsTerm.checkNumberLecture(1));
+    }
 }

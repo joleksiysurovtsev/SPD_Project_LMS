@@ -36,7 +36,6 @@ public class LectureIModel implements Lecture {
         this.lectorName = lectorName;
     }
 
-
     //_______________________________________________________________________________________________________________//
 
     @Override
