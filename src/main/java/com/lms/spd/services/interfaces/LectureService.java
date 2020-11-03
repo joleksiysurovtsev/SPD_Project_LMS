@@ -4,7 +4,6 @@ import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

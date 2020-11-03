@@ -66,7 +66,7 @@ public class LMSTerminal {
         switch (reader.readLine().toLowerCase()) {
             case "+":
                 lmsConsolePrinter.printLectureList(lectureServiceImpl.getLectures());
-                System.out.println("The List shown what to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+                System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                 break;
             case "-":
                 System.out.println("Enter numbers separated by commas");
@@ -120,7 +120,7 @@ public class LMSTerminal {
 
         Date lectureDate = enterTheLectureDate();
 
-        ArrayList<Literature> literatures = addLitOrNot();
+        List<Literature> literatures = addLitOrNot();
 
 
         lectureServiceImpl.addLecture(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate);
@@ -156,8 +156,8 @@ public class LMSTerminal {
     }
 
     /*3*/
-    public ArrayList<Literature> addLitOrNot() throws IOException {
-        ArrayList<Literature> result = new ArrayList<>();
+    public List<Literature> addLitOrNot() throws IOException {
+        List<Literature> result = new ArrayList<>();
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
@@ -179,7 +179,7 @@ public class LMSTerminal {
     public List<Literature> addLitToArr(List<Literature> arrAddLit) throws IOException {
         int number = 0;
         boolean exists = true;
-        LiteratureType typeLit = null;
+        LiteratureType typeLit = LiteratureType.UNKNOWN;
         while (exists) {
             System.out.println("Please, choose literature type: ");
             System.out.println("1.Book, 2.Journal article, 3.Internet article");
@@ -195,7 +195,7 @@ public class LMSTerminal {
             } catch (IOException | NumberFormatException e) {
                 //
             }
-            if (typeLit != null) {
+            if (typeLit != LiteratureType.UNKNOWN) {
                 break;
             }
             System.out.println("Unknown type: try again");
@@ -427,11 +427,9 @@ public class LMSTerminal {
         String x = reader.readLine();
 
         while (true) {
-            if (x.equalsIgnoreCase("+")) break;
-            if (x.equalsIgnoreCase("-")) break;
-            if (x.equalsIgnoreCase("exit")) break;
-            System.out.println("You only need to enter a + or - or EXIT!");
             x = reader.readLine();
+            if (x.equalsIgnoreCase("+") || x.equalsIgnoreCase("-") || x.equalsIgnoreCase("exit")) break;
+            System.out.println("You only need to enter a + or - or EXIT!");
         }
 
         switch (x.toUpperCase()) {

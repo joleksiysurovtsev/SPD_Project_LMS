@@ -68,7 +68,7 @@ public class BookModel implements Literature {
 
     @Override
     public String print() {
-        StringBuilder printString = new StringBuilder("Book: " + getTitle() + " Author: " + getAuthor());
+        StringBuilder printString = new StringBuilder(" Book: " + getTitle() + " Author: " + getAuthor());
         if (!genre.equals("Unknown")) {
             printString.append(" Genre: ").append(genre);
         }

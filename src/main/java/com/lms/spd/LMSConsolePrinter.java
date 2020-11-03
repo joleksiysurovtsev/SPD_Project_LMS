@@ -13,6 +13,10 @@ public class LMSConsolePrinter {
      * The method prints the list of all lectures to the console
      */
     public void printLectureList(List<Lecture> lectures) {
+        if (lectures.isEmpty()){
+            System.out.println("The lecture list is empty first add lectures");
+            return;
+        }
         lectures.forEach(System.out::println);
     }
 
@@ -20,6 +24,10 @@ public class LMSConsolePrinter {
      * The method print Preview Lecture list
      */
     public void printPreviewLectureList(List<Lecture> lectures) {
+        if (lectures.isEmpty()){
+            System.out.println("The lecture list is empty first add lectures");
+            return;
+        }
         lectures.forEach(value -> {
             if (value.toString().length() > 50) {
                 System.out.println(value.toString().substring(0, 50));
@@ -33,6 +41,10 @@ public class LMSConsolePrinter {
      * The method prints the list lectures to the console by number
      */
     public void printLectureList(String s, List<Lecture> lectures) {
+        if (lectures.isEmpty()){
+            System.out.println("The lecture list is empty first add lectures");
+            return;
+        }
         String[] numbToDisplay = getStringsNumberLect(s);
         Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
                 .filter(x -> Integer.parseInt(value) == x.getNumberOfLecture())
@@ -52,14 +64,14 @@ public class LMSConsolePrinter {
      */
     public void printListLit(Lecture selectedLecture) {
         List<Literature> litArr = selectedLecture.getLiteratures();
-        if (!litArr.isEmpty()) {
+        if (litArr.isEmpty()) {
+            System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
+        } else {
             int i = 1;
             for (Literature x : litArr) {
                 System.out.println(i + x.print());
                 i++;
             }
-        } else {
-            System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
         }
     }
 

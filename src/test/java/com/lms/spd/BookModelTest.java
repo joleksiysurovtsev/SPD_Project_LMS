@@ -10,7 +10,7 @@ class BookModelTest {
     @Test
     void print() {
         BookModel testBook = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
-        assertEquals("Book: Философия Java Author: Брюс Эккель Genre: Computer Science Publishing in: 2015year", testBook.print());
+        assertEquals(" Book: Философия Java Author: Брюс Эккель Genre: Computer Science Publishing in: 2015year", testBook.print());
     }
 
     @Test
