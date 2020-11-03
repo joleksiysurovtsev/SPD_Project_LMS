@@ -56,7 +56,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public boolean removeLectures(int lectureRemove) {
         if (lectures.size() == 1 || lectureRemove == 1) {
-            lectures = Collections.emptyList();
+            lectures = new ArrayList<>();
             return true;
         } else if (!(lectureRemove < 0 || lectureRemove >= lectures.size())) {
             lectures.remove(lectureRemove - 1);
