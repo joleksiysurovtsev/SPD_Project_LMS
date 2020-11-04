@@ -254,67 +254,30 @@ public class LMSTerminal {
 
 
     public Literature inputData(LiteratureType type) throws IOException {
+        Literature lit;
         lmsConsolePrinter.printMessagesAddLit(1);
         String title = reader.readLine();
         lmsConsolePrinter.printMessagesAddLit(2);
         String author = reader.readLine();
-        Literature lit;
         switch (type) {
             case JOURNAL_ARTICLE:
                 lmsConsolePrinter.printMessagesAddLit(3);
                 String titleJournal = reader.readLine();
                 lmsConsolePrinter.printMessagesAddLit(4);
-                if (title.isEmpty()) {
-                    title = "Unknown";
-                }
-                if (author.isEmpty()) {
-                    author = "Unknown";
-                }
-                if (titleJournal.isEmpty()) {
-                    titleJournal = "Unknown";
-                }
-                int issueOfTheJournal;
-                try {
-                    issueOfTheJournal = Integer.parseInt(reader.readLine());
-                } catch (NumberFormatException | NullPointerException e) {
-                    issueOfTheJournal = 0;
-                }
-                lit = new JournalArticleModel(title, author, titleJournal, issueOfTheJournal);
+                String issueOfTheJournal = reader.readLine();
+                lit = createJournal(title, author, titleJournal, issueOfTheJournal);
                 break;
             case INTERNET_ARTICLE:
                 lmsConsolePrinter.printMessagesAddLit(5);
                 String urlAddress = reader.readLine();
-                if (title.isEmpty()) {
-                    title = "Unknown";
-                }
-                if (author.isEmpty()) {
-                    author = "Unknown";
-                }
-                if (urlAddress.isEmpty()) {
-                    urlAddress = "Unknown";
-                }
-                lit = new InternetArticleModel(title, author, urlAddress);
+                lit = createInternetArticles(title, author, urlAddress);
                 break;
             case BOOK:
                 lmsConsolePrinter.printMessagesAddLit(6);
                 String genre = reader.readLine();
                 lmsConsolePrinter.printMessagesAddLit(7);
-                if (title.isEmpty()) {
-                    title = "Unknown";
-                }
-                if (author.isEmpty()) {
-                    author = "Unknown";
-                }
-                if (genre.isEmpty()) {
-                    genre = "Unknown";
-                }
-                int year;
-                try {
-                    year = Integer.parseInt(reader.readLine());
-                } catch (NumberFormatException ignored) {
-                    year = 0;
-                }
-                lit = new BookModel(title, author, genre, year);
+                String year = reader.readLine();
+                lit = createBook(title, author, genre, year);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
@@ -322,6 +285,58 @@ public class LMSTerminal {
         lit.setType(type);
         return lit;
     }
+
+    public Literature createJournal(String title, String author, String titleJournal, String issueOfTheJournal) {
+        if (title.isEmpty()) {
+            title = "Unknown";
+        }
+        if (author.isEmpty()) {
+            author = "Unknown";
+        }
+        if (titleJournal.isEmpty()) {
+            titleJournal = "Unknown";
+        }
+        int issueOfTheJour;
+        try {
+            issueOfTheJour = Integer.parseInt(issueOfTheJournal);
+        } catch (NumberFormatException | NullPointerException e) {
+            issueOfTheJour = 0;
+        }
+        return new JournalArticleModel(title, author, titleJournal, issueOfTheJour);
+    }
+
+    public Literature createInternetArticles(String title, String author, String urlAddress) {
+        if (title.isEmpty()) {
+            title = "Unknown";
+        }
+        if (author.isEmpty()) {
+            author = "Unknown";
+        }
+        if (urlAddress.isEmpty()) {
+            urlAddress = "Unknown";
+        }
+        return new InternetArticleModel(title, author, urlAddress);
+    }
+
+    public Literature createBook(String title, String author, String genre, String year) {
+        if (title.isEmpty()) {
+            title = "Unknown";
+        }
+        if (author.isEmpty()) {
+            author = "Unknown";
+        }
+        if (genre.isEmpty()) {
+            genre = "Unknown";
+        }
+        int years;
+        try {
+            years = Integer.parseInt(year);
+        } catch (NumberFormatException ignored) {
+            years = 0;
+        }
+        return new BookModel(title, author, genre, years);
+    }
+
 
     /**
      * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
@@ -375,14 +390,14 @@ public class LMSTerminal {
             }
             subMenuRemovalLecture();
         } catch (NumberFormatException | IOException e) {
-            String[] lectureRemove = stringToDelleteLit(numbRemovalLecture);
+            String[] lectureRemove = stringToDelleteLecture(numbRemovalLecture);
             lectureServiceImpl.removeLectures(lectureRemove);
             subMenuRemovalLecture();
         }
     }
 
 
-    private String[] stringToDelleteLit(String lectureRemove) {
+    public String[] stringToDelleteLecture(String lectureRemove) {
         String[] numbDeletedLect = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
         IntStream.range(0, numbDeletedLect.length).forEach(i -> numbDeletedLect[i] = numbDeletedLect[i].replaceAll("[a-zA-Zа]*", ""));
         String[] numbToDisplay = Arrays.stream(numbDeletedLect).filter(x -> !(x.isEmpty())).toArray(String[]::new);
