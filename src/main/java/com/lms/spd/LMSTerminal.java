@@ -2,6 +2,9 @@ package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.enums.LiteratureType;
+import com.lms.spd.models.BookModel;
+import com.lms.spd.models.InternetArticleModel;
+import com.lms.spd.models.JournalArticleModel;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
@@ -164,7 +167,7 @@ public class LMSTerminal {
         switch (reader.readLine()) {
             case "+":
                 do {
-                    addLitToArr(result);
+                    createLit(result);
                     System.out.println("Add more literature? if not enter minus");
                 } while (!reader.readLine().equals("-"));
                 break;
@@ -178,10 +181,15 @@ public class LMSTerminal {
     }
 
 
-    public List<Literature> addLitToArr(List<Literature> arrAddLit) throws IOException {
+//    public List<Literature> addLitToArr(List<Literature> arrAddLit) throws IOException {
+//        createLit(arrAddLit);
+//        return arrAddLit;
+//    }
+
+    private Literature createLit(List<Literature> arrAddLit) throws IOException {
+        LiteratureType typeLit = LiteratureType.UNKNOWN;
         int number = 0;
         boolean exists = true;
-        LiteratureType typeLit = LiteratureType.UNKNOWN;
         while (exists) {
             System.out.println("Please, choose literature type: ");
             System.out.println("1.Book, 2.Journal article, 3.Internet article");
@@ -203,9 +211,85 @@ public class LMSTerminal {
             System.out.println("Unknown type: try again");
         }
         System.out.println("Type is : " + typeLit.toString());
-        arrAddLit.add(literatureServiceImpl.inputData(typeLit));
-        return arrAddLit;
+        arrAddLit.add(inputData(typeLit));
+        return inputData(typeLit);
     }
+
+
+    public Literature inputData(LiteratureType type) throws IOException {
+        lmsConsolePrinter.printMessagesAddLit(1);
+        String title = reader.readLine();
+        lmsConsolePrinter.printMessagesAddLit(2);
+        String author = reader.readLine();
+        Literature lit;
+        switch (type) {
+            case JOURNAL_ARTICLE:
+                lmsConsolePrinter.printMessagesAddLit(3);
+                String titleJournal = reader.readLine();
+                lmsConsolePrinter.printMessagesAddLit(4);
+                if (title.isEmpty()) {
+                    title = "Unknown";
+                }
+                if (author.isEmpty()) {
+                    author = "Unknown";
+                }
+                if (titleJournal.isEmpty()) {
+                    titleJournal = "Unknown";
+                }
+                int issueOfTheJournal;
+                try {
+                    issueOfTheJournal = Integer.parseInt(reader.readLine());
+                } catch (NumberFormatException | NullPointerException e) {
+                    issueOfTheJournal = 0;
+                }
+                lit = new JournalArticleModel(title, author, titleJournal, issueOfTheJournal);
+                break;
+            case INTERNET_ARTICLE:
+                lmsConsolePrinter.printMessagesAddLit(5);
+                String urlAddress = reader.readLine();
+                if (title.isEmpty()) {
+                    title = "Unknown";
+                }
+                if (author.isEmpty()) {
+                    author = "Unknown";
+                }
+                if (urlAddress.isEmpty()) {
+                    urlAddress = "Unknown";
+                }
+                lit = new InternetArticleModel(title, author, urlAddress);
+                break;
+            case BOOK:
+                lmsConsolePrinter.printMessagesAddLit(6);
+                String genre = reader.readLine();
+                lmsConsolePrinter.printMessagesAddLit(7);
+               if (title.isEmpty()) {
+                    title = "Unknown";
+                }
+                if (author.isEmpty()) {
+                    author = "Unknown";
+                }
+                if (genre.isEmpty()) {
+                    genre = "Unknown";
+                }
+                int year;
+                try {
+                    year = Integer.parseInt(reader.readLine());
+                } catch (NumberFormatException ignored) {
+                    year = 0;
+                }
+                lit = new BookModel(title, author, genre, year);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
+        lit.setType(type);
+        return lit;
+    }
+
+
+
+    //₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴//
+
 
     /**
      * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
@@ -444,18 +528,19 @@ public class LMSTerminal {
 
     private void point4_3AddLit() throws IOException {
         System.out.println("Please enter the title of the new book");
-        lectureServiceImpl.getSelectedLecture().setLiteratures(addLitToArr(lectureServiceImpl.getSelectedLecture().getLiteratures()));
+        literatureServiceImpl.addLiterature(createLit(),lectureServiceImpl.getSelectedLecture().getLiteratures());
+        lectureServiceImpl.getSelectedLecture().getLiteratures();
+        lectureServiceImpl.getSelectedLecture().setLiteratures(literatureServiceImpl.addLiterature() addLitToArr(lectureServiceImpl.getSelectedLecture().getLiteratures()));
+
         System.out.println("Book added what to do next");
         System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
                 "you will return to the lecture selection menu, to complete the work, exit ");
-        String x = reader.readLine();
-
+        String x;
         while (true) {
             x = reader.readLine();
             if (x.equalsIgnoreCase("+") || x.equalsIgnoreCase("-") || x.equalsIgnoreCase("exit")) break;
             System.out.println("You only need to enter a + or - or EXIT!");
         }
-
         switch (x.toUpperCase()) {
             case "+":
                 point4_3AddLit();

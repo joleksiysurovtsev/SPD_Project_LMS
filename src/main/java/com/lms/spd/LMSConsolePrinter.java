@@ -100,4 +100,15 @@ public class LMSConsolePrinter {
                 "\"5. --> view all lecture information\n" +
                 "\"6. --> exit to the main menu");
     }
+
+    //₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴//
+    public void printMessagesAddLit(int message) {
+        if (message == 1) {System.out.println("Enter a title");}
+        if (message == 2) {System.out.println("Please enter a author name");}
+        if (message == 3) {System.out.println("Please enter a titleJournal name or press Enter");}
+        if (message == 4) {System.out.println("Please enter a issue of the journal where the article was published");}
+        if (message == 5) {System.out.println("Please enter a url address or press Enter");}
+        if (message == 6) {System.out.println("Please enter a genre name or press Enter");}
+        if (message == 7) {System.out.println("Please enter a year of publication of the book");}
+    }
 }
