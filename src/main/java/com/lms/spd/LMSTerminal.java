@@ -67,7 +67,7 @@ public class LMSTerminal {
     /**
      * point 1 main menu: view a list of lectures
      */
-    public void point1MainMenuShowLectures() throws IOException {
+    private void point1MainMenuShowLectures() throws IOException {
         System.out.println("Display all lectures \u001b[36;1m\"+\"" + "\u001B[0m" + " or \u001b[31;1m\"-\" \u001B[0mspecifically some by numbers?" + " enter \u001B[32m\"small\"\u001B[0m to preview lectures");
         switch (reader.readLine().toLowerCase()) {
             case "+":
@@ -128,7 +128,8 @@ public class LMSTerminal {
 
         List<Literature> literatures = addLitOrNot();
 
-        lectureServiceImpl.addLecture(new LectureIModel(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate));
+        lectureServiceImpl.addLecture(new LectureIModel(lectureType, numberOfLecture, nameOfLecture,literatures , lectorName, lectureDate));
+
         System.out.println("Entering a new lecture");
         subMenuAddingLectureToList();
     }
@@ -162,22 +163,23 @@ public class LMSTerminal {
 
     /*3*/
     public List<Literature> addLitOrNot() throws IOException {
-        List<Literature> result = new ArrayList<>();
+        List<Literature> newArrLit = new ArrayList<>();
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
                 do {
-                    createLit(result);
+                    literatureServiceImpl.addLiterature(createLit(),newArrLit);
                     System.out.println("Add more literature? if not enter minus");
                 } while (!reader.readLine().equals("-"));
                 break;
             case "-":
+                //или возвращаем пустой массив
                 break;
             default:
                 System.out.println("Something wrong");
                 addLitOrNot();
         }
-        return result;
+        return newArrLit;
     }
 
 
@@ -186,7 +188,8 @@ public class LMSTerminal {
 //        return arrAddLit;
 //    }
 
-    private Literature createLit(List<Literature> arrAddLit) throws IOException {
+    //выбрали тип литературы
+    private Literature createLit() throws IOException {
         LiteratureType typeLit = LiteratureType.UNKNOWN;
         int number = 0;
         boolean exists = true;
@@ -211,7 +214,6 @@ public class LMSTerminal {
             System.out.println("Unknown type: try again");
         }
         System.out.println("Type is : " + typeLit.toString());
-        arrAddLit.add(inputData(typeLit));
         return inputData(typeLit);
     }
 
@@ -262,7 +264,7 @@ public class LMSTerminal {
                 lmsConsolePrinter.printMessagesAddLit(6);
                 String genre = reader.readLine();
                 lmsConsolePrinter.printMessagesAddLit(7);
-               if (title.isEmpty()) {
+                if (title.isEmpty()) {
                     title = "Unknown";
                 }
                 if (author.isEmpty()) {
@@ -285,11 +287,6 @@ public class LMSTerminal {
         lit.setType(type);
         return lit;
     }
-
-
-
-    //₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴//
-
 
     /**
      * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
@@ -527,10 +524,7 @@ public class LMSTerminal {
     }
 
     private void point4_3AddLit() throws IOException {
-        System.out.println("Please enter the title of the new book");
-        literatureServiceImpl.addLiterature(createLit(),lectureServiceImpl.getSelectedLecture().getLiteratures());
-        lectureServiceImpl.getSelectedLecture().getLiteratures();
-        lectureServiceImpl.getSelectedLecture().setLiteratures(literatureServiceImpl.addLiterature() addLitToArr(lectureServiceImpl.getSelectedLecture().getLiteratures()));
+        literatureServiceImpl.addLiterature(createLit(), lectureServiceImpl.getSelectedLecture().getLiteratures());
 
         System.out.println("Book added what to do next");
         System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +

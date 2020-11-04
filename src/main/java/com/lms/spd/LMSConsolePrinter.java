@@ -101,7 +101,6 @@ public class LMSConsolePrinter {
                 "\"6. --> exit to the main menu");
     }
 
-    //₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴₴//
     public void printMessagesAddLit(int message) {
         if (message == 1) {System.out.println("Enter a title");}
         if (message == 2) {System.out.println("Please enter a author name");}

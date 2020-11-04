@@ -58,7 +58,7 @@ public class InternetArticleModel implements Literature {
 
     @Override
     public String print() {
-        StringBuilder printString = new StringBuilder("Title: " + getTitle() + " Author: " + getAuthor());
+        StringBuilder printString = new StringBuilder(" Internet articles: " + getTitle() + " Author: " + getAuthor());
         if (!urlAddress.equals("Unknown")) {
             printString.append(" Web address: ").append(urlAddress);
         }
@@ -67,7 +67,7 @@ public class InternetArticleModel implements Literature {
 
     @Override
     public String toString() {
-        return "Internet articles: " + " " + getTitle() + ", author= " + getAuthor() + " URL " + urlAddress;
+        return " Internet articles: " + " " + getTitle() + ", author= " + getAuthor() + " URL " + urlAddress;
     }
 
     @Override

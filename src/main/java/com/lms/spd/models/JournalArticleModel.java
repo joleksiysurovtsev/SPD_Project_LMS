@@ -71,7 +71,7 @@ public class JournalArticleModel implements Literature {
     public String print() {
         StringBuilder printString = new StringBuilder();
         if (!titleOfArticle.equals("Unknown")) {
-            printString.append("Article: ").append(titleOfArticle);
+            printString.append(" Article: ").append(titleOfArticle);
         }
 
         if (!getTitle().equals("Unknown")) {

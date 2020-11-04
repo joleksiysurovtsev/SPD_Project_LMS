@@ -20,9 +20,6 @@ public class LiteratureServiceImpl implements LiteratureService {
         this.literatures = literatures;
     }
 
-
-
-
     @Override
     public List<Literature> removeLiterature(int numberLit, List<Literature> lit) {
         if (lit.size() == 1) {
