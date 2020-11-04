@@ -13,7 +13,7 @@ class JournalArticleModelTest {
     @Test
     void print() {
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        assertEquals("Article: This keyword {in examples} In the journal java world Journal №: 5", journalArticle.print());
+        assertEquals(" Article: This keyword {in examples} In the journal java world Journal №: 5", journalArticle.print());
     }
 
     @Test

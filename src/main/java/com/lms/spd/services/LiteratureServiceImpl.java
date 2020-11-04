@@ -21,6 +21,12 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     @Override
+    public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) {
+        lit.add(litAdded);
+        return lit;
+    }
+
+    @Override
     public List<Literature> removeLiterature(int numberLit, List<Literature> lit) {
         if (lit.size() == 1) {
             lit = new ArrayList<>();
@@ -30,10 +36,4 @@ public class LiteratureServiceImpl implements LiteratureService {
         return lit;
     }
 
-
-    @Override
-    public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) {
-        lit.add(litAdded);
-        return lit;
-    }
 }

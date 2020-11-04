@@ -29,13 +29,15 @@ class LectureServiceImplTest {
     }
 
 
-//    @Test
-//    @DisplayName("Remove one lecture from empty array: expected String 'Lectures: are missing.' ")
-//    void removeLecturesByStringTest() {
-////        assertEquals("Lectures: are missing.", lectureService.removeLectures("5,6"));
-////        assertEquals("Lectures:  1 successfully removed the rest are missing.", lectureService.removeLectures("1,5"));
-////        assertEquals("Lectures: are missing.", lectureService.removeLectures("5"));
-//    }
+    @Test
+    @DisplayName("Remove one lecture from empty array: expected String 'Lectures: are missing.' ")
+    void removeLecturesByStringTest() {
+        List<Lecture> expected = new ArrayList<>();
+        expected.add(new LectureIModel(1, "Writes text to."));
+        String[] numbLectToDell= {"1","3"};
+        lectureService.removeLectures(numbLectToDell);
+        assertEquals(expected, lectureService.getLectures());
+    }
 
     @Test
     @DisplayName("Remove one lecture from empty array: expected false ")

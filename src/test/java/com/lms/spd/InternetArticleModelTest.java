@@ -13,13 +13,13 @@ class InternetArticleModelTest {
     @Test
     void print() {
         InternetArticleModel internetArticles = new InternetArticleModel("Java", "Aleksey", "google");
-        assertEquals("Title: Java Author: Aleksey Web address: google", internetArticles.print());
+        assertEquals(" Internet articles: Java Author: Aleksey Web address: google", internetArticles.print());
     }
 
     @Test
     void testToString() {
         InternetArticleModel internetArticles = new InternetArticleModel("Caracteres de escape em Java", "Oleksandr Klymenko", "https://javarush.ru/groups/posts/614-----ehkranirovanie-simvolov-v-java");
-        String expected = "Internet articles:  Caracteres de escape em Java, author= Oleksandr Klymenko URL https://javarush.ru/groups/posts/614-----ehkranirovanie-simvolov-v-java";
+        String expected = " Internet articles:  Caracteres de escape em Java, author= Oleksandr Klymenko URL https://javarush.ru/groups/posts/614-----ehkranirovanie-simvolov-v-java";
         assertEquals(expected, internetArticles.toString());
     }
 

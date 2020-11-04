@@ -128,7 +128,7 @@ public class LMSTerminal {
 
         List<Literature> literatures = addLitOrNot();
 
-        lectureServiceImpl.addLecture(new LectureIModel(lectureType, numberOfLecture, nameOfLecture,literatures , lectorName, lectureDate));
+        lectureServiceImpl.addLecture(new LectureIModel(lectureType, numberOfLecture, nameOfLecture, literatures, lectorName, lectureDate));
 
         System.out.println("Entering a new lecture");
         subMenuAddingLectureToList();
@@ -161,14 +161,55 @@ public class LMSTerminal {
         return lectureName;
     }
 
-    /*3*/
+    /**
+     * Method of adding the lecture date. If a date is entered,
+     * the date is set to the wrong date on the day after two months from the current
+     */
+    private Date enterTheLectureDate() throws IOException {
+        System.out.println("Enter the lecture date for example: 19-10-1986");
+        Date d1 = new Date();
+        String dateInString;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        dateInString = reader.readLine();
+        try {
+            sdf.setLenient(false);
+            d1 = sdf.parse(dateInString);
+        } catch (ParseException e) {
+            LocalDateTime localDateTime = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusMonths(2);
+            d1 = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            System.out.println("The date is entered incorrectly, the date of the lecture is set two months from the current");
+        }
+        return d1;
+    }
+
+    /**
+     * Returns the lecture type implemented by type checking.
+     */
+    private LectureType setLectureType() {
+        System.out.println("Please, choose lecture type: ");
+        System.out.println("1. " + LectureType.OPEN);
+        System.out.println("2. " + LectureType.CLOSE);
+        int number = 0;
+        try {
+            number = Integer.parseInt(reader.readLine());
+            if (number > LectureType.values().length || number <= 0) {
+                System.out.println("Unknown type: try again");
+                setLectureType();
+            }
+        } catch (IOException e) {
+            System.out.println("Unknown type: try again");
+            setLectureType();
+        }
+        return LectureType.getValueByNumber(number);
+    }
+
     public List<Literature> addLitOrNot() throws IOException {
         List<Literature> newArrLit = new ArrayList<>();
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         switch (reader.readLine()) {
             case "+":
                 do {
-                    literatureServiceImpl.addLiterature(createLit(),newArrLit);
+                    literatureServiceImpl.addLiterature(createLit(), newArrLit);
                     System.out.println("Add more literature? if not enter minus");
                 } while (!reader.readLine().equals("-"));
                 break;
@@ -183,12 +224,6 @@ public class LMSTerminal {
     }
 
 
-//    public List<Literature> addLitToArr(List<Literature> arrAddLit) throws IOException {
-//        createLit(arrAddLit);
-//        return arrAddLit;
-//    }
-
-    //выбрали тип литературы
     private Literature createLit() throws IOException {
         LiteratureType typeLit = LiteratureType.UNKNOWN;
         int number = 0;
@@ -295,48 +330,6 @@ public class LMSTerminal {
     private String enterLektorName() throws IOException {
         String s = reader.readLine();
         return (s.isEmpty()) ? "Unknown" : s;
-    }
-
-    /**
-     * Method of adding the lecture date. If a date is entered,
-     * the date is set to the wrong date on the day after two months from the current
-     */
-    private Date enterTheLectureDate() throws IOException {
-        System.out.println("Enter the lecture date for example: 19-10-1986");
-        Date d1 = new Date();
-        String dateInString;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        dateInString = reader.readLine();
-        try {
-            sdf.setLenient(false);
-            d1 = sdf.parse(dateInString);
-        } catch (ParseException e) {
-            LocalDateTime localDateTime = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusMonths(2);
-            d1 = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-            System.out.println("The date is entered incorrectly, the date of the lecture is set two months from the current");
-        }
-        return d1;
-    }
-
-    /**
-     * Returns the lecture type implemented by type checking.
-     */
-    private LectureType setLectureType() {
-        System.out.println("Please, choose lecture type: ");
-        System.out.println("1. " + LectureType.OPEN);
-        System.out.println("2. " + LectureType.CLOSE);
-        int number = 0;
-        try {
-            number = Integer.parseInt(reader.readLine());
-            if (number > LectureType.values().length || number <= 0) {
-                System.out.println("Unknown type: try again");
-                setLectureType();
-            }
-        } catch (IOException e) {
-            System.out.println("Unknown type: try again");
-            setLectureType();
-        }
-        return LectureType.getValueByNumber(number);
     }
 
     private void subMenuAddingLectureToList() throws IOException {
@@ -453,7 +446,7 @@ public class LMSTerminal {
         if (numbOfLecture == 0) {
             startLMS();
         } else {
-            if (!checkNumberLecture(numbOfLecture)) {
+            if (!(lectureServiceImpl.getLectures().size() >= numbOfLecture - 1)) {
                 System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
                 point4MainMenuChoiceOfLecture();
             } else {
@@ -466,15 +459,6 @@ public class LMSTerminal {
         lmsConsolePrinter.showFourthMenu();
         subMenu2Point4();
     }
-
-    public boolean checkNumberLecture(int numbOfLectures) {
-        boolean flag = false;
-        if (lectureServiceImpl.getLectures().size() >= numbOfLectures - 1) {
-            flag = true;
-        }
-        return flag;
-    }
-
 
     private void subMenu2Point4() throws IOException {
         int choice = 0;
