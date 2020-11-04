@@ -48,7 +48,7 @@ class LectureServiceImplTest {
     @Test
     @DisplayName("Remove one lecture from empty array: expected false ")
     void removeLecturesByIntTest2() {
-        assertTrue(lectureService.removeLectures(2));
+        assertTrue(lectureService.removeLectures(1));
     }
 
 
