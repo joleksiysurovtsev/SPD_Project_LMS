@@ -390,14 +390,14 @@ public class LMSTerminal {
             }
             subMenuRemovalLecture();
         } catch (NumberFormatException | IOException e) {
-            String[] lectureRemove = stringToDelleteLecture(numbRemovalLecture);
+            String[] lectureRemove = stringToDeleteLecture(numbRemovalLecture);
             lectureServiceImpl.removeLectures(lectureRemove);
             subMenuRemovalLecture();
         }
     }
 
 
-    public String[] stringToDelleteLecture(String lectureRemove) {
+    public String[] stringToDeleteLecture(String lectureRemove) {
         String[] numbDeletedLect = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
         IntStream.range(0, numbDeletedLect.length).forEach(i -> numbDeletedLect[i] = numbDeletedLect[i].replaceAll("[a-zA-Zа]*", ""));
         String[] numbToDisplay = Arrays.stream(numbDeletedLect).filter(x -> !(x.isEmpty())).toArray(String[]::new);
