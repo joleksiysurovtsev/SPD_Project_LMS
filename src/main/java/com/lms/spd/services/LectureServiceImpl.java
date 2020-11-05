@@ -95,7 +95,7 @@ public class LectureServiceImpl implements LectureService {
      */
     @Override
     public boolean removeLectures(int lectureRemove) {
-        boolean removedLect = lectures.removeIf(lectures -> lectures.getNumberOfLecture() == lectureRemove);
+        boolean removedLect = lectures.removeIf(lecture -> lecture.getNumberOfLecture() == lectureRemove);
         sortLectureArrAfterRemove();
         return removedLect;
     }

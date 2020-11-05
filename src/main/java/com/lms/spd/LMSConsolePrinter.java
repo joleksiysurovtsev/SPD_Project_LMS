@@ -5,30 +5,25 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
     /**
-     * The method prints the list of all lectures to the console
+     * The method prints the list of all lectures to the console if the date of the lecture has passed then the lecture is crossed out
      */
     public void printLectureList(List<Lecture> lectures) {
         if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
-            return;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        for (int i = 0, lecturesSize = lectures.size(); i < lecturesSize; i++) {
-            Lecture lect = lectures.get(i);
-            String s;
-            if (lect.getLectureDate().before(Calendar.getInstance())) {
-                s = "\u001B[31m" + "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture() + "\u001B[0m";
-            } else {
-                s = "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture();
-            }
-            System.out.println(s);
+        } else {
+            lectures.forEach(this::printFullLectList);
         }
     }
+
 
     /**
      * The method print Preview Lecture list
@@ -36,15 +31,9 @@ public class LMSConsolePrinter {
     public void printPreviewLectureList(List<Lecture> lectures) {
         if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
-            return;
+        } else {
+            lectures.forEach(this::printSubLectList);
         }
-        lectures.forEach(value -> {
-            if (value.toString().length() > 50) {
-                System.out.println(value.toString().substring(0, 50));
-            } else {
-                System.out.println(value);
-            }
-        });
     }
 
     /**
@@ -58,9 +47,17 @@ public class LMSConsolePrinter {
         String[] numbToDisplay = getStringsNumberLect(s);
         Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
                 .filter(x -> Integer.parseInt(value) == x.getNumberOfLecture())
-                .forEach(System.out::println));
+                .forEach(this::printFullLectList));
     }
 
+    private void printSubLectList(Lecture value) {
+        String nameLectures = value.getNameOfLecture().length() > 30 ? value.getNameOfLecture().substring(0, 30) : value.getNameOfLecture();
+        System.out.println(value.getLectureDate().before(Calendar.getInstance()) ? ("\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + nameLectures + "\u001B[0m") : ("Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + nameLectures));
+    }
+
+    private void printFullLectList(Lecture value) {
+        System.out.println(value.getLectureDate().before(Calendar.getInstance()) ? "\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + value.getNameOfLecture() + "\u001B[0m" : "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + value.getNameOfLecture());
+    }
 
     private String[] getStringsNumberLect(String s) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
@@ -134,4 +131,7 @@ public class LMSConsolePrinter {
             System.out.println("Please enter a year of publication of the book");
         }
     }
+
+
+
 }
