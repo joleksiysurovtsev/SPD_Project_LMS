@@ -4,8 +4,8 @@ package com.lms.spd;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
-import java.util.Arrays;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
@@ -13,18 +13,28 @@ public class LMSConsolePrinter {
      * The method prints the list of all lectures to the console
      */
     public void printLectureList(List<Lecture> lectures) {
-        if (lectures.isEmpty()){
+        if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
             return;
         }
-        lectures.forEach(System.out::println);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        for (int i = 0, lecturesSize = lectures.size(); i < lecturesSize; i++) {
+            Lecture lect = lectures.get(i);
+            String s;
+            if (lect.getLectureDate().before(Calendar.getInstance())) {
+                s = "\u001B[31m" + "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture() + "\u001B[0m";
+            } else {
+                s = "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture();
+            }
+            System.out.println(s);
+        }
     }
 
     /**
      * The method print Preview Lecture list
      */
     public void printPreviewLectureList(List<Lecture> lectures) {
-        if (lectures.isEmpty()){
+        if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
             return;
         }
@@ -41,7 +51,7 @@ public class LMSConsolePrinter {
      * The method prints the list lectures to the console by number
      */
     public void printLectureList(String s, List<Lecture> lectures) {
-        if (lectures.isEmpty()){
+        if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
             return;
         }
@@ -102,12 +112,26 @@ public class LMSConsolePrinter {
     }
 
     public void printMessagesAddLit(int message) {
-        if (message == 1) {System.out.println("Enter a title");}
-        if (message == 2) {System.out.println("Please enter a author name");}
-        if (message == 3) {System.out.println("Please enter a titleJournal name or press Enter");}
-        if (message == 4) {System.out.println("Please enter a issue of the journal where the article was published");}
-        if (message == 5) {System.out.println("Please enter a url address or press Enter");}
-        if (message == 6) {System.out.println("Please enter a genre name or press Enter");}
-        if (message == 7) {System.out.println("Please enter a year of publication of the book");}
+        if (message == 1) {
+            System.out.println("Enter a title");
+        }
+        if (message == 2) {
+            System.out.println("Please enter a author name");
+        }
+        if (message == 3) {
+            System.out.println("Please enter a titleJournal name or press Enter");
+        }
+        if (message == 4) {
+            System.out.println("Please enter a issue of the journal where the article was published");
+        }
+        if (message == 5) {
+            System.out.println("Please enter a url address or press Enter");
+        }
+        if (message == 6) {
+            System.out.println("Please enter a genre name or press Enter");
+        }
+        if (message == 7) {
+            System.out.println("Please enter a year of publication of the book");
+        }
     }
 }

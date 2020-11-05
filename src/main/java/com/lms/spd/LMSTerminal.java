@@ -20,10 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class LMSTerminal {
@@ -82,7 +79,7 @@ public class LMSTerminal {
                 System.out.println("Lecture preview");
                 lmsConsolePrinter.printPreviewLectureList(lectureServiceImpl.getLectures());
                 break;
-                default:
+            default:
                 point1MainMenuShowLectures();
                 break;
         }
@@ -123,7 +120,7 @@ public class LMSTerminal {
 
         LectureType lectureType = setLectureType();
 
-        Date lectureDate = enterTheLectureDate();
+        Calendar lectureDate = enterTheLectureDate();
 
         List<Literature> literatures = addLitOrNot();
 
@@ -164,18 +161,17 @@ public class LMSTerminal {
      * Method of adding the lecture date. If a date is entered,
      * the date is set to the wrong date on the day after two months from the current
      */
-    private Date enterTheLectureDate() throws IOException {
+    private Calendar enterTheLectureDate() throws IOException {
         System.out.println("Enter the lecture date for example: 19-10-1986");
-        Date d1 = new Date();
+        Calendar d1 = new GregorianCalendar();
         String dateInString;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         dateInString = reader.readLine();
         try {
             sdf.setLenient(false);
-            d1 = sdf.parse(dateInString);
+            d1.setTime(sdf.parse(dateInString));
         } catch (ParseException e) {
-            LocalDateTime localDateTime = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusMonths(2);
-            d1 = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            d1 = Calendar.getInstance();
             System.out.println("The date is entered incorrectly, the date of the lecture is set two months from the current");
         }
         return d1;
@@ -186,8 +182,9 @@ public class LMSTerminal {
      */
     private LectureType setLectureType() {
         System.out.println("Please, choose lecture type: ");
-        System.out.println("1. " + LectureType.OPEN);
-        System.out.println("2. " + LectureType.CLOSE);
+        for (int i = 1; i < LectureType.values().length + 1; i++) {
+            System.out.println(i + ". " + LectureType.getValueByNumber(i)+" ");
+        }
         int number = 0;
         try {
             number = Integer.parseInt(reader.readLine());

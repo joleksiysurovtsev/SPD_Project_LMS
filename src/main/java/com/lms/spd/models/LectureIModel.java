@@ -4,6 +4,7 @@ import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +13,7 @@ public class LectureIModel implements Lecture {
     private String nameOfLecture;
     private int numberOfLecture;
     private List<Literature> literatures;
-    private Date lectureDate;
+    private Calendar lectureDate;
     private String lectorName;
     private LectureType type;
 
@@ -27,7 +28,7 @@ public class LectureIModel implements Lecture {
         this.numberOfLecture = numberOfLecture;
     }
 
-    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Date lectureDate) {
+    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
         this.numberOfLecture = numberOfLecture;
@@ -69,12 +70,12 @@ public class LectureIModel implements Lecture {
     }
 
     @Override
-    public void setLectureDate(Date lectureDate) {
+    public void setLectureDate(Calendar lectureDate) {
         this.lectureDate = lectureDate;
     }
 
     @Override
-    public Date getLectureDate() {
+    public Calendar getLectureDate() {
         return lectureDate;
     }
 
@@ -101,7 +102,7 @@ public class LectureIModel implements Lecture {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
     public String toString() {
-        return lectureDate +" Lecture №" + numberOfLecture + ". " + nameOfLecture;
+        return "Lecture №" + numberOfLecture + ". " + nameOfLecture+" Date:" + lectureDate.getTime();
     }
 
     @Override
