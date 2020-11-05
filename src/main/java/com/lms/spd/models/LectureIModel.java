@@ -101,7 +101,7 @@ public class LectureIModel implements Lecture {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
     public String toString() {
-        return "Lecture №" + numberOfLecture + ". " + nameOfLecture;
+        return lectureDate +" Lecture №" + numberOfLecture + ". " + nameOfLecture;
     }
 
     @Override

@@ -72,22 +72,21 @@ public class LMSTerminal {
         switch (reader.readLine().toLowerCase()) {
             case "+":
                 lmsConsolePrinter.printLectureList(lectureServiceImpl.getLectures());
-                System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
+
                 break;
             case "-":
                 System.out.println("Enter numbers separated by commas");
                 lmsConsolePrinter.printLectureList(reader.readLine(), lectureServiceImpl.getLectures());
-                System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                 break;
             case "small":
                 System.out.println("Lecture preview");
                 lmsConsolePrinter.printPreviewLectureList(lectureServiceImpl.getLectures());
-                System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
                 break;
-            default:
+                default:
                 point1MainMenuShowLectures();
                 break;
         }
+        System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program ");
         subMenuShowLectures();
     }
 

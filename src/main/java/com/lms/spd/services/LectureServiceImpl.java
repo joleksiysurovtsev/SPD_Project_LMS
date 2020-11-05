@@ -36,12 +36,14 @@ public class LectureServiceImpl implements LectureService {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     public void addLecture(Lecture lecture) {
+        //
         if ((lectures.isEmpty() || lecture.getNumberOfLecture() > lectures.size())) {
             lectures.add(lecture);
         } else {
             lectures.add(lecture.getNumberOfLecture() - 1, lecture);
         }
-        sortLectureArr();
+        sortByDate();
+        sortLectureArr(); //нумерует лекции в порядке возрастания
     }
 
     //______________________________________________________________________________________________________________//
@@ -65,6 +67,10 @@ public class LectureServiceImpl implements LectureService {
 
 
     //________________________________________________________________________________________________//
+
+    private void sortByDate() {
+        lectures.sort(Comparator.comparing(Lecture::getLectureDate));
+    }
 
     private void sortLectureArr() {
         IntStream.range(0, lectures.size() - 1).filter(i -> lectures.get(i).getNumberOfLecture() == lectures.get(i + 1)
