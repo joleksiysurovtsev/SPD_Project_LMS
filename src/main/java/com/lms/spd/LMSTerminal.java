@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -65,19 +63,23 @@ public class LMSTerminal {
      * point 1 main menu: view a list of lectures
      */
     private void point1MainMenuShowLectures() throws IOException {
-        System.out.println("Display all lectures \u001b[36;1m\"+\"" + "\u001B[0m" + " or \u001b[31;1m\"-\" \u001B[0mspecifically some by numbers?" + " enter \u001B[32m\"small\"\u001B[0m to preview lectures");
+        System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n"
+                + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by numbers\n"
+                + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n"
+                + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type ");
         switch (reader.readLine().toLowerCase()) {
             case "+":
                 lmsConsolePrinter.printLectureList(lectureServiceImpl.getLectures());
-
                 break;
             case "-":
                 System.out.println("Enter numbers separated by commas");
                 lmsConsolePrinter.printLectureList(reader.readLine(), lectureServiceImpl.getLectures());
                 break;
             case "small":
-                System.out.println("Lecture preview");
                 lmsConsolePrinter.printPreviewLectureList(lectureServiceImpl.getLectures());
+                break;
+            case "type":
+                lmsConsolePrinter.printLectureListByType(selectLectureType(arrayLectTypesInvolved(lectureServiceImpl.getLectures())),lectureServiceImpl.getLectures());
                 break;
             default:
                 point1MainMenuShowLectures();
@@ -118,7 +120,7 @@ public class LMSTerminal {
         System.out.println("Enter lecturer name");
         String lectorName = enterLektorName();
 
-        LectureType lectureType = setLectureType();
+        LectureType lectureType = selectLectureType();
 
         Calendar lectureDate = enterTheLectureDate();
 
@@ -180,24 +182,55 @@ public class LMSTerminal {
     /**
      * Returns the lecture type implemented by type checking.
      */
-    private LectureType setLectureType() {
+    private LectureType selectLectureType() {
         System.out.println("Please, choose lecture type: ");
         for (int i = 1; i < LectureType.values().length + 1; i++) {
-            System.out.println(i + ". " + LectureType.getValueByNumber(i)+" ");
+            System.out.println(i + ". " + LectureType.getValueByNumber(i) + " ");
         }
         int number = 0;
         try {
             number = Integer.parseInt(reader.readLine());
             if (number > LectureType.values().length || number <= 0) {
                 System.out.println("Unknown type: try again");
-                setLectureType();
+                selectLectureType();
             }
         } catch (IOException e) {
             System.out.println("Unknown type: try again");
-            setLectureType();
+            selectLectureType();
         }
         return LectureType.getValueByNumber(number);
     }
+
+    private LectureType selectLectureType(List <LectureType> types ) {
+        int number;
+        while (true) {
+            System.out.println("Please, choose lecture type: ");
+            IntStream.range(0, types.size()).mapToObj(i -> (i + 1) + ". " + types.get(i) + " ").forEach(System.out::println);
+            try {
+                number = Integer.parseInt(reader.readLine());
+                if (number > types.size() || number <= 0) {
+                    System.out.println("Unknown type: try again");
+                    continue;
+                }
+            } catch (IOException e) {
+                System.out.println("Unknown type: try again");
+                continue;
+            }
+            break;
+        }
+        return types.get(number-1);
+    }
+
+    private List <LectureType> arrayLectTypesInvolved(List<Lecture> lectures){
+        List<LectureType> types = new ArrayList<>();
+        for (Lecture lecture: lectures) {
+            if (!types.contains(lecture.getType())){
+            types.add(lecture.getType());}
+        }
+        return types;
+    }
+
+
 
     public List<Literature> addLitOrNot() throws IOException {
         List<Literature> newArrLit = new ArrayList<>();

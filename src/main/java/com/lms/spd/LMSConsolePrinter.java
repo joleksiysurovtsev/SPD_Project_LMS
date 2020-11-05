@@ -1,6 +1,7 @@
 package com.lms.spd;
 
 
+import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
@@ -29,6 +30,7 @@ public class LMSConsolePrinter {
      * The method print Preview Lecture list
      */
     public void printPreviewLectureList(List<Lecture> lectures) {
+        System.out.println("Lecture preview");
         if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
         } else {
@@ -42,27 +44,51 @@ public class LMSConsolePrinter {
     public void printLectureList(String s, List<Lecture> lectures) {
         if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
-            return;
+
+        } else {
+            Integer[] numbToDisplay = getStringsNumberLect(s);
+            Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
+                    .filter(x -> value == x.getNumberOfLecture())
+                    .forEach(this::printFullLectList));
         }
-        String[] numbToDisplay = getStringsNumberLect(s);
-        Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
-                .filter(x -> Integer.parseInt(value) == x.getNumberOfLecture())
-                .forEach(this::printFullLectList));
     }
 
+    /**
+     * the method prints lectures after checking for the length of the lecture title no more than 30 characters
+     */
     private void printSubLectList(Lecture value) {
         String nameLectures = value.getNameOfLecture().length() > 30 ? value.getNameOfLecture().substring(0, 30) : value.getNameOfLecture();
         System.out.println(value.getLectureDate().before(Calendar.getInstance()) ? ("\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + nameLectures + "\u001B[0m") : ("Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + nameLectures));
     }
 
+
+    public void printLectureListByType(LectureType type, List<Lecture> lectures) {
+        if (lectures.isEmpty()) {
+            System.out.println("The lecture list is empty first add lectures");
+        } else {
+            for (Lecture lect : lectures) {
+                if (lect.getType()==type){
+                    System.out.println(lect.getLectureDate().before(Calendar.getInstance()) ? "\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture() + "\u001B[0m" : "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture());
+                }
+            }
+        }
+    }
+
+
+    /**
+     * the method prints lectures, checking if the lecture is passed in red and is crossed out
+     */
     private void printFullLectList(Lecture value) {
         System.out.println(value.getLectureDate().before(Calendar.getInstance()) ? "\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + value.getNameOfLecture() + "\u001B[0m" : "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + value.getNameOfLecture());
     }
 
-    private String[] getStringsNumberLect(String s) {
+    /**
+     * returns numbers from strings
+     */
+    private Integer[] getStringsNumberLect(String s) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
         IntStream.range(0, strings.length).forEach(i -> strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", ""));
-        return Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(String[]::new);
+        return Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(Integer[]::new);
     }
 
 
@@ -131,7 +157,6 @@ public class LMSConsolePrinter {
             System.out.println("Please enter a year of publication of the book");
         }
     }
-
 
 
 }
