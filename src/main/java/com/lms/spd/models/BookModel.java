@@ -3,6 +3,9 @@ package com.lms.spd.models;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class BookModel implements Literature {
@@ -11,12 +14,14 @@ public class BookModel implements Literature {
     private String genre;
     private int publishedInYear;
     private LiteratureType type;
+    private Calendar dateResourceWasAdded;
 
     public BookModel(String title, String author, String genre, int publishedInYear) {
         this.genre = genre;
         this.publishedInYear = publishedInYear;
         setTitle(title);
         setAuthor(author);
+        this.dateResourceWasAdded = GregorianCalendar.getInstance();
     }
 
     @Override
@@ -49,6 +54,15 @@ public class BookModel implements Literature {
         this.type = type;
     }
 
+    @Override
+    public Calendar getDateResourceWasAdded() {
+        return dateResourceWasAdded;
+    }
+    @Override
+    public void setDateResourceWasAdded(Calendar dateResourceWasAdded) {
+        this.dateResourceWasAdded = dateResourceWasAdded;
+    }
+
     public String getGenre() {
         return genre;
     }
@@ -66,8 +80,10 @@ public class BookModel implements Literature {
         this.publishedInYear = publishedInYear;
     }
 
+
     @Override
     public String print() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         StringBuilder printString = new StringBuilder(" Book: " + getTitle() + " Author: " + getAuthor());
         if (!genre.equals("Unknown")) {
             printString.append(" Genre: ").append(genre);
@@ -75,6 +91,7 @@ public class BookModel implements Literature {
         if (publishedInYear != 0) {
             printString.append(" Publishing in: ").append(publishedInYear).append("year");
         }
+        printString.append("\t"+ " Date the resource was added: " + sdf.format(getDateResourceWasAdded().getTime()));
         return printString.toString();
     }
 

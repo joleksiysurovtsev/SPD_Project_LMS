@@ -3,6 +3,9 @@ package com.lms.spd.models;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class JournalArticleModel implements Literature {
@@ -12,11 +15,24 @@ public class JournalArticleModel implements Literature {
     private int issueOfTheJournal;
     private LiteratureType type;
 
+    @Override
+    public Calendar getDateResourceWasAdded() {
+        return dateResourceWasAdded;
+    }
+
+    @Override
+    public void setDateResourceWasAdded(Calendar dateResourceWasAdded) {
+        this.dateResourceWasAdded = dateResourceWasAdded;
+    }
+
+    private Calendar dateResourceWasAdded;
+
     public JournalArticleModel(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
         setAuthor(author);
         setTitle(titleJournal);
         this.titleOfArticle = titleOfArticle;
         this.issueOfTheJournal = issueOfTheJournal;
+        this.dateResourceWasAdded = GregorianCalendar.getInstance();
     }
 
     @Override
@@ -69,18 +85,17 @@ public class JournalArticleModel implements Literature {
 
     @Override
     public String print() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         StringBuilder printString = new StringBuilder();
-        if (!titleOfArticle.equals("Unknown")) {
-            printString.append(" Article: ").append(titleOfArticle);
-        }
-
+        printString.append(" Article: ").append(titleOfArticle);
         if (!getTitle().equals("Unknown")) {
             printString.append(" In the journal ").append(getTitle());
         }
-
         if (issueOfTheJournal != 0) {
             printString.append(" Journal №: ").append(issueOfTheJournal);
         }
+        printString.append(sdf.format(getDateResourceWasAdded().getTime()));
+
         return printString.toString();
     }
 

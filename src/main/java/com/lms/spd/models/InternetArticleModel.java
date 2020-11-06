@@ -3,19 +3,23 @@ package com.lms.spd.models;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class InternetArticleModel implements Literature {
     private String title;
     private String author;
     private String urlAddress;
-
+    private Calendar dateResourceWasAdded;
     private LiteratureType type;
 
     public InternetArticleModel(String title, String author, String urlAddress) {
         setAuthor(author);
         setTitle(title);
         this.urlAddress = urlAddress;
+        this.dateResourceWasAdded = GregorianCalendar.getInstance();
     }
 
     public String getUrlAddress() {
@@ -58,11 +62,22 @@ public class InternetArticleModel implements Literature {
 
     @Override
     public String print() {
-        StringBuilder printString = new StringBuilder(" Internet articles: " + getTitle() + " Author: " + getAuthor());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        StringBuilder printString = new StringBuilder(" Internet articles: " + getTitle() + " Author: " + getAuthor()+ " Date the resource was added: " + sdf.format(getDateResourceWasAdded().getTime()));
         if (!urlAddress.equals("Unknown")) {
             printString.append(" Web address: ").append(urlAddress);
         }
         return printString.toString();
+    }
+
+    @Override
+    public Calendar getDateResourceWasAdded() {
+        return dateResourceWasAdded;
+    }
+
+    @Override
+    public void setDateResourceWasAdded(Calendar dateResourceWasAdded) {
+        this.dateResourceWasAdded = dateResourceWasAdded;
     }
 
     @Override

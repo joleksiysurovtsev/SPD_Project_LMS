@@ -30,4 +30,6 @@ public interface Lecture {
     LectureType getType();
 
     void setType(LectureType type);
+
+
 }

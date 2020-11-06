@@ -102,7 +102,7 @@ public class LMSConsolePrinter {
         } else {
             int i = 1;
             for (Literature x : litArr) {
-                System.out.println(i + x.print());
+                System.out.printf(" %15s %n",  i , x.print());
                 i++;
             }
         }
