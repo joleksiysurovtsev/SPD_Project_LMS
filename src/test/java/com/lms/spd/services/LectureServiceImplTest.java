@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,7 +34,7 @@ class LectureServiceImplTest {
     void removeLecturesByStringTest() {
         List<Lecture> expected = new ArrayList<>();
         expected.add(new LectureIModel(1, "Writes text to."));
-        String[] numbLectToDell= {"1","3"};
+        String[] numbLectToDell = {"1", "3"};
         lectureService.removeLectures(numbLectToDell);
         assertEquals(expected, lectureService.getLectures());
     }
@@ -45,6 +45,7 @@ class LectureServiceImplTest {
         assertFalse(lectureService.removeLectures(5));
         assertTrue(lectureService.removeLectures(1));
     }
+
     @Test
     @DisplayName("Remove one lecture from empty array: expected false ")
     void removeLecturesByIntTest2() {
@@ -64,29 +65,25 @@ class LectureServiceImplTest {
     @DisplayName("Add new lecture to array "
             + "expected: one more lecture will be added to the end of the lecture array")
     void addLecture() {
-        List<Lecture> expectedLectures = new ArrayList<>();
+        LectureServiceImpl lectureService = new LectureServiceImpl();
+        List<Lecture> tested = lectureService.getLectures();
         {
-            expectedLectures.add(new LectureIModel(1, "BufferedReader."));
-            expectedLectures.add(new LectureIModel(2, "Writes text to."));
-            expectedLectures.add(new LectureIModel(3, "Core Java API"));
-            expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 4, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()));
+            tested.add(new LectureIModel(LectureType.getValueByNumber(1), 1, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2022, 06, 15)));
         }
-        lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 4, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()));
-        assertEquals(expectedLectures, lectureService.getLectures());
+        lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 1, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2022, 06, 15)));
+        assertEquals(tested, lectureService.getLectures());
     }
 
     @Test
     @DisplayName("Adding a lecture to the middle of the array")
     void addLecture2() {
-        List<Lecture> expectedLectures = new ArrayList<>();
+        LectureServiceImpl lectureService = new LectureServiceImpl();
+        List<Lecture> expectedLectures = lectureService.getLectures();
         {
-            expectedLectures.add(new LectureIModel(1, "BufferedReader."));
-            expectedLectures.add(new LectureIModel(2, "Writes text to."));
-            expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()));
-            expectedLectures.add(new LectureIModel(4, "Core Java API"));
+            expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
         }
 
-        lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new Date()));
+        lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
         assertEquals(expectedLectures, lectureService.getLectures());
     }
 

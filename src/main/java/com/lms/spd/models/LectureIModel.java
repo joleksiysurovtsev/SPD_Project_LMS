@@ -5,7 +5,6 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -100,9 +99,17 @@ public class LectureIModel implements Lecture {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
     @Override
     public String toString() {
-        return "Lecture №" + numberOfLecture + ". " + nameOfLecture+" Date:" + lectureDate.getTime();
+        return "LectureIModel{" +
+                "nameOfLecture='" + nameOfLecture + '\'' +
+                ", numberOfLecture=" + numberOfLecture +
+                ", literatures=" + literatures +
+                ", lectureDate=" + lectureDate +
+                ", lectorName='" + lectorName + '\'' +
+                ", type=" + type +
+                '}';
     }
 
     @Override

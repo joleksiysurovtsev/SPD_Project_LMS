@@ -2,11 +2,9 @@ package com.lms.spd;
 
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.models.interfaces.Literature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +13,7 @@ class LectureIModelTest {
     @Test
     void testToString() {
         Lecture testLecture = new LectureIModel(1, "Test");
-        assertEquals("Lecture №1. Test",testLecture.toString());
+        assertEquals("LectureIModel{nameOfLecture='Test', numberOfLecture=1, literatures=null, lectureDate=null, lectorName='null', type=null}",testLecture.toString());
     }
 
     @Test
