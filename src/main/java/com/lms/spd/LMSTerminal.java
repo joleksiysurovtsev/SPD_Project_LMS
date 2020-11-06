@@ -184,9 +184,7 @@ public class LMSTerminal {
      */
     private LectureType selectLectureType() {
         System.out.println("Please, choose lecture type: ");
-        for (int i = 1; i < LectureType.values().length + 1; i++) {
-            System.out.println(i + ". " + LectureType.getValueByNumber(i) + " ");
-        }
+        IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
         int number = 0;
         try {
             number = Integer.parseInt(reader.readLine());
@@ -223,10 +221,7 @@ public class LMSTerminal {
 
     private List <LectureType> arrayLectTypesInvolved(List<Lecture> lectures){
         List<LectureType> types = new ArrayList<>();
-        for (Lecture lecture: lectures) {
-            if (!types.contains(lecture.getType())){
-            types.add(lecture.getType());}
-        }
+        lectures.stream().filter(lecture -> !types.contains(lecture.getType())).forEach(lecture -> types.add(lecture.getType()));
         return types;
     }
 
