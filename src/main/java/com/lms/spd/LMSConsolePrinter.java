@@ -8,6 +8,7 @@ import com.lms.spd.models.interfaces.Literature;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -67,7 +68,7 @@ public class LMSConsolePrinter {
             System.out.println("The lecture list is empty first add lectures");
         } else {
             for (Lecture lect : lectures) {
-                if (lect.getType()==type){
+                if (lect.getType() == type) {
                     System.out.println(lect.getLectureDate().before(Calendar.getInstance()) ? "\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture() + "\u001B[0m" : "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture());
                 }
             }
@@ -96,17 +97,43 @@ public class LMSConsolePrinter {
      * the method print a list of references from the previously selected lecture
      */
     public void printListLit(Lecture selectedLecture) {
+        //создали из лекции лист литературы
         List<Literature> litArr = selectedLecture.getLiteratures();
+        //если список пустой
         if (litArr.isEmpty()) {
             System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
         } else {
+             sortLectureByDateAndType(litArr);
+            //печатаем на экран литературу
             int i = 1;
             for (Literature x : litArr) {
-                System.out.printf(" %15s %n",  i , x.print());
+                System.out.println( i + ""+ x.print());
                 i++;
             }
         }
     }
+
+    private void sortLectureByDateAndType(List<Literature> litArr) {
+        litArr.sort(Comparator.comparing(Literature::getType));
+        boolean flag = false;
+        while (flag) {
+            flag = true;
+            for (int i = 0, litArrSize = litArr.size(); i < litArrSize; i++) {
+                if (litArr.get(i).getDateResourceWasAdded().after(litArr.get(i + 1))) {
+                    //меняем их местами
+                    Literature temps = litArr.get(i);
+                    litArr.set(i, litArr.get(i + 1));
+                    litArr.set(i + 1, temps);
+                    flag = false;
+                }
+            }
+        }
+    }
+
+
+
+
+
 
 
     public void showStartMenu() {

@@ -83,7 +83,7 @@ public class BookModel implements Literature {
 
     @Override
     public String print() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         StringBuilder printString = new StringBuilder(" Book: " + getTitle() + " Author: " + getAuthor());
         if (!genre.equals("Unknown")) {
             printString.append(" Genre: ").append(genre);
