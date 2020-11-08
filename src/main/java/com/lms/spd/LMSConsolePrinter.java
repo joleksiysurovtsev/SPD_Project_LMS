@@ -18,6 +18,18 @@ public class LMSConsolePrinter {
     /**
      * The method prints the list of all lectures to the console if the date of the lecture has passed then the lecture is crossed out
      */
+    public void printLectureListByCurentDate(List<Lecture> lectures) {
+        if (lectures.isEmpty()) {
+            System.out.println("The lecture list is empty first add lectures");
+        } else {
+            lectures.forEach(this::printFullLectList);
+        }
+    }
+
+
+    /**
+     * The method prints the list of all lectures to the console if the date of the lecture has passed then the lecture is crossed out
+     */
     public void printLectureList(List<Lecture> lectures) {
         if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");

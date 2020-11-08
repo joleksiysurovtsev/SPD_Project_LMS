@@ -1,5 +1,6 @@
 package com.lms.spd.services;
 
+import com.lms.spd.LMSTerminal;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -13,7 +14,7 @@ public class LectureServiceImpl implements LectureService {
     private List<Lecture> lectures = new ArrayList<>() {
         {
             add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 5)));
-            add(new LectureIModel(LectureType.COMMON, 2, "\"Intellij IDEA Features. GitLab flow.\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 9, 7)));
+            add(new LectureIModel(LectureType.COMMON, 2, "\"Intellij IDEA Features. GitLab flow.\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 9, 5)));
             add(new LectureIModel(LectureType.JAVA_CORE, 3, "\"JAVA_CORE Java API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 12)));
             add(new LectureIModel(LectureType.COMMON, 4, "\"Debugging. Build Tools: Graddle. Unit-testing basics\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 9, 14)));
             add(new LectureIModel(LectureType.JAVA_CORE, 5, "\"Class design\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 19)));
@@ -86,6 +87,7 @@ public class LectureServiceImpl implements LectureService {
         }
         sortByDate();
         sortLectureArr(); //нумерует лекции в порядке возрастания
+        LMSTerminal.cash.updateCashAfteradd(lecture);
     }
 
     //______________________________________________________________________________________________________________//
@@ -95,14 +97,31 @@ public class LectureServiceImpl implements LectureService {
      */
     @Override
     public boolean removeLectures(int lectureRemove) {
+        removeLectCash(lectureRemove);
         boolean removedLect = lectures.removeIf(lecture -> lecture.getNumberOfLecture() == lectureRemove);
         sortLectureArrAfterRemove();
         return removedLect;
     }
 
+    private void removeLectCash(int lectureRemove) {
+        List<Lecture> listR = new ArrayList<>();
+        for (Lecture lect : lectures) {
+            if (lect.getNumberOfLecture() == lectureRemove) {
+                listR.add(lect);
+            }
+        }
+        LMSTerminal.cash.updateCashAfterRemove(listR);
+    }
+
 
     @Override
     public void removeLectures(String[] lectureRemove) {
+
+//        for (Lecture lect : lectures) {
+//            if (lect.getNumberOfLecture() == lectureRemove) {
+//                LMSTerminal.cash.updateCashAfterRemove(lect);
+//            }
+//        }
         Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> lectures.removeIf(p -> p.getNumberOfLecture() == z));
         sortLectureArrAfterRemove();
     }
