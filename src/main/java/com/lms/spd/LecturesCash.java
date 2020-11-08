@@ -3,21 +3,13 @@ package com.lms.spd;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.services.LectureServiceImpl;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class LecturesCash {
     private LectureServiceImpl lectureService = new LectureServiceImpl();
     private List<Lecture> lectures = lectureService.getLectures();
-    private Calendar curentDate = new GregorianCalendar(2020, 9, 5);
+    private Calendar curentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 5);
     private Map<Calendar, List<Lecture>> cash = new HashMap();
-
-    public void printMap() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        for (Map.Entry<Calendar, List<Lecture>> entry : cash.entrySet()) {
-            System.out.println(sdf.format(entry.getKey().getTime()) + " : " + entry.getValue().size());
-        }
-    }
 
 
     public Calendar getCurentDate() {
@@ -33,7 +25,7 @@ public class LecturesCash {
     }
 
     public List<Lecture> returnList() {
-        return cash.get(curentDate) == null ? new ArrayList<Lecture>() : cash.get(curentDate);
+        return cash.get(curentDate) == null ? new ArrayList<>() : cash.get(curentDate);
     }
 
 
@@ -53,28 +45,28 @@ public class LecturesCash {
                     }
                 }
                 cash.put(date, lecturesadded);
-            } else {
-                continue;
             }
         }
     }
 
 
+
     public void updateCashAfteradd(Lecture lecture) {
         List<Lecture> lsc;
         if (cash.containsKey(lecture.getLectureDate())) {
-            lsc = cash.get(lecture.getLectureDate());
+            lsc = cash.get(lecture.getLectureDate()); //в лист лекций из кеша по дате
         } else {
-            lsc = new ArrayList<>();
+            lsc = new ArrayList<>();                  //или создаём если небыло
         }
-        lsc.add(lecture);
+        lsc.add(lecture);                             //добавляем лекцию
+        cash.put(lecture.getLectureDate(), lsc);      //возвращаем в мапу
     }
 
     public void updateCashAfterRemove(List<Lecture> lecturebyremove) {
-        for (Lecture lectures : lecturebyremove) {
+        lecturebyremove.forEach(lectures -> {
             List<Lecture> lsc = cash.get(lectures.getLectureDate());
             lsc.removeIf(lecture -> lecture.getNameOfLecture().equals(lectures.getNameOfLecture()));
             cash.put(lectures.getLectureDate(), lsc);
-        }
+        });
     }
 }

@@ -105,7 +105,7 @@ public class LMSTerminal {
         if (!reader.readLine().isEmpty()) {
             cash.setCurentDate(enterTheLectureDate());
         }
-        System.out.println("Date "+sdf.format(cash.getCurentDate().getTime()));
+        System.out.println("Date " + sdf.format(cash.getCurentDate().getTime()));
     }
 
 
@@ -269,13 +269,12 @@ public class LMSTerminal {
 
     private Literature createLit() throws IOException {
         LiteratureType typeLit = LiteratureType.UNKNOWN;
-        int number = 0;
         boolean exists = true;
         while (exists) {
             System.out.println("Please, choose literature type: ");
             System.out.println("1.Book, 2.Journal article, 3.Internet article");
             try {
-                number = Integer.parseInt(reader.readLine());
+                int number = Integer.parseInt(reader.readLine());
                 for (LiteratureType e : LiteratureType.values()) {
                     if (e.ordinal() == number) {
                         typeLit = LiteratureType.getValueByNumber(number);
@@ -291,6 +290,7 @@ public class LMSTerminal {
             }
             System.out.println("Unknown type: try again");
         }
+        assert typeLit != null;
         System.out.println("Type is : " + typeLit.toString());
         return inputData(typeLit);
     }
@@ -424,19 +424,11 @@ public class LMSTerminal {
         } catch (IOException e) {
             point3MainMenuRemovalLecture();
         }
-        try {
-            assert numbRemovalLecture != null;
-            if (!lectureServiceImpl.removeLectures(Integer.parseInt(numbRemovalLecture))) {
-                System.out.println("Lectures under this number do not exist, try again");
-            } else {
-                System.out.print("successfully");
-            }
-            subMenuRemovalLecture();
-        } catch (NumberFormatException | IOException e) {
-            String[] lectureRemove = stringToDeleteLecture(numbRemovalLecture);
-            lectureServiceImpl.removeLectures(lectureRemove);
-            subMenuRemovalLecture();
-        }
+        assert numbRemovalLecture != null;
+        String[] lectureRemove = stringToDeleteLecture(numbRemovalLecture);
+        lectureServiceImpl.removeLectures(lectureRemove);
+        subMenuRemovalLecture();
+
     }
 
 
@@ -559,16 +551,20 @@ public class LMSTerminal {
 
 
     private void point4_2ViewListOfLit() throws IOException {
-        lmsConsolePrinter.printListLit(lectureServiceImpl.getSelectedLecture());
+        lectureServiceImpl.getSelectedLecture().printListLit(lmsConsolePrinter);
         System.out.println("what do we do with the bibliography");
         lmsConsolePrinter.showFourthMenu();
         subMenu2Point4();
     }
 
     private void point4_3AddLit() throws IOException {
-        literatureServiceImpl.addLiterature(createLit(), lectureServiceImpl.getSelectedLecture().getLiteratures());
-
-        System.out.println("Book added what to do next");
+        Literature newLit = createLit();
+        if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)){
+            System.out.println("this literature is already there");
+        }else{
+            literatureServiceImpl.addLiterature(newLit, lectureServiceImpl.getSelectedLecture().getLiteratures());
+            System.out.println("Book added what to do next");
+        }
         System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
                 "you will return to the lecture selection menu, to complete the work, exit ");
         String x;

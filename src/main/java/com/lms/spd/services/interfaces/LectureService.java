@@ -14,7 +14,5 @@ public interface LectureService {
 
     void addLecture(Lecture lecture);
 
-    boolean removeLectures(int lectureRemove);
-
     void removeLectures(String[] lectureRemove);
 }

@@ -96,36 +96,17 @@ public class LectureServiceImpl implements LectureService {
      * Remove lecture from array
      */
     @Override
-    public boolean removeLectures(int lectureRemove) {
-        removeLectCash(lectureRemove);
-        boolean removedLect = lectures.removeIf(lecture -> lecture.getNumberOfLecture() == lectureRemove);
-        sortLectureArrAfterRemove();
-        return removedLect;
-    }
-
-    private void removeLectCash(int lectureRemove) {
-        List<Lecture> listR = new ArrayList<>();
-        for (Lecture lect : lectures) {
-            if (lect.getNumberOfLecture() == lectureRemove) {
-                listR.add(lect);
-            }
-        }
-        LMSTerminal.cash.updateCashAfterRemove(listR);
-    }
-
-
-    @Override
     public void removeLectures(String[] lectureRemove) {
-
-//        for (Lecture lect : lectures) {
-//            if (lect.getNumberOfLecture() == lectureRemove) {
-//                LMSTerminal.cash.updateCashAfterRemove(lect);
-//            }
-//        }
+        removeLectCash(lectureRemove);
         Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> lectures.removeIf(p -> p.getNumberOfLecture() == z));
         sortLectureArrAfterRemove();
     }
 
+    private void removeLectCash(String[] lectureRemove) {
+        List<Lecture> listR = new ArrayList<>();
+        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(x -> lectures.stream().filter(lr -> lr.getNumberOfLecture() == x).forEach(listR::add));
+        LMSTerminal.cash.updateCashAfterRemove(listR);
+    }
 
     //________________________________________________________________________________________________//
 
@@ -138,7 +119,6 @@ public class LectureServiceImpl implements LectureService {
                 .getNumberOfLecture()).forEach(i -> lectures.get(i + 1).setNumberOfLecture((lectures.get(i + 1)
                 .getNumberOfLecture()) + 1));
     }
-
 
     private void sortLectureArrAfterRemove() {
         IntStream.range(0, lectures.size()).forEach(i -> lectures.get(i).setNumberOfLecture(i + 1));
