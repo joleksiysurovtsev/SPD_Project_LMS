@@ -112,10 +112,11 @@ public class LectureServiceImpl implements LectureService {
     private void sortByDate() {
         lectures.sort(Comparator.comparing(Lecture::getLectureDate));
     }
+
     private void sortLectureArr() {
-        IntStream.range(0, lectures.size() - 1).filter(i -> lectures.get(i).getNumberOfLecture() == lectures.get(i + 1)
-                .getNumberOfLecture()).forEach(i -> lectures.get(i + 1).setNumberOfLecture((lectures.get(i + 1)
-                .getNumberOfLecture()) + 1));
+        for (int i = 0; i < lectures.size(); i++) {
+            lectures.get(i).setNumberOfLecture(i+1);
+        }
     }
 
     private void sortLectureArrAfterRemove() {

@@ -20,17 +20,15 @@ public class LMSConsolePrinter {
             System.out.println("The lecture list is empty first add lectures");
         } else {
             printTopOfTable();
-            for (Lecture lect : lectures) {
-                printLectureTable(lect);
-            }
+            lectures.forEach(this::printLectureTable);
         }
     }
 
     public void printPreviewLectureList(List<Lecture> lectures) {
+        System.out.println("Lecture preview");
         tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.15s| %-24.24s|";
         printAllLectureTable(lectures);
         tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.50s| %-24.24s|";
-        System.out.println("Lecture preview");
     }
 
     public void printLectureListByType(LectureType type, List<Lecture> lectures) {
@@ -38,11 +36,7 @@ public class LMSConsolePrinter {
             System.out.println("The lecture list is empty first add lectures");
         } else {
             printTopOfTable();
-            for (Lecture lect : lectures) {
-                if (lect.getType() == type) {
-                    printLectureTable(lect);
-                }
-            }
+            lectures.stream().filter(lect -> lect.getType() == type).forEach(this::printLectureTable);
         }
     }
 
