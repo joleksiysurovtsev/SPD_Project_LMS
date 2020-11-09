@@ -4,12 +4,17 @@ import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
 import com.lms.spd.services.interfaces.LectureService;
 import com.lms.spd.services.interfaces.LiteratureService;
+import com.lms.spd.terminalmenuitems.LMSTerminalPoint1;
+import com.lms.spd.terminalmenuitems.LMSTerminalPoint2;
+import com.lms.spd.terminalmenuitems.LMSTerminalPoint3;
+import com.lms.spd.terminalmenuitems.LMSTerminalPoint4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class LMSTerminal {
+    public static LecturesCash cash = new LecturesCash();
     public static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     public static LectureService lectureServiceImpl = new LectureServiceImpl();
     public static LiteratureService literatureServiceImpl = new LiteratureServiceImpl();

@@ -1,5 +1,6 @@
-package com.lms.spd;
+package com.lms.spd.terminalmenuitems;
 
+import com.lms.spd.LMSTerminal;
 import com.lms.spd.models.interfaces.Lecture;
 
 import java.io.IOException;

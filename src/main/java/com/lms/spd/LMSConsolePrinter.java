@@ -33,7 +33,7 @@ public class LMSConsolePrinter {
         if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
         } else {
-            Integer[] numbToDisplay = getStringsNumberLect(s);
+            int[] numbToDisplay = getStringsNumberLect(s);
             Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
                     .filter(x -> value == x.getNumberOfLecture())
                     .forEach(this::printFullLectList));
@@ -82,10 +82,10 @@ public class LMSConsolePrinter {
     /**
      * returns numbers from strings
      */
-    private Integer[] getStringsNumberLect(String s) {
+    private int[] getStringsNumberLect(String s) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
         IntStream.range(0, strings.length).forEach(i -> strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", ""));
-        return Arrays.stream(strings).filter(x -> !(x.isEmpty())).toArray(Integer[]::new);
+        return Arrays.stream(strings).filter(x -> !(x.isEmpty())).mapToInt(Integer::parseInt).toArray();
     }
 
 
@@ -122,7 +122,7 @@ public class LMSConsolePrinter {
      * point 4 main menu: method deleting the lecture list
      */
 
-    void showFourthMenu() {
+    public void showFourthMenu() {
         System.out.println("1. --> choose another lecture\n" +
                 "\"2. --> view the list of literature\n" +
                 "\"3. --> add new literature\n" +

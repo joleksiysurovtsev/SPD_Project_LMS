@@ -1,5 +1,6 @@
-package com.lms.spd;
+package com.lms.spd.terminalmenuitems;
 
+import com.lms.spd.LMSTerminal;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 
@@ -14,7 +15,6 @@ import java.util.stream.IntStream;
 
 public class LMSTerminalPoint1 {
 
-    public static LecturesCash cash = new LecturesCash();
     LMSTerminal terminal = new LMSTerminal();
 
     public LMSTerminalPoint1() throws IOException {
@@ -48,7 +48,7 @@ public class LMSTerminalPoint1 {
                 break;
             case "date":
                 changeDate();
-                LMSTerminal.lmsConsolePrinter.printLectureList(cash.returnList());
+                LMSTerminal.lmsConsolePrinter.printLectureList(LMSTerminal.cash.returnList());
                 break;
             default:
                 point1MainMenuShowLectures();
@@ -60,11 +60,11 @@ public class LMSTerminalPoint1 {
 
     private void changeDate() throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        System.out.print("Displayed lectures for :" + sdf.format(cash.getCurentDate().getTime()) + " if you want to change the date enter otherwise press enter ");
+        System.out.print("Displayed lectures for :" + sdf.format(LMSTerminal.cash.getCurentDate().getTime()) + " if you want to change the date enter otherwise press enter ");
         if (!LMSTerminal.reader.readLine().isEmpty()) {
-            cash.setCurentDate(enterTheLectureDate());
+            LMSTerminal.cash.setCurentDate(enterTheLectureDate());
         }
-        System.out.println("Date " + sdf.format(cash.getCurentDate().getTime()));
+        System.out.println("Date " + sdf.format(LMSTerminal.cash.getCurentDate().getTime()));
     }
 
     private void subMenuShowLectures() throws IOException {

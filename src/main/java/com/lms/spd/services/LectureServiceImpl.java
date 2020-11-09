@@ -1,6 +1,6 @@
 package com.lms.spd.services;
 
-import com.lms.spd.LMSTerminalPoint1;
+import com.lms.spd.LMSTerminal;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -77,17 +77,16 @@ public class LectureServiceImpl implements LectureService {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-
+    @Override
     public void addLecture(Lecture lecture) {
-        //
         if ((lectures.isEmpty() || lecture.getNumberOfLecture() > lectures.size())) {
             lectures.add(lecture);
         } else {
             lectures.add(lecture.getNumberOfLecture() - 1, lecture);
         }
+        LMSTerminal.cash.updateCashAfterAdd(lecture);
         sortByDate();
         sortLectureArr(); //нумерует лекции в порядке возрастания
-        LMSTerminalPoint1.cash.updateCashAfterAdd(lecture);
     }
 
     //______________________________________________________________________________________________________________//
@@ -105,7 +104,7 @@ public class LectureServiceImpl implements LectureService {
     private void removeLectCash(String[] lectureRemove) {
         List<Lecture> listR = new ArrayList<>();
         Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(x -> lectures.stream().filter(lr -> lr.getNumberOfLecture() == x).forEach(listR::add));
-        LMSTerminalPoint1.cash.updateCashAfterRemove(listR);
+        LMSTerminal.cash.updateCashAfterRemove(listR);
     }
 
     //________________________________________________________________________________________________//
