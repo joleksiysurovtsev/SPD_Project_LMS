@@ -34,11 +34,11 @@ public class LMSTerminalPoint1 {
         String choice = LMSTerminal.reader.readLine().toLowerCase();
         switch (choice) {
             case "+":
-                LMSTerminal.lmsConsolePrinter.printLectureList(LMSTerminal.lectureServiceImpl.getLectures());
+                LMSTerminal.lmsConsolePrinter.printAllLectureTable(LMSTerminal.lectureServiceImpl.getLectures());
                 break;
             case "-":
                 System.out.println("Enter numbers separated by commas");
-                LMSTerminal.lmsConsolePrinter.printLectureList(LMSTerminal.reader.readLine(), LMSTerminal.lectureServiceImpl.getLectures());
+                LMSTerminal.lmsConsolePrinter.printLectureListByNumber(LMSTerminal.reader.readLine(), LMSTerminal.lectureServiceImpl.getLectures());
                 break;
             case "small":
                 LMSTerminal.lmsConsolePrinter.printPreviewLectureList(LMSTerminal.lectureServiceImpl.getLectures());
@@ -48,7 +48,7 @@ public class LMSTerminalPoint1 {
                 break;
             case "date":
                 changeDate();
-                LMSTerminal.lmsConsolePrinter.printLectureList(LMSTerminal.cash.returnList());
+                LMSTerminal.lmsConsolePrinter.printAllLectureTable(LMSTerminal.cash.returnList());
                 break;
             default:
                 point1MainMenuShowLectures();

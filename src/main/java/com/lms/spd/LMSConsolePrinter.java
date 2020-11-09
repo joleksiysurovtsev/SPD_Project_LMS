@@ -1,6 +1,5 @@
 package com.lms.spd;
 
-
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
@@ -14,69 +13,64 @@ import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.50s| %-24.24s|";
 
-    /**
-     * The method prints the list of all lectures to the console if the date of the lecture has passed then the lecture is crossed out
-     */
-    public void printLectureList(List<Lecture> lectures) {
+    public void printAllLectureTable(List<Lecture> lectures) {
         if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
         } else {
-            lectures.forEach(this::printFullLectList);
+            printTopOfTable();
+            for (Lecture lect : lectures) {
+                printLectureTable(lect);
+            }
         }
     }
 
-    /**
-     * The method prints the list lectures to the console by number
-     */
-    public void printLectureList(String s, List<Lecture> lectures) {
-        if (lectures.isEmpty()) {
-            System.out.println("The lecture list is empty first add lectures");
-        } else {
-            int[] numbToDisplay = getStringsNumberLect(s);
-            Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
-                    .filter(x -> value == x.getNumberOfLecture())
-                    .forEach(this::printFullLectList));
-        }
-    }
-
-    /**
-     * The method print Preview Lecture list
-     */
     public void printPreviewLectureList(List<Lecture> lectures) {
+        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.15s| %-24.24s|";
+        printAllLectureTable(lectures);
+        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.50s| %-24.24s|";
         System.out.println("Lecture preview");
-        if (lectures.isEmpty()) {
-            System.out.println("The lecture list is empty first add lectures");
-        } else {
-            lectures.forEach(this::printSubLectList);
-        }
-    }
-
-    /**
-     * the method prints lectures after checking for the length of the lecture title no more than 30 characters
-     */
-    private void printSubLectList(Lecture value) {
-        String nameLectures = value.getNameOfLecture().length() > 30 ? value.getNameOfLecture().substring(0, 30) : value.getNameOfLecture();
-        System.out.println(value.getLectureDate().before(Calendar.getInstance()) ? ("\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + nameLectures + "\u001B[0m") : ("Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + nameLectures));
     }
 
     public void printLectureListByType(LectureType type, List<Lecture> lectures) {
         if (lectures.isEmpty()) {
             System.out.println("The lecture list is empty first add lectures");
         } else {
+            printTopOfTable();
             for (Lecture lect : lectures) {
                 if (lect.getType() == type) {
-                    System.out.println(lect.getLectureDate().before(Calendar.getInstance()) ? "\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture() + "\u001B[0m" : "Date: " + sdf.format(lect.getLectureDate().getTime()) + " Lecture №" + lect.getNumberOfLecture() + "    Title:  " + lect.getNameOfLecture());
+                    printLectureTable(lect);
                 }
             }
         }
     }
 
-    /**
-     * the method prints lectures, checking if the lecture is passed in red and is crossed out
-     */
-    private void printFullLectList(Lecture value) {
-        System.out.println(value.getLectureDate().before(Calendar.getInstance()) ? "\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + value.getNameOfLecture() + "\u001B[0m" : "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + value.getNameOfLecture());
+    public void printLectureListByNumber(String s, List<Lecture> lectures) {
+        if (lectures.isEmpty()) {
+            System.out.println("The lecture list is empty first add lectures");
+        } else {
+            printTopOfTable();
+            int[] numbToDisplay = getStringsNumberLect(s);
+            Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
+                    .filter(x -> value == x.getNumberOfLecture())
+                    .forEach(this::printLectureTable));
+        }
+    }
+
+    private void printTopOfTable() {
+        System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|\u1005|    Date     |  Lecture type      | Lecture number |                          Lecture title           |      Lecturer name      |");
+        System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+    }
+
+    //Печатает таблицу
+    private void printLectureTable(Lecture lecture) {
+        if (lecture.getLectureDate().before(Calendar.getInstance())) {
+            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+        } else {
+            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+        }
     }
 
     /**
@@ -88,8 +82,7 @@ public class LMSConsolePrinter {
         return Arrays.stream(strings).filter(x -> !(x.isEmpty())).mapToInt(Integer::parseInt).toArray();
     }
 
-
-    public void sortLectureByDateAndType(List<Literature> litArr) {
+    public void sortLitByDateAndType(List<Literature> litArr) {
         litArr.sort(Comparator.comparing(Literature::getType));
         boolean flag = false;
         while (flag) {
@@ -155,5 +148,20 @@ public class LMSConsolePrinter {
         }
     }
 
-
+    public void printListLit(Lecture lecture) {
+        //создали из лекции лист литературы
+        List<Literature> litArr = lecture.getLiteratures();
+        //если список пустой
+        if (litArr.isEmpty()) {
+            System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
+        } else {
+            sortLitByDateAndType(litArr);
+            //печатаем на экран литературу
+            int i = 1;
+            for (Literature x : litArr) {
+                System.out.println(i + "" + x.print());
+                i++;
+            }
+        }
+    }
 }

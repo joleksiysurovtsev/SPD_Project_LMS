@@ -83,7 +83,7 @@ public class LMSTerminalPoint4 {
 
 
     private void point4_2ViewListOfLit() throws IOException {
-        LMSTerminal.lectureServiceImpl.getSelectedLecture().printListLit(LMSTerminal.lmsConsolePrinter);
+        LMSTerminal.lmsConsolePrinter.printListLit(LMSTerminal.lectureServiceImpl.getSelectedLecture());
         System.out.println("what do we do with the bibliography");
         LMSTerminal.lmsConsolePrinter.showFourthMenu();
         subMenu2Point4();
