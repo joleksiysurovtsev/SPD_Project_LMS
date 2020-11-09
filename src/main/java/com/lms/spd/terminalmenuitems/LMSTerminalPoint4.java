@@ -1,7 +1,10 @@
 package com.lms.spd.terminalmenuitems;
 
+import com.lms.spd.LMSConsolePrinter;
 import com.lms.spd.LMSTerminal;
+import com.lms.spd.LMSUtilsHelper;
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.models.interfaces.Literature;
 
 import java.io.IOException;
 
@@ -9,6 +12,9 @@ public class LMSTerminalPoint4 {
     public LMSTerminalPoint4() throws IOException {
         point4MainMenuChoiceOfLecture();
     }
+
+    LMSConsolePrinter printer = new LMSConsolePrinter();
+    LMSUtilsHelper utilsHelper =new LMSUtilsHelper();
 
     private void point4MainMenuChoiceOfLecture() throws IOException {
         System.out.println("Enter the number of the lecture, " +
@@ -33,9 +39,11 @@ public class LMSTerminalPoint4 {
                 point4MainMenuChoiceOfLecture();
             } else {
                 LMSTerminal.lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
-                System.out.println("Selected lecture " + "\u001B[35m" + "\"" + LMSTerminal.lectureServiceImpl.getSelectedLecture().toString() + "\"" + "\u001B[0m");
+                System.out.println("Selected lecture: " );
+                System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+                printer.printLectureTable(LMSTerminal.lectureServiceImpl.getSelectedLecture());
+                System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
                 System.out.println("What are the next actions?");
-                System.out.println("__________________________");
             }
         }
         LMSTerminal.lmsConsolePrinter.showFourthMenu();
@@ -90,15 +98,15 @@ public class LMSTerminalPoint4 {
     }
 
     private void point4_3AddLit() throws IOException {
-//        Literature newLit = createLit();
-//        if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)){
-//            System.out.println("this literature is already there");
-//        }else{
-//            literatureServiceImpl.addLiterature(newLit, lectureServiceImpl.getSelectedLecture().getLiteratures());
-//            System.out.println("Book added what to do next");
-//        }
-//        System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
-//                "you will return to the lecture selection menu, to complete the work, exit ");
+        Literature newLit = createLit();
+        if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)){
+            System.out.println("this literature is already there");
+        }else{
+            literatureServiceImpl.addLiterature(newLit, lectureServiceImpl.getSelectedLecture().getLiteratures());
+            System.out.println("Book added what to do next");
+        }
+        System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
+                "you will return to the lecture selection menu, to complete the work, exit ");
         String x;
         while (true) {
             x = LMSTerminal.reader.readLine();

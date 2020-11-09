@@ -59,7 +59,7 @@ public class LMSConsolePrinter {
     }
 
     //Печатает таблицу
-    private void printLectureTable(Lecture lecture) {
+    public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
             System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
         } else {
@@ -110,7 +110,7 @@ public class LMSConsolePrinter {
      */
 
     public void showFourthMenu() {
-        System.out.println("1. --> choose another lecture\n" +
+        System.out.println("\"1. --> choose another lecture\n" +
                 "\"2. --> view the list of literature\n" +
                 "\"3. --> add new literature\n" +
                 "\"4. --> remove literature\n" +
@@ -157,5 +157,13 @@ public class LMSConsolePrinter {
                 i++;
             }
         }
+    }
+
+    public void printMenuPoint1() {
+        System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n"
+                + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by numbers\n"
+                + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n"
+                + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
+                + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date ");
     }
 }

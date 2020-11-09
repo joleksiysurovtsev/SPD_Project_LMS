@@ -1,54 +1,44 @@
 package com.lms.spd.terminalmenuitems;
 
+import com.lms.spd.LMSConsolePrinter;
 import com.lms.spd.LMSTerminal;
-import com.lms.spd.enums.LectureType;
-import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.LMSUtilsHelper;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.stream.IntStream;
 
 public class LMSTerminalPoint1 {
-
-    LMSTerminal terminal = new LMSTerminal();
-
     public LMSTerminalPoint1() throws IOException {
         point1MainMenuShowLectures();
     }
+
+    LMSTerminal terminal = new LMSTerminal();
+    LMSConsolePrinter print = new LMSConsolePrinter();
+    LMSUtilsHelper utilsHelper = new LMSUtilsHelper();
 
     /**
      * point 1 main menu: view a list of lectures
      */
     private void point1MainMenuShowLectures() throws IOException {
-        System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n"
-                + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by numbers\n"
-                + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n"
-                + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
-                + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date ");
-
+        print.printMenuPoint1();
         String choice = LMSTerminal.reader.readLine().toLowerCase();
         switch (choice) {
             case "+":
-                LMSTerminal.lmsConsolePrinter.printAllLectureTable(LMSTerminal.lectureServiceImpl.getLectures());
+                print.printAllLectureTable(LMSTerminal.lectureServiceImpl.getLectures());
                 break;
             case "-":
                 System.out.println("Enter numbers separated by commas");
-                LMSTerminal.lmsConsolePrinter.printLectureListByNumber(LMSTerminal.reader.readLine(), LMSTerminal.lectureServiceImpl.getLectures());
+                print.printLectureListByNumber(LMSTerminal.reader.readLine(), LMSTerminal.lectureServiceImpl.getLectures());
                 break;
             case "small":
-                LMSTerminal.lmsConsolePrinter.printPreviewLectureList(LMSTerminal.lectureServiceImpl.getLectures());
+                print.printPreviewLectureList(LMSTerminal.lectureServiceImpl.getLectures());
                 break;
             case "type":
-                LMSTerminal.lmsConsolePrinter.printLectureListByType(selectLectureType(arrayLectTypesInvolved(LMSTerminal.lectureServiceImpl.getLectures())), LMSTerminal.lectureServiceImpl.getLectures());
+                print.printLectureListByType(utilsHelper.selectLectureType(utilsHelper.arrayLectTypesInvolved(LMSTerminal.lectureServiceImpl.getLectures())), LMSTerminal.lectureServiceImpl.getLectures());
                 break;
             case "date":
                 changeDate();
-                LMSTerminal.lmsConsolePrinter.printAllLectureTable(LMSTerminal.cash.returnList());
+                print.printAllLectureTable(LMSTerminal.cash.returnList());
                 break;
             default:
                 point1MainMenuShowLectures();
@@ -62,7 +52,7 @@ public class LMSTerminalPoint1 {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         System.out.print("Displayed lectures for :" + sdf.format(LMSTerminal.cash.getCurentDate().getTime()) + " if you want to change the date enter otherwise press enter ");
         if (!LMSTerminal.reader.readLine().isEmpty()) {
-            LMSTerminal.cash.setCurentDate(enterTheLectureDate());
+            LMSTerminal.cash.setCurentDate(utilsHelper.enterTheLectureDate());
         }
         System.out.println("Date " + sdf.format(LMSTerminal.cash.getCurentDate().getTime()));
     }
@@ -79,65 +69,4 @@ public class LMSTerminalPoint1 {
         }
     }
 
-    /**
-     * Returns the lecture type implemented by type checking.
-     */
-    private LectureType selectLectureType() {
-        System.out.println("Please, choose lecture type: ");
-        IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
-        int number = 0;
-        try {
-            number = Integer.parseInt(LMSTerminal.reader.readLine());
-            if (number > LectureType.values().length || number <= 0) {
-                System.out.println("Unknown type: try again");
-                selectLectureType();
-            }
-        } catch (IOException e) {
-            System.out.println("Unknown type: try again");
-            selectLectureType();
-        }
-        return LectureType.getValueByNumber(number);
-    }
-
-    private LectureType selectLectureType(List<LectureType> types) {
-        int number;
-        while (true) {
-            System.out.println("Please, choose lecture type: ");
-            IntStream.range(0, types.size()).mapToObj(i -> (i + 1) + ". " + types.get(i) + " ").forEach(System.out::println);
-            try {
-                number = Integer.parseInt(LMSTerminal.reader.readLine());
-                if (number > types.size() || number <= 0) {
-                    System.out.println("Unknown type: try again");
-                    continue;
-                }
-            } catch (IOException e) {
-                System.out.println("Unknown type: try again");
-                continue;
-            }
-            break;
-        }
-        return types.get(number - 1);
-    }
-
-    private List<LectureType> arrayLectTypesInvolved(List<Lecture> lectures) {
-        List<LectureType> types = new ArrayList<>();
-        lectures.stream().filter(lecture -> !types.contains(lecture.getType())).forEach(lecture -> types.add(lecture.getType()));
-        return types;
-    }
-
-    private Calendar enterTheLectureDate() throws IOException {
-        System.out.println("Enter the lecture date for example: 19-10-1986");
-        Calendar d1 = new GregorianCalendar();
-        String dateInString;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        dateInString = LMSTerminal.reader.readLine();
-        try {
-            sdf.setLenient(true);
-            d1.setTime(sdf.parse(dateInString));
-        } catch (ParseException e) {
-            d1 = Calendar.getInstance();
-            System.out.println("The date is entered incorrectly, the date of the lecture is set two months from the current");
-        }
-        return d1;
-    }
 }
