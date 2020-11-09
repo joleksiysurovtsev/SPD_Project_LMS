@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 
 public class LectureServiceImpl implements LectureService {
 
+
     private List<Lecture> lectures = new ArrayList<>() {
         {
             add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5)));

@@ -147,7 +147,7 @@ public class LMSConsolePrinter {
         List<Literature> litArr = lecture.getLiteratures();
         //если список пустой
         if (litArr.isEmpty()) {
-            System.out.println("\u001B[31m" + "Lecture is empty, first add literature to it" + "\u001B[0m");
+            System.out.println("\u001B[31m" + "Literature list is empty, please add literature first" + "\u001B[0m");
         } else {
             sortLitByDateAndType(litArr);
             //печатаем на экран литературу

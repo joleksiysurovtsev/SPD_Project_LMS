@@ -6,6 +6,7 @@ import com.lms.spd.services.LectureServiceImpl;
 import java.util.*;
 
 public class LecturesCash {
+
     private LectureServiceImpl lectureService = new LectureServiceImpl();
     private List<Lecture> lectures = lectureService.getLectures();
     private Calendar curentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 5);
