@@ -11,7 +11,6 @@ public class LecturesCash {
     private Calendar curentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 5);
     private Map<Calendar, List<Lecture>> cash = new HashMap();
 
-
     public Calendar getCurentDate() {
         return curentDate;
     }
@@ -28,9 +27,8 @@ public class LecturesCash {
         return cash.get(curentDate) == null ? new ArrayList<>() : cash.get(curentDate);
     }
 
-
     /**
-     * метод создаёт кеш.
+     * method initializes cache
      */
     private void cashInit() {
         for (int i = 0; i < lectures.size(); i++) {   //бежим по всему массиву основных лекций
@@ -51,19 +49,19 @@ public class LecturesCash {
 
 
 
-    public void updateCashAfteradd(Lecture lecture) {
+    public void updateCashAfterAdd(Lecture lectureAdded) {
         List<Lecture> lsc;
-        if (cash.containsKey(lecture.getLectureDate())) {
-            lsc = cash.get(lecture.getLectureDate()); //в лист лекций из кеша по дате
+        if (cash.containsKey(lectureAdded.getLectureDate())) {
+            lsc = cash.get(lectureAdded.getLectureDate()); //в лист лекций из кеша по дате
         } else {
             lsc = new ArrayList<>();                  //или создаём если небыло
         }
-        lsc.add(lecture);                             //добавляем лекцию
-        cash.put(lecture.getLectureDate(), lsc);      //возвращаем в мапу
+        lsc.add(lectureAdded);                             //добавляем лекцию
+        cash.put(lectureAdded.getLectureDate(), lsc);      //возвращаем в мапу
     }
 
-    public void updateCashAfterRemove(List<Lecture> lecturebyremove) {
-        lecturebyremove.forEach(lectures -> {
+    public void updateCashAfterRemove(List<Lecture> lectureDeleted) {
+        lectureDeleted.forEach(lectures -> {
             List<Lecture> lsc = cash.get(lectures.getLectureDate());
             lsc.removeIf(lecture -> lecture.getNameOfLecture().equals(lectures.getNameOfLecture()));
             cash.put(lectures.getLectureDate(), lsc);

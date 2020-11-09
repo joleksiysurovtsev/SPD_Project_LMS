@@ -26,6 +26,19 @@ public class LMSConsolePrinter {
         }
     }
 
+    /**
+     * The method prints the list lectures to the console by number
+     */
+    public void printLectureList(String s, List<Lecture> lectures) {
+        if (lectures.isEmpty()) {
+            System.out.println("The lecture list is empty first add lectures");
+        } else {
+            Integer[] numbToDisplay = getStringsNumberLect(s);
+            Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
+                    .filter(x -> value == x.getNumberOfLecture())
+                    .forEach(this::printFullLectList));
+        }
+    }
 
     /**
      * The method print Preview Lecture list
@@ -40,28 +53,12 @@ public class LMSConsolePrinter {
     }
 
     /**
-     * The method prints the list lectures to the console by number
-     */
-    public void printLectureList(String s, List<Lecture> lectures) {
-        if (lectures.isEmpty()) {
-            System.out.println("The lecture list is empty first add lectures");
-
-        } else {
-            Integer[] numbToDisplay = getStringsNumberLect(s);
-            Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
-                    .filter(x -> value == x.getNumberOfLecture())
-                    .forEach(this::printFullLectList));
-        }
-    }
-
-    /**
      * the method prints lectures after checking for the length of the lecture title no more than 30 characters
      */
     private void printSubLectList(Lecture value) {
         String nameLectures = value.getNameOfLecture().length() > 30 ? value.getNameOfLecture().substring(0, 30) : value.getNameOfLecture();
         System.out.println(value.getLectureDate().before(Calendar.getInstance()) ? ("\u001B[31m" + "\u001b[9m" + "Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + nameLectures + "\u001B[0m") : ("Date: " + sdf.format(value.getLectureDate().getTime()) + " Lecture №" + value.getNumberOfLecture() + "    Title:  " + nameLectures));
     }
-
 
     public void printLectureListByType(LectureType type, List<Lecture> lectures) {
         if (lectures.isEmpty()) {
@@ -74,7 +71,6 @@ public class LMSConsolePrinter {
             }
         }
     }
-
 
     /**
      * the method prints lectures, checking if the lecture is passed in red and is crossed out
@@ -109,12 +105,6 @@ public class LMSConsolePrinter {
             }
         }
     }
-
-
-
-
-
-
 
     public void showStartMenu() {
         System.out.println("\u001B[34m" + "Main menu " +

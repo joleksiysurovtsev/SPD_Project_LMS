@@ -1,6 +1,6 @@
 package com.lms.spd.services;
 
-import com.lms.spd.LMSTerminal;
+import com.lms.spd.LMSTerminalPoint1;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -87,7 +87,7 @@ public class LectureServiceImpl implements LectureService {
         }
         sortByDate();
         sortLectureArr(); //нумерует лекции в порядке возрастания
-        LMSTerminal.cash.updateCashAfteradd(lecture);
+        LMSTerminalPoint1.cash.updateCashAfterAdd(lecture);
     }
 
     //______________________________________________________________________________________________________________//
@@ -105,7 +105,7 @@ public class LectureServiceImpl implements LectureService {
     private void removeLectCash(String[] lectureRemove) {
         List<Lecture> listR = new ArrayList<>();
         Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(x -> lectures.stream().filter(lr -> lr.getNumberOfLecture() == x).forEach(listR::add));
-        LMSTerminal.cash.updateCashAfterRemove(listR);
+        LMSTerminalPoint1.cash.updateCashAfterRemove(listR);
     }
 
     //________________________________________________________________________________________________//
@@ -113,7 +113,6 @@ public class LectureServiceImpl implements LectureService {
     private void sortByDate() {
         lectures.sort(Comparator.comparing(Lecture::getLectureDate));
     }
-
     private void sortLectureArr() {
         IntStream.range(0, lectures.size() - 1).filter(i -> lectures.get(i).getNumberOfLecture() == lectures.get(i + 1)
                 .getNumberOfLecture()).forEach(i -> lectures.get(i + 1).setNumberOfLecture((lectures.get(i + 1)
