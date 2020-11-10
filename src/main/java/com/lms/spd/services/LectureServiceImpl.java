@@ -85,9 +85,9 @@ public class LectureServiceImpl implements LectureService {
         } else {
             lectures.add(lecture.getNumberOfLecture() - 1, lecture);
         }
-        LMSTerminal.cash.updateCashAfterAdd(lecture);
         sortByDate();
         sortLectureArr(); //нумерует лекции в порядке возрастания
+        LMSTerminal.cash.updateCashAfterAdd(lecture);
     }
 
     //______________________________________________________________________________________________________________//

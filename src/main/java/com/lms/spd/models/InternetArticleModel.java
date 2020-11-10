@@ -62,7 +62,7 @@ public class InternetArticleModel implements Literature {
 
     @Override
     public String print() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         StringBuilder printString = new StringBuilder(" Internet articles: " + getTitle() + " Author: " + getAuthor()+ " Date the resource was added: " + sdf.format(getDateResourceWasAdded().getTime()));
         if (!urlAddress.equals("Unknown")) {
             printString.append(" Web address: ").append(urlAddress);

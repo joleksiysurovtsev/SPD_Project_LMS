@@ -85,7 +85,7 @@ public class JournalArticleModel implements Literature {
 
     @Override
     public String print() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         StringBuilder printString = new StringBuilder();
         printString.append(" Article: ").append(titleOfArticle);
         if (!getTitle().equals("Unknown")) {
@@ -94,7 +94,7 @@ public class JournalArticleModel implements Literature {
         if (issueOfTheJournal != 0) {
             printString.append(" Journal №: ").append(issueOfTheJournal);
         }
-        printString.append(sdf.format(getDateResourceWasAdded().getTime()));
+        printString.append(" "+sdf.format(getDateResourceWasAdded().getTime()));
 
         return printString.toString();
     }

@@ -2,9 +2,7 @@ package com.lms.spd;
 
 import com.lms.spd.models.InternetArticleModel;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,8 +10,9 @@ class InternetArticleModelTest {
 
     @Test
     void print() {
-        InternetArticleModel internetArticles = new InternetArticleModel("Java", "Aleksey", "google");
-        assertEquals(" Internet articles: Java Author: Aleksey Web address: google", internetArticles.print());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        InternetArticleModel internetArticles = new InternetArticleModel("Java", "Aleksey", "Unknown");
+        assertEquals(" Internet articles: Java Author: Aleksey Date the resource was added: "+sdf.format(internetArticles.getDateResourceWasAdded().getTime()), internetArticles.print());
     }
 
     @Test

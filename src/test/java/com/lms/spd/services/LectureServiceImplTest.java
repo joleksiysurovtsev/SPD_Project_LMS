@@ -1,5 +1,6 @@
 package com.lms.spd.services;
 
+import com.lms.spd.LecturesCash;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -17,6 +18,7 @@ class LectureServiceImplTest {
 
     private LectureServiceImpl lectureService;
 
+
     @BeforeEach
     void createLectureService() {
         lectureService = new LectureServiceImpl();
@@ -27,31 +29,6 @@ class LectureServiceImplTest {
 
         lectureService.setLectures(lectures);
     }
-
-
-    @Test
-    @DisplayName("Remove one lecture from empty array: expected String 'Lectures: are missing.' ")
-    void removeLecturesByStringTest() {
-        List<Lecture> expected = new ArrayList<>();
-        expected.add(new LectureIModel(1, "Writes text to."));
-        String[] numbLectToDell = {"1", "3"};
-        lectureService.removeLectures(numbLectToDell);
-        assertEquals(expected, lectureService.getLectures());
-    }
-
-//    @Test
-//    @DisplayName("Remove one lecture from empty array: expected false ")
-//    void removeLecturesByIntTest() {
-//        assertFalse(lectureService.removeLectures("5"));
-//        assertTrue(lectureService.removeLectures("1"));
-//    }
-//
-//    @Test
-//    @DisplayName("Remove one lecture from empty array: expected false ")
-//    void removeLecturesByIntTest2() {
-//        assertTrue(lectureService.removeLectures("1"));
-//    }
-
 
     @Test
     @DisplayName("setSelectedLecture method selects by position in the array")
@@ -86,5 +63,25 @@ class LectureServiceImplTest {
         lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
         assertEquals(expectedLectures, lectureService.getLectures());
     }
+
+    @Test
+    @DisplayName("Adding a lecture to the middle of the array")
+    void addLecture3() {
+        LectureServiceImpl lectureService = new LectureServiceImpl();
+        ArrayList<Lecture> lectures = new ArrayList<>();
+        lectureService.setLectures(lectures);
+
+        List<Lecture> expectedLectures = lectureService.getLectures();
+        {
+            expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
+        }
+
+        lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
+        assertEquals(expectedLectures, lectureService.getLectures());
+    }
+
+
+
+
 
 }
