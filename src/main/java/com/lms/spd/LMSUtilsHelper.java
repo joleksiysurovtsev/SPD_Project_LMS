@@ -7,6 +7,7 @@ import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
+import com.lms.spd.services.LiteratureServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,9 +21,9 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class LMSUtilsHelper {
-
     LMSConsolePrinter print = new LMSConsolePrinter();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
     public Literature createLit() throws IOException {
         LiteratureType typeLit = LiteratureType.UNKNOWN;
         boolean exists = true;
@@ -175,12 +176,79 @@ public class LMSUtilsHelper {
         } catch (ParseException e) {
             System.out.println("The date is entered incorrectly, try again");
             enterTheLectureDate();}
-
         return d1;
     }
 
 
+    /**
+     * Returns the title of the lecture after checking that it is not empty.
+     */
+    public String createTheLectureTitle() throws IOException {
+        String lectureName;
+        do {
+            System.out.println("Enter the title of the lecture");
+            lectureName = reader.readLine();
+            if (lectureName.isEmpty()) {
+                System.out.println("The lecture must have a title. Try again");
+            } else {
+                break;
+            }
+        } while (true);
+        return lectureName;
+    }
 
+    /**
+     * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
+     * returns the title of the lecture after checking that it is not empty.
+     *
+     */
+    String enterLektorName() throws IOException {
+        System.out.println("Enter lecturer name");
+        String s = reader.readLine();
+        return (s.isEmpty()) ? "Unknown" : s;
+    }
+
+    /**
+     * Returns the lecture type implemented by type checking.
+     */
+    LectureType selectLectureType() {
+        int number = 0;
+        do {
+            System.out.println("Please, choose lecture type: ");
+            IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
+            try {
+                number = Integer.parseInt(reader.readLine());
+                if (number > LectureType.values().length || number <= 0) {
+                    System.out.println("Unknown type: try again");
+                    selectLectureType();
+                }
+            } catch (IOException | NumberFormatException e) {
+                System.out.println("Unknown type: try again");
+                selectLectureType();
+            }
+        } while (number < 0);
+        return LectureType.getValueByNumber(number);
+    }
+
+    public List<Literature> addLitOrNot() throws IOException {
+        List<Literature> newArrLit = new ArrayList<>();
+        System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
+        switch (reader.readLine()) {
+            case "+":
+                do {
+                    literatureServiceImpl.addLiterature(createLit(), newArrLit);
+                    System.out.println("Add more literature? if not enter minus");
+                } while (!reader.readLine().equals("-"));
+                break;
+            case "-":
+                //или возвращаем пустой массив
+                break;
+            default:
+                System.out.println("Something wrong");
+                addLitOrNot();
+        }
+        return newArrLit;
+    }
 
 
 }

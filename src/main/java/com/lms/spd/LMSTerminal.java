@@ -13,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +22,7 @@ public class LMSTerminal {
     public static LecturesCash cash = new LecturesCash();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LectureService lectureServiceImpl = new LectureServiceImpl();
-    LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
+    private LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
     LMSConsolePrinter print = new LMSConsolePrinter();
     LMSUtilsHelper utilsHelper = new LMSUtilsHelper();
 
@@ -78,7 +77,7 @@ public class LMSTerminal {
                 print.printLectureListByType(utilsHelper.selectLectureType(utilsHelper.arrayLectTypesInvolved(lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
                 break;
             case "date":
-                changeDate();
+                cashDate();
                 print.printAllLectureTable(cash.returnList());
                 break;
             default:
@@ -89,7 +88,7 @@ public class LMSTerminal {
         subMenuShowLectures();
     }
 
-    private void changeDate() throws IOException {
+    private void cashDate() throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         System.out.print("Displayed lectures for :" + sdf.format(cash.getCurentDate().getTime()) + " if you want to change the date enter otherwise press enter ");
         if (!reader.readLine().isEmpty()) {
@@ -112,85 +111,14 @@ public class LMSTerminal {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     private void point2MainMenuAddingLecture() throws IOException {
-        String nameOfLecture = enterTheLectureTitle();
-        String lectorName = enterLektorName();
-        LectureType lectureType = selectLectureType();
+        String nameOfLecture = utilsHelper.createTheLectureTitle();
+        String lectorName = utilsHelper.enterLektorName();
+        LectureType lectureType = utilsHelper.selectLectureType();
         Calendar lectureDate = utilsHelper.enterTheLectureDate();
-        List<Literature> literatures = addLitOrNot();
+        List<Literature> literatures = utilsHelper.addLitOrNot();
         lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate));
-
         System.out.println("Entering a new lecture?");
         subMenuAddingLectureToList();
-    }
-
-    /**
-     * Returns the title of the lecture after checking that it is not empty.
-     */
-    private String enterTheLectureTitle() throws IOException {
-        String lectureName;
-        do {
-            System.out.println("Enter the title of the lecture");
-            lectureName = reader.readLine();
-            if (lectureName.isEmpty()) {
-                System.out.println("The lecture must have a title. Try again");
-            } else {
-                break;
-            }
-        } while (true);
-        return lectureName;
-    }
-
-    /**
-     * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
-     * returns the title of the lecture after checking that it is not empty.
-     */
-    private String enterLektorName() throws IOException {
-        System.out.println("Enter lecturer name");
-        String s = reader.readLine();
-        return (s.isEmpty()) ? "Unknown" : s;
-    }
-
-    /**
-     * Returns the lecture type implemented by type checking.
-     */
-    private LectureType selectLectureType() {
-        int number = 0;
-        do {
-            System.out.println("Please, choose lecture type: ");
-            IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
-            try {
-                number = Integer.parseInt(reader.readLine());
-                if (number > LectureType.values().length || number <= 0) {
-                    System.out.println("Unknown type: try again");
-                    selectLectureType();
-                }
-            } catch (IOException | NumberFormatException e) {
-                System.out.println("Unknown type: try again");
-                selectLectureType();
-            }
-        } while (number < 0);
-        return LectureType.getValueByNumber(number);
-    }
-
-
-    public List<Literature> addLitOrNot() throws IOException {
-        List<Literature> newArrLit = new ArrayList<>();
-        System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
-        switch (reader.readLine()) {
-            case "+":
-                do {
-                    literatureServiceImpl.addLiterature(utilsHelper.createLit(), newArrLit);
-                    System.out.println("Add more literature? if not enter minus");
-                } while (!reader.readLine().equals("-"));
-                break;
-            case "-":
-                //или возвращаем пустой массив
-                break;
-            default:
-                System.out.println("Something wrong");
-                addLitOrNot();
-        }
-        return newArrLit;
     }
 
 
@@ -310,14 +238,12 @@ public class LMSTerminal {
 
     private void subMenu2Point4() throws IOException {
         int choice = 0;
-        boolean flag = true;
-        while (flag) {
+        while (true) {
             try {
                 choice = Integer.parseInt(reader.readLine());
-                flag = false;
+                break;
             } catch (NumberFormatException | IOException e) {
                 System.out.println("You only need to enter a number!");
-
             }
         }
         switch (choice) {
