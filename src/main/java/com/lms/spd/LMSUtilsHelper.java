@@ -179,15 +179,15 @@ public class LMSUtilsHelper {
      */
     public String createTheLectureTitle() throws IOException {
         String lectureName;
-        do {
-            System.out.println("Enter the title of the lecture");
+        System.out.println("Enter the title of the lecture");
+        while (true) {
             lectureName = reader.readLine();
-            if (lectureName.isEmpty()) {
-                System.out.println("The lecture must have a title. Try again");
-            } else {
+            if (!lectureName.isEmpty()) {
                 break;
+            } else {
+                System.out.println("The lecture must have a title. Try again");
             }
-        } while (true);
+        }
         return lectureName;
     }
 
@@ -224,12 +224,12 @@ public class LMSUtilsHelper {
     }
 
     public List<Literature> addLitOrNot() throws IOException {
-        List<Literature> newArrLit = new ArrayList<>();
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
+        List <Literature> newlit = new ArrayList<>();
         switch (reader.readLine()) {
             case "+":
                 do {
-                    literatureServiceImpl.addLiterature(createLit(), newArrLit);
+                    literatureServiceImpl.addLiterature(createLit(), newlit);
                     System.out.println("Add more literature? if not enter minus");
                 } while (!reader.readLine().equals("-"));
                 break;
@@ -240,8 +240,27 @@ public class LMSUtilsHelper {
                 System.out.println("Something wrong");
                 addLitOrNot();
         }
-        return newArrLit;
+        return newlit;
     }
 
-
+    public String[] stringToDeleteLecture(String lectureRemove,List<Lecture> list) {
+        String[] numbDeletedLect = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
+        IntStream.range(0, numbDeletedLect.length).forEach(i -> numbDeletedLect[i] = numbDeletedLect[i].replaceAll("[a-zA-Zа]*", ""));
+        String[] numbToDisplay = Arrays.stream(numbDeletedLect).filter(x -> !(x.isEmpty())).toArray(String[]::new);
+        StringBuilder stringContains = new StringBuilder("Lectures: ");
+        boolean flag = true;
+        for (String item : numbToDisplay) {
+            for (Lecture value : list) {
+                int numb = value.getNumberOfLecture();
+                if (numb == Integer.parseInt(item)) {
+                    flag = false;
+                    stringContains.append(" ").append(item).append(" ");
+                    break;
+                }
+            }
+        }
+        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
+        System.out.println(stringContains.toString());
+        return numbToDisplay;
+    }
 }

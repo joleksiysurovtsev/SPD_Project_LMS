@@ -90,11 +90,10 @@ public class LMSTerminal {
 
     private void cashDate() throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        System.out.print("Displayed lectures for :" + sdf.format(cash.getCurentDate().getTime()) + " if you want to change the date enter otherwise press enter ");
+        System.out.println("Displayed lectures for :" + sdf.format(cash.getCurentDate().getTime()) + " if you want to change the date enter otherwise press enter ");
         if (!reader.readLine().isEmpty()) {
             cash.setCurentDate(utilsHelper.enterTheLectureDate());
         }
-        System.out.println("Date " + sdf.format(cash.getCurentDate().getTime()));
     }
 
     private void subMenuShowLectures() throws IOException {
@@ -120,7 +119,6 @@ public class LMSTerminal {
         System.out.println("Entering a new lecture?");
         subMenuAddingLectureToList();
     }
-
 
     private void subMenuAddingLectureToList() throws IOException {
         System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"-\"" + "\u001B[0m"
@@ -151,32 +149,10 @@ public class LMSTerminal {
             point3MainMenuRemovalLecture();
         }
         assert numbRemovalLecture != null;
-        String[] lectureRemove = stringToDeleteLecture(numbRemovalLecture);
+        String[] lectureRemove = utilsHelper.stringToDeleteLecture(numbRemovalLecture, lectureServiceImpl.getLectures());
         lectureServiceImpl.removeLectures(lectureRemove);
         subMenuRemovalLecture();
 
-    }
-
-
-    public String[] stringToDeleteLecture(String lectureRemove) {
-        String[] numbDeletedLect = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
-        IntStream.range(0, numbDeletedLect.length).forEach(i -> numbDeletedLect[i] = numbDeletedLect[i].replaceAll("[a-zA-Zа]*", ""));
-        String[] numbToDisplay = Arrays.stream(numbDeletedLect).filter(x -> !(x.isEmpty())).toArray(String[]::new);
-        StringBuilder stringContains = new StringBuilder("Lectures: ");
-        boolean flag = true;
-        for (String item : numbToDisplay) {
-            for (Lecture value : lectureServiceImpl.getLectures()) {
-                int numb = value.getNumberOfLecture();
-                if (numb == Integer.parseInt(item)) {
-                    flag = false;
-                    stringContains.append(" ").append(item).append(" ");
-                    break;
-                }
-            }
-        }
-        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
-        System.out.println(stringContains.toString());
-        return numbToDisplay;
     }
 
     private void subMenuRemovalLecture() throws IOException {
@@ -271,7 +247,6 @@ public class LMSTerminal {
                 break;
         }
     }
-
 
     private void point4_2ViewListOfLit() throws IOException {
         print.printListLit(lectureServiceImpl.getSelectedLecture());

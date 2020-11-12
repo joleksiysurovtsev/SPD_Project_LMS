@@ -14,7 +14,7 @@ public class LMSConsolePrinter {
 
     public void printAllLectureTable(List<Lecture> lectures) {
         if (lectures.isEmpty()) {
-            System.out.println("The lecture list is empty first add lectures");
+            printErrMassage();
         } else {
             printTopOfTable();
             lectures.forEach(this::printLectureTable);
@@ -30,23 +30,27 @@ public class LMSConsolePrinter {
 
     public void printLectureListByType(LectureType type, List<Lecture> lectures) {
         if (lectures.isEmpty()) {
-            System.out.println("The lecture list is empty first add lectures");
+            printErrMassage();
         } else {
             printTopOfTable();
-            lectures.stream().filter(lect -> lect.getType() == type).forEach(this::printLectureTable);
+            lectures.stream().filter(lecture -> lecture.getType() == type).forEach(this::printLectureTable);
         }
     }
 
     public void printLectureListByNumber(String s, List<Lecture> lectures) {
         if (lectures.isEmpty()) {
-            System.out.println("The lecture list is empty first add lectures");
+            printErrMassage();
         } else {
             printTopOfTable();
-            int[] numbToDisplay = getStringsNumberLect(s);
+            int[] numbToDisplay = getStringsNumberLecture(s);
             Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
                     .filter(x -> value == x.getNumberOfLecture())
                     .forEach(this::printLectureTable));
         }
+    }
+
+    private void printErrMassage() {
+        System.out.println("The lecture list is empty first add lectures");
     }
 
     private void printTopOfTable() {
@@ -67,7 +71,7 @@ public class LMSConsolePrinter {
     /**
      * returns numbers from strings
      */
-    private int[] getStringsNumberLect(String s) {
+    private int[] getStringsNumberLecture(String s) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
         IntStream.range(0, strings.length).forEach(i -> strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", ""));
         return Arrays.stream(strings).filter(x -> !(x.isEmpty())).mapToInt(Integer::parseInt).toArray();
