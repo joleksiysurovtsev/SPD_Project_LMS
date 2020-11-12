@@ -225,7 +225,7 @@ public class LMSUtilsHelper {
 
     public List<Literature> addLitOrNot() throws IOException {
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
-        List <Literature> newlit = new ArrayList<>();
+        List<Literature> newlit = new ArrayList<>();
         switch (reader.readLine()) {
             case "+":
                 do {
@@ -243,7 +243,7 @@ public class LMSUtilsHelper {
         return newlit;
     }
 
-    public String[] stringToDeleteLecture(String lectureRemove,List<Lecture> list) {
+    public String[] stringToDeleteLecture(String lectureRemove, List<Lecture> list) {
         String[] numbDeletedLect = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
         IntStream.range(0, numbDeletedLect.length).forEach(i -> numbDeletedLect[i] = numbDeletedLect[i].replaceAll("[a-zA-Zа]*", ""));
         String[] numbToDisplay = Arrays.stream(numbDeletedLect).filter(x -> !(x.isEmpty())).toArray(String[]::new);
@@ -262,5 +262,9 @@ public class LMSUtilsHelper {
         stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
         System.out.println(stringContains.toString());
         return numbToDisplay;
+    }
+
+    void cashDate(LecturesCash cash) throws IOException {
+        cash.setCurentDate(enterTheLectureDate());
     }
 }

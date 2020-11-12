@@ -13,10 +13,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.IntStream;
+
 
 public class LMSTerminal {
     public static LecturesCash cash = new LecturesCash();
@@ -77,7 +76,7 @@ public class LMSTerminal {
                 print.printLectureListByType(utilsHelper.selectLectureType(utilsHelper.arrayLectTypesInvolved(lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
                 break;
             case "date":
-                cashDate();
+                utilsHelper.cashDate(cash);
                 print.printAllLectureTable(cash.returnList());
                 break;
             default:
@@ -86,14 +85,6 @@ public class LMSTerminal {
         }
         System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program ");
         subMenuShowLectures();
-    }
-
-    private void cashDate() throws IOException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        System.out.println("Displayed lectures for :" + sdf.format(cash.getCurentDate().getTime()) + " if you want to change the date enter otherwise press enter ");
-        if (!reader.readLine().isEmpty()) {
-            cash.setCurentDate(utilsHelper.enterTheLectureDate());
-        }
     }
 
     private void subMenuShowLectures() throws IOException {
