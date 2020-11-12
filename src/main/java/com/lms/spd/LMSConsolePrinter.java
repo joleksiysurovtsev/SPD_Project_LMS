@@ -5,10 +5,7 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
@@ -94,14 +91,11 @@ public class LMSConsolePrinter {
     }
 
     public void showStartMenu() {
-        System.out.println("\u001B[34m" + "Main menu " +
-                "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" +
+        System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" +
                 "\"" + ": learning management system" + "\u001B[0m\n" +
                 "\"Please make your choice from the offered options\n"
-                + "1. Display lectures (number and title)\n"
-                + "2. Add a new lecture\n"
-                + "3. Delete a lecture by its number\n"
-                + "4. Choose a lecture\n"
+                + "1. Display lectures (number and title)\n" + "2. Add a new lecture\n"
+                + "3. Delete a lecture by its number\n" + "4. Choose a lecture\n"
                 + "0. \u001B[31mExit.\n\u001B[0m");
     }
 
@@ -110,47 +104,31 @@ public class LMSConsolePrinter {
      */
 
     public void showFourthMenu() {
-        System.out.println("\"1. --> choose another lecture\n" +
-                "\"2. --> view the list of literature\n" +
-                "\"3. --> add new literature\n" +
-                "\"4. --> remove literature\n" +
-                "\"5. --> view all lecture information\n" +
-                "\"6. --> exit to the main menu");
+        System.out.println("\"1. --> choose another lecture\n" + "\"2. --> view the list of literature\n" +
+                "\"3. --> add new literature\n" + "\"4. --> remove literature\n" +
+                "\"5. --> view all lecture information\n" + "\"6. --> exit to the main menu");
     }
 
+
     public void printMessagesAddLit(int message) {
-        if (message == 1) {
-            System.out.println("Enter a title");
-        }
-        if (message == 2) {
-            System.out.println("Please enter a author name");
-        }
-        if (message == 3) {
-            System.out.println("Please enter a titleJournal name or press Enter");
-        }
-        if (message == 4) {
-            System.out.println("Please enter a issue of the journal where the article was published");
-        }
-        if (message == 5) {
-            System.out.println("Please enter a url address or press Enter");
-        }
-        if (message == 6) {
-            System.out.println("Please enter a genre name or press Enter");
-        }
-        if (message == 7) {
-            System.out.println("Please enter a year of publication of the book");
+        Map<Integer, String> massageMap = Map.of(1, "value",
+                2, "Please enter a author name",
+                3, "Please enter a titleJournal name or press Enter",
+                4, "Please enter a issue of the journal where the article was published",
+                5, "Please enter a url address or press Enter",
+                6, "Please enter a genre name or press Enter",
+                7, "Please enter a year of publication of the book");
+        if (massageMap.containsKey(message)) {
+            System.out.println(massageMap.get(message));
         }
     }
 
     public void printListLit(Lecture lecture) {
-        //создали из лекции лист литературы
         List<Literature> litArr = lecture.getLiteratures();
-        //если список пустой
         if (litArr.isEmpty()) {
             System.out.println("\u001B[31m" + "Literature list is empty, please add literature first" + "\u001B[0m");
         } else {
             sortLitByDateAndType(litArr);
-            //печатаем на экран литературу
             int i = 1;
             for (Literature x : litArr) {
                 System.out.println(i + "" + x.print());
@@ -160,10 +138,8 @@ public class LMSConsolePrinter {
     }
 
     public void printMenuPoint1() {
-        System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n"
-                + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by numbers\n"
-                + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n"
-                + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
+        System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n" + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by numbers\n"
+                + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n" + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
                 + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date ");
     }
 }
