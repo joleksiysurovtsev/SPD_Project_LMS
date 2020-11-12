@@ -14,38 +14,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class LMSUtilsHelper {
     LMSConsolePrinter print = new LMSConsolePrinter();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
+
     public Literature createLit() throws IOException {
         LiteratureType typeLit = LiteratureType.UNKNOWN;
-        boolean exists = true;
-        while (exists) {
-            System.out.println("Please, choose literature type: ");
-            System.out.println("1.Book, 2.Journal article, 3.Internet article");
+        while (true) {
+            System.out.println("Please, choose literature type: \n" + LiteratureType.toListString());
             try {
                 int number = Integer.parseInt(reader.readLine());
-                for (LiteratureType e : LiteratureType.values()) {
-                    if (e.ordinal() == number) {
-                        typeLit = LiteratureType.getValueByNumber(number);
-                        exists = false;
-                        break;
-                    }
+                if (Arrays.stream(LiteratureType.values()).anyMatch(e -> e.ordinal() == number)) {
+                    typeLit = LiteratureType.getValueByNumber(number);
                 }
             } catch (IOException | NumberFormatException e) {
                 //
             }
-            if (typeLit != LiteratureType.UNKNOWN) {
+            if (typeLit == LiteratureType.UNKNOWN) {
+                System.out.println("Unknown type: try again");
+            } else {
                 break;
             }
-            System.out.println("Unknown type: try again");
         }
         assert typeLit != null;
         System.out.println("Type is : " + typeLit.toString());
@@ -175,7 +168,8 @@ public class LMSUtilsHelper {
             d1.setTime(sdf.parse(dateInString));
         } catch (ParseException e) {
             System.out.println("The date is entered incorrectly, try again");
-            enterTheLectureDate();}
+            enterTheLectureDate();
+        }
         return d1;
     }
 
@@ -200,7 +194,6 @@ public class LMSUtilsHelper {
     /**
      * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
      * returns the title of the lecture after checking that it is not empty.
-     *
      */
     String enterLektorName() throws IOException {
         System.out.println("Enter lecturer name");
