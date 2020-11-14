@@ -21,7 +21,7 @@ public class LMSTerminal {
     public static LecturesCash cash = new LecturesCash();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LectureService lectureServiceImpl = new LectureServiceImpl();
-    private LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
+    LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
     LMSConsolePrinter print = new LMSConsolePrinter();
     LMSUtilsHelper utilsHelper = new LMSUtilsHelper();
 
