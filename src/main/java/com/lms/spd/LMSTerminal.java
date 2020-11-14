@@ -1,6 +1,7 @@
 package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
+import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
@@ -30,7 +31,12 @@ public class LMSTerminal {
         try {
             switch (reader.readLine()) {
                 case "1":
-                    point1MainMenuShowLectures();
+                    try {
+                        point1MainMenuShowLectures();
+                    } catch (ListIsEmptyException e) {
+                        System.err.println("\033[0;0mList is empty\u001B[0m");
+                        point1MainMenuShowLectures();
+                    }
                     break;
                 case "2":
                     point2MainMenuAddingLecture();
@@ -49,7 +55,7 @@ public class LMSTerminal {
                     startLMS();
                     break;
             }
-        } catch (IOException | NullPointerException e) {
+        } catch (IOException | NullPointerException | ListIsEmptyException e) {
             e.printStackTrace();
         }
     }
@@ -58,7 +64,7 @@ public class LMSTerminal {
     /**
      * point 1 main menu: view a list of lectures
      */
-    private void point1MainMenuShowLectures() throws IOException {
+    private void point1MainMenuShowLectures() throws IOException, ListIsEmptyException {
         print.printMenuPoint1();
         String choice = reader.readLine().toLowerCase();
         switch (choice) {
@@ -78,6 +84,9 @@ public class LMSTerminal {
             case "date":
                 utilsHelper.cashDate(cash);
                 print.printAllLectureTable(cash.returnList());
+                break;
+            case "exit":
+                startLMS();
                 break;
             default:
                 point1MainMenuShowLectures();
@@ -157,7 +166,7 @@ public class LMSTerminal {
                 point3MainMenuRemovalLecture();
                 break;
             case "-":
-                return;
+                startLMS();
             case "EXIT":
                 System.exit(0);
                 break;

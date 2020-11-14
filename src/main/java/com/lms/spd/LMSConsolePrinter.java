@@ -1,6 +1,7 @@
 package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
+import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
@@ -12,16 +13,17 @@ public class LMSConsolePrinter {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.50s| %-24.24s|";
 
-    public void printAllLectureTable(List<Lecture> lectures) {
+    public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
         if (lectures.isEmpty()) {
-            printErrMassage();
+            throw new ListIsEmptyException("List lectures is empty");
+         //   printErrMassage();
         } else {
             printTopOfTable();
             lectures.forEach(this::printLectureTable);
         }
     }
 
-    public void printPreviewLectureList(List<Lecture> lectures) {
+    public void printPreviewLectureList(List<Lecture> lectures) throws ListIsEmptyException {
         System.out.println("Lecture preview");
         tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.15s| %-24.24s|";
         printAllLectureTable(lectures);
@@ -144,6 +146,7 @@ public class LMSConsolePrinter {
     public void printMenuPoint1() {
         System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n" + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by numbers\n"
                 + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n" + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
-                + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date ");
+                + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date\n"
+                + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu");
     }
 }
