@@ -1,6 +1,6 @@
 package com.lms.spd.exceptions;
 
-public class ListIsEmptyException extends Throwable {
+public class ListIsEmptyException extends Exception {
     public ListIsEmptyException() {
         super();
     }

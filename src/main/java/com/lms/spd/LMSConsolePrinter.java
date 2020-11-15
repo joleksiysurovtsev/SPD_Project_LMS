@@ -15,8 +15,7 @@ public class LMSConsolePrinter {
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
         if (lectures.isEmpty()) {
-            throw new ListIsEmptyException("List lectures is empty");
-         //   printErrMassage();
+            throw new ListIsEmptyException("I can not print the list of lectures it is empty");
         } else {
             printTopOfTable();
             lectures.forEach(this::printLectureTable);
@@ -30,18 +29,18 @@ public class LMSConsolePrinter {
         tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.50s| %-24.24s|";
     }
 
-    public void printLectureListByType(LectureType type, List<Lecture> lectures) {
+    public void printLectureListByType(LectureType type, List<Lecture> lectures) throws ListIsEmptyException {
         if (lectures.isEmpty()) {
-            printErrMassage();
+            throw new ListIsEmptyException("I can not print the list of lectures it is empty");
         } else {
             printTopOfTable();
             lectures.stream().filter(lecture -> lecture.getType() == type).forEach(this::printLectureTable);
         }
     }
 
-    public void printLectureListByNumber(String s, List<Lecture> lectures) {
+    public void printLectureListByNumber(String s, List<Lecture> lectures) throws ListIsEmptyException {
         if (lectures.isEmpty()) {
-            printErrMassage();
+            throw new ListIsEmptyException("I can not print the list of lectures it is empty");
         } else {
             printTopOfTable();
             int[] numbToDisplay = getStringsNumberLecture(s);

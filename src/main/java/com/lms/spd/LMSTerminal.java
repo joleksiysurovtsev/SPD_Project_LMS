@@ -26,38 +26,36 @@ public class LMSTerminal {
     LMSConsolePrinter print = new LMSConsolePrinter();
     LMSUtilsHelper utilsHelper = new LMSUtilsHelper();
 
-    public void startLMS() {
+    public void startLMS() throws IOException {
         print.showStartMenu();
-        try {
-            switch (reader.readLine()) {
-                case "1":
-                    try {
-                        point1MainMenuShowLectures();
-                    } catch (ListIsEmptyException e) {
-                        System.err.println("\033[0;0mList is empty\u001B[0m");
-                        point1MainMenuShowLectures();
-                    }
-                    break;
-                case "2":
-                    point2MainMenuAddingLecture();
-                    break;
-                case "3":
-                    point3MainMenuRemovalLecture();
-                    break;
-                case "4":
-                    point4MainMenuChoiceOfLecture();
-                    break;
-                case "0":
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("\u001B[31m" + "There is no such item in the menu, let's try again" + "\u001B[0m");
+
+        switch (reader.readLine()) {
+            case "1":
+                try {
+                    point1MainMenuShowLectures();
+                } catch (ListIsEmptyException e) {
+                    System.err.println(e.getMessage());
                     startLMS();
-                    break;
-            }
-        } catch (IOException | NullPointerException | ListIsEmptyException e) {
-            e.printStackTrace();
+                }
+                break;
+            case "2":
+                point2MainMenuAddingLecture();
+                break;
+            case "3":
+                point3MainMenuRemovalLecture();
+                break;
+            case "4":
+                point4MainMenuChoiceOfLecture();
+                break;
+            case "0":
+                System.exit(0);
+                break;
+            default:
+                System.out.println("\u001B[31m" + "There is no such item in the menu, let's try again" + "\u001B[0m");
+                startLMS();
+                break;
         }
+
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
