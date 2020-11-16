@@ -139,7 +139,7 @@ public class LMSTerminal {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     private void point3MainMenuRemovalLecture() throws IOException {
-        System.out.println("Please enter the number of the lecture if you want to delete one or more comma separated ");
+        System.out.println("Please enter the ID of the lecture if you want to delete one or more comma separated ");
         String numbRemovalLecture = null;
         try {
             numbRemovalLecture = reader.readLine();

@@ -98,7 +98,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public void removeLectures(String[] lectureRemove) {
         LecturesCash.removeLectCash(lectureRemove, lectures);
-        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> lectures.removeIf(p -> p.getNumberOfLecture() == z));
+        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> lectures.removeIf(p -> p.getId() == z));
     }
 
 

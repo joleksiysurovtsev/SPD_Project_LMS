@@ -5,7 +5,6 @@ import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LiteratureServiceImpl;
@@ -278,8 +277,8 @@ public class LMSUtilsHelper {
     }
 
     public static int generateId(List<Lecture> lectures) {
-        Optional<Integer> x = lectures.stream().map(v -> v.getId()).reduce(Integer::max);
-        int rez = x.get().intValue();
+        Optional<Integer> x = lectures.stream().map(Lecture::getId).reduce(Integer::max);
+        int rez = x.orElse(0);
         rez++;
         return rez;
     }
