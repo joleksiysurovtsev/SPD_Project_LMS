@@ -10,7 +10,7 @@ public class LecturesCash {
     private LectureServiceImpl lectureService = new LectureServiceImpl();
     private List<Lecture> lectures = lectureService.getLectures();
     private Calendar curentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 5);
-    private Map<Calendar, List<Lecture>> cash = new HashMap();
+    private static Map<Calendar, List<Lecture>> cash = new HashMap();
 
     public Calendar getCurentDate() {
         return curentDate;
@@ -50,7 +50,7 @@ public class LecturesCash {
 
 
 
-    public void updateCashAfterAdd(Lecture lectureAdded) {
+    public static void updateCashAfterAdd(Lecture lectureAdded) {
         List<Lecture> lsc;
         if (cash.containsKey(lectureAdded.getLectureDate())) {
             lsc = cash.get(lectureAdded.getLectureDate()); //в лист лекций из кеша по дате
@@ -61,7 +61,13 @@ public class LecturesCash {
         cash.put(lectureAdded.getLectureDate(), lsc);      //возвращаем в мапу
     }
 
-    public void updateCashAfterRemove(List<Lecture> lectureDeleted) {
+    public static void removeLectCash(String[] lectureRemove, List<Lecture> lectures) {
+        List<Lecture> listR = new ArrayList<>();
+        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(x -> lectures.stream().filter(lr -> lr.getNumberOfLecture() == x).forEach(listR::add));
+        LecturesCash.updateCashAfterRemove(listR);
+    }
+
+    private static void updateCashAfterRemove(List<Lecture> lectureDeleted) {
         lectureDeleted.forEach(lectures -> {
             List<Lecture> lsc = cash.get(lectures.getLectureDate());
             lsc.removeIf(lecture -> lecture.getNameOfLecture().equals(lectures.getNameOfLecture()));

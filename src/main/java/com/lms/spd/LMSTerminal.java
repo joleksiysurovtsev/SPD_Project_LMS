@@ -28,34 +28,33 @@ public class LMSTerminal {
 
     public void startLMS() throws IOException {
         print.showStartMenu();
-
-        switch (reader.readLine()) {
-            case "1":
-                try {
+        try {
+            switch (reader.readLine()) {
+                case "1":
                     point1MainMenuShowLectures();
-                } catch (ListIsEmptyException e) {
-                    System.err.println(e.getMessage());
+                    break;
+                case "2":
+                    point2MainMenuAddingLecture();
+                    break;
+                case "3":
+                    point3MainMenuRemovalLecture();
+                    break;
+                case "4":
+                    point4MainMenuChoiceOfLecture();
+                    break;
+                case "0":
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("\u001B[31m" + "There is no such item in the menu, let's try again" + "\u001B[0m");
                     startLMS();
-                }
-                break;
-            case "2":
-                point2MainMenuAddingLecture();
-                break;
-            case "3":
-                point3MainMenuRemovalLecture();
-                break;
-            case "4":
-                point4MainMenuChoiceOfLecture();
-                break;
-            case "0":
-                System.exit(0);
-                break;
-            default:
-                System.out.println("\u001B[31m" + "There is no such item in the menu, let's try again" + "\u001B[0m");
-                startLMS();
-                break;
+                    break;
+            }
+            print.showStartMenu();
+        } catch (ListIsEmptyException e) {
+            System.err.println(e.getMessage());
+            startLMS();
         }
-
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 

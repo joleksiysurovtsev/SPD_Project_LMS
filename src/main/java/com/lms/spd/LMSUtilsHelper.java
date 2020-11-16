@@ -267,4 +267,12 @@ public class LMSUtilsHelper {
     void cashDate(LecturesCash cash) throws IOException {
         cash.setCurentDate(enterTheLectureDate());
     }
+
+    public static int generateId(){
+        UUID uuid = new UUID(-2147483647, 2147483647);
+        uuid.
+        String id = uuid.randomUUID().toString();
+        return Integer.parseInt(id);
+
+    }
 }

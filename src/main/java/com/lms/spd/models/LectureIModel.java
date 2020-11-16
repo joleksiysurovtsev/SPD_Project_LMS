@@ -15,7 +15,7 @@ public class LectureIModel implements Lecture {
     private Calendar lectureDate;
     private String lectorName;
     private LectureType type;
-
+    private long id;
     //lecture constructor____________________________________________________________________________________________//
 
     public LectureIModel(String nameOfLecture) {
@@ -34,6 +34,16 @@ public class LectureIModel implements Lecture {
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
+    }
+
+    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate, int id) {
+        this.type = type;
+        this.nameOfLecture = nameOfLecture;
+        this.numberOfLecture = numberOfLecture;
+        this.literatures = literatures;
+        this.lectureDate = lectureDate;
+        this.lectorName = lectorName;
+        this.id = id;
     }
 
     //_______________________________________________________________________________________________________________//
@@ -96,6 +106,14 @@ public class LectureIModel implements Lecture {
     @Override
     public void setType(LectureType type) {
         this.type = type;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
