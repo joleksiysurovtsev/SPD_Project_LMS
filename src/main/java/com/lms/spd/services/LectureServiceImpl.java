@@ -15,7 +15,7 @@ public class LectureServiceImpl implements LectureService {
 
     private List<Lecture> lectures = new ArrayList<>() {
         {
-            add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5)));
+            add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50));
             add(new LectureIModel(LectureType.COMMON, 2, "\"Intellij IDEA Features. GitLab flow.\"", new ArrayList<>(), "Andrii Zaiats", new GregorianCalendar(2020, 9, 5)));
 //            add(new LectureIModel(LectureType.JAVA_CORE, 3, "\"JAVA_CORE Java API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 12)));
 //            add(new LectureIModel(LectureType.COMMON, 4, "\"Debugging. Build Tools: Graddle. Unit-testing basics\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 9, 14)));
@@ -108,11 +108,7 @@ public class LectureServiceImpl implements LectureService {
         lectures.sort(Comparator.comparing(Lecture::getLectureDate));
     }
 
-    private void numbersLectures() {        //нумерует лекции в порядке возрастания
-        for (int i = 0; i < lectures.size(); i++) {
-            lectures.get(i).setNumberOfLecture(i+1);
-        }
-    }
+
 
     private void sortLectureArrAfterRemove() {
         IntStream.range(0, lectures.size()).forEach(i -> lectures.get(i).setNumberOfLecture(i + 1));

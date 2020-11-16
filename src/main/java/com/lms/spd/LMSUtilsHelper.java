@@ -5,6 +5,7 @@ import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
+import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LiteratureServiceImpl;
@@ -21,6 +22,7 @@ public class LMSUtilsHelper {
     LMSConsolePrinter print = new LMSConsolePrinter();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
+
 
     public Literature createLit() throws IOException {
         LiteratureType typeLit = LiteratureType.UNKNOWN;
@@ -268,11 +270,17 @@ public class LMSUtilsHelper {
         cash.setCurentDate(enterTheLectureDate());
     }
 
-    public static int generateId(){
-        UUID uuid = new UUID(-2147483647, 2147483647);
-        uuid.
-        String id = uuid.randomUUID().toString();
-        return Integer.parseInt(id);
+    public static List<Lecture> numbersLectures(List<Lecture> lectures) {        //нумерует лекции в порядке возрастания
+        for (int i = 0; i < lectures.size(); i++) {
+            lectures.get(i).setNumberOfLecture(i + 1);
+        }
+        return lectures;
+    }
 
+    public static int generateId(List<Lecture> lectures) {
+        Optional<Integer> x = lectures.stream().map(v -> v.getId()).reduce(Integer::max);
+        int rez = x.get().intValue();
+        rez++;
+        return rez;
     }
 }

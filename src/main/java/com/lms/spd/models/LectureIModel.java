@@ -6,7 +6,6 @@ import com.lms.spd.models.interfaces.Literature;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 public class LectureIModel implements Lecture {
     private String nameOfLecture;
@@ -15,7 +14,7 @@ public class LectureIModel implements Lecture {
     private Calendar lectureDate;
     private String lectorName;
     private LectureType type;
-    private long id;
+    private int id;
     //lecture constructor____________________________________________________________________________________________//
 
     public LectureIModel(String nameOfLecture) {
@@ -108,11 +107,11 @@ public class LectureIModel implements Lecture {
         this.type = type;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -134,17 +133,27 @@ public class LectureIModel implements Lecture {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof LectureIModel)) return false;
+
         LectureIModel that = (LectureIModel) o;
-        return getNumberOfLecture() == that.getNumberOfLecture() &&
-                Objects.equals(getNameOfLecture(), that.getNameOfLecture()) &&
-                Objects.equals(getLiteratures(), that.getLiteratures()) &&
-                Objects.equals(getLectureDate(), that.getLectureDate()) &&
-                Objects.equals(getLectorName(), that.getLectorName()) &&
-                getType() == that.getType();
+
+        if (getNumberOfLecture() != that.getNumberOfLecture()) return false;
+        if (getId() != that.getId()) return false;
+        if (!getNameOfLecture().equals(that.getNameOfLecture())) return false;
+        if (!getLiteratures().equals(that.getLiteratures())) return false;
+        if (!getLectureDate().equals(that.getLectureDate())) return false;
+        if (!getLectorName().equals(that.getLectorName())) return false;
+        return getType() == that.getType();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNameOfLecture(), getNumberOfLecture(), getLiteratures(), getLectureDate(), getLectorName(), getType());
+        int result = getNameOfLecture().hashCode();
+        result = 31 * result + getNumberOfLecture();
+        result = 31 * result + getLiteratures().hashCode();
+        result = 31 * result + getLectureDate().hashCode();
+        result = 31 * result + getLectorName().hashCode();
+        result = 31 * result + getType().hashCode();
+        result = 31 * result + (int) (getId() ^ (getId() >>> 32));
+        return result;
     }
 }

@@ -66,21 +66,21 @@ public class LMSTerminal {
         String choice = reader.readLine().toLowerCase();
         switch (choice) {
             case "+":
-                print.printAllLectureTable(lectureServiceImpl.getLectures());
+                print.printAllLectureTable(LMSUtilsHelper.numbersLectures(lectureServiceImpl.getLectures()));
                 break;
             case "-":
                 System.out.println("Enter numbers separated by commas");
-                print.printLectureListByNumber(reader.readLine(), lectureServiceImpl.getLectures());
+                print.printLectureListByNumber(reader.readLine(), LMSUtilsHelper.numbersLectures(lectureServiceImpl.getLectures()));
                 break;
             case "small":
-                print.printPreviewLectureList(lectureServiceImpl.getLectures());
+                print.printPreviewLectureList(LMSUtilsHelper.numbersLectures(lectureServiceImpl.getLectures()));
                 break;
             case "type":
-                print.printLectureListByType(utilsHelper.selectLectureType(utilsHelper.arrayLectTypesInvolved(lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
+                print.printLectureListByType(utilsHelper.selectLectureType(utilsHelper.arrayLectTypesInvolved(LMSUtilsHelper.numbersLectures(lectureServiceImpl.getLectures()))), LMSUtilsHelper.numbersLectures(lectureServiceImpl.getLectures()));
                 break;
             case "date":
                 utilsHelper.cashDate(cash);
-                print.printAllLectureTable(cash.returnList());
+                print.printAllLectureTable(LMSUtilsHelper.numbersLectures(cash.returnList()));
                 break;
             case "exit":
                 startLMS();
@@ -107,12 +107,13 @@ public class LMSTerminal {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     private void point2MainMenuAddingLecture() throws IOException {
+        int id = LMSUtilsHelper.generateId(lectureServiceImpl.getLectures());
         String nameOfLecture = utilsHelper.createTheLectureTitle();
         String lectorName = utilsHelper.enterLektorName();
         LectureType lectureType = utilsHelper.selectLectureType();
         Calendar lectureDate = utilsHelper.enterTheLectureDate();
         List<Literature> literatures = utilsHelper.addLitOrNot();
-        lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate));
+        lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate, id));
         System.out.println("Entering a new lecture?");
         subMenuAddingLectureToList();
     }

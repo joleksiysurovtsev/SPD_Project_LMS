@@ -31,4 +31,6 @@ public interface Lecture {
 
     void setType(LectureType type);
 
+    public int getId() ;
+    public void setId(int id);
 }

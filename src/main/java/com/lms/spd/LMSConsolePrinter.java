@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.50s| %-24.24s|";
+    String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
         if (lectures.isEmpty()) {
@@ -50,22 +50,18 @@ public class LMSConsolePrinter {
         }
     }
 
-    private void printErrMassage() {
-        System.out.println("The lecture list is empty first add lectures");
-    }
-
     private void printTopOfTable() {
-        System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|\u1005|    Date     |  Lecture type      | Lecture number |                          Lecture title           |      Lecturer name      |");
-        System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|\u1005|    Date     |  Lecture type      | Lecture number | Lecture ID     |                   Lecture title                  |      Lecturer name      |");
+        System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------------+");
     }
 
     //Печатает таблицу
     public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
-            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(),lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
         } else {
-            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(),lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
         }
     }
 
