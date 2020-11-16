@@ -14,6 +14,7 @@ public class InternetArticleModel implements Literature {
     private String urlAddress;
     private Calendar dateResourceWasAdded;
     private LiteratureType type;
+    private int id;
 
     public InternetArticleModel(String title, String author, String urlAddress) {
         setAuthor(author);
@@ -58,6 +59,17 @@ public class InternetArticleModel implements Literature {
     @Override
     public void setType(LiteratureType type) {
         this.type = type;
+    }
+
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -15,6 +15,7 @@ public class BookModel implements Literature {
     private int publishedInYear;
     private LiteratureType type;
     private Calendar dateResourceWasAdded;
+    private int id;
 
     public BookModel(String title, String author, String genre, int publishedInYear) {
         this.genre = genre;
@@ -58,9 +59,20 @@ public class BookModel implements Literature {
     public Calendar getDateResourceWasAdded() {
         return dateResourceWasAdded;
     }
+
     @Override
     public void setDateResourceWasAdded(Calendar dateResourceWasAdded) {
         this.dateResourceWasAdded = dateResourceWasAdded;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getGenre() {

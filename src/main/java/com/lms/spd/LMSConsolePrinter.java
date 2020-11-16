@@ -24,9 +24,9 @@ public class LMSConsolePrinter {
 
     public void printPreviewLectureList(List<Lecture> lectures) throws ListIsEmptyException {
         System.out.println("Lecture preview");
-        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.15s| %-24.24s|";
+        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.15s| %-24.24s|";
         printAllLectureTable(lectures);
-        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.50s| %-24.24s|";
+        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
     }
 
     public void printLectureListByType(LectureType type, List<Lecture> lectures) throws ListIsEmptyException {
@@ -112,7 +112,7 @@ public class LMSConsolePrinter {
 
 
     public void printMessagesAddLit(int message) {
-        Map<Integer, String> massageMap = Map.of(1, "value",
+        Map<Integer, String> massageMap = Map.of(1, "Please enter a title:",
                 2, "Please enter a author name",
                 3, "Please enter a titleJournal name or press Enter",
                 4, "Please enter a issue of the journal where the article was published",

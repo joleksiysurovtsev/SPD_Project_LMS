@@ -107,7 +107,7 @@ public class LMSTerminal {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     private void point2MainMenuAddingLecture() throws IOException {
-        int id = LMSUtilsHelper.generateId(lectureServiceImpl.getLectures());
+        int id = LMSUtilsHelper.generateIdLect(lectureServiceImpl.getLectures());
         String nameOfLecture = utilsHelper.createTheLectureTitle();
         String lectorName = utilsHelper.enterLektorName();
         LectureType lectureType = utilsHelper.selectLectureType();
@@ -200,9 +200,9 @@ public class LMSTerminal {
             } else {
                 lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
                 System.out.println("Selected lecture: ");
-                System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+                System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------+");
                 print.printLectureTable(lectureServiceImpl.getSelectedLecture());
-                System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+                System.out.println("+------------------------------------------------------------------------------------------------------------------------------------------+");
                 System.out.println("What are the next actions?");
             }
         }

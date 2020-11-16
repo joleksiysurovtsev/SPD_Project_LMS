@@ -14,6 +14,7 @@ public class JournalArticleModel implements Literature {
     private String titleOfArticle;
     private int issueOfTheJournal;
     private LiteratureType type;
+    private int id;
 
     @Override
     public Calendar getDateResourceWasAdded() {
@@ -79,6 +80,17 @@ public class JournalArticleModel implements Literature {
 
     public void setIssueOfTheJournal(int issueOfTheJournal) {
         this.issueOfTheJournal = issueOfTheJournal;
+    }
+
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//

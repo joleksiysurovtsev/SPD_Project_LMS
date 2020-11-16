@@ -19,6 +19,11 @@ public interface Literature {
 
     String print();
 
-     Calendar getDateResourceWasAdded();
+    Calendar getDateResourceWasAdded();
+
     void setDateResourceWasAdded(Calendar dateResourceWasAdded);
+
+    public int getId();
+
+    public void setId(int id);
 }

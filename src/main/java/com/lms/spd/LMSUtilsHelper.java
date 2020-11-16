@@ -51,8 +51,14 @@ public class LMSUtilsHelper {
         Literature lit;
         print.printMessagesAddLit(1);
         String title = reader.readLine();
+        if (title.isEmpty()){
+            title = "Unknown";
+        }
         print.printMessagesAddLit(2);
         String author = reader.readLine();
+        if (author.isEmpty()){
+            title = "Unknown";
+        }
         switch (type) {
             case JOURNAL_ARTICLE:
                 print.printMessagesAddLit(3);
@@ -252,7 +258,7 @@ public class LMSUtilsHelper {
         boolean flag = true;
         for (String item : numbToDisplay) {
             for (Lecture value : list) {
-                int numb = value.getNumberOfLecture();
+                int numb = value.getId();
                 if (numb == Integer.parseInt(item)) {
                     flag = false;
                     stringContains.append(" ").append(item).append(" ");
@@ -260,7 +266,7 @@ public class LMSUtilsHelper {
                 }
             }
         }
-        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
+        stringContains.append(!flag ? "successfully removed." : "are missing.");
         System.out.println(stringContains.toString());
         return numbToDisplay;
     }
@@ -276,7 +282,14 @@ public class LMSUtilsHelper {
         return lectures;
     }
 
-    public static int generateId(List<Lecture> lectures) {
+    public static int generateIdLit(List<Literature> literature) {
+        Optional<Integer> x = literature.stream().map(Literature::getId).reduce(Integer::max);
+        int rez = x.orElse(0);
+        rez++;
+        return rez;
+    }
+
+    public static int generateIdLect(List<Lecture> lectures) {
         Optional<Integer> x = lectures.stream().map(Lecture::getId).reduce(Integer::max);
         int rez = x.orElse(0);
         rez++;
