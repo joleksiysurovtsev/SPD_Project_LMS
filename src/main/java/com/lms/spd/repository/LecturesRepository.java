@@ -3,12 +3,13 @@ package com.lms.spd.repository;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.repository.interfaces.Repository;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class LecturesRepository {
+public class LecturesRepository implements Repository {
 
 
     private List<Lecture> lectures = new ArrayList<>() {
@@ -54,11 +55,13 @@ public class LecturesRepository {
         }
     };
 
+    @Override
     public List<Lecture> getAll() {
         return lectures;
     }
 
-    public void setAll(List<Lecture> lectures) {
+    @Override
+    public void setAll(List lectures) {
         this.lectures = lectures;
     }
 }

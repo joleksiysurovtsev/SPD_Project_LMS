@@ -6,9 +6,9 @@ import java.util.List;
 public interface LectureService {
     List<Lecture> getLectures();
 
-   void setLectures(List<Lecture> lectures);
-
     Lecture getSelectedLecture();
+
+    void setLectures(List<Lecture> lectures);
 
     void setSelectedLecture(int selected);
 
