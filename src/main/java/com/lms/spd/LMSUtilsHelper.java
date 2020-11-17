@@ -3,6 +3,7 @@ package com.lms.spd;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.exceptions.DateFormatException;
+import com.lms.spd.exceptions.ValidateInputException;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
@@ -206,31 +207,31 @@ public class LMSUtilsHelper {
      * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
      * returns the title of the lecture after checking that it is not empty.
      */
-    String enterLektorName() throws IOException {
+    String enterLektorName() throws IOException, ValidateInputException {
         System.out.println("Enter lecturer name");
-        String s = reader.readLine();
-        return (s.isEmpty()) ? "Unknown" : s;
+        String lectorName = reader.readLine();
+        if (lectorName.length() >= 1 & lectorName.length() < 5) {
+            throw new ValidateInputException("the name and surname of the lecturer cannot be less than five characters");
+        }
+        return (lectorName.isEmpty()) ? "Unknown" : lectorName;
     }
 
     /**
      * Returns the lecture type implemented by type checking.
      */
-    LectureType selectLectureType() {
+    LectureType selectLectureType() throws ValidateInputException {
         int number = 0;
-        do {
-            System.out.println("Please, choose lecture type: ");
-            IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
-            try {
-                number = Integer.parseInt(reader.readLine());
-                if (number > LectureType.values().length || number <= 0) {
-                    System.out.println("Unknown type: try again");
-                    selectLectureType();
-                }
-            } catch (IOException | NumberFormatException e) {
-                System.out.println("Unknown type: try again");
-                selectLectureType();
+        System.out.println("Please, choose lecture type: ");
+        IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
+        try {
+            number = Integer.parseInt(reader.readLine());
+            if (number > LectureType.values().length || number <= 0) {
+                throw new ValidateInputException("Unknown type: try again");
             }
-        } while (number < 0);
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("incorrect input");
+            selectLectureType();
+        }
         return LectureType.getValueByNumber(number);
     }
 

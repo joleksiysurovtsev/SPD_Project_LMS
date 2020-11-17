@@ -3,6 +3,7 @@ package com.lms.spd;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.exceptions.DateFormatException;
 import com.lms.spd.exceptions.ListIsEmptyException;
+import com.lms.spd.exceptions.ValidateInputException;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
@@ -108,10 +109,25 @@ public class LMSTerminal {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     private void point2MainMenuAddingLecture() throws IOException {
-        int id = LMSUtilsHelper.generateIdLect(lectureServiceImpl.getLectures());
+        LectureType lectureType = null;
         String nameOfLecture = utilsHelper.createTheLectureTitle();
-        String lectorName = utilsHelper.enterLektorName();
-        LectureType lectureType = utilsHelper.selectLectureType();
+        String lectorName;
+        while (true) {
+            try {
+                lectorName = utilsHelper.enterLektorName();
+                break;
+            } catch (ValidateInputException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        while (true) {
+            try {
+                lectureType = utilsHelper.selectLectureType();
+                break;
+            } catch (ValidateInputException e) {
+                System.err.println(e.getMessage());
+            }
+        }
         Calendar lectureDate;
         while (true) {
             try {
@@ -122,6 +138,8 @@ public class LMSTerminal {
             }
         }
         List<Literature> literatures = utilsHelper.addLitOrNot();
+        int id = LMSUtilsHelper.generateIdLect(lectureServiceImpl.getLectures());
+
         lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate, id));
         System.out.println("Entering a new lecture?");
         subMenuAddingLectureToList();
@@ -209,9 +227,9 @@ public class LMSTerminal {
             } else {
                 lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
                 System.out.println("Selected lecture: ");
-                System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------+");
+                System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------------+");
                 print.printLectureTable(lectureServiceImpl.getSelectedLecture());
-                System.out.println("+------------------------------------------------------------------------------------------------------------------------------------------+");
+                System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------------+");
                 System.out.println("What are the next actions?");
             }
         }
@@ -247,7 +265,7 @@ public class LMSTerminal {
                 point4_5showLectureInfo();
                 break;
             case 6:
-                return;
+                startLMS();
             default:
                 System.out.println("\u001B[31m" + "There is no such item in the menu, let's try again" + "\u001B[0m");
                 subMenu2Point4();
@@ -335,7 +353,7 @@ public class LMSTerminal {
     private void point4_5showLectureInfo() throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Lecture lecture = lectureServiceImpl.getSelectedLecture();
-        StringBuilder lectureInfo = new StringBuilder("Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
+        StringBuilder lectureInfo = new StringBuilder("Lecture ID: " + lecture.getId() + "\n" + "Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
         if (!lecture.getLectorName().isEmpty() || lecture.getLectorName() != null) {
             lectureInfo.append("The lecture is lecturing by: ").append(lecture.getLectorName()).append("\n");
         }
@@ -345,7 +363,6 @@ public class LMSTerminal {
         if (lecture.getType() != null) {
             lectureInfo.append(" Lecture Type: ").append(lecture.getType());
         }
-
         System.out.println(lectureInfo);
         print.printListLit(lecture);
         print.showFourthMenu();
