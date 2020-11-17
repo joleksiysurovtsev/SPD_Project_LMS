@@ -1,6 +1,7 @@
 package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
+import com.lms.spd.exceptions.DateFormatException;
 import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -111,7 +112,15 @@ public class LMSTerminal {
         String nameOfLecture = utilsHelper.createTheLectureTitle();
         String lectorName = utilsHelper.enterLektorName();
         LectureType lectureType = utilsHelper.selectLectureType();
-        Calendar lectureDate = utilsHelper.enterTheLectureDate();
+        Calendar lectureDate;
+        while (true) {
+            try {
+                lectureDate = utilsHelper.enterTheLectureDate();
+                break;
+            } catch (DateFormatException e) {
+                System.err.println(e.getMessage() + " The lecture cannot be given in the last century: Try again");
+            }
+        }
         List<Literature> literatures = utilsHelper.addLitOrNot();
         lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate, id));
         System.out.println("Entering a new lecture?");

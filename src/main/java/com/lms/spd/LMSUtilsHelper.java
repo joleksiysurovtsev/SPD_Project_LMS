@@ -2,6 +2,7 @@ package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.enums.LiteratureType;
+import com.lms.spd.exceptions.DateFormatException;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
@@ -51,12 +52,12 @@ public class LMSUtilsHelper {
         Literature lit;
         print.printMessagesAddLit(1);
         String title = reader.readLine();
-        if (title.isEmpty()){
+        if (title.isEmpty()) {
             title = "Unknown";
         }
         print.printMessagesAddLit(2);
         String author = reader.readLine();
-        if (author.isEmpty()){
+        if (author.isEmpty()) {
             title = "Unknown";
         }
         switch (type) {
@@ -164,20 +165,23 @@ public class LMSUtilsHelper {
         return types;
     }
 
-    public Calendar enterTheLectureDate() throws IOException {
-        System.out.println("Enter the lecture date for example: 19-10-1986");
+    public Calendar enterTheLectureDate() throws IOException, DateFormatException {
+        System.out.println("Enter the lecture date for example: 19-10-2020");
         Calendar d1 = new GregorianCalendar();
-        String dateInString;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        dateInString = reader.readLine();
-        try {
-            sdf.setLenient(true);
-            d1.setTime(sdf.parse(dateInString));
-        } catch (ParseException e) {
-            System.out.println("The date is entered incorrectly, try again");
-            enterTheLectureDate();
+        String dateInString = reader.readLine();
+        if (!dateInString.matches("^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2})$")) {
+            throw new DateFormatException("Incorect format");
+        } else {
+            try {
+                sdf.setLenient(true);
+                d1.setTime(sdf.parse(dateInString));
+            } catch (ParseException e) {
+                System.out.println("The date is entered incorrectly, try again");
+                enterTheLectureDate();
+            }
+            return d1;
         }
-        return d1;
     }
 
 
@@ -272,7 +276,15 @@ public class LMSUtilsHelper {
     }
 
     void cashDate(LecturesCash cash) throws IOException {
-        cash.setCurentDate(enterTheLectureDate());
+        while (true) {
+            try {
+                cash.setCurentDate(enterTheLectureDate());
+                break;
+            } catch (DateFormatException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
     }
 
     public static List<Lecture> numbersLectures(List<Lecture> lectures) {        //нумерует лекции в порядке возрастания
@@ -281,6 +293,7 @@ public class LMSUtilsHelper {
         }
         return lectures;
     }
+
 
     public static int generateIdLit(List<Literature> literature) {
         Optional<Integer> x = literature.stream().map(Literature::getId).reduce(Integer::max);
