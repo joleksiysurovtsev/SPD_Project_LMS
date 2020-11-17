@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LiteratureServiceImpl implements LiteratureService {
-    LectureServiceImpl lectureService = new LectureServiceImpl();
     List<Literature> literatures = new ArrayList<>();
 
 
