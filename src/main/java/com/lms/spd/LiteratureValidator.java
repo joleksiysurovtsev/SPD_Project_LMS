@@ -4,12 +4,10 @@ import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
-import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LiteratureServiceImpl;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class LiteratureValidator {
     LMSConsolePrinter print = new LMSConsolePrinter();
