@@ -5,44 +5,21 @@ import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class LectureValidator {
     LiteratureValidator literatureValidator = new LiteratureValidator();
 
-    public Lecture createLecture() throws IOException {
+    public Lecture createLecture() {
         String nameOfLecture = createTheLectureTitle();
         String lectorName = enterLektorName();
         LectureType lectureType = selectLectureType();
-        Calendar lectureDate = enterTheLectureDate();
+        Calendar lectureDate = ConsoleInputValidator.enterTheDate();
         List<Literature> literatures = literatureValidator.addLitOrNot();
         return new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate);
-    }
-
-
-    public Calendar enterTheLectureDate() {
-        System.out.println("Enter the lecture date for example: 19-10-1986");
-        Calendar d1 = new GregorianCalendar();
-        String dateInString;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        while (true) {
-            dateInString = ConsoleInputValidator.readString();
-            try {
-                sdf.setLenient(true);
-                d1.setTime(sdf.parse(dateInString));
-                break;
-            } catch (ParseException e) {
-                System.out.println("The date is entered incorrectly, try again");
-            }
-        }
-        return d1;
     }
 
     /**
@@ -68,18 +45,19 @@ public class LectureValidator {
      */
     String enterLektorName() {
         System.out.println("Enter lecturer name");
-        String s = ConsoleInputValidator.readString();
-        return s;
+        String lecturerName = ConsoleInputValidator.readString();
+        return lecturerName;
     }
 
     /**
      * Returns the lecture type implemented by type checking.
      */
-    LectureType selectLectureType() {
+
+    private LectureType selectLectureType() {
+        System.out.println("Please, choose lecture type: ");
+        IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
         int number = 0;
         while (true) {
-            System.out.println("Please, choose lecture type: ");
-            IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
             number = ConsoleInputValidator.readInt();
             if (number > LectureType.values().length || number <= 0) {
                 System.out.println("Unknown type: try again");
@@ -90,13 +68,27 @@ public class LectureValidator {
         return LectureType.getValueByNumber(number);
     }
 
+
+    LectureType selectLectureType(List<LectureType> types) {
+        int number = 0;
+        while (true) {
+            System.out.println("Please, choose lecture type: ");
+            IntStream.range(0, types.size()).mapToObj(i -> (i + 1) + ". " + types.get(i) + " ").forEach(System.out::println);
+            number = ConsoleInputValidator.readInt();
+            if (number > types.size() || number <= 0) {
+                System.out.println("Unknown type: try again");
+                continue;
+            }
+            break;
+        }
+        return types.get(number - 1);
+    }
+
+
     public List<LectureType> arrayLecturesTypesInvolved(List<Lecture> lectures) {
         List<LectureType> types = new ArrayList<>();
         lectures.stream().filter(lecture -> !types.contains(lecture.getType())).forEach(lecture -> types.add(lecture.getType()));
         return types;
     }
 
-    void cashDate(LecturesCache cash){
-        cash.setCurentDate(enterTheLectureDate());
-    }
 }

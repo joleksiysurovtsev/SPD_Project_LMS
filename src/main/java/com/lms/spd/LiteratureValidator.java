@@ -8,18 +8,14 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LiteratureServiceImpl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.IntStream;
 
 public class LiteratureValidator {
     LMSConsolePrinter print = new LMSConsolePrinter();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
 
-    public Literature createLit() throws IOException {
+    public Literature createLit() {
         LiteratureType typeLit = LiteratureType.UNKNOWN;
         while (true) {
             System.out.println("Please, choose literature type: \n" + LiteratureType.toListString());
@@ -39,7 +35,7 @@ public class LiteratureValidator {
     }
 
 
-    public Literature inputData(LiteratureType type) throws IOException {
+    public Literature inputData(LiteratureType type) {
         Literature lit;
         print.printMessagesAddLit(1);
         String title = ConsoleInputValidator.readString();
@@ -74,15 +70,15 @@ public class LiteratureValidator {
 //____________________________________________________________________________________________________________________//
 
 
-    public List<Literature> addLitOrNot() throws IOException {
+    public List<Literature> addLitOrNot() {
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         List<Literature> newlit = new ArrayList<>();
-        switch (reader.readLine()) {
+        switch (ConsoleInputValidator.readString()) {
             case "+":
                 do {
                     literatureServiceImpl.addLiterature(createLit(), newlit);
                     System.out.println("Add more literature? if not enter minus");
-                } while (!reader.readLine().equals("-"));
+                } while (!ConsoleInputValidator.readString().equals("-"));
                 break;
             case "-":
                 //или возвращаем пустой массив
