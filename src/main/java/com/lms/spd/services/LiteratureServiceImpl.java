@@ -2,13 +2,13 @@ package com.lms.spd.services;
 
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.interfaces.LiteratureService;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class LiteratureServiceImpl implements LiteratureService {
-    LectureServiceImpl lectureService = new LectureServiceImpl();
-    List<Literature> literatures = new ArrayList<>();
 
+    List<Literature> literatures = new ArrayList<>();
 
     @Override
     public List<Literature> getLiteratures() {

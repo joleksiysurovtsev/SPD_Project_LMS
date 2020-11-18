@@ -2,7 +2,7 @@ package com.lms.spd.models.interfaces;
 
 import com.lms.spd.enums.LectureType;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public interface Lecture {
@@ -23,11 +23,12 @@ public interface Lecture {
 
     void setLectorName(String nameOfLecture);
 
-    Date getLectureDate();
+    Calendar getLectureDate();
 
-    void setLectureDate(Date lectureDate);
+    void setLectureDate(Calendar lectureDate);
 
     LectureType getType();
 
     void setType(LectureType type);
+
 }

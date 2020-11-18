@@ -2,9 +2,7 @@ package com.lms.spd;
 
 import com.lms.spd.models.JournalArticleModel;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,8 +10,9 @@ class JournalArticleModelTest {
 
     @Test
     void print() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        assertEquals(" Article: This keyword {in examples} In the journal java world Journal №: 5", journalArticle.print());
+        assertEquals(" Article: This keyword {in examples} In the journal java world Journal №: 5 "+sdf.format(journalArticle.getDateResourceWasAdded().getTime()), journalArticle.print());
     }
 
     @Test

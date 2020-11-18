@@ -2,6 +2,8 @@ package com.lms.spd.models.interfaces;
 
 import com.lms.spd.enums.LiteratureType;
 
+import java.util.Calendar;
+
 public interface Literature {
     String getTitle();
 
@@ -17,4 +19,6 @@ public interface Literature {
 
     String print();
 
+     Calendar getDateResourceWasAdded();
+    void setDateResourceWasAdded(Calendar dateResourceWasAdded);
 }
