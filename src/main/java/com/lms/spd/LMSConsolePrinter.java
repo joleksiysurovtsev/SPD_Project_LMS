@@ -147,4 +147,14 @@ public class LMSConsolePrinter {
                 + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n" + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
                 + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date ");
     }
+
+    public void printErrMassage(int message){
+        Map<Integer, String> massageMap = Map.of(1, "There is no such item in the menu, let's try again");
+        if (massageMap.containsKey(message)) {
+            System.err.println(massageMap.get(message));
+        }
+    }
+
+
+
 }

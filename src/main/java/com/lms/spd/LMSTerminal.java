@@ -25,24 +25,24 @@ public class LMSTerminal {
     public void startLMS() {
         print.showStartMenu();
         try {
-            switch (reader.readLine()) {
-                case "1":
+            switch (ConsoleInputValidator.readInt()) {
+                case 1:
                     point1MainMenuShowLectures();
                     break;
-                case "2":
+                case 2:
                     point2MainMenuAddingLecture();
                     break;
-                case "3":
+                case 3:
                     point3MainMenuRemovalLecture();
                     break;
-                case "4":
+                case 4:
                     point4MainMenuChoiceOfLecture();
                     break;
-                case "0":
+                case 0:
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("\u001B[31m" + "There is no such item in the menu, let's try again" + "\u001B[0m");
+                    print.printErrMassage(1);
                     startLMS();
                     break;
             }
@@ -57,8 +57,8 @@ public class LMSTerminal {
      */
     private void point1MainMenuShowLectures() throws IOException {
         print.printMenuPoint1();
-        String choice = reader.readLine().toLowerCase();
-        switch (choice) {
+        String choice = ConsoleInputValidator.readString();
+        switch (choice.toLowerCase()) {
             case "+":
                 print.printAllLectureTable(lectureServiceImpl.getLectures());
                 break;
@@ -70,13 +70,14 @@ public class LMSTerminal {
                 print.printPreviewLectureList(lectureServiceImpl.getLectures());
                 break;
             case "type":
-                print.printLectureListByType(lectureValidator.selectLectureType(lectureValidator.arrayLecturesTypesInvolved( lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
+                print.printLectureListByType(lectureValidator.selectLectureType(lectureValidator.arrayLecturesTypesInvolved(lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
                 break;
             case "date":
                 cash.setCurentDate(ConsoleInputValidator.enterTheDate());
                 print.printAllLectureTable(cash.returnList());
                 break;
             default:
+                print.printErrMassage(1);
                 point1MainMenuShowLectures();
                 break;
         }
@@ -84,13 +85,14 @@ public class LMSTerminal {
         subMenuShowLectures();
     }
 
-    private void subMenuShowLectures() throws IOException {
-        String s = reader.readLine().toUpperCase();
+    private void subMenuShowLectures() {
+        String s = ConsoleInputValidator.readString().toUpperCase();
         if ("0".equals(s)) {
             startLMS();
         } else if ("EXIT".equals(s)) {
             System.exit(0);
         } else {
+            print.printErrMassage(1);
             System.out.println("you must enter either \"0\" or EXIT");
             subMenuShowLectures();
         }
@@ -106,7 +108,7 @@ public class LMSTerminal {
     private void subMenuAddingLectureToList() throws IOException {
         System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"-\"" + "\u001B[0m"
                 + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
-        switch (reader.readLine().toUpperCase()) {
+        switch (ConsoleInputValidator.readString().toUpperCase()) {
             case "+":
                 point2MainMenuAddingLecture();
                 break;
@@ -116,6 +118,7 @@ public class LMSTerminal {
                 System.exit(0);
                 break;
             default:
+                print.printErrMassage(1);
                 System.out.println("you must enter either \"+\" \"-\" or EXIT");
                 subMenuAddingLectureToList();
                 break;
@@ -125,17 +128,10 @@ public class LMSTerminal {
 
     private void point3MainMenuRemovalLecture() throws IOException {
         System.out.println("Please enter the number of the lecture if you want to delete one or more comma separated ");
-        String numbRemovalLecture = null;
-        try {
-            numbRemovalLecture = reader.readLine();
-        } catch (IOException e) {
-            point3MainMenuRemovalLecture();
-        }
-        assert numbRemovalLecture != null;
+        String numbRemovalLecture = ConsoleInputValidator.readString();
         String[] lectureRemove = literatureValidator.stringToDeleteLecture(numbRemovalLecture, lectureServiceImpl.getLectures());
         lectureServiceImpl.removeLectures(lectureRemove);
         subMenuRemovalLecture();
-
     }
 
     private void subMenuRemovalLecture() throws IOException {
@@ -154,6 +150,7 @@ public class LMSTerminal {
                 System.exit(0);
                 break;
             default:
+                print.printErrMassage(1);
                 System.out.println("please make the right choice \"+\" \"-\" or \"EXIT\"");
                 subMenuRemovalLecture();
                 break;
@@ -196,16 +193,7 @@ public class LMSTerminal {
     }
 
     private void subMenu2Point4() throws IOException {
-        int choice = 0;
-        while (true) {
-            try {
-                choice = Integer.parseInt(reader.readLine());
-                break;
-            } catch (NumberFormatException | IOException e) {
-                System.out.println("You only need to enter a number!");
-            }
-        }
-        switch (choice) {
+        switch (ConsoleInputValidator.readInt()) {
             case 1: // 1. --> choose another lecture
                 point4MainMenuChoiceOfLecture();
                 break;
@@ -225,7 +213,7 @@ public class LMSTerminal {
             case 6:
                 return;
             default:
-                System.out.println("\u001B[31m" + "There is no such item in the menu, let's try again" + "\u001B[0m");
+                print.printErrMassage(1);
                 subMenu2Point4();
                 break;
         }
@@ -248,36 +236,28 @@ public class LMSTerminal {
         }
         System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
                 "you will return to the lecture selection menu, to complete the work, exit ");
-        String x;
         while (true) {
-            x = reader.readLine();
-            if (x.equalsIgnoreCase("+") || x.equalsIgnoreCase("-") || x.equalsIgnoreCase("exit")) break;
-            System.out.println("You only need to enter a + or - or EXIT!");
-        }
-        switch (x.toUpperCase()) {
-            case "+":
-                point4_3AddLit();
-                break;
-            case "-":
-                point4MainMenuChoiceOfLecture();
-                break;
-            case "EXIT":
-                System.exit(0);
-                break;
-            default:
-                break;
+            switch (ConsoleInputValidator.readString().toUpperCase()) {
+                case "+":
+                    point4_3AddLit();
+                    break;
+                case "-":
+                    point4MainMenuChoiceOfLecture();
+                    break;
+                case "EXIT":
+                    System.exit(0);
+                    break;
+                default:
+                    print.printErrMassage(1);
+                    continue;
+            }
+            break;
         }
     }
 
     private void point4_4DeleteLit() throws IOException {
         System.out.println("Please enter the number of the book you want to delete");
-        int indexLit = 0;
-        try {
-            indexLit = Integer.parseInt(reader.readLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Please enter a number");
-            point4_4DeleteLit();
-        }
+        int indexLit = ConsoleInputValidator.readInt();
         boolean flag = false;
         if (lectureServiceImpl.getSelectedLecture().getLiteratures().size() >= indexLit) {
             flag = true;
@@ -295,7 +275,7 @@ public class LMSTerminal {
 
     private void subMenuPoint4_4DeleteLit() throws IOException {
         System.out.println("\"+\" YES or \"-\" NO");
-        switch (reader.readLine()) {
+        switch (ConsoleInputValidator.readString()) {
             case "+":
                 point4_4DeleteLit();
                 break;
@@ -303,6 +283,7 @@ public class LMSTerminal {
                 point4MainMenuChoiceOfLecture();
                 break;
             default:
+                print.printErrMassage(1);
                 System.out.println("please choice from the offered");
                 break;
         }
@@ -321,7 +302,6 @@ public class LMSTerminal {
         if (lecture.getType() != null) {
             lectureInfo.append(" Lecture Type: ").append(lecture.getType());
         }
-
         System.out.println(lectureInfo);
         print.printListLit(lecture);
         print.showFourthMenu();
