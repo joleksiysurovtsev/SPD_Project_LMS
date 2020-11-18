@@ -35,7 +35,7 @@ public class LiteratureValidator {
     }
 
 
-    public Literature inputData(LiteratureType type) {
+    private Literature inputData(LiteratureType type) {
         Literature lit;
         print.printMessagesAddLit(1);
         String title = ConsoleInputValidator.readString();

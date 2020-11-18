@@ -25,7 +25,7 @@ public class LectureValidator {
     /**
      * Returns the title of the lecture after checking that it is not empty.
      */
-    public String createTheLectureTitle() {
+    private String createTheLectureTitle() {
         String lectureName;
         System.out.println("Enter the title of the lecture");
         while (true) {
@@ -43,7 +43,7 @@ public class LectureValidator {
      * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
      * returns the title of the lecture after checking that it is not empty.
      */
-    String enterLektorName() {
+    private String enterLektorName() {
         System.out.println("Enter lecturer name");
         String lecturerName = ConsoleInputValidator.readString();
         return lecturerName;
@@ -53,7 +53,7 @@ public class LectureValidator {
      * Returns the lecture type implemented by type checking.
      */
 
-    private LectureType selectLectureType() {
+    public LectureType selectLectureType() {
         System.out.println("Please, choose lecture type: ");
         IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
         int number = 0;
@@ -69,7 +69,7 @@ public class LectureValidator {
     }
 
 
-    LectureType selectLectureType(List<LectureType> types) {
+    public LectureType selectLectureType(List<LectureType> types) {
         int number = 0;
         while (true) {
             System.out.println("Please, choose lecture type: ");
