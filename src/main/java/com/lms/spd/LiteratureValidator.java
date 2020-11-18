@@ -12,15 +12,14 @@ import com.lms.spd.services.LiteratureServiceImpl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class LMSUtilsHelper {
+public class LiteratureValidator {
     LMSConsolePrinter print = new LMSConsolePrinter();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
+    LectureValidator lectureValidator = new LectureValidator();
 
     public Literature createLit() throws IOException {
         LiteratureType typeLit = LiteratureType.UNKNOWN;
@@ -130,26 +129,8 @@ public class LMSUtilsHelper {
         }
         return new BookModel(title, author, genre, years);
     }
+//____________________________________________________________________________________________________________________//
 
-    public LectureType selectLectureType(List<LectureType> types) {
-        int number;
-        while (true) {
-            System.out.println("Please, choose lecture type: ");
-            IntStream.range(0, types.size()).mapToObj(i -> (i + 1) + ". " + types.get(i) + " ").forEach(System.out::println);
-            try {
-                number = Integer.parseInt(reader.readLine());
-                if (number > types.size() || number <= 0) {
-                    System.out.println("Unknown type: try again");
-                    continue;
-                }
-            } catch (IOException e) {
-                System.out.println("Unknown type: try again");
-                continue;
-            }
-            break;
-        }
-        return types.get(number - 1);
-    }
 
     public List<LectureType> arrayLectTypesInvolved(List<Lecture> lectures) {
         List<LectureType> types = new ArrayList<>();
@@ -157,71 +138,6 @@ public class LMSUtilsHelper {
         return types;
     }
 
-    public Calendar enterTheLectureDate() throws IOException {
-        System.out.println("Enter the lecture date for example: 19-10-1986");
-        Calendar d1 = new GregorianCalendar();
-        String dateInString;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        dateInString = reader.readLine();
-        try {
-            sdf.setLenient(true);
-            d1.setTime(sdf.parse(dateInString));
-        } catch (ParseException e) {
-            System.out.println("The date is entered incorrectly, try again");
-            enterTheLectureDate();
-        }
-        return d1;
-    }
-
-
-    /**
-     * Returns the title of the lecture after checking that it is not empty.
-     */
-    public String createTheLectureTitle() throws IOException {
-        String lectureName;
-        System.out.println("Enter the title of the lecture");
-        while (true) {
-            lectureName = reader.readLine();
-            if (!lectureName.isEmpty()) {
-                break;
-            } else {
-                System.out.println("The lecture must have a title. Try again");
-            }
-        }
-        return lectureName;
-    }
-
-    /**
-     * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
-     * returns the title of the lecture after checking that it is not empty.
-     */
-    String enterLektorName() throws IOException {
-        System.out.println("Enter lecturer name");
-        String s = reader.readLine();
-        return (s.isEmpty()) ? "Unknown" : s;
-    }
-
-    /**
-     * Returns the lecture type implemented by type checking.
-     */
-    LectureType selectLectureType() {
-        int number = 0;
-        do {
-            System.out.println("Please, choose lecture type: ");
-            IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
-            try {
-                number = Integer.parseInt(reader.readLine());
-                if (number > LectureType.values().length || number <= 0) {
-                    System.out.println("Unknown type: try again");
-                    selectLectureType();
-                }
-            } catch (IOException | NumberFormatException e) {
-                System.out.println("Unknown type: try again");
-                selectLectureType();
-            }
-        } while (number < 0);
-        return LectureType.getValueByNumber(number);
-    }
 
     public List<Literature> addLitOrNot() throws IOException {
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
@@ -264,7 +180,7 @@ public class LMSUtilsHelper {
         return numbToDisplay;
     }
 
-    void cashDate(LecturesCash cash) throws IOException {
-        cash.setCurentDate(enterTheLectureDate());
+    void cashDate(LecturesCache cash) throws IOException {
+        cash.setCurentDate(lectureValidator.enterTheLectureDate(this));
     }
 }

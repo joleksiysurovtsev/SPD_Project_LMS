@@ -1,6 +1,5 @@
 package com.lms.spd.services;
 
-import com.lms.spd.LecturesCash;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;

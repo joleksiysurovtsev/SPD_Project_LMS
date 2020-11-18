@@ -5,7 +5,7 @@ import com.lms.spd.services.LectureServiceImpl;
 
 import java.util.*;
 
-public class LecturesCash {
+public class LecturesCache {
 
     private LectureServiceImpl lectureService = new LectureServiceImpl();
     private List<Lecture> lectures = lectureService.getLectures();
@@ -20,7 +20,7 @@ public class LecturesCash {
         this.curentDate = curentDate;
     }
 
-    public LecturesCash() {
+    public LecturesCache() {
         cashInit();
     }
 

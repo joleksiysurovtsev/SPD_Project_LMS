@@ -13,11 +13,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LecturesCashTest {
+class LecturesCacheTest {
 
     @Test
     void returnList() {
-        LecturesCash cash = new LecturesCash();
+        LecturesCache cash = new LecturesCache();
         LectureService lectureService = new LectureServiceImpl();
         List<Lecture> lectures = new ArrayList<>();
         lectures.add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5)));

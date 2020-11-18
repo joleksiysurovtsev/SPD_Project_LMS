@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LMSTerminalTest {
     LMSTerminal terminal = new LMSTerminal();
-    LMSUtilsHelper helper = new LMSUtilsHelper();
+    LiteratureValidator helper = new LiteratureValidator();
 
     @Test
     void stringToDeleteLecture() {

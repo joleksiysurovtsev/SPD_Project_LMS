@@ -18,12 +18,12 @@ import java.util.List;
 
 
 public class LMSTerminal {
-    public static LecturesCash cash = new LecturesCash();
+    public static LecturesCache cash = new LecturesCache();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LectureService lectureServiceImpl = new LectureServiceImpl();
     private LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
     LMSConsolePrinter print = new LMSConsolePrinter();
-    LMSUtilsHelper utilsHelper = new LMSUtilsHelper();
+    LiteratureValidator utilsHelper = new LiteratureValidator();
 
     public void startLMS() {
         print.showStartMenu();
@@ -73,7 +73,7 @@ public class LMSTerminal {
                 print.printPreviewLectureList(lectureServiceImpl.getLectures());
                 break;
             case "type":
-                print.printLectureListByType(utilsHelper.selectLectureType(utilsHelper.arrayLectTypesInvolved(lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
+                print.printLectureListByType(utilsHelper.lectureValidator.selectLectureType(utilsHelper.arrayLectTypesInvolved(lectureServiceImpl.getLectures()), utilsHelper), lectureServiceImpl.getLectures());
                 break;
             case "date":
                 utilsHelper.cashDate(cash);
@@ -101,10 +101,10 @@ public class LMSTerminal {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     private void point2MainMenuAddingLecture() throws IOException {
-        String nameOfLecture = utilsHelper.createTheLectureTitle();
-        String lectorName = utilsHelper.enterLektorName();
-        LectureType lectureType = utilsHelper.selectLectureType();
-        Calendar lectureDate = utilsHelper.enterTheLectureDate();
+        String nameOfLecture = utilsHelper.lectureValidator.createTheLectureTitle(utilsHelper);
+        String lectorName = utilsHelper.lectureValidator.enterLektorName(utilsHelper);
+        LectureType lectureType = utilsHelper.lectureValidator.selectLectureType(utilsHelper);
+        Calendar lectureDate = utilsHelper.lectureValidator.enterTheLectureDate(utilsHelper);
         List<Literature> literatures = utilsHelper.addLitOrNot();
         lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate));
         System.out.println("Entering a new lecture?");

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LMSUtilsHelperTest {
-    LMSUtilsHelper utilsHelper = new LMSUtilsHelper();
+class LiteratureValidatorTest {
+    LiteratureValidator utilsHelper = new LiteratureValidator();
 
     @Test
     void createJournal() {
