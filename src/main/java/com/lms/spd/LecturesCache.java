@@ -4,12 +4,13 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.services.LectureServiceImpl;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LecturesCache {
 
     private LectureServiceImpl lectureService = new LectureServiceImpl();
     private List<Lecture> lectures = lectureService.getLectures();
-    private Calendar curentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 5);
+    private Calendar curentDate = new GregorianCalendar();
     private Map<Calendar, List<Lecture>> cash = new HashMap();
 
     public Calendar getCurentDate() {
@@ -37,18 +38,11 @@ public class LecturesCache {
             // проверяем есть ли ключ эта дата в мапе
             Calendar date = lect.getLectureDate();
             if (!cash.containsKey(date)) { //если в мапе нет такого ключа то генерируем лист с єтими датами и пихаем
-                List<Lecture> lecturesadded = new ArrayList<>(); //новый лист с лекциями и пихаем все с этими датами
-                for (Lecture lecture : lectures) {
-                    if (lecture.getLectureDate().equals(date)) {
-                        lecturesadded.add(lecture);
-                    }
-                }
-                cash.put(date, lecturesadded);
+                List<Lecture> lecturesAdd = lectures.stream().filter(lecture -> lecture.getLectureDate().equals(date)).collect(Collectors.toList()); //новый лист с лекциями и пихаем все с этими датами
+                cash.put(date, lecturesAdd);
             }
         }
     }
-
-
 
     public void updateCashAfterAdd(Lecture lectureAdded) {
         List<Lecture> lsc;

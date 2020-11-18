@@ -7,20 +7,17 @@ import com.lms.spd.services.LiteratureServiceImpl;
 import com.lms.spd.services.interfaces.LectureService;
 import com.lms.spd.services.interfaces.LiteratureService;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 
 
 public class LMSTerminal {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     public static LecturesCache cash = new LecturesCache();
-    LectureService lectureServiceImpl = new LectureServiceImpl();
+    private LectureService lectureServiceImpl = new LectureServiceImpl();
     private LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
-    LMSConsolePrinter print = new LMSConsolePrinter();
-    LiteratureValidator literatureValidator = new LiteratureValidator();
-    LectureValidator lectureValidator = new LectureValidator();
+    private LMSConsolePrinter print = new LMSConsolePrinter();
+    private LiteratureValidator literatureValidator = new LiteratureValidator();
+    private LectureValidator lectureValidator = new LectureValidator();
 
     public void startLMS() {
         print.showStartMenu();
@@ -55,7 +52,7 @@ public class LMSTerminal {
     /**
      * point 1 main menu: view a list of lectures
      */
-    private void point1MainMenuShowLectures() throws IOException {
+    private void point1MainMenuShowLectures()  {
         print.printMenuPoint1();
         String choice = ConsoleInputValidator.readString();
         switch (choice.toLowerCase()) {
@@ -64,7 +61,7 @@ public class LMSTerminal {
                 break;
             case "-":
                 System.out.println("Enter numbers separated by commas");
-                print.printLectureListByNumber(reader.readLine(), lectureServiceImpl.getLectures());
+                print.printLectureListByNumber(ConsoleInputValidator.readString(), lectureServiceImpl.getLectures());
                 break;
             case "small":
                 print.printPreviewLectureList(lectureServiceImpl.getLectures());
@@ -114,6 +111,7 @@ public class LMSTerminal {
                 break;
             case "-":
                 startLMS();
+                break;
             case "EXIT":
                 System.exit(0);
                 break;
@@ -129,7 +127,7 @@ public class LMSTerminal {
     private void point3MainMenuRemovalLecture() throws IOException {
         System.out.println("Please enter the number of the lecture if you want to delete one or more comma separated ");
         String numbRemovalLecture = ConsoleInputValidator.readString();
-        String[] lectureRemove = literatureValidator.stringToDeleteLecture(numbRemovalLecture, lectureServiceImpl.getLectures());
+        String[] lectureRemove = lectureValidator.stringToDeleteLecture(numbRemovalLecture, lectureServiceImpl.getLectures());
         lectureServiceImpl.removeLectures(lectureRemove);
         subMenuRemovalLecture();
     }
@@ -140,7 +138,7 @@ public class LMSTerminal {
                 "\u001B[0m" + "if you wont return to the menu " + "\u001B[32m" + "\"-\"" +
                 "\u001B[0m" + "" + " or \u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
 
-        switch (reader.readLine().toUpperCase()) {
+        switch (ConsoleInputValidator.readString().toUpperCase()) {
             case "+":
                 point3MainMenuRemovalLecture();
                 break;
@@ -162,21 +160,11 @@ public class LMSTerminal {
         System.out.println("Enter the number of the lecture, " +
                 "information about which you want to see " +
                 "if you change your mind to exit to the menu enter " + "\u001B[32m" + "0" + "\u001B[0m");
-        int numbOfLecture = 0;
-        boolean flag = true;
-        while (flag) {
-            //проверили ввели ли номер
-            try {
-                numbOfLecture = Integer.parseInt(reader.readLine());
-                flag = false;
-            } catch (NumberFormatException e) {
-                System.out.println("You must type a lecture number!");
-            }
-        }
+        int numbOfLecture = ConsoleInputValidator.readInt();
         if (numbOfLecture == 0) {
-            return;
+            startLMS();
         } else {
-            if (!(lectureServiceImpl.getLectures().size() >= numbOfLecture - 1)) {
+            if ((lectureServiceImpl.getLectures().size() <= numbOfLecture - 1)) {
                 System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
                 point4MainMenuChoiceOfLecture();
             } else {
@@ -249,7 +237,7 @@ public class LMSTerminal {
                     break;
                 default:
                     print.printErrMassage(1);
-                    continue;
+                    break;
             }
             break;
         }

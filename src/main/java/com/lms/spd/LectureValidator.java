@@ -6,6 +6,7 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -89,6 +90,27 @@ public class LectureValidator {
         List<LectureType> types = new ArrayList<>();
         lectures.stream().filter(lecture -> !types.contains(lecture.getType())).forEach(lecture -> types.add(lecture.getType()));
         return types;
+    }
+
+    public String[] stringToDeleteLecture(String lectureRemove, List<Lecture> list) {
+        String[] numbDeletedLect = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
+        IntStream.range(0, numbDeletedLect.length).forEach(i -> numbDeletedLect[i] = numbDeletedLect[i].replaceAll("[a-zA-Zа]*", ""));
+        String[] numbToDisplay = Arrays.stream(numbDeletedLect).filter(x -> !(x.isEmpty())).toArray(String[]::new);
+        StringBuilder stringContains = new StringBuilder("Lectures: ");
+        boolean flag = true;
+        for (String item : numbToDisplay) {
+            for (Lecture value : list) {
+                int numb = value.getNumberOfLecture();
+                if (numb == Integer.parseInt(item)) {
+                    flag = false;
+                    stringContains.append(" ").append(item).append(" ");
+                    break;
+                }
+            }
+        }
+        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
+        System.out.println(stringContains.toString());
+        return numbToDisplay;
     }
 
 }

@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LiteratureServiceImpl implements LiteratureService {
-    LectureServiceImpl lectureService = new LectureServiceImpl();
-    List<Literature> literatures = new ArrayList<>();
 
+    List<Literature> literatures = new ArrayList<>();
 
     @Override
     public List<Literature> getLiteratures() {
