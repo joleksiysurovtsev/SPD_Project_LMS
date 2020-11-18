@@ -1,7 +1,5 @@
 package com.lms.spd;
 
-import com.lms.spd.enums.LectureType;
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
@@ -13,17 +11,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
 
 
 public class LMSTerminal {
-    public static LecturesCache cash = new LecturesCache();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    public static LecturesCache cash = new LecturesCache();
     LectureService lectureServiceImpl = new LectureServiceImpl();
     private LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
     LMSConsolePrinter print = new LMSConsolePrinter();
-    LiteratureValidator utilsHelper = new LiteratureValidator();
+    LiteratureValidator literatureValidator = new LiteratureValidator();
+    LectureValidator lectureValidator = new LectureValidator();
 
     public void startLMS() {
         print.showStartMenu();
@@ -73,10 +70,10 @@ public class LMSTerminal {
                 print.printPreviewLectureList(lectureServiceImpl.getLectures());
                 break;
             case "type":
-                print.printLectureListByType(utilsHelper.lectureValidator.selectLectureType(utilsHelper.arrayLectTypesInvolved(lectureServiceImpl.getLectures()), utilsHelper), lectureServiceImpl.getLectures());
+                print.printLectureListByType(lectureValidator.selectLectureType(), lectureServiceImpl.getLectures());
                 break;
             case "date":
-                utilsHelper.cashDate(cash);
+                lectureValidator.cashDate(cash);
                 print.printAllLectureTable(cash.returnList());
                 break;
             default:
@@ -101,12 +98,7 @@ public class LMSTerminal {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     private void point2MainMenuAddingLecture() throws IOException {
-        String nameOfLecture = utilsHelper.lectureValidator.createTheLectureTitle(utilsHelper);
-        String lectorName = utilsHelper.lectureValidator.enterLektorName(utilsHelper);
-        LectureType lectureType = utilsHelper.lectureValidator.selectLectureType(utilsHelper);
-        Calendar lectureDate = utilsHelper.lectureValidator.enterTheLectureDate(utilsHelper);
-        List<Literature> literatures = utilsHelper.addLitOrNot();
-        lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate));
+        lectureServiceImpl.addLecture(lectureValidator.createLecture());
         System.out.println("Entering a new lecture?");
         subMenuAddingLectureToList();
     }
@@ -140,7 +132,7 @@ public class LMSTerminal {
             point3MainMenuRemovalLecture();
         }
         assert numbRemovalLecture != null;
-        String[] lectureRemove = utilsHelper.stringToDeleteLecture(numbRemovalLecture, lectureServiceImpl.getLectures());
+        String[] lectureRemove = literatureValidator.stringToDeleteLecture(numbRemovalLecture, lectureServiceImpl.getLectures());
         lectureServiceImpl.removeLectures(lectureRemove);
         subMenuRemovalLecture();
 
@@ -247,7 +239,7 @@ public class LMSTerminal {
     }
 
     private void point4_3AddLit() throws IOException {
-        Literature newLit = utilsHelper.createLit();
+        Literature newLit = literatureValidator.createLit();
         if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)) {
             System.out.println("this literature is already there");
         } else {

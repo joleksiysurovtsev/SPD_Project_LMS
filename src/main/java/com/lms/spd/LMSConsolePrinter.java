@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
+
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|%-50.50s| %-24.24s|";
 
