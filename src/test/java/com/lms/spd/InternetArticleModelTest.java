@@ -12,7 +12,7 @@ class InternetArticleModelTest {
     void print() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         InternetArticleModel internetArticles = new InternetArticleModel("Java", "Aleksey", "Unknown");
-        assertEquals(" Internet articles: Java Author: Aleksey Date the resource was added: "+sdf.format(internetArticles.getDateResourceWasAdded().getTime()), internetArticles.print());
+        assertEquals(" Internet articles: Java Author: Aleksey Date the resource was added: "+sdf.format(internetArticles.getDateResourceWasAdded().getTime())+" ID 0", internetArticles.print());
     }
 
     @Test

@@ -17,6 +17,16 @@ public class BookModel implements Literature {
     private Calendar dateResourceWasAdded;
     private int id;
 
+    public BookModel(String title, String author, String genre, int publishedInYear,int id) {
+        this.genre = genre;
+        this.publishedInYear = publishedInYear;
+        setTitle(title);
+        setAuthor(author);
+        this.dateResourceWasAdded = GregorianCalendar.getInstance();
+        this.id = id;
+    }
+
+
     public BookModel(String title, String author, String genre, int publishedInYear) {
         this.genre = genre;
         this.publishedInYear = publishedInYear;
@@ -103,7 +113,7 @@ public class BookModel implements Literature {
         if (publishedInYear != 0) {
             printString.append(" Publishing in: ").append(publishedInYear).append("year");
         }
-        printString.append("\t"+ " Date the resource was added: " + sdf.format(getDateResourceWasAdded().getTime()));
+        printString.append("\t"+ " Date the resource was added: " + sdf.format(getDateResourceWasAdded().getTime())).append(" ID "+ getId());
         return printString.toString();
     }
 

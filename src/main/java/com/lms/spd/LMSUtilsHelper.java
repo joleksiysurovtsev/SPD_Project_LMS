@@ -26,6 +26,7 @@ public class LMSUtilsHelper {
 
 
     public Literature createLit() throws IOException {
+
         LiteratureType typeLit = LiteratureType.UNKNOWN;
         while (true) {
             System.out.println("Please, choose literature type: \n" + LiteratureType.toListString());
@@ -50,6 +51,7 @@ public class LMSUtilsHelper {
 
 
     public Literature inputData(LiteratureType type) throws IOException {
+        int id = generateIdLit(literatureServiceImpl.getLiterature());
         Literature lit;
         print.printMessagesAddLit(1);
         String title = reader.readLine();
@@ -85,6 +87,7 @@ public class LMSUtilsHelper {
                 throw new IllegalStateException("Unexpected value: " + type);
         }
         lit.setType(type);
+        lit.setId(id);
         return lit;
     }
 

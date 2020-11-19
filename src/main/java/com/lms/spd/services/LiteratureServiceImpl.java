@@ -1,5 +1,6 @@
 package com.lms.spd.services;
 
+import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.LiteratureRepository;
 import com.lms.spd.services.interfaces.LiteratureService;
@@ -13,6 +14,10 @@ public class LiteratureServiceImpl implements LiteratureService {
 
     public LiteratureServiceImpl() {
         this.repository = new LiteratureRepository();
+    }
+
+    public List<Literature> getLiterature() {
+        return repository.getAll();
     }
 
     @Override
