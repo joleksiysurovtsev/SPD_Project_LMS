@@ -1,6 +1,7 @@
 package com.lms.spd.services;
 
 import com.lms.spd.enums.LectureType;
+import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ class LectureServiceImplTest {
     void createLectureService() {
         lectureService = new LectureServiceImpl();
         ArrayList<Lecture> lectures = new ArrayList<>();
-        lectures.add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50));
+        lectures.add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5), 50));
         lectures.add(new LectureIModel(2, "Writes text to."));
         lectures.add(new LectureIModel(3, "Core Java API"));
 
@@ -32,10 +33,25 @@ class LectureServiceImplTest {
     @Test
     @DisplayName("setSelectedLecture method selects by position in the array")
     void getSelectedLecture() {
-        lectureService.setSelectedLecture(0);
-        Lecture expectedLecture = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
+        try {
+            lectureService.setSelectedLecture(0);
+        } catch (NullLectureException e) {
+            e.printStackTrace();
+        }
+        Lecture expectedLecture = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5), 50);
         assertEquals(expectedLecture, lectureService.getSelectedLecture());
+
     }
+
+    @Test
+    @DisplayName("checking if an exception is thrown if there is no lecture")
+    void getSelectedLectureExeption() {
+
+        assertThrows(NullLectureException.class, () -> {
+            lectureService.setSelectedLecture(-1);
+        });
+    }
+
 
     @Test
     @DisplayName("Add new lecture to array "
@@ -78,9 +94,6 @@ class LectureServiceImplTest {
         lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
         assertEquals(expectedLectures, lectureService.getLectures());
     }
-
-
-
 
 
 }
