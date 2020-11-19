@@ -17,4 +17,9 @@ public class NullLectureException extends Exception {
         super(cause);
     }
 
+    @Override
+    public String toString()
+    {
+        return "Error. You are trying to do something with a non-existent lecture.";
+    }
 }

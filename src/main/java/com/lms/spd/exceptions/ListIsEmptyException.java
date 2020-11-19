@@ -21,4 +21,9 @@ public class ListIsEmptyException extends Exception {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
+    @Override
+    public String toString()
+    {
+        return "Error. You are trying to get something from an empty array.";
+    }
 }
