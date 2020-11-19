@@ -1,5 +1,6 @@
 package com.lms.spd.models;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
@@ -8,12 +9,25 @@ import java.util.Calendar;
 import java.util.List;
 
 public class LectureIModel implements Lecture {
+    @JSONField(name = "NAME OF LECTURE")
     private String nameOfLecture;
+
+    @JSONField(name = "NUMBER OF LECTURE")
     private int numberOfLecture;
+
+    @JSONField(name = "LIST LITERATURES")
     private List<Literature> literatures;
+
+    @JSONField(name = "LECTURE DATE", format="dd/MM/yyyy")
     private Calendar lectureDate;
+
+    @JSONField(name = "LECTOR NAME")
     private String lectorName;
+
+    @JSONField(name = "LECTURE TYPE")
     private LectureType type;
+
+    @JSONField(name = "LECTURE ID")
     private int id;
     //lecture constructor____________________________________________________________________________________________//
 

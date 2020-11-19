@@ -1,6 +1,7 @@
 package com.lms.spd.services;
 
 import com.lms.spd.LecturesCache;
+import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.repository.LectureRepository;
@@ -34,8 +35,11 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public void setSelectedLecture(int selected) {
-        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getNumberOfLecture() == selected + 1).findFirst().orElse(new LectureIModel(""));
+    public void setSelectedLecture(int selected) throws NullLectureException {
+        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getNumberOfLecture() == selected + 1).findFirst().orElse(null);
+        if (selectedLecture == null){
+            throw new NullLectureException("There is no lecture under this number");
+        }
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//

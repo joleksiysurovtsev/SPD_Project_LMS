@@ -1,5 +1,6 @@
 package com.lms.spd.services.interfaces;
 
+import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.models.interfaces.Lecture;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface LectureService {
 
     void setLectures(List<Lecture> lectures);
 
-    void setSelectedLecture(int selected);
+    void setSelectedLecture(int selected) throws NullLectureException;
 
     void addLecture(Lecture lecture);
 

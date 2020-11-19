@@ -3,6 +3,7 @@ package com.lms.spd;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.exceptions.DateFormatException;
 import com.lms.spd.exceptions.ListIsEmptyException;
+import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.exceptions.ValidateInputException;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -28,7 +29,7 @@ public class LMSTerminal {
     LMSConsolePrinter print = new LMSConsolePrinter();
     LMSUtilsHelper utilsHelper = new LMSUtilsHelper();
 
-    public void startLMS() throws IOException {
+    public void startLMS() {
         print.showStartMenu();
         try {
             switch (reader.readLine()) {
@@ -53,7 +54,7 @@ public class LMSTerminal {
                     break;
             }
             print.showStartMenu();
-        } catch (ListIsEmptyException e) {
+        } catch (ListIsEmptyException | IOException e) {
             System.err.println(e.getMessage());
             startLMS();
         }
@@ -219,19 +220,19 @@ public class LMSTerminal {
             }
         }
         if (numbOfLecture == 0) {
-            return;
+            startLMS();
         } else {
-            if (!(lectureServiceImpl.getLectures().size() >= numbOfLecture - 1)) {
-                System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
-                point4MainMenuChoiceOfLecture();
-            } else {
-                lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
+                try {
+                    lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
+                } catch (NullLectureException e) {
+                    System.err.println(e.getMessage());
+                    point4MainMenuChoiceOfLecture();
+                }
                 System.out.println("Selected lecture: ");
                 System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------------+");
                 print.printLectureTable(lectureServiceImpl.getSelectedLecture());
                 System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------------+");
                 System.out.println("What are the next actions?");
-            }
         }
         print.showFourthMenu();
         subMenu2Point4();
