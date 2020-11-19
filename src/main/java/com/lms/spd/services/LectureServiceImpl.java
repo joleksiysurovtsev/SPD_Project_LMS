@@ -7,7 +7,6 @@ import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.services.interfaces.LectureService;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class LectureServiceImpl implements LectureService {
 
@@ -58,15 +57,11 @@ public class LectureServiceImpl implements LectureService {
         Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> repository.removeLecture(z));
     }
 
-
     //________________________________________________________________________________________________//
 
     private void sortByDate() {
         repository.getAll().sort(Comparator.comparing(Lecture::getLectureDate));
     }
 
-    @Deprecated
-    private void sortLectureArrAfterRemove() {
-        IntStream.range(0, repository.getAll().size()).forEach(i -> repository.getAll().get(i).setNumberOfLecture(i + 1));
-    }
+
 }

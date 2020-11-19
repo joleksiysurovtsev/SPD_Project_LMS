@@ -10,13 +10,25 @@ public class LiteratureRepository implements LiteratureRepositoryInterface {
 
     List<Literature> literatures = new ArrayList<>();
 
-
-    @Override
-    public void addLiterature(Literature entity) {
+    public List<Literature> getAll() {
+        return literatures;
     }
 
+    public void setAll(List literatures) {
+        this.literatures = literatures;
+    }
+
+
     @Override
-    public void removeLiterature(Literature entity) {
+    public Literature addLiterature(Literature literature) {
+        literatures.add(literature);
+        return literature;
+    }
+
+
+    @Override
+    public void removeLiterature(int id) {
+        literatures.removeIf(e -> e.getId() == id);
     }
 
     @Override

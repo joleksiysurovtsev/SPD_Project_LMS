@@ -18,7 +18,7 @@ class LecturesCacheTest {
     void returnList() {
         LecturesCache cash = new LecturesCache();
         List<Lecture> lectures = new ArrayList<>();
-        lectures.add(new LectureIModel(LectureType.JAVA_CORE, 3, "\"JAVA_CORE Java API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 12)));
+        lectures.add(new LectureIModel(LectureType.JAVA_CORE, 3, "\"JAVA_CORE Java API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 12),3));
         Calendar curentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 12);
         cash.setCurentDate(curentDate);
         assertEquals(lectures, cash.returnList());

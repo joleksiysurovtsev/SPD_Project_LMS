@@ -204,7 +204,7 @@ public class LMSTerminal {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     private void point4MainMenuChoiceOfLecture() throws IOException {
-        System.out.println("Enter the number of the lecture, " +
+        System.out.println("Enter the ID of the lecture, " +
                 "information about which you want to see " +
                 "if you change your mind to exit to the menu enter " + "\u001B[32m" + "0" + "\u001B[0m");
         int numbOfLecture = 0;
@@ -312,7 +312,7 @@ public class LMSTerminal {
     }
 
     private void point4_4DeleteLit() throws IOException {
-        System.out.println("Please enter the number of the book you want to delete");
+        System.out.println("Please enter the number of the literature you want to delete");
         int indexLit = 0;
         try {
             indexLit = Integer.parseInt(reader.readLine());
@@ -321,6 +321,7 @@ public class LMSTerminal {
             point4_4DeleteLit();
         }
         boolean flag = false;
+
         if (lectureServiceImpl.getSelectedLecture().getLiteratures().size() >= indexLit) {
             flag = true;
         }
@@ -334,6 +335,8 @@ public class LMSTerminal {
         System.out.println("\"+\" YES or \"-\" NO");
         subMenuPoint4_4DeleteLit();
     }
+
+
 
     private void subMenuPoint4_4DeleteLit() throws IOException {
         System.out.println("\"+\" YES or \"-\" NO");
