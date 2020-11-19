@@ -51,7 +51,6 @@ public class LMSUtilsHelper {
 
 
     public Literature inputData(LiteratureType type) throws IOException {
-        int id = generateIdLit(literatureServiceImpl.getLiterature());
         Literature lit;
         print.printMessagesAddLit(1);
         String title = reader.readLine();
@@ -87,7 +86,6 @@ public class LMSUtilsHelper {
                 throw new IllegalStateException("Unexpected value: " + type);
         }
         lit.setType(type);
-        lit.setId(id);
         return lit;
     }
 
@@ -299,12 +297,7 @@ public class LMSUtilsHelper {
     }
 
 
-    public static int generateIdLit(List<Literature> literature) {
-        Optional<Integer> x = literature.stream().map(Literature::getId).reduce(Integer::max);
-        int rez = x.orElse(0);
-        rez++;
-        return rez;
-    }
+
 
     public static int generateIdLect(List<Lecture> lectures) {
         Optional<Integer> x = lectures.stream().map(Lecture::getId).reduce(Integer::max);

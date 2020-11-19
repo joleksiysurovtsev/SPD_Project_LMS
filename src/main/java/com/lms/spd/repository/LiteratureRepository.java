@@ -5,6 +5,7 @@ import com.lms.spd.repository.interfaces.LiteratureRepositoryInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class LiteratureRepository implements LiteratureRepositoryInterface {
 
@@ -18,13 +19,12 @@ public class LiteratureRepository implements LiteratureRepositoryInterface {
         this.literatures = literatures;
     }
 
-
     @Override
     public Literature addLiterature(Literature literature) {
+        literature.setId(generateIdLit(literatures));
         literatures.add(literature);
         return literature;
     }
-
 
     @Override
     public void removeLiterature(int id) {
@@ -34,5 +34,12 @@ public class LiteratureRepository implements LiteratureRepositoryInterface {
     @Override
     public void updateLiterature(Literature entity) {
 
+    }
+
+    public static int generateIdLit(List<Literature> literatures) {
+        Optional<Integer> x = literatures.stream().map(Literature::getId).reduce(Integer::max);
+        int rez = x.orElse(0);
+        rez++;
+        return rez;
     }
 }
