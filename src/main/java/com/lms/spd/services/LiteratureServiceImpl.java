@@ -7,6 +7,7 @@ import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class LiteratureServiceImpl implements LiteratureService {
 
@@ -22,6 +23,7 @@ public class LiteratureServiceImpl implements LiteratureService {
 
     @Override
     public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) {
+        litAdded.setId(generateIdLit(repository.getAll()));
         lit.add(repository.addLiterature(litAdded));
         return lit;
     }
@@ -38,4 +40,10 @@ public class LiteratureServiceImpl implements LiteratureService {
         return lit;
     }
 
+    public static int generateIdLit(List<Literature> literatures) {
+        Optional<Integer> x = literatures.stream().map(Literature::getId).reduce(Integer::max);
+        int rez = x.orElse(0);
+        rez++;
+        return rez;
+    }
 }

@@ -21,7 +21,6 @@ public class LiteratureRepository implements LiteratureRepositoryInterface {
 
     @Override
     public Literature addLiterature(Literature literature) {
-        literature.setId(generateIdLit(literatures));
         literatures.add(literature);
         return literature;
     }
@@ -36,10 +35,5 @@ public class LiteratureRepository implements LiteratureRepositoryInterface {
 
     }
 
-    public static int generateIdLit(List<Literature> literatures) {
-        Optional<Integer> x = literatures.stream().map(Literature::getId).reduce(Integer::max);
-        int rez = x.orElse(0);
-        rez++;
-        return rez;
-    }
+
 }
