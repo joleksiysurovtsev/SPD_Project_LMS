@@ -299,10 +299,5 @@ public class LMSUtilsHelper {
 
 
 
-    public static int generateIdLect(List<Lecture> lectures) {
-        Optional<Integer> x = lectures.stream().map(Lecture::getId).reduce(Integer::max);
-        int rez = x.orElse(0);
-        rez++;
-        return rez;
-    }
+
 }

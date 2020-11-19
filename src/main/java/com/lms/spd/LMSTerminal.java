@@ -139,9 +139,8 @@ public class LMSTerminal {
             }
         }
         List<Literature> literatures = utilsHelper.addLitOrNot();
-        int id = LMSUtilsHelper.generateIdLect(lectureServiceImpl.getLectures());
 
-        lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate, id));
+        lectureServiceImpl.addLecture(new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate));
         System.out.println("Entering a new lecture?");
         subMenuAddingLectureToList();
     }

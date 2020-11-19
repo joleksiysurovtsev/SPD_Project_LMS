@@ -1,5 +1,6 @@
 package com.lms.spd.services;
 
+import com.lms.spd.LMSUtilsHelper;
 import com.lms.spd.LecturesCache;
 import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.models.LectureIModel;
@@ -45,6 +46,7 @@ public class LectureServiceImpl implements LectureService {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
     public void addLecture(Lecture lecture) {
+        lecture.setId(generateIdLect(repository.getAll()));
         repository.addLecture(lecture);
         sortByDate();
         LecturesCache.updateCashAfterAdd(lecture);
@@ -68,4 +70,10 @@ public class LectureServiceImpl implements LectureService {
     }
 
 
+    public static int generateIdLect(List<Lecture> lectures) {
+        Optional<Integer> x = lectures.stream().map(Lecture::getId).reduce(Integer::max);
+        int rez = x.orElse(0);
+        rez++;
+        return rez;
+    }
 }
