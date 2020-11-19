@@ -1,8 +1,9 @@
 package com.lms.spd.services;
-import com.lms.spd.LecturesCash;
+
+import com.lms.spd.LecturesCache;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.repository.LecturesRepository;
+import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.services.interfaces.LectureService;
 
 import java.util.*;
@@ -10,10 +11,10 @@ import java.util.stream.IntStream;
 
 public class LectureServiceImpl implements LectureService {
 
-    private LecturesRepository repository;
+    private LectureRepository repository;
 
     public LectureServiceImpl() {
-        this.repository = new LecturesRepository();
+        this.repository = new LectureRepository();
     }
 
     private Lecture selectedLecture;
@@ -41,13 +42,9 @@ public class LectureServiceImpl implements LectureService {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
     public void addLecture(Lecture lecture) {
-        if ((repository.getAll().isEmpty() || lecture.getNumberOfLecture() > repository.getAll().size())) {
-            repository.getAll().add(lecture);
-        } else {
-            repository.getAll().add(lecture.getNumberOfLecture() - 1, lecture);
-        }
+        repository.addLecture(lecture);
         sortByDate();
-        LecturesCash.updateCashAfterAdd(lecture);
+        LecturesCache.updateCashAfterAdd(lecture);
     }
 
     //______________________________________________________________________________________________________________//
@@ -57,8 +54,8 @@ public class LectureServiceImpl implements LectureService {
      */
     @Override
     public void removeLectures(String[] lectureRemove) {
-        LecturesCash.removeLectCash(lectureRemove, repository.getAll());
-        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> repository.getAll().removeIf(p -> p.getId() == z));
+        LecturesCache.removeLectCash(lectureRemove, repository.getAll());
+        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> repository.removeLecture(z));
     }
 
 

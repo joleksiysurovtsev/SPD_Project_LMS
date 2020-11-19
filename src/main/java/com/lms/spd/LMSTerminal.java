@@ -21,7 +21,7 @@ import java.util.List;
 
 
 public class LMSTerminal {
-    public static LecturesCash cash = new LecturesCash();
+    public static LecturesCache cash = new LecturesCache();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LectureService lectureServiceImpl = new LectureServiceImpl();
     LiteratureService literatureServiceImpl = new LiteratureServiceImpl();

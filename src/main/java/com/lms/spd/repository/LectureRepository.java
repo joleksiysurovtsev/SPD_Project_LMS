@@ -3,18 +3,18 @@ package com.lms.spd.repository;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.repository.interfaces.Repository;
+import com.lms.spd.repository.interfaces.LectureRepositoryInterface;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class LecturesRepository implements Repository {
+public class LectureRepository implements LectureRepositoryInterface {
 
 
     private List<Lecture> lectures = new ArrayList<>() {
         {
-            add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50));
+            add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5), 50));
             add(new LectureIModel(LectureType.COMMON, 2, "\"Intellij IDEA Features. GitLab flow.\"", new ArrayList<>(), "Andrii Zaiats", new GregorianCalendar(2020, 9, 5)));
             add(new LectureIModel(LectureType.JAVA_CORE, 3, "\"JAVA_CORE Java API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 12)));
             add(new LectureIModel(LectureType.COMMON, 4, "\"Debugging. Build Tools: Graddle. Unit-testing basics\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 9, 14)));
@@ -55,13 +55,27 @@ public class LecturesRepository implements Repository {
         }
     };
 
-    @Override
+
     public List<Lecture> getAll() {
         return lectures;
     }
 
-    @Override
     public void setAll(List lectures) {
         this.lectures = lectures;
+    }
+
+    @Override
+    public void addLecture(Lecture lecture) {
+        lectures.add(lecture);
+    }
+
+    @Override
+    public void removeLecture(int id) {
+        lectures.removeIf(e -> e.getId() == id);
+     }
+
+    @Override
+    public void updateLecture(Lecture lecture) {
+
     }
 }

@@ -5,7 +5,7 @@ import com.lms.spd.services.LectureServiceImpl;
 
 import java.util.*;
 
-public class LecturesCash {
+public class LecturesCache {
 
     private LectureServiceImpl lectureService = new LectureServiceImpl();
     private List<Lecture> lectures = lectureService.getLectures();
@@ -20,7 +20,7 @@ public class LecturesCash {
         this.curentDate = curentDate;
     }
 
-    public LecturesCash() {
+    public LecturesCache() {
         cashInit();
     }
 
@@ -64,7 +64,7 @@ public class LecturesCash {
     public static void removeLectCash(String[] lectureRemove, List<Lecture> lectures) {
         List<Lecture> listR = new ArrayList<>();
         Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(x -> lectures.stream().filter(lr -> lr.getNumberOfLecture() == x).forEach(listR::add));
-        LecturesCash.updateCashAfterRemove(listR);
+        LecturesCache.updateCashAfterRemove(listR);
     }
 
     private static void updateCashAfterRemove(List<Lecture> lectureDeleted) {

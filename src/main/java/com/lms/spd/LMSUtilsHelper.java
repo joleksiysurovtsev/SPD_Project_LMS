@@ -276,7 +276,7 @@ public class LMSUtilsHelper {
         return numbToDisplay;
     }
 
-    void cashDate(LecturesCash cash) throws IOException {
+    void cashDate(LecturesCache cash) throws IOException {
         while (true) {
             try {
                 cash.setCurentDate(enterTheLectureDate());

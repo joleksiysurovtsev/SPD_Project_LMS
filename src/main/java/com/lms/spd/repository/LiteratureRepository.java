@@ -1,23 +1,26 @@
 package com.lms.spd.repository;
 
-
 import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.repository.interfaces.Repository;
+import com.lms.spd.repository.interfaces.LiteratureRepositoryInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LiteratureRepository implements Repository {
+public class LiteratureRepository implements LiteratureRepositoryInterface {
 
     List<Literature> literatures = new ArrayList<>();
 
-    public List<Literature> getAll() {
-        return literatures;
+
+    @Override
+    public void addLiterature(Literature entity) {
     }
 
-    public void setAll(List literatures) {
-        this.literatures = literatures;
+    @Override
+    public void removeLiterature(Literature entity) {
     }
 
+    @Override
+    public void updateLiterature(Literature entity) {
 
+    }
 }
