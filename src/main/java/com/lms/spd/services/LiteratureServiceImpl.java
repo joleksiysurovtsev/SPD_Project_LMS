@@ -9,7 +9,6 @@ import java.util.List;
 public class LiteratureServiceImpl implements LiteratureService {
     List<Literature> literatures = new ArrayList<>();
 
-
     @Override
     public List<Literature> getLiteratures() {
         return literatures;

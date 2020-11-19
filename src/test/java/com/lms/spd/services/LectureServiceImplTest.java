@@ -23,7 +23,7 @@ class LectureServiceImplTest {
     void createLectureService() {
         lectureService = new LectureServiceImpl();
         ArrayList<Lecture> lectures = new ArrayList<>();
-        lectures.add(new LectureIModel(1, "BufferedReader."));
+        lectures.add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50));
         lectures.add(new LectureIModel(2, "Writes text to."));
         lectures.add(new LectureIModel(3, "Core Java API"));
 
@@ -34,7 +34,7 @@ class LectureServiceImplTest {
     @DisplayName("setSelectedLecture method selects by position in the array")
     void getSelectedLecture() {
         lectureService.setSelectedLecture(0);
-        Lecture expectedLecture = new LectureIModel(1, "BufferedReader.");
+        Lecture expectedLecture = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
         assertEquals(expectedLecture, lectureService.getSelectedLecture());
     }
 

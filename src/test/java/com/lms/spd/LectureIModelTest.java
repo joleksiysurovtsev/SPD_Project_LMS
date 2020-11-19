@@ -1,10 +1,14 @@
 package com.lms.spd;
 
+import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,16 +22,17 @@ class LectureIModelTest {
 
     @Test
     void testEquals() {
-        Lecture testLecture = new LectureIModel(1, "Test");
-        Lecture testLecture2 = new LectureIModel(1, "Test");
-        Lecture testLecture3 = new LectureIModel( 2,"Test2");
+        Lecture testLecture = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
+        Lecture testLecture2 = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
+        Lecture testLecture3 = new LectureIModel(LectureType.JAVA_CORE, 5, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
         assertEquals(testLecture2, testLecture);
         assertNotEquals(testLecture3, testLecture);
     }
 
     @Test
     void testHashCode() {
-        Lecture testLecture = new LectureIModel(1, "Test");
+        Lecture testLecture = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
+
         int hashCode = testLecture.hashCode();
         assertEquals(hashCode,testLecture.hashCode());
     }

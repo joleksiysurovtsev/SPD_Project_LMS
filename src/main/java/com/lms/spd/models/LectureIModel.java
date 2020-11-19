@@ -136,13 +136,14 @@ public class LectureIModel implements Lecture {
 
         LectureIModel that = (LectureIModel) o;
 
-        if (getNumberOfLecture() != that.getNumberOfLecture()) return false;
-        if (getId() != that.getId()) return false;
-        if (!getNameOfLecture().equals(that.getNameOfLecture())) return false;
-        if (!getLiteratures().equals(that.getLiteratures())) return false;
-        if (!getLectureDate().equals(that.getLectureDate())) return false;
-        if (!getLectorName().equals(that.getLectorName())) return false;
-        return getType() == that.getType();
+        if (numberOfLecture != that.numberOfLecture) return false;
+        if (id != that.id) return false;
+        if (nameOfLecture != null ? !nameOfLecture.equals(that.nameOfLecture) : that.nameOfLecture != null)
+            return false;
+        if (literatures != null ? !literatures.equals(that.literatures) : that.literatures != null) return false;
+        if (lectureDate != null ? !lectureDate.equals(that.lectureDate) : that.lectureDate != null) return false;
+        if (lectorName != null ? !lectorName.equals(that.lectorName) : that.lectorName != null) return false;
+        return type == that.type;
     }
 
     @Override
@@ -153,7 +154,7 @@ public class LectureIModel implements Lecture {
         result = 31 * result + getLectureDate().hashCode();
         result = 31 * result + getLectorName().hashCode();
         result = 31 * result + getType().hashCode();
-        result = 31 * result + (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getId();
         return result;
     }
 }
