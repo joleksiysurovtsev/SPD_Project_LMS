@@ -1,9 +1,7 @@
 package com.lms.spd.services;
 
-import com.lms.spd.LMSUtilsHelper;
 import com.lms.spd.LecturesCache;
 import com.lms.spd.exceptions.NullLectureException;
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.services.interfaces.LectureService;

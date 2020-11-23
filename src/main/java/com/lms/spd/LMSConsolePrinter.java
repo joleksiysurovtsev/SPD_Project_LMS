@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
+
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
 
@@ -144,4 +145,14 @@ public class LMSConsolePrinter {
                 + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date\n"
                 + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu");
     }
+
+    public void printErrMassage(int message){
+        Map<Integer, String> massageMap = Map.of(1, "There is no such item in the menu, let's try again");
+        if (massageMap.containsKey(message)) {
+            System.err.println(massageMap.get(message));
+        }
+    }
+
+
+
 }

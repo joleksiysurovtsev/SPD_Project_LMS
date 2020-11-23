@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public class LiteratureServiceImpl implements LiteratureService {
 
+    List<Literature> literatures = new ArrayList<>();
+
     private LiteratureRepository repository;
 
     public LiteratureServiceImpl() {
@@ -18,12 +20,11 @@ public class LiteratureServiceImpl implements LiteratureService {
 
     @Override
     public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) {
-        litAdded.setId(generateIdLit(repository.getAll()));
-        lit.add(repository.addLiterature(litAdded));
+        lit.add(litAdded);
         return lit;
     }
 
-    @Override //переделать на удаление из репозитория и из лекции по айдишнику
+    @Override
     public List<Literature> removeLiterature(int numberLit, List<Literature> lit) {
         int id = lit.get(numberLit-1).getId();
         repository.removeLiterature(id);

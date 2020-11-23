@@ -3,6 +3,8 @@ package com.lms.spd;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.services.LectureServiceImpl;
+import com.lms.spd.services.interfaces.LectureService;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -22,6 +24,6 @@ class LecturesCacheTest {
         Calendar curentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 12);
         cash.setCurentDate(curentDate);
         assertEquals(lectures, cash.returnList());
+
     }
 }
-
