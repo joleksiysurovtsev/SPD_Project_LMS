@@ -23,7 +23,7 @@ public class LMSUtilsHelper {
     LMSConsolePrinter print = new LMSConsolePrinter();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
-
+    private final String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2})$";
 
     public Literature createLit() throws IOException {
 
@@ -172,8 +172,8 @@ public class LMSUtilsHelper {
         Calendar d1 = new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String dateInString = reader.readLine();
-        if (!dateInString.matches("^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2})$")) {
-            throw new DateFormatException("Incorect format");
+        if (!dateInString.matches(LECTURE_DATE_REG_EXP)) {
+            throw new DateFormatException("Incorrect format");
         } else {
             try {
                 sdf.setLenient(true);
