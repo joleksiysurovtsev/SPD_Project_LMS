@@ -8,5 +8,4 @@ public interface LectureRepositoryInterface  {
 
     void removeLecture(int id);
 
-    void updateLecture(Lecture lecture);
 }

@@ -14,32 +14,13 @@ public class LiteratureValidator {
     LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
 
     public Literature createLit() {
-        LiteratureType typeLit = LiteratureType.UNKNOWN;
-        while (true) {
-            System.out.println("Please, choose literature type: \n" + LiteratureType.toListString());
-            int number = ConsoleInputValidator.readInt();
-            if (Arrays.stream(LiteratureType.values()).anyMatch(e -> e.ordinal() == number)) {
-                typeLit = LiteratureType.getValueByNumber(number);
-            }
-            if (typeLit == LiteratureType.UNKNOWN) {
-                System.out.println("Unknown type: try again");
-            } else {
-                break;
-            }
-        }
-        assert typeLit != null;
-        System.out.println("Type is : " + typeLit.toString());
-        return inputData(typeLit);
-    }
-
-
-    private Literature inputData(LiteratureType type) {
         Literature lit;
+        LiteratureType typeLit = getLiteratureType();
         print.printMessagesAddLit(1);
         String title = ConsoleInputValidator.readString();
         print.printMessagesAddLit(2);
         String author = ConsoleInputValidator.readString();
-        switch (type) {
+        switch (typeLit) {
             case JOURNAL_ARTICLE:
                 print.printMessagesAddLit(3);
                 String titleJournal = ConsoleInputValidator.readString();
@@ -60,10 +41,25 @@ public class LiteratureValidator {
                 lit = new BookModel(title, author, genre, year);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + type);
+                throw new IllegalStateException("Unexpected value: " + typeLit);
         }
-        lit.setType(type);
+        lit.setType(typeLit);
         return lit;
+    }
+
+    private LiteratureType getLiteratureType() {
+        LiteratureType typeLit;
+        System.out.println("Please, choose literature type: " + LiteratureType.toListString());
+        while (true){
+            int number = ConsoleInputValidator.readInt();
+            typeLit = LiteratureType.stream().filter(d -> d.ordinal()==number).findFirst().orElse(null);
+            if (typeLit!=null){
+                break;
+            }else {
+                System.out.println("Unknown type: try again");
+            }
+        }
+        return typeLit;
     }
 //____________________________________________________________________________________________________________________//
 
