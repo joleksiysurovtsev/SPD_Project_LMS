@@ -102,5 +102,4 @@ public class LectureValidator {
         System.out.println(stringContains.toString());
         return numbToDisplay;
     }
-
 }

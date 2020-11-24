@@ -1,5 +1,6 @@
 package com.lms.spd;
 
+import com.lms.spd.exceptions.DateFormatException;
 import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.exceptions.ValidateInputException;
 
@@ -15,6 +16,7 @@ public class ConsoleInputValidator {
 
 
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private static String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2})$";
 
     public static int readInt() {
         int number;
@@ -50,9 +52,14 @@ public class ConsoleInputValidator {
             try {
                 sdf.setLenient(true);
                 d1.setTime(sdf.parse(dateInString));
+                if (!dateInString.matches(LECTURE_DATE_REG_EXP)) {
+                    throw new DateFormatException("the date of the lecture cannot be later than 2000");
+                }
                 break;
+            } catch (DateFormatException f) {
+                System.err.println(f.getMessage());
             } catch (ParseException e) {
-                System.out.println("The date is entered incorrectly, try again");
+                System.err.println("The date is entered incorrectly, try again");
             }
         }
         return d1;
