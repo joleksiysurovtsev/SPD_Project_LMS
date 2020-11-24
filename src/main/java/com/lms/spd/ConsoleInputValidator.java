@@ -1,7 +1,6 @@
 package com.lms.spd;
 
 import com.lms.spd.exceptions.DateFormatException;
-import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.exceptions.ValidateInputException;
 
 import java.io.BufferedReader;

@@ -10,7 +10,7 @@ import java.util.*;
 
 public class LectureServiceImpl implements LectureService {
 
-    private LectureRepository repository;
+    private final LectureRepository repository;
 
     public LectureServiceImpl() {
         this.repository = new LectureRepository();
@@ -44,7 +44,7 @@ public class LectureServiceImpl implements LectureService {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
     public void addLecture(Lecture lecture) {
-        lecture.setId(generateIdLect(repository.getAll()));
+        lecture.setId(generateLectureID(repository.getAll()));
         repository.addLecture(lecture);
         sortByDate();
         LecturesCache.updateCashAfterAdd(lecture);
@@ -68,10 +68,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
 
-    public static int generateIdLect(List<Lecture> lectures) {
-        Optional<Integer> x = lectures.stream().map(Lecture::getId).reduce(Integer::max);
-        int rez = x.orElse(0);
-        rez++;
-        return rez;
+    public static int generateLectureID(List<Lecture> lectures) {
+        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0))+1;
     }
 }
