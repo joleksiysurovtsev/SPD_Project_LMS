@@ -231,9 +231,9 @@ public class LMSTerminal {
             literatureServiceImpl.addLiterature(newLit, lectureServiceImpl.getSelectedLecture().getLiteratures());
             System.out.println("Book added what to do next");
         }
-        System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
-                "you will return to the lecture selection menu, to complete the work, exit ");
         while (true) {
+            System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
+                    "you will return to the lecture selection menu, to complete the work, exit ");
             switch (ConsoleInputValidator.readString().toUpperCase()) {
                 case "+":
                     point4_3AddLit();
@@ -248,7 +248,6 @@ public class LMSTerminal {
                     print.printErrMassage(1);
                     break;
             }
-            break;
         }
     }
 
@@ -282,6 +281,7 @@ public class LMSTerminal {
             default:
                 print.printErrMassage(1);
                 System.out.println("please choice from the offered");
+                subMenuPoint4_4DeleteLit();
                 break;
         }
     }
