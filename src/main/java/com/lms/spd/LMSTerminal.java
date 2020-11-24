@@ -2,7 +2,6 @@ package com.lms.spd;
 
 import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.exceptions.NullLectureException;
-import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
@@ -10,7 +9,6 @@ import com.lms.spd.services.interfaces.LectureService;
 import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 public class LMSTerminal {
     public static LecturesCache cash = new LecturesCache();
@@ -76,6 +74,8 @@ public class LMSTerminal {
                 cash.setCurentDate(ConsoleInputValidator.enterTheDate());
                 print.printAllLectureTable(cash.returnList());
                 break;
+            case "exit":
+                startLMS();
             default:
                 print.printErrMassage(1);
                 point1MainMenuShowLectures();

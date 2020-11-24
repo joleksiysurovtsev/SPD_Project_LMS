@@ -69,13 +69,14 @@ public class LiteratureValidator {
         List<Literature> newLiteratureArr = new ArrayList<>();
         switch (ConsoleInputValidator.readString()) {
             case "+":
-                do {
+                literatureServiceImpl.addLiterature(createLit(), newLiteratureArr);
+                System.out.println("Add more literature? if not enter minus");
+                while (!ConsoleInputValidator.readString().equals("-")) {
                     literatureServiceImpl.addLiterature(createLit(), newLiteratureArr);
                     System.out.println("Add more literature? if not enter minus");
-                } while (!ConsoleInputValidator.readString().equals("-"));
+                }
                 break;
             case "-":
-                //или возвращаем пустой массив
                 break;
             default:
                 System.out.println("Something wrong");

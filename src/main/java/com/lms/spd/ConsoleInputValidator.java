@@ -1,5 +1,8 @@
 package com.lms.spd;
 
+import com.lms.spd.exceptions.ListIsEmptyException;
+import com.lms.spd.exceptions.ValidateInputException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -55,4 +58,23 @@ public class ConsoleInputValidator {
         return d1;
     }
 
+    public static String readString(String validate) {
+        if (validate.equals("lectureName")) {
+            System.out.println("Enter the title of the lecture");
+        }
+        String line = null;
+        while (true) {
+            try {
+                line = reader.readLine();
+                if (validate.equals("lectureName") && line.isEmpty()) {
+                    throw new ValidateInputException("The lecture must have a title");
+                } else break;
+            } catch (IOException | ValidateInputException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+        assert line != null;
+        if (line.isEmpty()) return "Unknown";
+        return line;
+    }
 }
