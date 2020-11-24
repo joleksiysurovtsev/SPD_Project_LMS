@@ -60,9 +60,9 @@ public class LMSConsolePrinter {
     //Печатает таблицу
     public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
-            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(),lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
         } else {
-            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(),lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
         }
     }
 
@@ -125,10 +125,14 @@ public class LMSConsolePrinter {
         }
     }
 
-    public void printListLit(Lecture lecture) {
+    public void printListLit(Lecture lecture)  {
         List<Literature> litArr = lecture.getLiteratures();
         if (litArr.isEmpty()) {
-            System.out.println("\u001B[31m" + "Literature list is empty, please add literature first" + "\u001B[0m");
+            try {
+                throw new ListIsEmptyException("Literature list is empty, please add literature first");
+            } catch (ListIsEmptyException e) {
+                System.err.println(e.getMessage());
+            }
         } else {
             sortLitByDateAndType(litArr);
             int i = 1;
@@ -146,13 +150,21 @@ public class LMSConsolePrinter {
                 + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu");
     }
 
-    public void printErrMassage(int message){
-        Map<Integer, String> massageMap = Map.of(1, "There is no such item in the menu, let's try again");
+    public void printErrMassage(int message) {
+        Map<Integer, String> massageMap = Map.of(1, "There is no such item in the menu, let's try again",
+                2, "There is no such item in the menu, let's try again");
         if (massageMap.containsKey(message)) {
             System.err.println(massageMap.get(message));
         }
     }
 
 
-
+    void showAllLectureInfo(Lecture lecture) {
+        StringBuilder lectureInfo = new StringBuilder("Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
+        lectureInfo.append("The lecture is lecturing by: ").append(lecture.getLectorName()).append("\n");
+        lectureInfo.append("Lecture date: ").append(sdf.format(lecture.getLectureDate().getTime()));
+        lectureInfo.append(" Lecture Type: ").append(lecture.getType());
+        System.out.println(lectureInfo);
+        printListLit(lecture);
+    }
 }
