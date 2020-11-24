@@ -11,7 +11,6 @@ import java.util.List;
 
 public class LectureRepository implements LectureRepositoryInterface {
 
-
     private List<Lecture> lectures = new ArrayList<>() {
         {
             add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5), 1));
@@ -55,12 +54,11 @@ public class LectureRepository implements LectureRepositoryInterface {
         }
     };
 
-
     public List<Lecture> getAll() {
         return lectures;
     }
 
-    public void setAll(List lectures) {
+    public void setAll(List<Lecture> lectures) {
         this.lectures = lectures;
     }
 

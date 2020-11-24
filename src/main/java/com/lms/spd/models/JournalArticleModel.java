@@ -106,7 +106,7 @@ public class JournalArticleModel implements Literature {
         if (issueOfTheJournal != 0) {
             printString.append(" Journal №: ").append(issueOfTheJournal);
         }
-        printString.append(" "+sdf.format(getDateResourceWasAdded().getTime())).append(" ID "+ getId());
+        printString.append(" ").append(sdf.format(getDateResourceWasAdded().getTime())).append(" ID ").append(getId());
 
         return printString.toString();
     }

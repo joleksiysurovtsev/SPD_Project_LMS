@@ -13,7 +13,7 @@ public class LiteratureValidator {
     LMSConsolePrinter print = new LMSConsolePrinter();
     LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
 
-    public Literature createLit() {
+    public Literature createLiterature() {
         Literature lit;
         LiteratureType typeLit = getLiteratureType();
         print.printMessagesAddLit(1);
@@ -69,10 +69,10 @@ public class LiteratureValidator {
         List<Literature> newLiteratureArr = new ArrayList<>();
         switch (ConsoleInputValidator.readString()) {
             case "+":
-                literatureServiceImpl.addLiterature(createLit(), newLiteratureArr);
+                literatureServiceImpl.addLiterature(createLiterature(), newLiteratureArr);
                 System.out.println("Add more literature? if not enter minus");
                 while (!ConsoleInputValidator.readString().equals("-")) {
-                    literatureServiceImpl.addLiterature(createLit(), newLiteratureArr);
+                    literatureServiceImpl.addLiterature(createLiterature(), newLiteratureArr);
                     System.out.println("Add more literature? if not enter minus");
                 }
                 break;

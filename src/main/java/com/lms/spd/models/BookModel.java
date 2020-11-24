@@ -113,7 +113,8 @@ public class BookModel implements Literature {
         if (publishedInYear != 0) {
             printString.append(" Publishing in: ").append(publishedInYear).append("year");
         }
-        printString.append("\t"+ " Date the resource was added: " + sdf.format(getDateResourceWasAdded().getTime())).append(" ID "+ getId());
+        printString.append("\t" + " Date the resource was added: ")
+                .append(sdf.format(getDateResourceWasAdded().getTime())).append(" ID ").append(getId());
         return printString.toString();
     }
 

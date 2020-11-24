@@ -4,9 +4,9 @@ import com.lms.spd.models.interfaces.Literature;
 
 public interface LiteratureRepositoryInterface {
 
-    Literature addLiterature(Literature entity);
+    Literature addLiterature(Literature literature);
 
     void removeLiterature(int id);
 
-    void updateLiterature(Literature entity);
+    void updateLiterature(Literature literature);
 }

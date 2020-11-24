@@ -71,7 +71,7 @@ public class LMSConsolePrinter {
      */
     private int[] getStringsNumberLecture(String s) {
         String[] strings = s.replaceAll("\\s+", "").split(",(?!\\s)");
-        IntStream.range(0, strings.length).forEach(i -> strings[i] = strings[i].replaceAll("[a-zA-Zа-яА-Я]*", ""));
+        IntStream.range(0, strings.length).forEach(i -> strings[i] = strings[i].replaceAll("^[a-zA-Zа-яА-Я]+$", ""));
         return Arrays.stream(strings).filter(x -> !(x.isEmpty())).mapToInt(Integer::parseInt).toArray();
     }
 

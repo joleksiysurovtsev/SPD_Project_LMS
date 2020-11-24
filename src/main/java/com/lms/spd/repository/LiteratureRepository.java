@@ -21,7 +21,7 @@ public class LiteratureRepository implements LiteratureRepositoryInterface {
         return literatures;
     }
 
-    public void setAll(List literatures) {
+    public void setAll(List<Literature> literatures) {
         this.literatures = literatures;
     }
 

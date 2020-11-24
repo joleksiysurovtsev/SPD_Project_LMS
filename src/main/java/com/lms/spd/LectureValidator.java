@@ -1,7 +1,6 @@
 package com.lms.spd;
 
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
@@ -46,10 +45,10 @@ public class LectureValidator {
     public LectureType selectLectureType() {
         System.out.println("Please, choose lecture type: ");
         IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
-        LectureType lectureType ;
+        LectureType lectureType;
         while (true) {
-            int number = ConsoleInputValidator.readInt()-1;
-            lectureType = LectureType.stream().filter(d -> d.ordinal()==number).findFirst().orElse(null);
+            int number = ConsoleInputValidator.readInt() - 1;
+            lectureType = LectureType.stream().filter(d -> d.ordinal() == number).findFirst().orElse(null);
             if (lectureType == null) {
                 System.out.println("Unknown type: try again");
                 continue;
@@ -90,16 +89,15 @@ public class LectureValidator {
         boolean flag = true;
         for (String item : numbToDisplay) {
             for (Lecture value : list) {
-                int numb = value.getNumberOfLecture();
-                if (numb == Integer.parseInt(item)) {
+                if (value.getNumberOfLecture() == Integer.parseInt(item)) {
                     flag = false;
                     stringContains.append(" ").append(item).append(" ");
                     break;
                 }
             }
         }
-        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
         System.out.println(stringContains.toString());
+        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
         return numbToDisplay;
     }
 }

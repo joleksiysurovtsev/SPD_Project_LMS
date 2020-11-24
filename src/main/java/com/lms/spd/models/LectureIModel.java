@@ -7,6 +7,7 @@ import com.lms.spd.models.interfaces.Literature;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class LectureIModel implements Lecture {
     @JSONField(name = "NAME OF LECTURE")
@@ -18,7 +19,7 @@ public class LectureIModel implements Lecture {
     @JSONField(name = "LIST LITERATURES")
     private List<Literature> literatures;
 
-    @JSONField(name = "LECTURE DATE", format="dd/MM/yyyy")
+    @JSONField(name = "LECTURE DATE", format = "dd/MM/yyyy")
     private Calendar lectureDate;
 
     @JSONField(name = "LECTOR NAME")
@@ -152,11 +153,10 @@ public class LectureIModel implements Lecture {
 
         if (numberOfLecture != that.numberOfLecture) return false;
         if (id != that.id) return false;
-        if (nameOfLecture != null ? !nameOfLecture.equals(that.nameOfLecture) : that.nameOfLecture != null)
-            return false;
-        if (literatures != null ? !literatures.equals(that.literatures) : that.literatures != null) return false;
-        if (lectureDate != null ? !lectureDate.equals(that.lectureDate) : that.lectureDate != null) return false;
-        if (lectorName != null ? !lectorName.equals(that.lectorName) : that.lectorName != null) return false;
+        if (!Objects.equals(lectorName, that.lectorName)) return false;
+        if (!Objects.equals(literatures, that.literatures)) return false;
+        if (!Objects.equals(lectureDate, that.lectureDate)) return false;
+        if (!Objects.equals(nameOfLecture, that.nameOfLecture)) return false;
         return type == that.type;
     }
 

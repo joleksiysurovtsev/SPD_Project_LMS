@@ -71,7 +71,7 @@ public class LMSTerminal {
                 print.printLectureListByType(lectureValidator.selectLectureType(lectureValidator.arrayLecturesTypesInvolved(lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
                 break;
             case "date":
-                cash.setCurentDate(ConsoleInputValidator.enterTheDate());
+                cash.setCurrentDate(ConsoleInputValidator.enterTheDate());
                 print.printAllLectureTable(cash.returnList());
                 break;
             case "exit":
@@ -224,7 +224,7 @@ public class LMSTerminal {
     }
 
     private void point4_3AddLit() throws IOException {
-        Literature newLit = literatureValidator.createLit();
+        Literature newLit = literatureValidator.createLiterature();
         if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)) {
             System.out.println("this literature is already there");
         } else {
