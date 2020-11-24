@@ -53,10 +53,10 @@ public class LiteratureValidator {
         while (true){
             int number = ConsoleInputValidator.readInt();
             typeLit = LiteratureType.stream().filter(d -> d.ordinal()==number).findFirst().orElse(null);
-            if (typeLit!=null){
-                break;
-            }else {
+            if (typeLit == null) {
                 System.out.println("Unknown type: try again");
+            } else {
+                break;
             }
         }
         return typeLit;
@@ -66,11 +66,11 @@ public class LiteratureValidator {
 
     List<Literature> addLitOrNot() {
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
-        List<Literature> newlit = new ArrayList<>();
+        List<Literature> newLiteratureArr = new ArrayList<>();
         switch (ConsoleInputValidator.readString()) {
             case "+":
                 do {
-                    literatureServiceImpl.addLiterature(createLit(), newlit);
+                    literatureServiceImpl.addLiterature(createLit(), newLiteratureArr);
                     System.out.println("Add more literature? if not enter minus");
                 } while (!ConsoleInputValidator.readString().equals("-"));
                 break;
@@ -81,7 +81,7 @@ public class LiteratureValidator {
                 System.out.println("Something wrong");
                 addLitOrNot();
         }
-        return newlit;
+        return newLiteratureArr;
     }
 
 
