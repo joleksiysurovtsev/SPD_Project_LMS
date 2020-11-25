@@ -7,6 +7,7 @@ import com.lms.spd.models.interfaces.Literature;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
@@ -75,21 +76,8 @@ public class LMSConsolePrinter {
         return Arrays.stream(strings).filter(x -> !(x.isEmpty())).mapToInt(Integer::parseInt).toArray();
     }
 
-    public void sortLitByDateAndType(List<Literature> litArr) {
-        litArr.sort(Comparator.comparing(Literature::getType));
-        boolean flag = false;
-        while (flag) {
-            flag = true;
-            for (int i = 0, litArrSize = litArr.size(); i < litArrSize; i++) {
-                if (litArr.get(i).getDateResourceWasAdded().after(litArr.get(i + 1))) {
-                    //меняем их местами
-                    Literature temps = litArr.get(i);
-                    litArr.set(i, litArr.get(i + 1));
-                    litArr.set(i + 1, temps);
-                    flag = false;
-                }
-            }
-        }
+    public List<Literature> sortLitByDateAndType(List<Literature> litArr) {
+        return litArr.stream().distinct().sorted(Comparator.comparing(Literature::getType).thenComparing(Literature::getDateResourceWasAdded)).collect(Collectors.toList());
     }
 
     public void showStartMenu() {
@@ -125,7 +113,7 @@ public class LMSConsolePrinter {
         }
     }
 
-    public void printListLit(Lecture lecture)  {
+    public void printListLit(Lecture lecture) {
         List<Literature> litArr = lecture.getLiteratures();
         if (litArr.isEmpty()) {
             try {
@@ -134,7 +122,7 @@ public class LMSConsolePrinter {
                 System.err.println(e.getMessage());
             }
         } else {
-            sortLitByDateAndType(litArr);
+            litArr = sortLitByDateAndType(litArr);
             int i = 1;
             for (Literature x : litArr) {
                 System.out.println(i + "" + x.print());
@@ -160,10 +148,9 @@ public class LMSConsolePrinter {
 
 
     void showAllLectureInfo(Lecture lecture) {
-        StringBuilder lectureInfo = new StringBuilder("Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
-        lectureInfo.append("The lecture is lecturing by: ").append(lecture.getLectorName()).append("\n");
-        lectureInfo.append("Lecture date: ").append(sdf.format(lecture.getLectureDate().getTime()));
-        lectureInfo.append(" Lecture Type: ").append(lecture.getType());
+        String lectureInfo = "Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n" + "The lecture is lecturing by: " + lecture.getLectorName() + "\n" +
+                "Lecture date: " + sdf.format(lecture.getLectureDate().getTime()) +
+                " Lecture Type: " + lecture.getType();
         System.out.println(lectureInfo);
         printListLit(lecture);
     }
