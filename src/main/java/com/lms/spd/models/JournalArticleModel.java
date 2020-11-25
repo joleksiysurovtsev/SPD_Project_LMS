@@ -1,20 +1,34 @@
 package com.lms.spd.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public class JournalArticleModel implements Literature {
+public class JournalArticleModel implements Literature, Serializable {
+    @JsonProperty("Title")
     private String title;
+    @JsonProperty("Author")
     private String author;
+    @JsonProperty("Title of article")
     private String titleOfArticle;
+    @JsonProperty("Issue of the journal")
     private int issueOfTheJournal;
+    @JsonProperty("Literature type")
     private LiteratureType type;
+    @JsonProperty("ID")
     private int id;
+    @JsonProperty("Date resource was added")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Calendar dateResourceWasAdded;
+
+    public JournalArticleModel() { }
 
     @Override
     public Calendar getDateResourceWasAdded() {
@@ -25,8 +39,6 @@ public class JournalArticleModel implements Literature {
     public void setDateResourceWasAdded(Calendar dateResourceWasAdded) {
         this.dateResourceWasAdded = dateResourceWasAdded;
     }
-
-    private Calendar dateResourceWasAdded;
 
     public JournalArticleModel(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
         setAuthor(author);

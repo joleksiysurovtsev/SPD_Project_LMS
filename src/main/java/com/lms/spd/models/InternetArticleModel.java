@@ -1,20 +1,32 @@
 package com.lms.spd.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public class InternetArticleModel implements Literature {
+public class InternetArticleModel implements Literature, Serializable {
+    @JsonProperty("Title")
     private String title;
+    @JsonProperty("Author")
     private String author;
+    @JsonProperty("URL")
     private String urlAddress;
-    private Calendar dateResourceWasAdded;
+    @JsonProperty("Literature type")
     private LiteratureType type;
+    @JsonProperty("ID")
     private int id;
+    @JsonProperty("Date resource was added")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Calendar dateResourceWasAdded;
+
+    public InternetArticleModel() {}
 
     public InternetArticleModel(String title, String author, String urlAddress) {
         setAuthor(author);
