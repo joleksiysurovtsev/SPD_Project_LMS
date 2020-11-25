@@ -36,3 +36,4 @@
 {"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"\"Deploy (AWS). CI/CD\"","NumberOfLecture":37,"List literatures":[],"Date of lecture":"16-02-2021","Lector Name":"Andrii Zaiats","Lecture type":"COMMON","Lecture ID":33}
 {"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"\"Spring Security. (part 2)\"","NumberOfLecture":38,"List literatures":[],"Date of lecture":"21-02-2021","Lector Name":"Vasya Rudas","Lecture type":"EE","Lecture ID":34}
 {"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"\"Deploy (AWS). CI/CD - practice\"","NumberOfLecture":39,"List literatures":[],"Date of lecture":"23-02-2021","Lector Name":"Andrii Zaiats","Lecture type":"COMMON","Lecture ID":35}
+{"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"Novaya lektsiya","NumberOfLecture":1,"List literatures":[],"Date of lecture":"24-11-2020","Lector Name":"Noviy lektor","Lecture type":"CAREER","Lecture ID":36}

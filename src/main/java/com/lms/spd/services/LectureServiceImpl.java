@@ -6,6 +6,7 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.services.interfaces.LectureService;
 
+import java.io.IOException;
 import java.util.*;
 
 public class LectureServiceImpl implements LectureService {
@@ -24,7 +25,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public void setLectures(List<Lecture> lectures) {
+    public void setLectures(List<Lecture> lectures) throws IOException {
         repository.setAll(lectures);
     }
 
@@ -43,7 +44,7 @@ public class LectureServiceImpl implements LectureService {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
-    public void addLecture(Lecture lecture) {
+    public void addLecture(Lecture lecture) throws IOException {
         lecture.setId(generateLectureID(repository.getAll()));
         repository.addLecture(lecture);
         sortByDate();
@@ -58,7 +59,13 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public void removeLectures(String[] lectureRemove) {
         LecturesCache.removeLectCash(lectureRemove, repository.getAll());
-        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> repository.removeLecture(z));
+        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> {
+            try {
+                repository.removeLecture(z);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     //________________________________________________________________________________________________//
