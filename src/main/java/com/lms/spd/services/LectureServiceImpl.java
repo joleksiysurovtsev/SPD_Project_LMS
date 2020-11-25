@@ -8,10 +8,11 @@ import com.lms.spd.services.interfaces.LectureService;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LectureServiceImpl implements LectureService {
 
-    private final LectureRepository repository;
+    private LectureRepository repository;
 
     public LectureServiceImpl() {
         this.repository = new LectureRepository();
@@ -46,8 +47,9 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public void addLecture(Lecture lecture) throws IOException {
         lecture.setId(generateLectureID(repository.getAll()));
-        repository.addLecture(lecture);
-        sortByDate();
+        List<Lecture> addList = repository.getAll();
+        addList.add(lecture);
+        repository.setAll(addList.stream().sorted(Comparator.comparing(Lecture::getLectureDate)).collect(Collectors.toList()));
         LecturesCache.updateCashAfterAdd(lecture);
     }
 
@@ -69,11 +71,6 @@ public class LectureServiceImpl implements LectureService {
     }
 
     //________________________________________________________________________________________________//
-
-    private void sortByDate() {
-        repository.getAll().sort(Comparator.comparing(Lecture::getLectureDate));
-    }
-
 
     public static int generateLectureID(List<Lecture> lectures) {
         return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0))+1;

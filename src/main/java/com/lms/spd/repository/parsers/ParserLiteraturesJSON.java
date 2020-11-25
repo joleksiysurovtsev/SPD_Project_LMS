@@ -13,7 +13,7 @@ public class ParserLiteraturesJSON {
 
     private static final File file = new File("src/main/resources/json/Literatures.json");
 
-    public static void parseLecturesInJSON(List<Literature> lit) throws IOException {
+    public static void parseLiteraturesInJSON(List<Literature> lit) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         //если файла нет то создаём его
         if (!file.exists()) {
@@ -36,7 +36,7 @@ public class ParserLiteraturesJSON {
     }
 
 
-    public static List<Literature> parseLecturesFromJSON() {
+    public static List<Literature> parseLiteraturesFromJSON() {
         ObjectMapper mapper = new ObjectMapper();
         List<Literature> lect = new ArrayList<>();
         if (!file.exists()) {
