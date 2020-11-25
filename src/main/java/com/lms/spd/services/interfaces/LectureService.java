@@ -17,5 +17,5 @@ public interface LectureService {
 
     void addLecture(Lecture lecture) throws IOException;
 
-    void removeLectures(String[] lectureRemove);
+    void removeLectures(String[] lectureRemove) throws IOException;
 }

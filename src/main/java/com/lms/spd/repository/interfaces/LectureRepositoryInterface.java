@@ -3,11 +3,11 @@ package com.lms.spd.repository.interfaces;
 import com.lms.spd.models.interfaces.Lecture;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface LectureRepositoryInterface  {
 
-    void addLecture(Lecture lecture) throws IOException;
+    List<Lecture> getAll();
 
-    void removeLecture(int id) throws IOException;
-
+    void setAll(List<Lecture> lectures) throws IOException;
 }

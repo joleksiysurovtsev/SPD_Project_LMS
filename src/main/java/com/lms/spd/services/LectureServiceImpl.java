@@ -38,7 +38,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public void setSelectedLecture(int selected) throws NullLectureException {
         selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getNumberOfLecture() == selected + 1).findFirst().orElse(null);
-        if (selectedLecture == null){
+        if (selectedLecture == null) {
             throw new NullLectureException("There is no lecture under this number");
         }
     }
@@ -59,20 +59,19 @@ public class LectureServiceImpl implements LectureService {
      * Remove lecture from array
      */
     @Override
-    public void removeLectures(String[] lectureRemove) {
+    public void removeLectures(String[] lectureRemove) throws IOException {
         LecturesCache.removeLectCash(lectureRemove, repository.getAll());
-        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(z -> {
-            try {
-                repository.removeLecture(z);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        List<Lecture> lectures = repository.getAll();
+        for (String s: lectureRemove) {
+            int i = Integer.parseInt(s);
+            lectures = lectures.stream().filter(lecture -> lecture.getNumberOfLecture() != i).collect(Collectors.toList());
+        }
+        repository.setAll(lectures);
     }
 
     //________________________________________________________________________________________________//
 
     public static int generateLectureID(List<Lecture> lectures) {
-        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0))+1;
+        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) + 1;
     }
 }
