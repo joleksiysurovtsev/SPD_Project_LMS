@@ -15,7 +15,7 @@ test {
 dependencies{
     testImplementation"org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly"org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-    compile "com.alibaba:fastjson:1.1.25"
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
 }
 
 

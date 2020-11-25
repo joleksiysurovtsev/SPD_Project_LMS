@@ -1,36 +1,42 @@
 package com.lms.spd.models;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-public class LectureIModel implements Lecture {
-    @JSONField(name = "NAME OF LECTURE")
+public class LectureIModel implements Lecture, Serializable {
+    @JsonProperty("NameOfLecture")
     private String nameOfLecture;
 
-    @JSONField(name = "NUMBER OF LECTURE")
+    @JsonProperty("NumberOfLecture")
     private int numberOfLecture;
 
-    @JSONField(name = "LIST LITERATURES")
+    @JsonProperty("List literatures")
     private List<Literature> literatures;
 
-    @JSONField(name = "LECTURE DATE", format = "dd/MM/yyyy")
+    @JsonProperty("Date of lecture")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Calendar lectureDate;
 
-    @JSONField(name = "LECTOR NAME")
+    @JsonProperty("Lector Name")
     private String lectorName;
 
-    @JSONField(name = "LECTURE TYPE")
+    @JsonProperty("Lecture type")
     private LectureType type;
 
-    @JSONField(name = "LECTURE ID")
+    @JsonProperty("Lecture ID")
     private int id;
     //lecture constructor____________________________________________________________________________________________//
+
+
+    public LectureIModel() {}
 
     public LectureIModel(String nameOfLecture) {
         this.nameOfLecture = nameOfLecture;
