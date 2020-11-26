@@ -1,3 +1,4 @@
 {"@ class":"com.lms.spd.models.BookModel","Title":"5555","Author":"5555","Genre":"5555","PublishedInYear":555,"Literature type":"BOOK","Date resource was added":"26-11-2020","ID":1}
 {"@ class":"com.lms.spd.models.BookModel","Title":"book","Author":"aftor","Genre":"3","PublishedInYear":3,"Literature type":"BOOK","Date resource was added":"26-11-2020","ID":2}
 {"@ class":"com.lms.spd.models.InternetArticleModel","Title":"1","Author":"1","URL":"ddd","Literature type":"INTERNET_ARTICLE","ID":3,"Date resource was added":"26-11-2020"}
+{"@ class":"com.lms.spd.models.BookModel","Title":"Книга","Author":"какойто ","Genre":"фентези","PublishedInYear":1986,"Literature type":"BOOK","Date resource was added":"26-11-2020","ID":4}

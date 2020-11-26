@@ -50,9 +50,9 @@ public class LiteratureValidator {
 
     private LiteratureType getLiteratureType() {
         LiteratureType typeLit;
-        System.out.println("Please, choose literature type: " + LiteratureType.toListString());
+        System.out.println("Please, choose literature type: \n" + LiteratureType.toListString());
         while (true){
-            int number = ConsoleInputValidator.readInt();
+            int number = ConsoleInputValidator.readInt()-1;
             typeLit = LiteratureType.stream().filter(d -> d.ordinal()==number).findFirst().orElse(null);
             if (typeLit == null) {
                 System.out.println("Unknown type: try again");
