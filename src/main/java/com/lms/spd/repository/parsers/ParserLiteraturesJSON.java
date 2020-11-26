@@ -15,24 +15,29 @@ public class ParserLiteraturesJSON {
 
     private static final File file = new File("src/main/resources/json/Literatures.json");
     private static ObjectMapper mapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
+
     public static void parseLiteraturesInJSON(List<Literature> lit) throws IOException {
         //если файла нет то создаём его
         if (!file.exists()) {
             try {
                 Files.createFile(file.toPath());
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Unable to create file");
             }
         }
+        // Создаем поток-записи-байт-в-файл
         FileOutputStream fileOutputStream = new FileOutputStream(file.getPath());
-        try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8))) {
-            for (Literature literature : lit) {
-                String JSONString = mapper.writeValueAsString(literature);
-                myWriter.write(JSONString);
-                myWriter.write("\n");
-                myWriter.flush();
-            }
+        BufferedWriter bufferedWriter;
+        try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream)) {
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(bufferedOutputStream, StandardCharsets.UTF_8));
         }
+        for (Literature literature : lit) {
+            String JSONString = mapper.writeValueAsString(literature);
+            bufferedWriter.write(JSONString);
+            bufferedWriter.write("\n");
+            bufferedWriter.flush();
+        }
+
     }
 
 
@@ -43,14 +48,14 @@ public class ParserLiteraturesJSON {
             return new ArrayList<>();
         }
 
-        try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
-            String line = reader.readLine();
+        try (ReaderWrapper mywrapper = new ReaderWrapper(new BufferedReader(new InputStreamReader(new FileInputStream(file))))) {
+            String line = mywrapper.readLine();
             while (line != null) {
                 lect.add(mapper.readValue(line, Literature.class));
-                line = reader.readLine();
+                line = mywrapper.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Could not read the file");
         }
         return lect;
     }
