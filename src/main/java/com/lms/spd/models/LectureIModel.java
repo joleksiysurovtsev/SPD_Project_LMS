@@ -7,11 +7,13 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.io.Serializable;
+
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
-public class LectureIModel implements Lecture, Serializable {
+
+public class LectureIModel implements Lecture,Serializable {
+
     @JsonProperty("NameOfLecture")
     private String nameOfLecture;
 
@@ -127,6 +129,7 @@ public class LectureIModel implements Lecture, Serializable {
                 ", lectureDate=" + lectureDate +
                 ", lectorName='" + lectorName + '\'' +
                 ", type=" + type +
+                ", id=" + id +
                 '}';
     }
 
@@ -134,23 +137,26 @@ public class LectureIModel implements Lecture, Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof LectureIModel)) return false;
+
         LectureIModel that = (LectureIModel) o;
+
         if (id != that.id) return false;
-        if (!Objects.equals(lectorName, that.lectorName)) return false;
-        if (!Objects.equals(literatures, that.literatures)) return false;
-        if (!Objects.equals(lectureDate, that.lectureDate)) return false;
-        if (!Objects.equals(nameOfLecture, that.nameOfLecture)) return false;
+        if (nameOfLecture != null ? !nameOfLecture.equals(that.nameOfLecture) : that.nameOfLecture != null)
+            return false;
+        if (literatures != null ? !literatures.equals(that.literatures) : that.literatures != null) return false;
+        if (lectureDate != null ? !lectureDate.equals(that.lectureDate) : that.lectureDate != null) return false;
+        if (lectorName != null ? !lectorName.equals(that.lectorName) : that.lectorName != null) return false;
         return type == that.type;
     }
 
     @Override
     public int hashCode() {
-        int result = getNameOfLecture().hashCode();
-        result = 31 * result + getLiteratures().hashCode();
-        result = 31 * result + getLectureDate().hashCode();
-        result = 31 * result + getLectorName().hashCode();
-        result = 31 * result + getType().hashCode();
-        result = 31 * result + getId();
+        int result = nameOfLecture != null ? nameOfLecture.hashCode() : 0;
+        result = 31 * result + (literatures != null ? literatures.hashCode() : 0);
+        result = 31 * result + (lectureDate != null ? lectureDate.hashCode() : 0);
+        result = 31 * result + (lectorName != null ? lectorName.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
 }

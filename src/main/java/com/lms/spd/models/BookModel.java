@@ -28,7 +28,11 @@ public class BookModel implements Literature, Serializable {
     @JsonProperty("ID")
     private int id;
 
-    public BookModel(String title, String author, String genre, int publishedInYear,int id) {
+    public BookModel() {
+
+    }
+
+    public BookModel(String title, String author, String genre, int publishedInYear, int id) {
         this.genre = genre;
         this.publishedInYear = publishedInYear;
         setTitle(title);

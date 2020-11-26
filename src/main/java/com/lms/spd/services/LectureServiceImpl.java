@@ -71,6 +71,6 @@ public class LectureServiceImpl implements LectureService {
     //________________________________________________________________________________________________//
 
     public static int generateLectureID(List<Lecture> lectures) {
-        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) + 1;
+        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) +1;
     }
 }

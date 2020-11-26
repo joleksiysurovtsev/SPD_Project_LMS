@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class ConsoleInputValidator {
 
@@ -45,10 +46,12 @@ public class ConsoleInputValidator {
     public static Calendar enterTheDate() {
         System.out.println("Enter the lecture date for example: 19-10-2020");
         Calendar lectureDate = new GregorianCalendar();
+        lectureDate.setTimeZone(TimeZone.getDefault());
         String dateInString;
         while (true) {
             dateInString = ConsoleInputValidator.readString();
             try {
+                DATE_FORMAT.setLenient(false);
                 lectureDate.setTime(DATE_FORMAT.parse(dateInString));
                 if (!dateInString.matches(LECTURE_DATE_REG_EXP)) {
                     throw new DateFormatException("the date of the lecture cannot be later than 2000");
@@ -60,6 +63,7 @@ public class ConsoleInputValidator {
                 System.err.println("The date is entered incorrectly, try again");
             }
         }
+      //  System.out.println(DATE_FORMAT.format(lectureDate.getTime()));
         return lectureDate;
     }
 

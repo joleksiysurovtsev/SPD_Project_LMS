@@ -7,6 +7,7 @@ import java.util.Calendar;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@ class")
 public interface Literature {
+
     String getTitle();
 
     void setTitle(String title);

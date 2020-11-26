@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class LMSConsolePrinter {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
     String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
     private static int count = 1;
 
@@ -53,14 +54,14 @@ public class LMSConsolePrinter {
             Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
                     .filter(x -> value == x.getId())
                     .forEach(this::printLectureTable));
-            count = 1;
+           // count = 1;
         }
     }
 
     private void printTopOfTable() {
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.println("|\u1005|    Date     |  Lecture type      | Lecture number | Lecture ID     |                   Lecture title                  |      Lecturer name      |");
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
     }
 
     //Печатает таблицу
@@ -71,6 +72,7 @@ public class LMSConsolePrinter {
             System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
         }
     }
+
 
 
     public List<Literature> sortLitByDateAndType(List<Literature> litArr) {

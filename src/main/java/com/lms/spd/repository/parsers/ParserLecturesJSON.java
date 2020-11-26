@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ParserLecturesJSON {
 
@@ -15,6 +16,7 @@ public class ParserLecturesJSON {
 
     public static void parseLecturesInJSON(List<Lecture> lectures) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setTimeZone(TimeZone.getDefault());
         //если файла нет то создаём его
         if (!file.exists()) {
             try {
@@ -37,6 +39,7 @@ public class ParserLecturesJSON {
 
 
     public static List<Lecture> parseLecturesFromJSON() {
+
         //если файла нет то создаём его
         if (!file.exists()) {
             try {
@@ -46,6 +49,7 @@ public class ParserLecturesJSON {
             }
         }
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setTimeZone(TimeZone.getDefault());
         List<Lecture> lect = new ArrayList<>();
         if (!file.exists()) {
             System.err.println("No data file");

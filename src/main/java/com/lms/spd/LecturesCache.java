@@ -10,7 +10,7 @@ public class LecturesCache {
 
     private LectureServiceImpl lectureService = new LectureServiceImpl();
     private List<Lecture> lectures = lectureService.getLectures();
-    private Calendar currentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 5);
+    private Calendar currentDate ;
     private static Map<Calendar, List<Lecture>> cash = new HashMap();
 
     public Calendar getCurrentDate() {
@@ -26,7 +26,7 @@ public class LecturesCache {
     }
 
     public List<Lecture> returnList() {
-        return cash.get(currentDate) != null ? cash.get(currentDate) : new ArrayList<>();
+        return cash.get(currentDate);
     }
 
     /**
@@ -37,6 +37,7 @@ public class LecturesCache {
         //берём первый элемент
         // проверяем есть ли ключ эта дата в мапе
         //если в мапе нет такого ключа то генерируем лист с єтими датами и пихаем
+
         lectures.stream().map(Lecture::getLectureDate).filter(date -> !cash.containsKey(date)).forEach(this::listLectureByDate);
     }
 
@@ -61,7 +62,7 @@ public class LecturesCache {
     public static void removeLectCash(int[] lectureRemove, List<Lecture> lectures) {
         List<Lecture> listR = new ArrayList<>();
         Arrays.stream(lectureRemove).forEach(x -> lectures.stream().filter(lr -> lr.getId() == x).forEach(listR::add));
-     //   LecturesCache.updateCashAfterRemove(listR);
+        LecturesCache.updateCashAfterRemove(listR);
     }
 
     private static void updateCashAfterRemove(List<Lecture> lectureDeleted) {
