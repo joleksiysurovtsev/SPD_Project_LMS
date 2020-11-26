@@ -128,10 +128,12 @@ public class LMSTerminal {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     private void point3MainMenuRemovalLecture() throws IOException {
-        System.out.println("Please enter the number of the lecture if you want to delete one or more comma separated ");
-        String numbRemovalLecture = ConsoleInputValidator.readString();
-        String[] lectureRemove = lectureValidator.stringToDeleteLecture(numbRemovalLecture, lectureServiceImpl.getLectures());
-        lectureServiceImpl.removeLectures(lectureRemove);
+        System.out.println("Please enter the ID of the lecture if you want to delete one or more comma separated ");
+        int[] arr = Utill.getStringsNumberLecture(ConsoleInputValidator.readString());
+        if (arr == null) subMenuRemovalLecture();
+        else {
+            lectureServiceImpl.removeLectures(arr);
+        }
         subMenuRemovalLecture();
     }
 
@@ -217,8 +219,8 @@ public class LMSTerminal {
     }
 
     private void point4_2ViewListOfLit() throws IOException {
-       print.printListLit(lectureServiceImpl.getSelectedLecture());
-       System.out.println("what do we do with the bibliography");
+        print.printListLit(lectureServiceImpl.getSelectedLecture());
+        System.out.println("what do we do with the bibliography");
         print.showFourthMenu();
         subMenu2Point4();
     }

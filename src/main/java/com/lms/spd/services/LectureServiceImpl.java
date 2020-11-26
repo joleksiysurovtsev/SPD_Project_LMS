@@ -59,12 +59,11 @@ public class LectureServiceImpl implements LectureService {
      * Remove lecture from array
      */
     @Override
-    public void removeLectures(String[] lectureRemove) throws IOException {
-        LecturesCache.removeLectCash(lectureRemove, repository.getAll());
+    public void removeLectures(int[] lectureRemove) throws IOException {
+          LecturesCache.removeLectCash(lectureRemove, repository.getAll());
         List<Lecture> lectures = repository.getAll();
-        for (String s: lectureRemove) {
-            int i = Integer.parseInt(s);
-            lectures = lectures.stream().filter(lecture -> lecture.getNumberOfLecture() != i).collect(Collectors.toList());
+        for (int s : lectureRemove) {
+            lectures = lectures.stream().filter(lecture -> lecture.getId() != s).collect(Collectors.toList());
         }
         repository.setAll(lectures);
     }
