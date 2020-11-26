@@ -13,10 +13,6 @@ public interface Lecture {
 
     String getNameOfLecture();
 
-    int getNumberOfLecture();
-
-    void setNumberOfLecture(int numberOfLecture);
-
     List<Literature> getLiteratures();
 
     void setLiteratures(List<Literature> literatures);

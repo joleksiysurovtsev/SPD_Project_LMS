@@ -15,9 +15,6 @@ public class LectureIModel implements Lecture, Serializable {
     @JsonProperty("NameOfLecture")
     private String nameOfLecture;
 
-    @JsonProperty("NumberOfLecture")
-    private int numberOfLecture;
-
     @JsonProperty("List literatures")
     private List<Literature> literatures;
 
@@ -42,24 +39,18 @@ public class LectureIModel implements Lecture, Serializable {
         this.nameOfLecture = nameOfLecture;
     }
 
-    public LectureIModel(int numberOfLecture, String nameOfLecture) {
-        this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
-    }
-
-    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate) {
+    public LectureIModel(LectureType type, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
     }
 
-    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate, int id) {
+    public LectureIModel(LectureType type, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate, int id) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
+
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
@@ -76,16 +67,6 @@ public class LectureIModel implements Lecture, Serializable {
     @Override
     public String getNameOfLecture() {
         return nameOfLecture;
-    }
-
-    @Override
-    public void setNumberOfLecture(int numberOfLecture) {
-        this.numberOfLecture = numberOfLecture;
-    }
-
-    @Override
-    public int getNumberOfLecture() {
-        return this.numberOfLecture;
     }
 
     @Override
@@ -142,7 +123,6 @@ public class LectureIModel implements Lecture, Serializable {
     public String toString() {
         return "LectureIModel{" +
                 "nameOfLecture='" + nameOfLecture + '\'' +
-                ", numberOfLecture=" + numberOfLecture +
                 ", literatures=" + literatures +
                 ", lectureDate=" + lectureDate +
                 ", lectorName='" + lectorName + '\'' +
@@ -154,10 +134,7 @@ public class LectureIModel implements Lecture, Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof LectureIModel)) return false;
-
         LectureIModel that = (LectureIModel) o;
-
-        if (numberOfLecture != that.numberOfLecture) return false;
         if (id != that.id) return false;
         if (!Objects.equals(lectorName, that.lectorName)) return false;
         if (!Objects.equals(literatures, that.literatures)) return false;
@@ -169,7 +146,6 @@ public class LectureIModel implements Lecture, Serializable {
     @Override
     public int hashCode() {
         int result = getNameOfLecture().hashCode();
-        result = 31 * result + getNumberOfLecture();
         result = 31 * result + getLiteratures().hashCode();
         result = 31 * result + getLectureDate().hashCode();
         result = 31 * result + getLectorName().hashCode();

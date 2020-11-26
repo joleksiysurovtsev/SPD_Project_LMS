@@ -37,6 +37,14 @@ public class ParserLecturesJSON {
 
 
     public static List<Lecture> parseLecturesFromJSON() {
+        //если файла нет то создаём его
+        if (!file.exists()) {
+            try {
+                Files.createFile(file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         ObjectMapper mapper = new ObjectMapper();
         List<Lecture> lect = new ArrayList<>();
         if (!file.exists()) {

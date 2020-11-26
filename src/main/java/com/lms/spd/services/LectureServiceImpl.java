@@ -37,7 +37,7 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public void setSelectedLecture(int selected) throws NullLectureException {
-        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getNumberOfLecture() == selected + 1).findFirst().orElse(null);
+        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getId() == selected + 1).findFirst().orElse(null);
         if (selectedLecture == null) {
             throw new NullLectureException("There is no lecture under this number");
         }

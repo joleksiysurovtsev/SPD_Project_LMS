@@ -8,12 +8,12 @@ import com.lms.spd.models.interfaces.Literature;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
+    private static int count = 1;
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
         if (lectures.isEmpty()) {
@@ -21,6 +21,7 @@ public class LMSConsolePrinter {
         } else {
             printTopOfTable();
             lectures.forEach(this::printLectureTable);
+            count = 1;
         }
     }
 
@@ -37,6 +38,7 @@ public class LMSConsolePrinter {
         } else {
             printTopOfTable();
             lectures.stream().filter(lecture -> lecture.getType() == type).forEach(this::printLectureTable);
+            count = 1;
         }
     }
 
@@ -46,9 +48,12 @@ public class LMSConsolePrinter {
         } else {
             printTopOfTable();
             int[] numbToDisplay = Utill.getStringsNumberLecture(s);
+
+
             Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
-                    .filter(x -> value == x.getNumberOfLecture())
+                    .filter(x -> value == x.getId())
                     .forEach(this::printLectureTable));
+            count = 1;
         }
     }
 
@@ -61,12 +66,11 @@ public class LMSConsolePrinter {
     //Печатает таблицу
     public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
-            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
         } else {
-            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), lecture.getNumberOfLecture(), lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
         }
     }
-
 
 
     public List<Literature> sortLitByDateAndType(List<Literature> litArr) {
@@ -141,7 +145,7 @@ public class LMSConsolePrinter {
 
 
     void showAllLectureInfo(Lecture lecture) {
-        String lectureInfo = "Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n" + "The lecture is lecturing by: " + lecture.getLectorName() + "\n" +
+        String lectureInfo = "Lecture: ID" + lecture.getId() + " " + lecture.getNameOfLecture() + " \n" + "The lecture is lecturing by: " + lecture.getLectorName() + "\n" +
                 "Lecture date: " + sdf.format(lecture.getLectureDate().getTime()) +
                 " Lecture Type: " + lecture.getType();
         System.out.println(lectureInfo);

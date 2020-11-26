@@ -16,22 +16,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class LectureIModelTest {
     @Test
     void testToString() {
-        Lecture testLecture = new LectureIModel(1, "Test");
+        Lecture testLecture = new LectureIModel( "Test");
         assertEquals("LectureIModel{nameOfLecture='Test', numberOfLecture=1, literatures=null, lectureDate=null, lectorName='null', type=null}",testLecture.toString());
     }
 
     @Test
     void testEquals() {
-        Lecture testLecture = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
-        Lecture testLecture2 = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
-        Lecture testLecture3 = new LectureIModel(LectureType.JAVA_CORE, 5, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
+        Lecture testLecture = new LectureIModel(LectureType.JAVA_CORE,  "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
+        Lecture testLecture2 = new LectureIModel(LectureType.JAVA_CORE, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
+        Lecture testLecture3 = new LectureIModel(LectureType.JAVA_CORE, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
         assertEquals(testLecture2, testLecture);
         assertNotEquals(testLecture3, testLecture);
     }
 
     @Test
     void testHashCode() {
-        Lecture testLecture = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
+        Lecture testLecture = new LectureIModel(LectureType.JAVA_CORE, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5),50);
 
         int hashCode = testLecture.hashCode();
         assertEquals(hashCode,testLecture.hashCode());

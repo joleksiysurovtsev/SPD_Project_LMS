@@ -61,7 +61,7 @@ public class LecturesCache {
     public static void removeLectCash(int[] lectureRemove, List<Lecture> lectures) {
         List<Lecture> listR = new ArrayList<>();
         Arrays.stream(lectureRemove).forEach(x -> lectures.stream().filter(lr -> lr.getId() == x).forEach(listR::add));
-        LecturesCache.updateCashAfterRemove(listR);
+     //   LecturesCache.updateCashAfterRemove(listR);
     }
 
     private static void updateCashAfterRemove(List<Lecture> lectureDeleted) {
