@@ -7,6 +7,7 @@ import com.lms.spd.models.JournalArticleModel;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LiteratureServiceImpl;
 
+import java.io.IOException;
 import java.util.*;
 
 public class LiteratureValidator {
@@ -64,7 +65,7 @@ public class LiteratureValidator {
 //____________________________________________________________________________________________________________________//
 
 
-    List<Literature> addLitOrNot() {
+    List<Literature> addLitOrNot() throws IOException {
         System.out.println("Add literature \u001b[32;1m\" + \"\u001b[0m YES \u001b[35;1m\" - \"\u001b[0m NO");
         List<Literature> newLiteratureArr = new ArrayList<>();
         switch (ConsoleInputValidator.readString()) {

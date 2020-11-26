@@ -13,10 +13,9 @@ import java.util.TimeZone;
 public class ParserLecturesJSON {
 
     private static final File file = new File("src/main/resources/json/Lectures.json");
+    private static ObjectMapper mapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
 
     public static void parseLecturesInJSON(List<Lecture> lectures) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setTimeZone(TimeZone.getDefault());
         //если файла нет то создаём его
         if (!file.exists()) {
             try {
@@ -25,7 +24,6 @@ public class ParserLecturesJSON {
                 e.printStackTrace();
             }
         }
-
         FileOutputStream fileOutputStream = new FileOutputStream(file.getPath());
         try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8))) {
             for (Lecture lect : lectures) {
@@ -39,7 +37,6 @@ public class ParserLecturesJSON {
 
 
     public static List<Lecture> parseLecturesFromJSON() {
-
         //если файла нет то создаём его
         if (!file.exists()) {
             try {
@@ -48,8 +45,6 @@ public class ParserLecturesJSON {
                 e.printStackTrace();
             }
         }
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setTimeZone(TimeZone.getDefault());
         List<Lecture> lect = new ArrayList<>();
         if (!file.exists()) {
             System.err.println("No data file");

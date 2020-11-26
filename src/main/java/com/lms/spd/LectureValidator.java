@@ -5,6 +5,7 @@ import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -14,7 +15,7 @@ import java.util.stream.IntStream;
 public class LectureValidator {
     LiteratureValidator literatureValidator = new LiteratureValidator();
 
-    public Lecture createLecture() {
+    public Lecture createLecture() throws IOException {
         String nameOfLecture = createTheLectureTitle();
         String lectorName = enterLektorName();
         LectureType lectureType = selectLectureType();

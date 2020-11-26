@@ -4,8 +4,10 @@ import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.LiteratureRepository;
 import com.lms.spd.services.interfaces.LiteratureService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LiteratureServiceImpl implements LiteratureService {
 
@@ -16,17 +18,21 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     @Override
-    public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) {
+    public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) throws IOException {
         litAdded.setId(generateIdLit(repository.getAll()));
-        repository.addLiterature(litAdded);
         lit.add(litAdded);
-        return lit;
+       List<Literature> allLit =  repository.getAll().stream().collect(Collectors.toList());
+       allLit.add(litAdded);
+       repository.setAll(allLit);
+       return lit;
     }
 
     @Override
-    public List<Literature> removeLiterature(int numberLit, List<Literature> lit) {
+    public List<Literature> removeLiterature(int numberLit, List<Literature> lit) throws IOException {
         int id = lit.get(numberLit-1).getId();
-        repository.removeLiterature(id);
+        List<Literature> allLit =  repository.getAll().stream().collect(Collectors.toList());
+        allLit.removeIf(literature -> literature.getId() == id);
+        repository.setAll(allLit);
         if (lit.size() == 1) {
             lit = new ArrayList<>();
         } else {
