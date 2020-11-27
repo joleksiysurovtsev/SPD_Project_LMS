@@ -4,7 +4,6 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.repository.interfaces.LectureRepositoryInterface;
 import com.lms.spd.repository.parsers.ParserLecturesJSON;
 
-import java.io.IOException;
 import java.util.List;
 
 public class LectureRepository implements LectureRepositoryInterface {
@@ -15,7 +14,7 @@ public class LectureRepository implements LectureRepositoryInterface {
     }
 
     @Override
-    public void setAll(List<Lecture> lectures) throws IOException {
+    public void setAll(List<Lecture> lectures) {
         ParserLecturesJSON.parseLecturesInJSON(lectures);
     }
 
