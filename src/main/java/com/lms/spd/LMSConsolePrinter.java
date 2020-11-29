@@ -48,7 +48,7 @@ public class LMSConsolePrinter {
             throw new ListIsEmptyException("I can not print the list of lectures it is empty");
         } else {
             printTopOfTable();
-            int[] numbToDisplay = Utill.getStringsNumberLecture(s);
+            int[] numbToDisplay = Util.getStringsNumberLecture(s);
 
 
             Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()

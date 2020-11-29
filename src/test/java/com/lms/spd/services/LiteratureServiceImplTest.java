@@ -6,11 +6,8 @@ import com.lms.spd.models.interfaces.Literature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LiteratureServiceImplTest {
 

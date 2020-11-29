@@ -2,7 +2,7 @@ package com.lms.spd;
 
 import java.util.Arrays;
 
-public class Utill {
+public class Util {
     /**
      * returns numbers arr from strings
      */
