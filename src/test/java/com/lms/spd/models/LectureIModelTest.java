@@ -1,7 +1,6 @@
 package com.lms.spd.models;
 
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

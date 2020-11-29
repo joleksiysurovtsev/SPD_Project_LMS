@@ -8,6 +8,7 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.repository.parsers.ParserLecturesJSON;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
@@ -137,7 +138,7 @@ class LectureServiceImplTest {
         lectureService.addLecture(lectureIModel2);
 
 
-        int [] remove = {1};
+        int[] remove = {1};
         //удалил первую лекцию
         lectureService.removeLectures(remove);
 
@@ -147,5 +148,11 @@ class LectureServiceImplTest {
 
         List<Lecture> actuallist = ParserLecturesJSON.parseLecturesFromJSON();
         assertEquals(expectedlist, actuallist);
+    }
+
+    @After
+    public void deleteFile() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        file.delete();
     }
 }

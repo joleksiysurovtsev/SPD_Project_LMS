@@ -1,6 +1,5 @@
 package com.lms.spd.models;
 
-import com.lms.spd.models.JournalArticleModel;
 import org.junit.jupiter.api.Test;
 import java.text.SimpleDateFormat;
 
