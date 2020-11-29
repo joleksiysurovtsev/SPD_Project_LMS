@@ -37,7 +37,6 @@ public class LecturesCache {
         //берём первый элемент
         // проверяем есть ли ключ эта дата в мапе
         //если в мапе нет такого ключа то генерируем лист с єтими датами и пихаем
-
         lectures.stream().map(Lecture::getLectureDate).filter(date -> !cash.containsKey(date)).forEach(this::listLectureByDate);
     }
 

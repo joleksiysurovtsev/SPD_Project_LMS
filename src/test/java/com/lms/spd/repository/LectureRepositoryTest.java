@@ -3,7 +3,6 @@ package com.lms.spd.repository;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.repository.parsers.ParserLecturesJSON;
-import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

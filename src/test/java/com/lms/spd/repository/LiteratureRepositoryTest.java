@@ -37,11 +37,11 @@ class LiteratureRepositoryTest {
             e.printStackTrace();
         }
 
-        assertEquals("{\"@ class\":\"com.lms.spd.models.BookModel\",\"Title\":\"testBook\",\"Author\":\"testautor\",\"Genre\":\"testgenre\",\"PublishedInYear\":1999,\"Literature type\":null,\"Date resource was added\":\"27-11-2020\",\"ID\":1}", line);
+        assertEquals("{\"@ class\":\"com.lms.spd.models.BookModel\",\"Title\":\"testBook\",\"Author\":\"testautor\",\"Genre\":\"testgenre\",\"PublishedInYear\":1999,\"Literature type\":null,\"Date resource was added\":\"29-11-2020\",\"ID\":1}", line);
     }
 
     @Test
-    void getAll() {
+    void getAllTests() {
         File newFile = new File("src/test/resources/json/Literatures.json");
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
         Calendar calendar = new GregorianCalendar(2020, 02, 19);

@@ -1,0 +1,2 @@
+{"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"TestL1","List literatures":null,"Date of lecture":"04-02-2020","Lector Name":"testLector","Lecture type":"JAVA_CORE","Lecture ID":1}
+{"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"TestL1","List literatures":[{"@ class":"com.lms.spd.models.BookModel","Title":"Title2","Author":"author2","Genre":"genre","PublishedInYear":1986,"Literature type":null,"Date resource was added":"29-11-2020","ID":2}],"Date of lecture":"04-02-2020","Lector Name":"testLector","Lecture type":"JAVA_CORE","Lecture ID":2}

@@ -26,7 +26,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public void setLectures(List<Lecture> lectures) throws IOException {
+    public void setLectures(List<Lecture> lectures) {
         repository.setAll(lectures);
     }
 
@@ -37,7 +37,7 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public void setSelectedLecture(int selected) throws NullLectureException {
-        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getId() == selected + 1).findFirst().orElse(null);
+        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getId() == selected).findFirst().orElse(null);
         if (selectedLecture == null) {
             throw new NullLectureException("There is no lecture under this number");
         }
@@ -45,7 +45,7 @@ public class LectureServiceImpl implements LectureService {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
-    public void addLecture(Lecture lecture) throws IOException {
+    public void addLecture(Lecture lecture) {
         lecture.setId(generateLectureID(repository.getAll()));
         List<Lecture> addList = repository.getAll();
         addList.add(lecture);
@@ -59,8 +59,8 @@ public class LectureServiceImpl implements LectureService {
      * Remove lecture from array
      */
     @Override
-    public void removeLectures(int[] lectureRemove) throws IOException {
-          LecturesCache.removeLectCash(lectureRemove, repository.getAll());
+    public void removeLectures(int[] lectureRemove) {
+        LecturesCache.removeLectCash(lectureRemove, repository.getAll());
         List<Lecture> lectures = repository.getAll();
         for (int s : lectureRemove) {
             lectures = lectures.stream().filter(lecture -> lecture.getId() != s).collect(Collectors.toList());

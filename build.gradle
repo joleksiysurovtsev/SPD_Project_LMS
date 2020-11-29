@@ -13,6 +13,7 @@ test {
 }
 
 dependencies{
+    implementation 'junit:junit:4.12'
     testImplementation"org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly"org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
