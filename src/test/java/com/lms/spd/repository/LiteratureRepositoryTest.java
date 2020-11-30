@@ -22,14 +22,11 @@ class LiteratureRepositoryTest {
     @Test
     void setAllTest() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLecturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file.delete();
-        file2.delete();
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
 
         LiteratureRepository lR = new LiteratureRepository();
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
-        Calendar calendar = new GregorianCalendar(2020, 02, 19);
-        booktest.setDateResourceWasAdded(calendar);
+        booktest.setDateResourceWasAdded(new GregorianCalendar(2020, 02, 19));
 
         List<Literature> literature = new ArrayList<>();
         literature.add(booktest);
@@ -44,10 +41,7 @@ class LiteratureRepositoryTest {
     @Test
     void getAllTests() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLecturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file.delete();
-        file2.delete();
-
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
         Calendar calendar = new GregorianCalendar(2020, 02, 19);
         booktest.setDateResourceWasAdded(calendar);
