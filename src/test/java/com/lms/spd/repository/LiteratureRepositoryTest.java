@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -24,7 +26,14 @@ class LiteratureRepositoryTest {
     void setAllTest() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-
+        if (!file.exists()) {
+            try {
+                Files.createFile(file.toPath());
+                Files.createFile(file2.toPath());
+            } catch (IOException e) {
+                System.err.println("Unable to create file");
+            }
+        }
         LiteratureRepository lR = new LiteratureRepository();
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
         booktest.setDateResourceWasAdded(new GregorianCalendar(2020, 02, 19));
