@@ -153,6 +153,9 @@ class LectureServiceImplTest {
         assertEquals(expectedlist, actuallist);
         file2.delete();
         file.delete();
+
+       File file2 = new File("src/test/resources/json/Literatures.json");
+       file2.delete();
     }
 
 }

@@ -18,19 +18,19 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     @Override
-    public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) throws IOException {
+    public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) {
         litAdded.setId(generateIdLit(repository.getAll()));
         lit.add(litAdded);
-       List<Literature> allLit =  repository.getAll().stream().collect(Collectors.toList());
-       allLit.add(litAdded);
-       repository.setAll(allLit);
-       return lit;
+        List<Literature> allLit = new ArrayList<>(repository.getAll());
+        allLit.add(litAdded);
+        repository.setAll(allLit);
+        return lit;
     }
 
     @Override
-    public List<Literature> removeLiterature(int numberLit, List<Literature> lit) throws IOException {
-        int id = lit.get(numberLit-1).getId();
-        List<Literature> allLit =  repository.getAll().stream().collect(Collectors.toList());
+    public List<Literature> removeLiterature(int numberLit, List<Literature> lit) {
+        int id = lit.get(numberLit - 1).getId();
+        List<Literature> allLit = new ArrayList<>(repository.getAll());
         allLit.removeIf(literature -> literature.getId() == id);
         repository.setAll(allLit);
         if (lit.size() == 1) {
@@ -42,6 +42,6 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     public static int generateIdLit(List<Literature> literatures) {
-        return (literatures.stream().map(Literature::getId).max(Integer::compareTo).orElse(0))+1;
+        return (literatures.stream().map(Literature::getId).max(Integer::compareTo).orElse(0)) + 1;
     }
 }
