@@ -79,6 +79,7 @@ class ParserLecturesJSONTest {
     @Test
     @DisplayName("check if the file is lit")
     void parseLecturesJSON4() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
         newFileLectures.delete();
         newFileLiteratures.delete();
