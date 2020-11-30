@@ -4,14 +4,9 @@ import com.lms.spd.models.BookModel;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.parsers.ParserLecturesJSON;
 import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -21,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LiteratureRepositoryTest {
     private static File file = new File("src/test/resources/json/Lectures.json");
-    private  static File file2 = new File("src/test/resources/json/Literatures.json");
+    private static File file2 = new File("src/test/resources/json/Literatures.json");
 
 
     @Test
@@ -41,7 +36,7 @@ class LiteratureRepositoryTest {
 
         lR.setAll(literature);
 
-        assertEquals(literature,ParserLiteraturesJSON.parseLiteraturesFromJSON());
+        assertEquals(literature, ParserLiteraturesJSON.parseLiteraturesFromJSON());
         file.delete();
         file2.delete();
     }

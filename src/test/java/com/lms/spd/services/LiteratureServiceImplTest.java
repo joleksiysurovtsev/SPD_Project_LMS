@@ -21,10 +21,10 @@ class LiteratureServiceImplTest {
 
     @Test
     void addLiterature() throws IOException {
-        file2.delete();
-        file.delete();
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file2.delete();
+        file.delete();
 
         Literature book2 = new BookModel("Title", "Author", "Genre", 1986, 2);
 
@@ -43,10 +43,10 @@ class LiteratureServiceImplTest {
 
     @Test
     void removeLiterature() throws IOException {
-        file2.delete();
-        file.delete();
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file2.delete();
+        file.delete();
 
         LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
         //создали две книги
@@ -70,10 +70,10 @@ class LiteratureServiceImplTest {
 
     @Test
     void removeLiterature2(){
-        file2.delete();
-        file.delete();
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file2.delete();
+        file.delete();
         LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
         //создали две книги
         Literature book2 = new BookModel("Title2", "Author", "Genre", 1986, 1);

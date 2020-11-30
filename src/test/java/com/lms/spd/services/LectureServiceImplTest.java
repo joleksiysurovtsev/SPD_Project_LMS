@@ -26,17 +26,12 @@ class LectureServiceImplTest {
     private static File file = new File("src/test/resources/json/Lectures.json");
     private  static File file2 = new File("src/test/resources/json/Literatures.json");
 
-
-    @Before // Перед началом тестов создаём новый фаил с тестами
-    public void clearTheFileForTheTestingest() {
+    @Test
+    void getLectures() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
         file2.delete();
         file.delete();
-    }
-
-    @Test
-    void getLectures() {
         LectureServiceImpl lsImpl = new LectureServiceImpl();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
@@ -47,10 +42,16 @@ class LectureServiceImplTest {
 
         //ожидаем получить ту лекцию которую записали
         assertEquals(testListL, lsImpl.getLectures());
+        file2.delete();
+        file.delete();
     }
 
     @Test
     void setLectures() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file2.delete();
+        file.delete();
         LectureRepository pr = new LectureRepository();
         LectureServiceImpl lsImpl = new LectureServiceImpl();
         LectureIModel lectureIModel = new LectureIModel("testLect");
@@ -62,11 +63,16 @@ class LectureServiceImplTest {
 
         //expect to receive the lecture that we have attended
         assertEquals(testListL, pr.getAll());
+        file2.delete();
+        file.delete();
     }
 
     @Test
     void getSelectedLecture() throws NullLectureException {
-
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file2.delete();
+        file.delete();
         LectureServiceImpl lectureService = new LectureServiceImpl();
 
         LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2005, 10, 12), 1);
@@ -81,10 +87,16 @@ class LectureServiceImplTest {
         assertEquals(lectureIModel, lectureService.getSelectedLecture());
         lectureService.setSelectedLecture(2);
         assertEquals(lectureIModel2, lectureService.getSelectedLecture());
+        file2.delete();
+        file.delete();
     }
 
     @Test
     void addLecture() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file2.delete();
+        file.delete();
         //создали лекцию
         List<Literature> literature = new ArrayList<>();
         literature.add(new BookModel("Title", "author", "genre", 1986, 1));
@@ -111,10 +123,16 @@ class LectureServiceImplTest {
 
         List<Lecture> actuallist = ParserLecturesJSON.parseLecturesFromJSON();
         assertEquals(expectedlist, actuallist);
+        file2.delete();
+        file.delete();
     }
 
     @Test
     void removeLectures() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file2.delete();
+        file.delete();
         //создали лекцию
         List<Literature> literature = new ArrayList<>();
         literature.add(new BookModel("Title", "author", "genre", 1986, 1));
@@ -145,11 +163,8 @@ class LectureServiceImplTest {
 
         List<Lecture> actuallist = ParserLecturesJSON.parseLecturesFromJSON();
         assertEquals(expectedlist, actuallist);
+        file2.delete();
+        file.delete();
     }
 
-    @After
-    public void deleteFile() {
-       file.delete();
-       file2.delete();
-    }
 }

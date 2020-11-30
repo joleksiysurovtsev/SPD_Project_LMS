@@ -2,8 +2,6 @@ package com.lms.spd.repository.parsers;
 
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,17 +20,12 @@ class ParserLecturesJSONTest {
     private static File newFileLiteratures = new File("src/test/resources/json/Literatures.json");
 
 
-    @BeforeAll // Перед началом тестов создаём новый фаил с тестами
-    static void clearTheFileForTheTestingest() {
+    @Test
+    void parseLecturesJSON() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
         newFileLectures.delete();
         newFileLiteratures.delete();
-    }
-
-
-    @Test
-    void parseLecturesJSON() {
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
@@ -40,11 +33,17 @@ class ParserLecturesJSONTest {
         List<Lecture> resultListL = ParserLecturesJSON.parseLecturesFromJSON();
         //what we recorded what we got
         assertEquals(resultListL, testListL);
+        newFileLectures.delete();
+        newFileLiteratures.delete();
     }
 
 
     @Test
     void parseLecturesJSON2() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        newFileLectures.delete();
+        newFileLiteratures.delete();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
@@ -56,30 +55,36 @@ class ParserLecturesJSONTest {
             e.printStackTrace();
         }
         assertEquals("{\"@ class\":\"com.lms.spd.models.LectureIModel\",\"NameOfLecture\":\"testLect\",\"List literatures\":null,\"Date of lecture\":null,\"Lector Name\":null,\"Lecture type\":null,\"Lecture ID\":0}", line);
+        newFileLectures.delete();
+        newFileLiteratures.delete();
     }
 
 
     @Test
     @DisplayName("Checking if a blank sheet is returned")
     void parseLecturesJSON3() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
         newFileLectures.delete();
+        newFileLiteratures.delete();
+
         List<Lecture> resultListL = ParserLecturesJSON.parseLecturesFromJSON();
         List<Lecture> testListL = new ArrayList<>();
         assertEquals(testListL, resultListL);
+        newFileLectures.delete();
+        newFileLiteratures.delete();
+
     }
 
     @Test
     @DisplayName("check if the file is lit")
     void parseLecturesJSON4() {
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        newFileLectures.delete();
+        newFileLiteratures.delete();
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         File file = new File("src/test/resources/json/Lectures.json");
         assertEquals(ParserLecturesJSON.getFile(), file);
-    }
-
-
-    @AfterAll
-    @DisplayName("Delete files after each test")
-    static void deleteFile() {
         newFileLectures.delete();
         newFileLiteratures.delete();
     }
