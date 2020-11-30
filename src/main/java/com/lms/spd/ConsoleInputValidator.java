@@ -1,5 +1,8 @@
 package com.lms.spd;
 
+import com.lms.spd.exceptions.DateFormatException;
+import com.lms.spd.exceptions.ValidateInputException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +15,8 @@ public class ConsoleInputValidator {
 
 
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private static final String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2})$";
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     public static int readInt() {
         int number;
@@ -27,32 +32,54 @@ public class ConsoleInputValidator {
     }
 
     public static String readString() {
-        String line = null;
+        String line ="";
         try {
             line = reader.readLine();
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.err.println("Input wrong");
         }
         if (line.isEmpty()) return "Unknown";
         return line;
     }
 
     public static Calendar enterTheDate() {
-        System.out.println("Enter the lecture date for example: 19-10-1986");
-        Calendar d1 = new GregorianCalendar();
+        System.out.println("Enter the lecture date for example: 19-10-2020");
+        Calendar lectureDate = new GregorianCalendar();
         String dateInString;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         while (true) {
             dateInString = ConsoleInputValidator.readString();
             try {
-                sdf.setLenient(true);
-                d1.setTime(sdf.parse(dateInString));
+                lectureDate.setTime(DATE_FORMAT.parse(dateInString));
+                if (!dateInString.matches(LECTURE_DATE_REG_EXP)) {
+                    throw new DateFormatException("the date of the lecture cannot be later than 2000");
+                }
                 break;
+            } catch (DateFormatException f) {
+                System.err.println(f.getMessage());
             } catch (ParseException e) {
-                System.out.println("The date is entered incorrectly, try again");
+                System.err.println("The date is entered incorrectly, try again");
             }
         }
-        return d1;
+        return lectureDate;
     }
 
+    public static String readString(String validate) {
+        if (validate.equals("lectureName")) {
+            System.out.println("Enter the title of the lecture");
+        }
+        String line = null;
+        while (true) {
+            try {
+                line = reader.readLine();
+                if (validate.equals("lectureName") && line.isEmpty()) {
+                    throw new ValidateInputException("The lecture must have a title");
+                } else break;
+            } catch (IOException | ValidateInputException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+        assert line != null;
+        if (line.isEmpty()) return "Unknown";
+        return line;
+    }
 }

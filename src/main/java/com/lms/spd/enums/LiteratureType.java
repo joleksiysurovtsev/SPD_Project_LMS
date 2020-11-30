@@ -1,10 +1,17 @@
 package com.lms.spd.enums;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public enum LiteratureType {
     BOOK,
     JOURNAL_ARTICLE,
-    INTERNET_ARTICLE,
-    UNKNOWN;
+    INTERNET_ARTICLE;
+
+
+    public static Stream<LiteratureType> stream() {
+        return Arrays.stream(LiteratureType.values());
+    }
 
     public static LiteratureType getValueByNumber(int order){
         return order - 1 <= LectureType.values().length ? LiteratureType.values()[order - 1] : null;
@@ -17,4 +24,5 @@ public enum LiteratureType {
         }
         return list;
     }
+
 }

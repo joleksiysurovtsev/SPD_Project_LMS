@@ -1,5 +1,6 @@
 package com.lms.spd.models;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
@@ -9,13 +10,26 @@ import java.util.List;
 import java.util.Objects;
 
 public class LectureIModel implements Lecture {
+    @JSONField(name = "NAME OF LECTURE")
     private String nameOfLecture;
+
+    @JSONField(name = "NUMBER OF LECTURE")
     private int numberOfLecture;
+
+    @JSONField(name = "LIST LITERATURES")
     private List<Literature> literatures;
+
+    @JSONField(name = "LECTURE DATE", format = "dd/MM/yyyy")
     private Calendar lectureDate;
+
+    @JSONField(name = "LECTOR NAME")
     private String lectorName;
+
+    @JSONField(name = "LECTURE TYPE")
     private LectureType type;
 
+    @JSONField(name = "LECTURE ID")
+    private int id;
     //lecture constructor____________________________________________________________________________________________//
 
     public LectureIModel(String nameOfLecture) {
@@ -34,6 +48,16 @@ public class LectureIModel implements Lecture {
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
+    }
+
+    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate, int id) {
+        this.type = type;
+        this.nameOfLecture = nameOfLecture;
+        this.numberOfLecture = numberOfLecture;
+        this.literatures = literatures;
+        this.lectureDate = lectureDate;
+        this.lectorName = lectorName;
+        this.id = id;
     }
 
     //_______________________________________________________________________________________________________________//
@@ -98,6 +122,14 @@ public class LectureIModel implements Lecture {
         this.type = type;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     @Override
@@ -116,17 +148,27 @@ public class LectureIModel implements Lecture {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof LectureIModel)) return false;
+
         LectureIModel that = (LectureIModel) o;
-        return getNumberOfLecture() == that.getNumberOfLecture() &&
-                Objects.equals(getNameOfLecture(), that.getNameOfLecture()) &&
-                Objects.equals(getLiteratures(), that.getLiteratures()) &&
-                Objects.equals(getLectureDate(), that.getLectureDate()) &&
-                Objects.equals(getLectorName(), that.getLectorName()) &&
-                getType() == that.getType();
+
+        if (numberOfLecture != that.numberOfLecture) return false;
+        if (id != that.id) return false;
+        if (!Objects.equals(lectorName, that.lectorName)) return false;
+        if (!Objects.equals(literatures, that.literatures)) return false;
+        if (!Objects.equals(lectureDate, that.lectureDate)) return false;
+        if (!Objects.equals(nameOfLecture, that.nameOfLecture)) return false;
+        return type == that.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNameOfLecture(), getNumberOfLecture(), getLiteratures(), getLectureDate(), getLectorName(), getType());
+        int result = getNameOfLecture().hashCode();
+        result = 31 * result + getNumberOfLecture();
+        result = 31 * result + getLiteratures().hashCode();
+        result = 31 * result + getLectureDate().hashCode();
+        result = 31 * result + getLectorName().hashCode();
+        result = 31 * result + getType().hashCode();
+        result = 31 * result + getId();
+        return result;
     }
 }

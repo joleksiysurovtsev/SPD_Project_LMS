@@ -27,27 +27,15 @@ public class LectureValidator {
      * Returns the title of the lecture after checking that it is not empty.
      */
     private String createTheLectureTitle() {
-        String lectureName;
-        System.out.println("Enter the title of the lecture");
-        while (true) {
-            lectureName = ConsoleInputValidator.readString();
-            if (!lectureName.isEmpty()) {
-                break;
-            } else {
-                System.out.println("The lecture must have a title. Try again");
-            }
-        }
-        return lectureName;
+        return ConsoleInputValidator.readString("lectureName");
     }
 
     /**
      * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
-     * returns the title of the lecture after checking that it is not empty.
      */
     private String enterLektorName() {
         System.out.println("Enter lecturer name");
-        String lecturerName = ConsoleInputValidator.readString();
-        return lecturerName;
+        return ConsoleInputValidator.readString();
     }
 
     /**
@@ -57,16 +45,17 @@ public class LectureValidator {
     public LectureType selectLectureType() {
         System.out.println("Please, choose lecture type: ");
         IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
-        int number = 0;
+        LectureType lectureType;
         while (true) {
-            number = ConsoleInputValidator.readInt();
-            if (number > LectureType.values().length || number <= 0) {
+            int number = ConsoleInputValidator.readInt() - 1;
+            lectureType = LectureType.stream().filter(d -> d.ordinal() == number).findFirst().orElse(null);
+            if (lectureType == null) {
                 System.out.println("Unknown type: try again");
                 continue;
             }
             break;
         }
-        return LectureType.getValueByNumber(number);
+        return lectureType;
     }
 
 
@@ -100,17 +89,15 @@ public class LectureValidator {
         boolean flag = true;
         for (String item : numbToDisplay) {
             for (Lecture value : list) {
-                int numb = value.getNumberOfLecture();
-                if (numb == Integer.parseInt(item)) {
+                if (value.getNumberOfLecture() == Integer.parseInt(item)) {
                     flag = false;
                     stringContains.append(" ").append(item).append(" ");
                     break;
                 }
             }
         }
-        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
         System.out.println(stringContains.toString());
+        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
         return numbToDisplay;
     }
-
 }

@@ -12,7 +12,7 @@ class JournalArticleModelTest {
     void print() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        assertEquals(" Article: This keyword {in examples} In the journal java world Journal №: 5 "+sdf.format(journalArticle.getDateResourceWasAdded().getTime()), journalArticle.print());
+        assertEquals(" Article: This keyword {in examples} In the journal java world Journal №: 5 "+sdf.format(journalArticle.getDateResourceWasAdded().getTime())+" ID 0", journalArticle.print());
     }
 
     @Test

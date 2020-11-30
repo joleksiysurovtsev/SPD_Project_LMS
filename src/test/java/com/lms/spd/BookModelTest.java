@@ -13,7 +13,7 @@ class BookModelTest {
     void print() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         BookModel testBook = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
-        assertEquals(" Book: Философия Java Author: Брюс Эккель Genre: Computer Science Publishing in: 2015year\t Date the resource was added: "+sdf.format(testBook.getDateResourceWasAdded().getTime()), testBook.print());
+        assertEquals(" Book: Философия Java Author: Брюс Эккель Genre: Computer Science Publishing in: 2015year\t Date the resource was added: "+sdf.format(testBook.getDateResourceWasAdded().getTime())+" ID 0", testBook.print());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.lms.spd;
 
-import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.exceptions.ListIsEmptyException;
+import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
@@ -8,8 +9,6 @@ import com.lms.spd.services.interfaces.LectureService;
 import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-
 
 public class LMSTerminal {
     public static LecturesCache cash = new LecturesCache();
@@ -43,8 +42,10 @@ public class LMSTerminal {
                     startLMS();
                     break;
             }
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
+            print.showStartMenu();
+        } catch (ListIsEmptyException | IOException e) {
+            System.err.println(e.getMessage());
+            startLMS();
         }
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -52,7 +53,7 @@ public class LMSTerminal {
     /**
      * point 1 main menu: view a list of lectures
      */
-    private void point1MainMenuShowLectures()  {
+    private void point1MainMenuShowLectures() throws ListIsEmptyException {
         print.printMenuPoint1();
         String choice = ConsoleInputValidator.readString();
         switch (choice.toLowerCase()) {
@@ -70,9 +71,11 @@ public class LMSTerminal {
                 print.printLectureListByType(lectureValidator.selectLectureType(lectureValidator.arrayLecturesTypesInvolved(lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
                 break;
             case "date":
-                cash.setCurentDate(ConsoleInputValidator.enterTheDate());
+                cash.setCurrentDate(ConsoleInputValidator.enterTheDate());
                 print.printAllLectureTable(cash.returnList());
                 break;
+            case "exit":
+                startLMS();
             default:
                 print.printErrMassage(1);
                 point1MainMenuShowLectures();
@@ -143,7 +146,8 @@ public class LMSTerminal {
                 point3MainMenuRemovalLecture();
                 break;
             case "-":
-                return;
+                startLMS();
+                break;
             case "EXIT":
                 System.exit(0);
                 break;
@@ -168,7 +172,11 @@ public class LMSTerminal {
                 System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
                 point4MainMenuChoiceOfLecture();
             } else {
-                lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
+                try {
+                    lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
+                } catch (NullLectureException e) {
+                    System.err.println("List lecture is empty");
+                }
                 System.out.println("Selected lecture: ");
                 System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
                 print.printLectureTable(lectureServiceImpl.getSelectedLecture());
@@ -199,7 +207,8 @@ public class LMSTerminal {
                 point4_5showLectureInfo();
                 break;
             case 6:
-                return;
+                startLMS();
+                break;
             default:
                 print.printErrMassage(1);
                 subMenu2Point4();
@@ -208,23 +217,23 @@ public class LMSTerminal {
     }
 
     private void point4_2ViewListOfLit() throws IOException {
-        print.printListLit(lectureServiceImpl.getSelectedLecture());
-        System.out.println("what do we do with the bibliography");
+       print.printListLit(lectureServiceImpl.getSelectedLecture());
+       System.out.println("what do we do with the bibliography");
         print.showFourthMenu();
         subMenu2Point4();
     }
 
     private void point4_3AddLit() throws IOException {
-        Literature newLit = literatureValidator.createLit();
+        Literature newLit = literatureValidator.createLiterature();
         if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)) {
             System.out.println("this literature is already there");
         } else {
             literatureServiceImpl.addLiterature(newLit, lectureServiceImpl.getSelectedLecture().getLiteratures());
             System.out.println("Book added what to do next");
         }
-        System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
-                "you will return to the lecture selection menu, to complete the work, exit ");
         while (true) {
+            System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
+                    "you will return to the lecture selection menu, to complete the work, exit ");
             switch (ConsoleInputValidator.readString().toUpperCase()) {
                 case "+":
                     point4_3AddLit();
@@ -239,7 +248,6 @@ public class LMSTerminal {
                     print.printErrMassage(1);
                     break;
             }
-            break;
         }
     }
 
@@ -273,25 +281,13 @@ public class LMSTerminal {
             default:
                 print.printErrMassage(1);
                 System.out.println("please choice from the offered");
+                subMenuPoint4_4DeleteLit();
                 break;
         }
     }
 
     private void point4_5showLectureInfo() throws IOException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        Lecture lecture = lectureServiceImpl.getSelectedLecture();
-        StringBuilder lectureInfo = new StringBuilder("Lecture: №" + lecture.getNumberOfLecture() + " " + lecture.getNameOfLecture() + " \n");
-        if (!lecture.getLectorName().isEmpty() || lecture.getLectorName() != null) {
-            lectureInfo.append("The lecture is lecturing by: ").append(lecture.getLectorName()).append("\n");
-        }
-        if (lecture.getLectureDate() != null) {
-            lectureInfo.append("Lecture date: ").append(sdf.format(lecture.getLectureDate().getTime()));
-        }
-        if (lecture.getType() != null) {
-            lectureInfo.append(" Lecture Type: ").append(lecture.getType());
-        }
-        System.out.println(lectureInfo);
-        print.printListLit(lecture);
+        print.showAllLectureInfo(lectureServiceImpl.getSelectedLecture());
         print.showFourthMenu();
         subMenu2Point4();
     }

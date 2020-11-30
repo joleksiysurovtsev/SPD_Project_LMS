@@ -14,6 +14,7 @@ public class InternetArticleModel implements Literature {
     private String urlAddress;
     private Calendar dateResourceWasAdded;
     private LiteratureType type;
+    private int id;
 
     public InternetArticleModel(String title, String author, String urlAddress) {
         setAuthor(author);
@@ -60,10 +61,23 @@ public class InternetArticleModel implements Literature {
         this.type = type;
     }
 
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String print() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-        StringBuilder printString = new StringBuilder(" Internet articles: " + getTitle() + " Author: " + getAuthor()+ " Date the resource was added: " + sdf.format(getDateResourceWasAdded().getTime()));
+        StringBuilder printString = new StringBuilder(" Internet articles: " + getTitle()
+                + " Author: " + getAuthor() + " Date the resource was added: "
+                + sdf.format(getDateResourceWasAdded().getTime())).append(" ID ").append(getId());
         if (!urlAddress.equals("Unknown")) {
             printString.append(" Web address: ").append(urlAddress);
         }

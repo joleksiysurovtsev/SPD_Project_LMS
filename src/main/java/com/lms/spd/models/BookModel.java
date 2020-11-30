@@ -15,6 +15,17 @@ public class BookModel implements Literature {
     private int publishedInYear;
     private LiteratureType type;
     private Calendar dateResourceWasAdded;
+    private int id;
+
+    public BookModel(String title, String author, String genre, int publishedInYear,int id) {
+        this.genre = genre;
+        this.publishedInYear = publishedInYear;
+        setTitle(title);
+        setAuthor(author);
+        this.dateResourceWasAdded = GregorianCalendar.getInstance();
+        this.id = id;
+    }
+
 
     public BookModel(String title, String author, String genre, int publishedInYear) {
         this.genre = genre;
@@ -58,9 +69,20 @@ public class BookModel implements Literature {
     public Calendar getDateResourceWasAdded() {
         return dateResourceWasAdded;
     }
+
     @Override
     public void setDateResourceWasAdded(Calendar dateResourceWasAdded) {
         this.dateResourceWasAdded = dateResourceWasAdded;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getGenre() {
@@ -91,7 +113,8 @@ public class BookModel implements Literature {
         if (publishedInYear != 0) {
             printString.append(" Publishing in: ").append(publishedInYear).append("year");
         }
-        printString.append("\t"+ " Date the resource was added: " + sdf.format(getDateResourceWasAdded().getTime()));
+        printString.append("\t" + " Date the resource was added: ")
+                .append(sdf.format(getDateResourceWasAdded().getTime())).append(" ID ").append(getId());
         return printString.toString();
     }
 

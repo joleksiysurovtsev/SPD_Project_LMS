@@ -14,6 +14,7 @@ public class JournalArticleModel implements Literature {
     private String titleOfArticle;
     private int issueOfTheJournal;
     private LiteratureType type;
+    private int id;
 
     @Override
     public Calendar getDateResourceWasAdded() {
@@ -81,6 +82,17 @@ public class JournalArticleModel implements Literature {
         this.issueOfTheJournal = issueOfTheJournal;
     }
 
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
     @Override
@@ -94,7 +106,7 @@ public class JournalArticleModel implements Literature {
         if (issueOfTheJournal != 0) {
             printString.append(" Journal №: ").append(issueOfTheJournal);
         }
-        printString.append(" "+sdf.format(getDateResourceWasAdded().getTime()));
+        printString.append(" ").append(sdf.format(getDateResourceWasAdded().getTime())).append(" ID ").append(getId());
 
         return printString.toString();
     }
