@@ -7,6 +7,7 @@ import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -42,6 +43,12 @@ class LiteratureRepositoryTest {
     void getAllTests() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        try {
+            file.createNewFile();
+            file2.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
         Calendar calendar = new GregorianCalendar(2020, 02, 19);
         booktest.setDateResourceWasAdded(calendar);
