@@ -17,4 +17,6 @@ class UtilTest {
         int[] expected = null;
         assertArrayEquals(expected, Util.getStringsNumberLecture(""));
     }
+
+
 }
