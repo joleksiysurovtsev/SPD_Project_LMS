@@ -8,26 +8,21 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LectureRepositoryTest {
-    private static File file = new File("src/main/resources/json/Lectures.json");
+    private static File newfileLectures = new File("src/test/resources/json/Lectures.json");
+    private static File newFileLiteratures = new File("src/test/resources/json/Literatures.json");
+
     @BeforeAll // Перед началом тестов создаём новый фаил с тестами
     static void clearTheFileForTheTestingest() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        file.delete();
-        if (!file.exists()) {
-            try {
-                Files.createFile(file.toPath());
-            } catch (IOException e) {
-                System.err.println("unable to create file");
-            }
-        }
+        ParserLecturesJSON.seturl("src/test/resources/json/Literatures.json");
+        newfileLectures.delete();
+        newFileLiteratures.delete();
     }
 
 
@@ -46,7 +41,8 @@ class LectureRepositoryTest {
 
     @AfterAll
     static void deleteFile() {
-        file.delete();
+        newfileLectures.delete();
+        newFileLiteratures.delete();
     }
 
 }

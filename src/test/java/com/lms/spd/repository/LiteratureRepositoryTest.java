@@ -20,24 +20,17 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LiteratureRepositoryTest {
-    private static File file = new File("src/test/resources/json/Literatures.json");
-
-    @BeforeAll // Перед началом тестов создаём новый фаил с тестами
-    static void clearTheFileForTheTestingest() {
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file.delete();
-        if (!file.exists()) {
-            try {
-                Files.createFile(file.toPath());
-            } catch (IOException e) {
-                System.err.println("unable to create file");
-            }
-        }
-    }
+    private static File file = new File("src/test/resources/json/Lectures.json");
+    private  static File file2 = new File("src/test/resources/json/Literatures.json");
 
 
     @Test
     void setAllTest() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLecturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file.delete();
+        file2.delete();
+
         LiteratureRepository lR = new LiteratureRepository();
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
         Calendar calendar = new GregorianCalendar(2020, 02, 19);
@@ -48,18 +41,18 @@ class LiteratureRepositoryTest {
 
         lR.setAll(literature);
 
-        String line = null;
-        try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
-            line = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         assertEquals(literature,ParserLiteraturesJSON.parseLiteraturesFromJSON());
+        file.delete();
+        file2.delete();
     }
 
     @Test
     void getAllTests() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLecturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file.delete();
+        file2.delete();
+
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
         Calendar calendar = new GregorianCalendar(2020, 02, 19);
         booktest.setDateResourceWasAdded(calendar);
@@ -68,10 +61,7 @@ class LiteratureRepositoryTest {
         LiteratureRepository lR = new LiteratureRepository();
         lR.setAll(literature);
         assertEquals(literature, lR.getAll());
-    }
-
-    @AfterAll
-    static void deleteFile() {
         file.delete();
+        file2.delete();
     }
 }

@@ -8,6 +8,7 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.repository.parsers.ParserLecturesJSON;
+import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -22,24 +23,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LectureServiceImplTest {
-    private static File file = new File("src/main/resources/json/Lectures.json");
+    private static File file = new File("src/test/resources/json/Lectures.json");
+    private  static File file2 = new File("src/test/resources/json/Literatures.json");
+
 
     @Before // Перед началом тестов создаём новый фаил с тестами
     public void clearTheFileForTheTestingest() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        file2.delete();
         file.delete();
-        if (!file.exists()) {
-            try {
-                Files.createFile(file.toPath());
-            } catch (IOException e) {
-                System.err.println("unable to create file");
-            }
-        }
     }
 
     @Test
     void getLectures() {
-
         LectureServiceImpl lsImpl = new LectureServiceImpl();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
@@ -152,7 +149,7 @@ class LectureServiceImplTest {
 
     @After
     public void deleteFile() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        file.delete();
+       file.delete();
+       file2.delete();
     }
 }
