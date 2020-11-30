@@ -69,21 +69,22 @@ class LectureServiceImplTest {
 
     @Test
     void getSelectedLecture() throws NullLectureException {
+        LectureServiceImpl lectureService = new LectureServiceImpl();
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
         file2.delete();
         file.delete();
-        LectureServiceImpl lectureService = new LectureServiceImpl();
 
         LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2005, 10, 12), 1);
-        LectureIModel lectureIModel2 = new LectureIModel(LectureType.JAVA_CORE, "TestL2", null, "testLector", new GregorianCalendar(2005, 10, 12), 2);
+        LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON, "TestL2", null, "testLector", new GregorianCalendar(2005, 10, 12), 2);
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
         testListL.add(lectureIModel2);
+        ParserLecturesJSON.parseLecturesInJSON(testListL);
 
-        lectureService.setLectures(testListL);
 
         lectureService.setSelectedLecture(1);
+
         assertEquals(lectureIModel, lectureService.getSelectedLecture());
         lectureService.setSelectedLecture(2);
         assertEquals(lectureIModel2, lectureService.getSelectedLecture());
@@ -98,31 +99,18 @@ class LectureServiceImplTest {
         file2.delete();
         file.delete();
         //создали лекцию
-        List<Literature> literature = new ArrayList<>();
-        literature.add(new BookModel("Title", "author", "genre", 1986, 1));
-        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2020, 01, 4), 1);
+        LectureIModel lectureByTest = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2020, 01, 4), 1);
         List<Lecture> lectures = new ArrayList<>();
-        lectures.add(lectureIModel);
+        lectures.add(lectureByTest);
 
         //записал лекцию в фаил
         ParserLecturesJSON.parseLecturesInJSON(lectures);
 
-        //создал вторую лекцию
-        List<Literature> literature2 = new ArrayList<>();
-        literature2.add(new BookModel("Title2", "author2", "genre", 1986, 2));
-        LectureIModel lectureIModel2 = new LectureIModel(LectureType.JAVA_CORE, "TestL1", literature2, "testLector", new GregorianCalendar(2020, 01, 4), 2);
-
-        //добавил её к лекциям
-        LectureServiceImpl lectureService = new LectureServiceImpl();
-        lectureService.addLecture(lectureIModel2);
-
-        //ожидаем лист из двух лекций
+        //ожидаем лист из одной лекций
         List<Lecture> expectedlist = new ArrayList<>();
-        expectedlist.add(lectureIModel);
-        expectedlist.add(lectureIModel2);
+        expectedlist.add(lectureByTest);
 
-        List<Lecture> actuallist = ParserLecturesJSON.parseLecturesFromJSON();
-        assertEquals(expectedlist, actuallist);
+        assertEquals(expectedlist, ParserLecturesJSON.parseLecturesFromJSON());
         file2.delete();
         file.delete();
     }

@@ -11,21 +11,25 @@ import java.util.List;
 import java.util.TimeZone;
 
 public class ParserLecturesJSON {
+    private static File file = new File("src/main/resources/json/Lectures.json");
+    private static ObjectMapper mapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
 
     public static File getFile() {
         return file;
     }
 
-
+    /**
+     * set the path to the file with which we will work
+     */
     public static void seturl(String url) {
         ParserLecturesJSON.file = new File(url);
     }
 
-    private static File file = new File("src/main/resources/json/Lectures.json");
-    private static ObjectMapper mapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
-
-    public static void parseLecturesInJSON(List<Lecture> lectures)  {
-        //если файла нет то создаём его
+    /**
+     * method for writing lectures to JSON file
+     */
+    public static void parseLecturesInJSON(List<Lecture> lectures) {
+        //check if the file exists if not then create it
         if (!file.exists()) {
             try {
                 Files.createFile(file.toPath());
@@ -33,20 +37,11 @@ public class ParserLecturesJSON {
                 System.err.println("unable to create file");
             }
         }
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(file.getPath());
-        } catch (FileNotFoundException e) {
-            System.err.println("unable to create stream");
-        }
-        try {
-            try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8))) {
-                for (Lecture lect : lectures) {
-                    String JSONString = mapper.writeValueAsString(lect);
-                    myWriter.write(JSONString);
-                    myWriter.write("\n");
-                    myWriter.flush();
-                }
+        //creating a stream from a file
+        try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file.getPath()), StandardCharsets.UTF_8))) {
+            for (Lecture lect : lectures) {
+                myWriter.write(mapper.writeValueAsString(lect) + "\n");
+                myWriter.flush();
             }
         } catch (IOException e) {
             System.err.println("failed to write to file");
@@ -55,17 +50,15 @@ public class ParserLecturesJSON {
 
 
     public static List<Lecture> parseLecturesFromJSON() {
-        //если файла нет то создаём его
+        //check if the file exists if not then create it
+        List<Lecture> lect = new ArrayList<>();
         if (!file.exists()) {
-            System.err.println("No data file, creating new");
             try {
                 Files.createFile(file.toPath());
             } catch (IOException e) {
                 System.err.println("Unable to create file");
             }
         }
-        List<Lecture> lect = new ArrayList<>();
-
         try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
             String line = reader.readLine();
             while (line != null) {

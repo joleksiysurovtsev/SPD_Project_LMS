@@ -26,17 +26,20 @@ class LiteratureRepositoryTest {
     void setAllTest() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        if (!file.exists()) {
-            try {
-                Files.createFile(file.toPath());
-                Files.createFile(file2.toPath());
-            } catch (IOException e) {
-                System.err.println("Unable to create file");
-            }
+        file.delete();
+        file2.delete();
+        try {
+            file.createNewFile();
+            file2.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         LiteratureRepository lR = new LiteratureRepository();
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
-        booktest.setDateResourceWasAdded(new GregorianCalendar(2020, 02, 19));
+        booktest.setDateResourceWasAdded(new
+
+                GregorianCalendar(2020, 02, 19));
 
         List<Literature> literature = new ArrayList<>();
         literature.add(booktest);
@@ -45,7 +48,7 @@ class LiteratureRepositoryTest {
 
         List<Literature> literature2 = ParserLiteraturesJSON.parseLiteraturesFromJSON();
 
-        assertTrue(literature.equals(literature2) );
+        assertTrue(literature.equals(literature2));
         file.delete();
         file2.delete();
     }
@@ -68,7 +71,7 @@ class LiteratureRepositoryTest {
         LiteratureRepository lR = new LiteratureRepository();
         lR.setAll(literature);
 
-     //   assertEquals(literature, lR.getAll());
+        //   assertEquals(literature, lR.getAll());
         file.delete();
         file2.delete();
     }
