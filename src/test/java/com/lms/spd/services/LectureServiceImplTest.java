@@ -11,6 +11,8 @@ import com.lms.spd.repository.parsers.ParserLecturesJSON;
 import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
 import com.lms.spd.services.interfaces.LectureService;
 import jdk.jfr.Description;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
@@ -22,16 +24,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LectureServiceImplTest {
-    private static File file = new File("src/test/resources/json/Lectures.json");
-    private static File file2 = new File("src/test/resources/json/Literatures.json");
-
-    @Description("a method for cleaning files for tests " +
-            "and also sets the path to a file in the test directory for the parser")
-    private static void clearFiles() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file2.delete();
-        file.delete();
+    @AfterEach
+    @BeforeEach
+    public void cleanUpFiles() {
+        File targetFile = new File("src/test/resources/json/Lectures.json");
+        File targetFile2 = new File("src/test/resources/json/Literatures.json");
+        targetFile.delete();
+        targetFile2.delete();
+        ParserLecturesJSON.seturl("src/test/resources/json/");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
 
     @Test
@@ -39,7 +40,6 @@ class LectureServiceImplTest {
     @Description("Test method to get all lectures: " +
             "Should get the entire list of lectures that have been written to a JSON file")
     void getLectures() {
-        clearFiles();
         LectureServiceImpl lsImpl = new LectureServiceImpl();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         LectureIModel lectureIModel2 = new LectureIModel("testLect2");
@@ -59,7 +59,6 @@ class LectureServiceImplTest {
     @Order(32)
     @Description("The method should send the entire list of lectures for writing in a JSON file")
     void setLectures() {
-        clearFiles();
         LectureServiceImpl lsImpl = new LectureServiceImpl();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
@@ -76,7 +75,6 @@ class LectureServiceImplTest {
     @Order(33)
     @Description("Test method that should return a lecture by its ID number")
     void getSelectedLecture() {
-        clearFiles();
         //created a lecture list
         LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 1);
         LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON, "TestL2", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 2);
@@ -99,7 +97,6 @@ class LectureServiceImplTest {
     @Order(34)
     @Description("Testing adding lectures to a JSON file")
     void addLecture() {
-        clearFiles();
         //created a lecture added it to the list
         LectureIModel lectureByTest = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2020, 01, 4), 1);
 
@@ -113,7 +110,7 @@ class LectureServiceImplTest {
     @Test
     @Order(35)
     void removeLectures() {
-        clearFiles();
+
         //создали лекцию
         List<Literature> literature = new ArrayList<>();
         literature.add(new BookModel("Title", "author", "genre", 1986, 1));

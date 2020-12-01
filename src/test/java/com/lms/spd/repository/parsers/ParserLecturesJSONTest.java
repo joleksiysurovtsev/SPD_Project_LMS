@@ -2,14 +2,13 @@ package com.lms.spd.repository.parsers;
 
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +16,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ParserLecturesJSONTest {
 
-    private static File newFileLectures = new File("src/test/resources/json/Lectures.json");
-    private static File newFileLiteratures = new File("src/test/resources/json/Literatures.json");
-
-    private static void clearFiles() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        newFileLectures.delete();
-        newFileLiteratures.delete();
+    @AfterEach
+    @BeforeEach
+    public void cleanUpFiles() {
+        File targetFile = new File("src/test/resources/json/Lectures.json");
+        File targetFile2 = new File("src/test/resources/json/Literatures.json");
+        targetFile.delete();
+        targetFile2.delete();
+        ParserLecturesJSON.seturl("src/test/resources/json/");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
 
     @Test
     @Order(21)
     void parseLecturesJSON() {
-        clearFiles();
+
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
@@ -44,18 +44,12 @@ class ParserLecturesJSONTest {
     @Test
     @Order(22)
     void parseLecturesJSON2() {
-        clearFiles();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
         ParserLecturesJSON.parseLecturesInJSON(testListL);
-        String line = null;
-        try (BufferedReader reader = Files.newBufferedReader(newFileLectures.toPath())) {
-            line = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assertEquals("{\"@ class\":\"com.lms.spd.models.LectureIModel\",\"NameOfLecture\":\"testLect\",\"List literatures\":null,\"Date of lecture\":null,\"Lector Name\":null,\"Lecture type\":null,\"Lecture ID\":0}", line);
+
+        assertEquals(testListL, ParserLecturesJSON.parseLecturesFromJSON());
     }
 
 
@@ -63,7 +57,6 @@ class ParserLecturesJSONTest {
     @Order(23)
     @DisplayName("Checking if a blank sheet is returned")
     void parseLecturesJSON3() {
-        clearFiles();
         List<Lecture> resultListL = ParserLecturesJSON.parseLecturesFromJSON();
         List<Lecture> testListL = new ArrayList<>();
         assertEquals(testListL, resultListL);
@@ -73,8 +66,8 @@ class ParserLecturesJSONTest {
     @Order(24)
     @DisplayName("check if the file is lit")
     void parseLecturesJSON4() {
-        clearFiles();
-        File file = new File("src/test/resources/json/Lectures.json");
-        assertEquals(ParserLecturesJSON.getFile(), file);
+
+        String url = "src/test/resources/json/";
+        assertEquals(url, ParserLecturesJSON.getDirName());
     }
 }

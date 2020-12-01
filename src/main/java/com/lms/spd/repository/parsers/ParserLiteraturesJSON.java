@@ -1,55 +1,72 @@
 package com.lms.spd.repository.parsers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
 public class ParserLiteraturesJSON {
-    private static File file = new File("src/main/resources/json/Literatures.json");
+
+    private static String DIR_NAME = "src/main/resources/json/";
+    private static String FILE_NAME = "Literatures.json";
+
     private static final ObjectMapper mapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
 
-    public static File getFile() {
-        return file;
-    }
-
+    /**
+     * set the path to the file directory with which we will work
+     */
     public static void seturl(String url) {
-        ParserLiteraturesJSON.file = new File(url);
+        ParserLiteraturesJSON.DIR_NAME = url;
     }
 
-    public static void parseLiteraturesInJSON(List<Literature> lit) {
+    public static void parseLiteraturesInJSON(List<Literature> literature) {
         //if there is no file then create it
-        if (!file.exists()) {
-            try {
-                Files.createFile(file.toPath());
-            } catch (IOException e) {
-                System.err.println("Unable to create file");
+        try {
+            if (Files.notExists(Path.of(DIR_NAME))) {
+                Files.createDirectories(Path.of(DIR_NAME));
             }
-        }
-        try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file.getPath()))) {
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(bufferedOutputStream, StandardCharsets.UTF_8));
-            for (Literature literature : lit) {
-                bufferedWriter.write(mapper.writeValueAsString(literature)+"\n");
-                bufferedWriter.flush();
+            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
+                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
             }
         } catch (IOException e) {
-            System.out.println("File write error");
+            System.out.println("unable to create file");
+        }
+
+        try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DIR_NAME + FILE_NAME), StandardCharsets.UTF_8)))  {
+            StringBuilder stringBuilderEntity = new StringBuilder("");
+            for (Literature lit : literature) {
+                stringBuilderEntity.append(mapper.writeValueAsString(lit) + "\n");
+            }
+            myWriter.write(stringBuilderEntity.toString());
+            myWriter.flush();
+        } catch (IOException e) {
+            System.out.println("Failed to write to file");
         }
     }
 
 
     public static List<Literature> parseLiteraturesFromJSON() {
         List<Literature> lect = new ArrayList<>();
-        if (!file.exists()) {
-            return new ArrayList<>();
+        try {
+            if (Files.notExists(Path.of(DIR_NAME))) {
+                Files.createDirectories(Path.of(DIR_NAME));
+            }
+            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
+                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
+                return lect = new ArrayList<>();
+            }
+        } catch (IOException e) {
+            System.out.println("unable to create file");
         }
-        try (ReaderWrapper mywrapper = new ReaderWrapper(new InputStreamReader(new FileInputStream(file)))) {
+        try (ReaderWrapper mywrapper = new ReaderWrapper(new InputStreamReader(new FileInputStream(new File(DIR_NAME + FILE_NAME))))) {
             String line = mywrapper.readLine();
             while (line != null) {
                 lect.add(mapper.readValue(line, Literature.class));

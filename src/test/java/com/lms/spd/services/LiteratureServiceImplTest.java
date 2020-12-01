@@ -5,6 +5,8 @@ import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.parsers.ParserLecturesJSON;
 import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
 import jdk.jfr.Description;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
@@ -15,16 +17,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LiteratureServiceImplTest {
-    private static File file = new File("src/test/resources/json/Lectures.json");
-    private static File file2 = new File("src/test/resources/json/Literatures.json");
-
-    @Description("a method for cleaning files for tests " +
-            "and also sets the path to a file in the test directory for the parser")
-    private static void clearFiles() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file2.delete();
-        file.delete();
+    @AfterEach
+    @BeforeEach
+    public void cleanUpFiles() {
+        File targetFile = new File("src/test/resources/json/Lectures.json");
+        File targetFile2 = new File("src/test/resources/json/Literatures.json");
+        targetFile.delete();
+        targetFile2.delete();
+        ParserLecturesJSON.seturl("src/test/resources/json/");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
 
 
@@ -34,7 +35,6 @@ class LiteratureServiceImplTest {
             " to which you need to add the same literature, at the output we get the list of references " +
             "+ the one that was added")
     void addLiterature() {
-        clearFiles();
         LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
         //test List
         Literature book1 = new BookModel("Title", "Author", "Genre", 1986, 1);
@@ -51,7 +51,6 @@ class LiteratureServiceImplTest {
     @Description("The number of literature is passed to the input to the method and the list of references itself," +
             " at the output, we get a list without one literature")
     void removeLiterature() {
-        clearFiles();
         LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
         //test List
         List<Literature> literatureList = new ArrayList<>();

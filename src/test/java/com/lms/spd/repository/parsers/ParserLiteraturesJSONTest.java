@@ -2,6 +2,8 @@ package com.lms.spd.repository.parsers;
 
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.interfaces.Literature;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import java.io.File;
@@ -11,20 +13,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParserLiteraturesJSONTest {
-    private static File newFileLectures = new File("src/test/resources/json/Lectures.json");
-    private static File newFileLiteratures = new File("src/test/resources/json/Literatures.json");
 
-    private static void clearFiles() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        newFileLectures.delete();
-        newFileLiteratures.delete();
+    @AfterEach
+    @BeforeEach
+    public void cleanUpFiles() {
+        File targetFile = new File("src/test/resources/json/Lectures.json");
+        File targetFile2 = new File("src/test/resources/json/Literatures.json");
+        targetFile.delete();
+        targetFile2.delete();
+        ParserLecturesJSON.seturl("src/test/resources/json/");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
+
+
 
     @Test
     @Order(25)
     void parseLiteratureJSON() {
-        clearFiles();
+
         Literature literature = new BookModel("testBook","testautor","testgenre",1999,1);
         List<Literature> testListL = new ArrayList<>();
         testListL.add(literature);
@@ -36,7 +42,7 @@ class ParserLiteraturesJSONTest {
     @Test
     @Order(26)
     void parseLiteratureJSON3() {
-        clearFiles();
+
         List<Literature> resultListL = ParserLiteraturesJSON.parseLiteraturesFromJSON();
         List<Literature> testListL = new ArrayList<>();
         assertEquals(testListL, resultListL);
@@ -45,8 +51,7 @@ class ParserLiteraturesJSONTest {
     @Test
     @Order(27)
     void parseLiteratureJSON4() {
-        clearFiles();
-        File file = new File("src/test/resources/json/Literatures.json");
-        assertEquals(ParserLiteraturesJSON.getFile(), file);
+        String url = "src/test/resources/json/";
+        assertEquals(url, ParserLecturesJSON.getDirName());
     }
 }

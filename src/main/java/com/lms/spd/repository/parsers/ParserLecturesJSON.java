@@ -6,23 +6,26 @@ import com.lms.spd.models.interfaces.Lecture;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
 public class ParserLecturesJSON {
-    private static File file = new File("src/main/resources/json/Lectures.json");
+
+    private static String DIR_NAME = "src/main/resources/json/";
+    private static String FILE_NAME = "Lectures.json";
     private static ObjectMapper mapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
 
-    public static File getFile() {
-        return file;
+    public static String getDirName() {
+        return DIR_NAME;
     }
 
     /**
-     * set the path to the file with which we will work
+     * set the path to the file directory with which we will work
      */
     public static void seturl(String url) {
-        ParserLecturesJSON.file = new File(url);
+        ParserLecturesJSON.DIR_NAME = url;
     }
 
     /**
@@ -30,23 +33,28 @@ public class ParserLecturesJSON {
      */
     public static void parseLecturesInJSON(List<Lecture> lectures) {
         //check if the file exists if not then create it
-        if (!file.exists()) {
-            try {
-                Files.createFile(file.toPath());
-            } catch (IOException e) {
-                System.err.println("unable to create file");
+        try {
+            if (Files.notExists(Path.of(DIR_NAME))) {
+                Files.createDirectories(Path.of(DIR_NAME));
             }
+            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
+                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
+            }
+        } catch (IOException e) {
+            System.out.println("unable to create file");
         }
+
         //creating a stream from a file
-        StringBuilder s = new StringBuilder("");
-        try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file.getPath()), StandardCharsets.UTF_8))) {
+        
+        try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DIR_NAME + FILE_NAME), StandardCharsets.UTF_8))) {
+            StringBuilder stringBuilderEntity = new StringBuilder("");
             for (Lecture lect : lectures) {
-                s.append(mapper.writeValueAsString(lect) + "\n");
+                stringBuilderEntity.append(mapper.writeValueAsString(lect) + "\n");
             }
-            myWriter.write(s.toString());
+            myWriter.write(stringBuilderEntity.toString());
             myWriter.flush();
         } catch (IOException e) {
-            System.err.println("failed to write to file");
+            System.err.println("Failed to write to file");
         }
     }
 
@@ -54,14 +62,19 @@ public class ParserLecturesJSON {
     public static List<Lecture> parseLecturesFromJSON() {
         //check if the file exists if not then create it
         List<Lecture> lect = new ArrayList<>();
-        if (!file.exists()) {
-            try {
-                Files.createFile(file.toPath());
-            } catch (IOException e) {
-                System.err.println("Unable to create file");
+        try {
+            if (Files.notExists(Path.of(DIR_NAME))) {
+                Files.createDirectories(Path.of(DIR_NAME));
             }
+            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
+                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
+                return lect = new ArrayList<>();
+            }
+        } catch (IOException e) {
+            System.out.println("unable to create file");
         }
-        try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+
+        try (BufferedReader reader = Files.newBufferedReader(Path.of(DIR_NAME + FILE_NAME))) {
             String line = reader.readLine();
             while (line != null) {
                 lect.add(mapper.readValue(line, Lecture.class));
