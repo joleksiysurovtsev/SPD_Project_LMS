@@ -29,16 +29,7 @@ public class ParserLiteraturesJSON {
 
     public static void parseLiteraturesInJSON(List<Literature> literature) {
         //if there is no file then create it
-        try {
-            if (Files.notExists(Path.of(DIR_NAME))) {
-                Files.createDirectories(Path.of(DIR_NAME));
-            }
-            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
-                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
-            }
-        } catch (IOException e) {
-            System.out.println("unable to create file");
-        }
+        checkDirectoryAndFileExist();
 
         try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DIR_NAME + FILE_NAME), StandardCharsets.UTF_8)))  {
             StringBuilder stringBuilderEntity = new StringBuilder("");
@@ -54,18 +45,10 @@ public class ParserLiteraturesJSON {
 
 
     public static List<Literature> parseLiteraturesFromJSON() {
-        List<Literature> lect = new ArrayList<>();
-        try {
-            if (Files.notExists(Path.of(DIR_NAME))) {
-                Files.createDirectories(Path.of(DIR_NAME));
-            }
-            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
-                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
-                return lect = new ArrayList<>();
-            }
-        } catch (IOException e) {
-            System.out.println("unable to create file");
+        if (!checkDirectoryAndFileExist()) {
+            return new ArrayList<>();
         }
+        List<Literature> lect = new ArrayList<>();
         try (ReaderWrapper mywrapper = new ReaderWrapper(new InputStreamReader(new FileInputStream(new File(DIR_NAME + FILE_NAME))))) {
             String line = mywrapper.readLine();
             while (line != null) {
@@ -76,5 +59,23 @@ public class ParserLiteraturesJSON {
             System.err.println("Could not read the file");
         }
         return lect;
+    }
+
+
+    private static boolean checkDirectoryAndFileExist() {
+        boolean flag = true;
+        try {
+            if (Files.notExists(Path.of(DIR_NAME))) {
+                Files.createDirectories(Path.of(DIR_NAME));
+                flag = false;
+            }
+            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
+                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
+                flag = false;
+            }
+        } catch (IOException e) {
+            System.out.println("unable to create file");
+        }
+        return flag;
     }
 }

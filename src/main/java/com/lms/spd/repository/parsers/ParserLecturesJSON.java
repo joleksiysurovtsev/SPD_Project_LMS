@@ -33,19 +33,10 @@ public class ParserLecturesJSON {
      */
     public static void parseLecturesInJSON(List<Lecture> lectures) {
         //check if the file exists if not then create it
-        try {
-            if (Files.notExists(Path.of(DIR_NAME))) {
-                Files.createDirectories(Path.of(DIR_NAME));
-            }
-            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
-                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
-            }
-        } catch (IOException e) {
-            System.out.println("unable to create file");
-        }
+        checkDirectoryAndFileExist();
 
         //creating a stream from a file
-        
+
         try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DIR_NAME + FILE_NAME), StandardCharsets.UTF_8))) {
             StringBuilder stringBuilderEntity = new StringBuilder("");
             for (Lecture lect : lectures) {
@@ -58,22 +49,13 @@ public class ParserLecturesJSON {
         }
     }
 
-
     public static List<Lecture> parseLecturesFromJSON() {
         //check if the file exists if not then create it
-        List<Lecture> lect = new ArrayList<>();
-        try {
-            if (Files.notExists(Path.of(DIR_NAME))) {
-                Files.createDirectories(Path.of(DIR_NAME));
-            }
-            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
-                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
-                return lect = new ArrayList<>();
-            }
-        } catch (IOException e) {
-            System.out.println("unable to create file");
+        if (!checkDirectoryAndFileExist()) {
+            return new ArrayList<>();
         }
 
+        List<Lecture> lect = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(Path.of(DIR_NAME + FILE_NAME))) {
             String line = reader.readLine();
             while (line != null) {
@@ -84,5 +66,22 @@ public class ParserLecturesJSON {
             System.out.println("It is impossible to count lectures");
         }
         return lect;
+    }
+
+    private static boolean checkDirectoryAndFileExist() {
+        boolean flag = true;
+        try {
+            if (Files.notExists(Path.of(DIR_NAME))) {
+                Files.createDirectories(Path.of(DIR_NAME));
+                flag = false;
+            }
+            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
+                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
+                flag = false;
+            }
+        } catch (IOException e) {
+            System.out.println("unable to create file");
+        }
+        return flag;
     }
 }
