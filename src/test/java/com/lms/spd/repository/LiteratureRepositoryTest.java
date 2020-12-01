@@ -48,7 +48,7 @@ class LiteratureRepositoryTest {
 
         List<Literature> literature2 = ParserLiteraturesJSON.parseLiteraturesFromJSON();
 
-        assertTrue(literature.equals(literature2));
+        assertEquals(literature ,literature2 );
         file.delete();
         file2.delete();
     }

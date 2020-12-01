@@ -89,10 +89,10 @@ class LectureServiceImplTest {
         LectureServiceImpl lectureService = new LectureServiceImpl();
 
         lectureService.setSelectedLecture(1);
-        assertEquals(lectureIModel, lectureService.getSelectedLecture());
+        Lecture actual = lectureService.getSelectedLecture();
 
-        lectureService.setSelectedLecture(2);
-        assertEquals(lectureIModel2, lectureService.getSelectedLecture());
+        assertEquals(lectureIModel, actual);
+
         clearFiles();
     }
 
