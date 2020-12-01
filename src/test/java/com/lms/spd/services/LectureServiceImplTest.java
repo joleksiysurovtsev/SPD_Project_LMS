@@ -53,7 +53,6 @@ class LectureServiceImplTest {
 
         //expect to receive the lecture we write
         assertEquals(ParserLecturesJSON.parseLecturesFromJSON(), lsImpl.getLectures());
-        clearFiles();
     }
 
     @Test
@@ -71,7 +70,6 @@ class LectureServiceImplTest {
 
         //expect to receive the lecture that we have attended
         assertEquals(testListL, ParserLecturesJSON.parseLecturesFromJSON());
-        clearFiles();
     }
 
     @Test
@@ -79,7 +77,6 @@ class LectureServiceImplTest {
     @Description("Test method that should return a lecture by its ID number")
     void getSelectedLecture() {
         clearFiles();
-
         //created a lecture list
         LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 1);
         LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON, "TestL2", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 2);
@@ -96,8 +93,6 @@ class LectureServiceImplTest {
         Lecture actual = lectureService.getSelectedLecture();
 
         assertEquals(lectureIModel, actual);
-
-        clearFiles();
     }
 
     @Test
@@ -113,7 +108,6 @@ class LectureServiceImplTest {
 
         Lecture actualLecture = ParserLecturesJSON.parseLecturesFromJSON().get(0);
         assertEquals(lectureByTest,actualLecture);
-        clearFiles();
     }
 
     @Test
@@ -150,7 +144,5 @@ class LectureServiceImplTest {
 
         List<Lecture> actuallist = ParserLecturesJSON.parseLecturesFromJSON();
         assertEquals(expectedlist, actuallist);
-        clearFiles();
     }
-
 }

@@ -31,7 +31,6 @@ class ParserLiteraturesJSONTest {
         ParserLiteraturesJSON.parseLiteraturesInJSON(testListL);
         List<Literature> resultListL = ParserLiteraturesJSON.parseLiteraturesFromJSON();
         assertEquals(resultListL, testListL);
-        clearFiles();
     }
 
     @Test
@@ -41,7 +40,6 @@ class ParserLiteraturesJSONTest {
         List<Literature> resultListL = ParserLiteraturesJSON.parseLiteraturesFromJSON();
         List<Literature> testListL = new ArrayList<>();
         assertEquals(testListL, resultListL);
-        clearFiles();
     }
 
     @Test
@@ -50,7 +48,5 @@ class ParserLiteraturesJSONTest {
         clearFiles();
         File file = new File("src/test/resources/json/Literatures.json");
         assertEquals(ParserLiteraturesJSON.getFile(), file);
-        clearFiles();
     }
-
 }

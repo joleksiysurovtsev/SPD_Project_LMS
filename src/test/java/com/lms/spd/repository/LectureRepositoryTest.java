@@ -17,21 +17,22 @@ class LectureRepositoryTest {
     private static File newfileLectures = new File("src/test/resources/json/Lectures.json");
     private static File newFileLiteratures = new File("src/test/resources/json/Literatures.json");
 
-    @Test
-    @Order(28)
-    void setAllTest() {
+    private static void clearFiles() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
         newfileLectures.delete();
         newFileLiteratures.delete();
+    }
+
+    @Test
+    @Order(28)
+    void setAllTest() {
+        clearFiles();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
         LectureRepository lre = new LectureRepository();
         lre.setAll(testListL);
-
         assertEquals(testListL,lre.getAll());
-        newfileLectures.delete();
-        newFileLiteratures.delete();
     }
 }

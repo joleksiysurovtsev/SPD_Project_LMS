@@ -8,9 +8,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -19,29 +16,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LiteratureRepositoryTest {
-    private static File file = new File("src/test/resources/json/Lectures.json");
-    private static File file2 = new File("src/test/resources/json/Literatures.json");
+    private static File newfileLectures = new File("src/test/resources/json/Lectures.json");
+    private static File newFileLiteratures = new File("src/test/resources/json/Literatures.json");
+
+    private static void clearFiles() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        newfileLectures.delete();
+        newFileLiteratures.delete();
+    }
 
 
     @Test
     @Order(29)
     void setAllTest() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file.delete();
-        file2.delete();
-        try {
-            file.createNewFile();
-            file2.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        clearFiles();
         LiteratureRepository lR = new LiteratureRepository();
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
-        booktest.setDateResourceWasAdded(new
-
-                GregorianCalendar(2020, 02, 19));
+        booktest.setDateResourceWasAdded(new GregorianCalendar(2020, 02, 19));
 
         List<Literature> literature = new ArrayList<>();
         literature.add(booktest);
@@ -50,22 +42,13 @@ class LiteratureRepositoryTest {
 
         List<Literature> literature2 = ParserLiteraturesJSON.parseLiteraturesFromJSON();
 
-        assertEquals(literature ,literature2 );
-        file.delete();
-        file2.delete();
+        assertEquals(literature, literature2);
     }
 
     @Test
     @Order(30)
     void getAllTests() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        try {
-            file.createNewFile();
-            file2.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        clearFiles();
         Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
         Calendar calendar = new GregorianCalendar(2020, 02, 19);
         booktest.setDateResourceWasAdded(calendar);
@@ -74,8 +57,6 @@ class LiteratureRepositoryTest {
         LiteratureRepository lR = new LiteratureRepository();
         lR.setAll(literature);
 
-        //   assertEquals(literature, lR.getAll());
-        file.delete();
-        file2.delete();
+        assertEquals(literature, lR.getAll());
     }
 }

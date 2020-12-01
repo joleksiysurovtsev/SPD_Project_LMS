@@ -20,14 +20,17 @@ class ParserLecturesJSONTest {
     private static File newFileLectures = new File("src/test/resources/json/Lectures.json");
     private static File newFileLiteratures = new File("src/test/resources/json/Literatures.json");
 
-
-    @Test
-    @Order(21)
-    void parseLecturesJSON() {
+    private static void clearFiles() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
         newFileLectures.delete();
         newFileLiteratures.delete();
+    }
+
+    @Test
+    @Order(21)
+    void parseLecturesJSON() {
+        clearFiles();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
@@ -35,18 +38,13 @@ class ParserLecturesJSONTest {
         List<Lecture> resultListL = ParserLecturesJSON.parseLecturesFromJSON();
         //what we recorded what we got
         assertEquals(resultListL, testListL);
-        newFileLectures.delete();
-        newFileLiteratures.delete();
     }
 
 
     @Test
     @Order(22)
     void parseLecturesJSON2() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        newFileLectures.delete();
-        newFileLiteratures.delete();
+        clearFiles();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
@@ -58,8 +56,6 @@ class ParserLecturesJSONTest {
             e.printStackTrace();
         }
         assertEquals("{\"@ class\":\"com.lms.spd.models.LectureIModel\",\"NameOfLecture\":\"testLect\",\"List literatures\":null,\"Date of lecture\":null,\"Lector Name\":null,\"Lecture type\":null,\"Lecture ID\":0}", line);
-        newFileLectures.delete();
-        newFileLiteratures.delete();
     }
 
 
@@ -67,31 +63,18 @@ class ParserLecturesJSONTest {
     @Order(23)
     @DisplayName("Checking if a blank sheet is returned")
     void parseLecturesJSON3() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        newFileLectures.delete();
-        newFileLiteratures.delete();
-
+        clearFiles();
         List<Lecture> resultListL = ParserLecturesJSON.parseLecturesFromJSON();
         List<Lecture> testListL = new ArrayList<>();
         assertEquals(testListL, resultListL);
-        newFileLectures.delete();
-        newFileLiteratures.delete();
-
     }
 
     @Test
     @Order(24)
     @DisplayName("check if the file is lit")
     void parseLecturesJSON4() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        newFileLectures.delete();
-        newFileLiteratures.delete();
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        clearFiles();
         File file = new File("src/test/resources/json/Lectures.json");
         assertEquals(ParserLecturesJSON.getFile(), file);
-        newFileLectures.delete();
-        newFileLiteratures.delete();
     }
 }
