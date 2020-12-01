@@ -77,8 +77,8 @@ class LectureServiceImplTest {
         clearFiles();
 
         //created a lecture list
-        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2005, 10, 12), 1);
-        LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON, "TestL2", null, "testLector", new GregorianCalendar(2005, 10, 12), 2);
+        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 1);
+        LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON, "TestL2", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 2);
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
         testListL.add(lectureIModel2);
@@ -101,7 +101,7 @@ class LectureServiceImplTest {
     void addLecture() {
         clearFiles();
         //created a lecture added it to the list
-        LectureIModel lectureByTest = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2020, 01, 4), 1);
+        LectureIModel lectureByTest = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2020, 01, 4), 1);
 
         LectureServiceImpl lectureService = new LectureServiceImpl();
         lectureService.addLecture(lectureByTest);
