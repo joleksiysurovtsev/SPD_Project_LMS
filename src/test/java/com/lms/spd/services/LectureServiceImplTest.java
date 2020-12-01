@@ -11,6 +11,7 @@ import com.lms.spd.repository.parsers.ParserLecturesJSON;
 import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
 import com.lms.spd.services.interfaces.LectureService;
 import jdk.jfr.Description;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -36,6 +37,7 @@ class LectureServiceImplTest {
     @Test
     @Description("Test method to get all lectures: " +
             "Should get the entire list of lectures that have been written to a JSON file")
+    @Order(1)
     void getLectures() {
         clearFiles();
         LectureServiceImpl lsImpl = new LectureServiceImpl();
@@ -55,6 +57,7 @@ class LectureServiceImplTest {
     }
 
     @Test
+    @Order(2)
     @Description("The method should send the entire list of lectures for writing in a JSON file")
     void setLectures() {
         clearFiles();
@@ -72,6 +75,7 @@ class LectureServiceImplTest {
     }
 
     @Test
+    @Order(3)
     @Description("Test method that should return a lecture by its ID number")
     void getSelectedLecture() {
         clearFiles();
@@ -97,6 +101,7 @@ class LectureServiceImplTest {
     }
 
     @Test
+    @Order(4)
     @Description("Testing adding lectures to a JSON file")
     void addLecture() {
         clearFiles();
@@ -112,6 +117,7 @@ class LectureServiceImplTest {
     }
 
     @Test
+    @Order(5)
     void removeLectures() {
         clearFiles();
         //создали лекцию
