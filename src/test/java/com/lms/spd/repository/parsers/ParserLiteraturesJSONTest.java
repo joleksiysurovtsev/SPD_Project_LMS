@@ -14,49 +14,43 @@ class ParserLiteraturesJSONTest {
     private static File newFileLectures = new File("src/test/resources/json/Lectures.json");
     private static File newFileLiteratures = new File("src/test/resources/json/Literatures.json");
 
+    private static void clearFiles() {
+        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
+        newFileLectures.delete();
+        newFileLiteratures.delete();
+    }
+
     @Test
     @Order(25)
     void parseLiteratureJSON() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        newFileLiteratures.delete();
-        newFileLectures.delete();
+        clearFiles();
         Literature literature = new BookModel("testBook","testautor","testgenre",1999,1);
         List<Literature> testListL = new ArrayList<>();
         testListL.add(literature);
         ParserLiteraturesJSON.parseLiteraturesInJSON(testListL);
         List<Literature> resultListL = ParserLiteraturesJSON.parseLiteraturesFromJSON();
         assertEquals(resultListL, testListL);
-        newFileLiteratures.delete();
-        newFileLectures.delete();
-
+        clearFiles();
     }
 
     @Test
     @Order(26)
     void parseLiteratureJSON3() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        newFileLiteratures.delete();
-        newFileLectures.delete();
+        clearFiles();
         List<Literature> resultListL = ParserLiteraturesJSON.parseLiteraturesFromJSON();
         List<Literature> testListL = new ArrayList<>();
         assertEquals(testListL, resultListL);
-        newFileLiteratures.delete();
-        newFileLectures.delete();
+        clearFiles();
     }
 
     @Test
     @Order(27)
     void parseLiteratureJSON4() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        newFileLiteratures.delete();
-        newFileLectures.delete();
+        clearFiles();
         File file = new File("src/test/resources/json/Literatures.json");
         assertEquals(ParserLiteraturesJSON.getFile(), file);
-        newFileLiteratures.delete();
-        newFileLectures.delete();
+        clearFiles();
     }
 
 }
