@@ -4,6 +4,7 @@ import com.lms.spd.models.BookModel;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.parsers.ParserLecturesJSON;
 import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -23,6 +24,7 @@ class LiteratureRepositoryTest {
 
 
     @Test
+    @Order(29)
     void setAllTest() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
@@ -54,6 +56,7 @@ class LiteratureRepositoryTest {
     }
 
     @Test
+    @Order(30)
     void getAllTests() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");

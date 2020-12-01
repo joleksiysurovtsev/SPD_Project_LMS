@@ -1,5 +1,6 @@
 package com.lms.spd.enums;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LiteratureTypeTest {
 
     @Test
+    @Order(4)
     void getValueByNumber() {
         assertEquals(LiteratureType.BOOK,LiteratureType.getValueByNumber(1));
         assertEquals(LiteratureType.JOURNAL_ARTICLE,LiteratureType.getValueByNumber(2));
@@ -14,6 +16,7 @@ class LiteratureTypeTest {
     }
 
     @Test
+    @Order(5)
     void toListString() {
         String expected = "1. BOOK\n" +
                 "2. JOURNAL_ARTICLE\n" +

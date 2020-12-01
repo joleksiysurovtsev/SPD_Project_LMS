@@ -5,6 +5,7 @@ import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.models.interfaces.Lecture;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LMSConsolePrinterTest {
 
     @Test
+    @Order(38)
     @DisplayName("printAllLectureExceptionTest")
     @Description("The method should return an error if the input is an empty sheet")
     void printAllLectureExceptionTest() {

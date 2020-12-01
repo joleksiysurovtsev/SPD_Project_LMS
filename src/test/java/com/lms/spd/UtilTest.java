@@ -2,6 +2,7 @@ package com.lms.spd;
 
 import jdk.jfr.Description;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UtilTest {
 
     @Test
+    @Order(39)
     @DisplayName("getStringsNumberLecture")
     @Description("Case 1: The method should return an array of two numbers")
     void getStringsNumberLecture() {
@@ -17,6 +19,7 @@ class UtilTest {
     }
 
     @Test
+    @Order(40)
     @DisplayName("getStringsNumberLecture 2")
     @Description("Case 2: The method should return null")
     void getStringsNumberLecture2() {

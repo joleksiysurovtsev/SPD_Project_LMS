@@ -35,9 +35,9 @@ class LectureServiceImplTest {
     }
 
     @Test
+    @Order(31)
     @Description("Test method to get all lectures: " +
             "Should get the entire list of lectures that have been written to a JSON file")
-    @Order(1)
     void getLectures() {
         clearFiles();
         LectureServiceImpl lsImpl = new LectureServiceImpl();
@@ -57,7 +57,7 @@ class LectureServiceImplTest {
     }
 
     @Test
-    @Order(2)
+    @Order(32)
     @Description("The method should send the entire list of lectures for writing in a JSON file")
     void setLectures() {
         clearFiles();
@@ -75,7 +75,7 @@ class LectureServiceImplTest {
     }
 
     @Test
-    @Order(3)
+    @Order(33)
     @Description("Test method that should return a lecture by its ID number")
     void getSelectedLecture() {
         clearFiles();
@@ -101,7 +101,7 @@ class LectureServiceImplTest {
     }
 
     @Test
-    @Order(4)
+    @Order(34)
     @Description("Testing adding lectures to a JSON file")
     void addLecture() {
         clearFiles();
@@ -117,7 +117,7 @@ class LectureServiceImplTest {
     }
 
     @Test
-    @Order(5)
+    @Order(35)
     void removeLectures() {
         clearFiles();
         //создали лекцию

@@ -3,6 +3,7 @@ package com.lms.spd.repository.parsers;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -21,6 +22,7 @@ class ParserLecturesJSONTest {
 
 
     @Test
+    @Order(21)
     void parseLecturesJSON() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
@@ -39,6 +41,7 @@ class ParserLecturesJSONTest {
 
 
     @Test
+    @Order(22)
     void parseLecturesJSON2() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
@@ -61,6 +64,7 @@ class ParserLecturesJSONTest {
 
 
     @Test
+    @Order(23)
     @DisplayName("Checking if a blank sheet is returned")
     void parseLecturesJSON3() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
@@ -77,6 +81,7 @@ class ParserLecturesJSONTest {
     }
 
     @Test
+    @Order(24)
     @DisplayName("check if the file is lit")
     void parseLecturesJSON4() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
