@@ -38,11 +38,13 @@ public class ParserLecturesJSON {
             }
         }
         //creating a stream from a file
+        StringBuilder s = new StringBuilder("");
         try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file.getPath()), StandardCharsets.UTF_8))) {
             for (Lecture lect : lectures) {
-                myWriter.write(mapper.writeValueAsString(lect) + "\n");
-                myWriter.flush();
+                s.append(mapper.writeValueAsString(lect) + "\n");
             }
+            myWriter.write(s.toString());
+            myWriter.flush();
         } catch (IOException e) {
             System.err.println("failed to write to file");
         }
@@ -66,7 +68,7 @@ public class ParserLecturesJSON {
                 line = reader.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("It is impossible to count lectures");
         }
         return lect;
     }

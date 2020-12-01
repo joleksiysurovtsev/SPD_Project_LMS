@@ -1,24 +1,22 @@
 package com.lms.spd.services;
 
 import com.lms.spd.LecturesCache;
-import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.services.interfaces.LectureService;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class LectureServiceImpl implements LectureService {
 
     private LectureRepository repository;
+    private Lecture selectedLecture;
+
 
     public LectureServiceImpl() {
         this.repository = new LectureRepository();
     }
-
-    private Lecture selectedLecture;
 
     @Override
     public List<Lecture> getLectures() {
@@ -37,14 +35,7 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public void setSelectedLecture(int selected) {
-        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getId() == selected).findFirst().orElse(null);
-        if (selectedLecture == null) {
-            try {
-                throw new NullLectureException("There is no lecture under this number");
-            } catch (NullLectureException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getId() == selected).findFirst().orElse(selectedLecture);
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -75,6 +66,6 @@ public class LectureServiceImpl implements LectureService {
     //________________________________________________________________________________________________//
 
     public static int generateLectureID(List<Lecture> lectures) {
-        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) +1;
+        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) + 1;
     }
 }

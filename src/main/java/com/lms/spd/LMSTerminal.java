@@ -170,21 +170,21 @@ public class LMSTerminal {
         if (numbOfLecture == 0) {
             startLMS();
         } else {
-            if ((lectureServiceImpl.getLectures().size() <= numbOfLecture - 1)) {
+            try {
+                lectureServiceImpl.setSelectedLecture(numbOfLecture);
+            } catch (NullLectureException e) {
+                System.err.println("List lecture is empty");
+            }
+            if (lectureServiceImpl.getLectures().stream().noneMatch(lecture -> lecture.getId() == numbOfLecture)) {
                 System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
                 point4MainMenuChoiceOfLecture();
             } else {
-                try {
-                    lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
-                } catch (NullLectureException e) {
-                    System.err.println("List lecture is empty");
-                }
                 System.out.println("Selected lecture: ");
                 System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
                 print.printLectureTable(lectureServiceImpl.getSelectedLecture());
                 System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
                 System.out.println("What are the next actions?");
-            }
+           }
         }
         print.showFourthMenu();
         subMenu2Point4();
