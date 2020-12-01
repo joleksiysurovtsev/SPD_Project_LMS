@@ -1,5 +1,7 @@
 package com.lms.spd;
 
+import jdk.jfr.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,16 +9,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class UtilTest {
 
     @Test
+    @DisplayName("getStringsNumberLecture")
+    @Description("Case 1: The method should return an array of two numbers")
     void getStringsNumberLecture() {
         int[] expected = {1, 2};
-        assertArrayEquals(expected, Util.getStringsNumberLecture("1fgghgg,hg2"));
+        assertArrayEquals(expected, Util.getStringsNumberLecture("1text between two numbers,2"));
     }
 
     @Test
+    @DisplayName("getStringsNumberLecture 2")
+    @Description("Case 2: The method should return null")
     void getStringsNumberLecture2() {
         int[] expected = null;
         assertArrayEquals(expected, Util.getStringsNumberLecture(""));
     }
-
-
 }

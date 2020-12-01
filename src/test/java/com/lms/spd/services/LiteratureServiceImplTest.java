@@ -2,16 +2,11 @@ package com.lms.spd.services;
 
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.repository.parsers.ParserLecturesJSON;
 import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.DisplayName;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +16,9 @@ class LiteratureServiceImplTest {
     private static File file = new File("src/test/resources/json/Literatures.json");
 
     @Test
+    @Description("Literature is transferred to the input to the method and the list of references itself" +
+            " to which you need to add the same literature, at the output we get the list of references " +
+            "+ the one that was added")
     void addLiterature() {
         file.delete();
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
@@ -37,6 +35,8 @@ class LiteratureServiceImplTest {
     }
 
     @Test
+    @Description("The number of literature is passed to the input to the method and the list of references itself," +
+            " at the output, we get a list without one literature")
     void removeLiterature() {
         file.delete();
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");

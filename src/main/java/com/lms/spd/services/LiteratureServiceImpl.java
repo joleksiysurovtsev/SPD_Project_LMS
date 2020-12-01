@@ -4,10 +4,8 @@ import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.LiteratureRepository;
 import com.lms.spd.services.interfaces.LiteratureService;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class LiteratureServiceImpl implements LiteratureService {
 

@@ -9,13 +9,11 @@ import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.repository.parsers.ParserLecturesJSON;
 import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
-import org.junit.After;
-import org.junit.Before;
+import com.lms.spd.services.interfaces.LectureService;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -24,35 +22,42 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LectureServiceImplTest {
     private static File file = new File("src/test/resources/json/Lectures.json");
-    private  static File file2 = new File("src/test/resources/json/Literatures.json");
+    private static File file2 = new File("src/test/resources/json/Literatures.json");
 
-    @Test
-    void getLectures() {
+    @Description("a method for cleaning files for tests " +
+            "and also sets the path to a file in the test directory for the parser")
+    private static void clearFiles() {
         ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
         ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file2.delete();
-        file.delete();
-        LectureServiceImpl lsImpl = new LectureServiceImpl();
-        LectureIModel lectureIModel = new LectureIModel("testLect");
-        List<Lecture> testListL = new ArrayList<>();
-        testListL.add(lectureIModel);
-
-        LectureRepository lre = new LectureRepository();
-        lre.setAll(testListL); //запписали в фаил лекцию для проверки
-
-        //ожидаем получить ту лекцию которую записали
-        assertEquals(testListL, lsImpl.getLectures());
         file2.delete();
         file.delete();
     }
 
     @Test
+    @Description("Test method to get all lectures: " +
+            "Should get the entire list of lectures that have been written to a JSON file")
+    void getLectures() {
+        clearFiles();
+        LectureServiceImpl lsImpl = new LectureServiceImpl();
+        LectureIModel lectureIModel = new LectureIModel("testLect");
+        LectureIModel lectureIModel2 = new LectureIModel("testLect2");
+        List<Lecture> testListL = new ArrayList<>();
+        testListL.add(lectureIModel);
+        testListL.add(lectureIModel2);
+
+        LectureRepository lre = new LectureRepository();
+        //wrote a lecture to a file for verification
+        lre.setAll(testListL);
+
+        //expect to receive the lecture we write
+        assertEquals(ParserLecturesJSON.parseLecturesFromJSON(), lsImpl.getLectures());
+        clearFiles();
+    }
+
+    @Test
+    @Description("The method should send the entire list of lectures for writing in a JSON file")
     void setLectures() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file2.delete();
-        file.delete();
-        LectureRepository pr = new LectureRepository();
+        clearFiles();
         LectureServiceImpl lsImpl = new LectureServiceImpl();
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
@@ -62,65 +67,53 @@ class LectureServiceImplTest {
         lsImpl.setLectures(testListL);
 
         //expect to receive the lecture that we have attended
-        assertEquals(testListL, pr.getAll());
-        file2.delete();
-        file.delete();
+        assertEquals(testListL, ParserLecturesJSON.parseLecturesFromJSON());
+        clearFiles();
     }
 
     @Test
-    void getSelectedLecture() throws NullLectureException {
-        LectureServiceImpl lectureService = new LectureServiceImpl();
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file2.delete();
-        file.delete();
+    @Description("Test method that should return a lecture by its ID number")
+    void getSelectedLecture() {
+        clearFiles();
 
+        //created a lecture list
         LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2005, 10, 12), 1);
         LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON, "TestL2", null, "testLector", new GregorianCalendar(2005, 10, 12), 2);
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
         testListL.add(lectureIModel2);
+
+        //wrote the sheet to a file
         ParserLecturesJSON.parseLecturesInJSON(testListL);
 
+        LectureServiceImpl lectureService = new LectureServiceImpl();
 
         lectureService.setSelectedLecture(1);
-
         assertEquals(lectureIModel, lectureService.getSelectedLecture());
+
         lectureService.setSelectedLecture(2);
         assertEquals(lectureIModel2, lectureService.getSelectedLecture());
-        file2.delete();
-        file.delete();
+        clearFiles();
     }
 
     @Test
+    @Description("Testing adding lectures to a JSON file")
     void addLecture() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file2.delete();
-        file.delete();
-        //создали лекцию
+        clearFiles();
+        //created a lecture added it to the list
         LectureIModel lectureByTest = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2020, 01, 4), 1);
-        List<Lecture> lectures = new ArrayList<>();
-        lectures.add(lectureByTest);
 
-        //записал лекцию в фаил
-        ParserLecturesJSON.parseLecturesInJSON(lectures);
+        LectureServiceImpl lectureService = new LectureServiceImpl();
+        lectureService.addLecture(lectureByTest);
 
-        //ожидаем лист из одной лекций
-        List<Lecture> expectedlist = new ArrayList<>();
-        expectedlist.add(lectureByTest);
-
-        assertEquals(expectedlist, ParserLecturesJSON.parseLecturesFromJSON());
-        file2.delete();
-        file.delete();
+        Lecture actualLecture = ParserLecturesJSON.parseLecturesFromJSON().get(0);
+        assertEquals(lectureByTest,actualLecture);
+        clearFiles();
     }
 
     @Test
     void removeLectures() {
-        ParserLecturesJSON.seturl("src/test/resources/json/Lectures.json");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/Literatures.json");
-        file2.delete();
-        file.delete();
+        clearFiles();
         //создали лекцию
         List<Literature> literature = new ArrayList<>();
         literature.add(new BookModel("Title", "author", "genre", 1986, 1));
@@ -151,11 +144,7 @@ class LectureServiceImplTest {
 
         List<Lecture> actuallist = ParserLecturesJSON.parseLecturesFromJSON();
         assertEquals(expectedlist, actuallist);
-        file2.delete();
-        file.delete();
-
-       File file2 = new File("src/test/resources/json/Literatures.json");
-       file2.delete();
+        clearFiles();
     }
 
 }
