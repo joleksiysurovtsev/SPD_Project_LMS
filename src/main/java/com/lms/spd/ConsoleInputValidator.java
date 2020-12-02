@@ -16,8 +16,8 @@ public class ConsoleInputValidator {
 
 
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private static final String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2})$";
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    private static final String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2}) ([01]?[0-9]|2[0-3]):[0-5][0-9]$";
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
     public static int readInt() {
         int number;
@@ -44,7 +44,7 @@ public class ConsoleInputValidator {
     }
 
     public static Calendar enterTheDate() {
-        System.out.println("Enter the lecture date for example: 19-10-2020");
+        System.out.println("Enter the lecture date for example: 19-10-2020 18:30");
         Calendar lectureDate = new GregorianCalendar();
         lectureDate.setTimeZone(TimeZone.getDefault());
         String dateInString;

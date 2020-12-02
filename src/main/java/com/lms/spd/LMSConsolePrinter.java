@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class LMSConsolePrinter {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-    String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
+    String tabulator = "|%-1s| %-12s | %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
     private static int count = 1;
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
@@ -58,7 +58,7 @@ public class LMSConsolePrinter {
 
     private void printTopOfTable() {
         System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|\u1005|    Date     |  Lecture type      | Lecture number | Lecture ID     |                   Lecture title                  |      Lecturer name      |");
+        System.out.println("|\u1005|       Date       |  Lecture type      | Lecture number | Lecture ID     |                   Lecture title                  |      Lecturer name      |");
         System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
     }
 

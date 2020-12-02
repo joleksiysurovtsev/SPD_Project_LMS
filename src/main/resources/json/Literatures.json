@@ -1,0 +1,2 @@
+{"@ class":"com.lms.spd.models.BookModel","Title":"Thinking in Java","Author":"Bruce Eckel","Genre":"Computers","PublishedInYear":1998,"Literature type":"BOOK","Date resource was added":"02-12-2020","ID":1}
+{"@ class":"com.lms.spd.models.BookModel","Title":"Java Complete Reference","Author":"Schildt.","Genre":"Computers","PublishedInYear":2008,"Literature type":"BOOK","Date resource was added":"02-12-2020","ID":2}

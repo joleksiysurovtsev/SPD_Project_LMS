@@ -21,7 +21,7 @@ public class LectureIModel implements Lecture,Serializable {
     private List<Literature> literatures;
 
     @JsonProperty("Date of lecture")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private Calendar lectureDate;
 
     @JsonProperty("Lector Name")
@@ -32,6 +32,8 @@ public class LectureIModel implements Lecture,Serializable {
 
     @JsonProperty("Lecture ID")
     private int id;
+
+
     //lecture constructor____________________________________________________________________________________________//
 
 
