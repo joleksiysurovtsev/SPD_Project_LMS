@@ -18,7 +18,7 @@ class LectureIModelTest {
     @Order(18)
     void testToString() {
         Lecture testLecture = new LectureIModel( "Test");
-        assertEquals("LectureIModel{nameOfLecture='Test', literatures=null, lectureDate=null, lectorName='null', type=null, id=0}",testLecture.toString());
+        assertEquals("LectureIModel{nameOfLecture='Test', literatures=null, lectureDate=null, lectorName='null', type=null, id=0, durationOfTheLesson=0}",testLecture.toString());
     }
 
     @Test

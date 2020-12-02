@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 
 public class LectureIModel implements Lecture,Serializable {
@@ -33,7 +34,8 @@ public class LectureIModel implements Lecture,Serializable {
     @JsonProperty("Lecture ID")
     private int id;
 
-
+    @JsonProperty("Duration Of The Lesson")
+    private long durationOfTheLesson;
     //lecture constructor____________________________________________________________________________________________//
 
 
@@ -54,11 +56,20 @@ public class LectureIModel implements Lecture,Serializable {
     public LectureIModel(LectureType type, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate, int id) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
-
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
         this.id = id;
+    }
+
+    public LectureIModel(String nameOfLecture, List<Literature> literatures, Calendar lectureDate, String lectorName, LectureType type, int id, long durationOfTheLesson) {
+        this.nameOfLecture = nameOfLecture;
+        this.literatures = literatures;
+        this.lectureDate = lectureDate;
+        this.lectorName = lectorName;
+        this.type = type;
+        this.id = id;
+        this.durationOfTheLesson = durationOfTheLesson;
     }
 
     //_______________________________________________________________________________________________________________//
@@ -121,7 +132,16 @@ public class LectureIModel implements Lecture,Serializable {
         this.id = id;
     }
 
+    public long getDurationOfTheLesson() {
+        return durationOfTheLesson;
+    }
+
+    public void setDurationOfTheLesson(long durationOfTheLesson) {
+        this.durationOfTheLesson = durationOfTheLesson;
+    }
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
 
     @Override
     public String toString() {
@@ -132,33 +152,26 @@ public class LectureIModel implements Lecture,Serializable {
                 ", lectorName='" + lectorName + '\'' +
                 ", type=" + type +
                 ", id=" + id +
+                ", durationOfTheLesson=" + durationOfTheLesson +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof LectureIModel)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         LectureIModel that = (LectureIModel) o;
-
-        if (id != that.id) return false;
-        if (nameOfLecture != null ? !nameOfLecture.equals(that.nameOfLecture) : that.nameOfLecture != null)
-            return false;
-        if (literatures != null ? !literatures.equals(that.literatures) : that.literatures != null) return false;
-        if (lectureDate != null ? !lectureDate.equals(that.lectureDate) : that.lectureDate != null) return false;
-        if (lectorName != null ? !lectorName.equals(that.lectorName) : that.lectorName != null) return false;
-        return type == that.type;
+        return id == that.id &&
+                durationOfTheLesson == that.durationOfTheLesson &&
+                Objects.equals(nameOfLecture, that.nameOfLecture) &&
+                Objects.equals(literatures, that.literatures) &&
+                Objects.equals(lectureDate, that.lectureDate) &&
+                Objects.equals(lectorName, that.lectorName) &&
+                type == that.type;
     }
 
     @Override
     public int hashCode() {
-        int result = nameOfLecture != null ? nameOfLecture.hashCode() : 0;
-        result = 31 * result + (literatures != null ? literatures.hashCode() : 0);
-        result = 31 * result + (lectureDate != null ? lectureDate.hashCode() : 0);
-        result = 31 * result + (lectorName != null ? lectorName.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + id;
-        return result;
+        return Objects.hash(nameOfLecture, literatures, lectureDate, lectorName, type, id, durationOfTheLesson);
     }
 }
