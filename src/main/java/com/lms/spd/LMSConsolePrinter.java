@@ -50,11 +50,9 @@ public class LMSConsolePrinter {
             printTopOfTable();
             int[] numbToDisplay = Util.getStringsNumberLecture(s);
 
-
             Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
                     .filter(x -> value == x.getId())
                     .forEach(this::printLectureTable));
-           // count = 1;
         }
     }
 

@@ -17,6 +17,4 @@ public class LectureRepository implements LectureRepositoryInterface {
     public void setAll(List<Lecture> lectures) {
         ParserLecturesJSON.parseLecturesInJSON(lectures);
     }
-
-
 }

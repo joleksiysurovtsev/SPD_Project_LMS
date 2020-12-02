@@ -1,9 +1,7 @@
 package com.lms.spd.services.interfaces;
 
-import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.models.interfaces.Lecture;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface LectureService {
@@ -11,11 +9,11 @@ public interface LectureService {
 
     Lecture getSelectedLecture();
 
-    void setLectures(List<Lecture> lectures) throws IOException;
+    void setLectures(List<Lecture> lectures) ;
 
-    void setSelectedLecture(int selected) throws NullLectureException;
+    void setSelectedLecture(int selected) ;
 
-    void addLecture(Lecture lecture) throws IOException;
+    void addLecture(Lecture lecture) ;
 
-    void removeLectures(int[] lectureRemove) throws IOException;
+    void removeLectures(int[] lectureRemove) ;
 }

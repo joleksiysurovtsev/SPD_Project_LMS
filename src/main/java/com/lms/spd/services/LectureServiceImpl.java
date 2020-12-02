@@ -13,7 +13,6 @@ public class LectureServiceImpl implements LectureService {
     private LectureRepository repository;
     private Lecture selectedLecture;
 
-
     public LectureServiceImpl() {
         this.repository = new LectureRepository();
     }
@@ -55,7 +54,7 @@ public class LectureServiceImpl implements LectureService {
      */
     @Override
     public void removeLectures(int[] lectureRemove) {
-        LecturesCache.removeLectCash(lectureRemove, repository.getAll());
+        LecturesCache.removeLectureFromCache(lectureRemove, repository.getAll());
         List<Lecture> lectures = repository.getAll();
         for (int s : lectureRemove) {
             lectures = lectures.stream().filter(lecture -> lecture.getId() != s).collect(Collectors.toList());

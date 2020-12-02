@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LiteratureService {
 
-    List<Literature> removeLiterature(int numberLit, List<Literature> lit) throws IOException;
+    List<Literature> removeLiterature(int numberLit, List<Literature> lit) ;
 
-    List<Literature> addLiterature(Literature litAdded, List<Literature> lit) throws IOException;
+    List<Literature> addLiterature(Literature litAdded, List<Literature> lit) ;
 }

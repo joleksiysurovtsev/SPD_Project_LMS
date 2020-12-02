@@ -63,7 +63,6 @@ public class ConsoleInputValidator {
                 System.err.println("The date is entered incorrectly, try again");
             }
         }
-      //  System.out.println(DATE_FORMAT.format(lectureDate.getTime()));
         return lectureDate;
     }
 
