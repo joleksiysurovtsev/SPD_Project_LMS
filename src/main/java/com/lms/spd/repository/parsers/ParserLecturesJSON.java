@@ -36,7 +36,6 @@ public class ParserLecturesJSON {
         checkDirectoryAndFileExist();
 
         //creating a stream from a file
-
         try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DIR_NAME + FILE_NAME), StandardCharsets.UTF_8))) {
             StringBuilder stringBuilderEntity = new StringBuilder("");
             for (Lecture lect : lectures) {
@@ -54,18 +53,21 @@ public class ParserLecturesJSON {
         if (!checkDirectoryAndFileExist()) {
             return new ArrayList<>();
         }
+        List<Lecture> lectures = new ArrayList<>();
+        try (var stream = Files.lines(Path.of(DIR_NAME + FILE_NAME))) {
+            stream.forEach(lines -> readLectures(lectures, lines));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lectures;
+    }
 
-        List<Lecture> lect = new ArrayList<>();
-        try (BufferedReader reader = Files.newBufferedReader(Path.of(DIR_NAME + FILE_NAME))) {
-            String line = reader.readLine();
-            while (line != null) {
-                lect.add(mapper.readValue(line, Lecture.class));
-                line = reader.readLine();
-            }
+    private static void readLectures(List<Lecture> lect, String s) {
+        try {
+            lect.add(mapper.readValue(s, Lecture.class));
         } catch (IOException e) {
             System.out.println("It is impossible to count lectures");
         }
-        return lect;
     }
 
     private static boolean checkDirectoryAndFileExist() {
