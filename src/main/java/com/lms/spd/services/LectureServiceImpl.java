@@ -6,6 +6,7 @@ import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.services.interfaces.LectureService;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class LectureServiceImpl implements LectureService {
@@ -53,11 +54,11 @@ public class LectureServiceImpl implements LectureService {
      * Remove lecture from array
      */
     @Override
-    public void removeLectures(int[] lectureRemove) {
-        LecturesCache.removeLectureFromCache(lectureRemove, repository.getAll());
+    public void removeLectures(int[] lectureRemoveArr) {
+        LecturesCache.removeLectureFromCache(lectureRemoveArr, repository.getAll());
         List<Lecture> lectures = repository.getAll();
-        for (int s : lectureRemove) {
-            lectures = lectures.stream().filter(lecture -> lecture.getId() != s).collect(Collectors.toList());
+        for (int lectureNumberToBeDeleted : lectureRemoveArr) {
+            lectures = lectures.stream().filter(lecture -> lecture.getId() != lectureNumberToBeDeleted).collect(Collectors.toList());
         }
         repository.setAll(lectures);
     }
@@ -65,6 +66,7 @@ public class LectureServiceImpl implements LectureService {
     //________________________________________________________________________________________________//
 
     public static int generateLectureID(List<Lecture> lectures) {
-        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) + 1;
+        AtomicInteger i = new AtomicInteger();
+        return (lectures.stream().map(Lecture::getId).mapToInt(x -> x = i.incrementAndGet()).max().orElse(0));
     }
 }
