@@ -70,8 +70,8 @@ class LecturesCacheTest {
 
     @Test
     @Order(43)
-    @Description("test that should return a list of lectures on a given date")
-    void testCaseTwoReturnAListOfLecturesOnAGivenDate() {
+    @Description("Method2 test that should return a list of lectures on a given date")
+    void returnList2() {
         LectureIModel lectureIModel = new LectureIModel(LectureType.CAREER,"test",new ArrayList<>(),"test",new GregorianCalendar(2020,10,05),1);
         LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON,"test",new ArrayList<>(),"test",new GregorianCalendar(2020,10,06),2);
         List<Lecture> testListL = new ArrayList<>();
@@ -93,7 +93,7 @@ class LecturesCacheTest {
     @Test
     @Order(44)
     @Description("Method2 test that should return a list of lectures on a given date")
-    void testCaseThreeReturnAListOfLecturesOnAGivenDate() {
+    void returnList3() {
         LectureIModel lectureIModel = new LectureIModel(LectureType.CAREER,"test",new ArrayList<>(),"test",new GregorianCalendar(2020,10,05),1);
         LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON,"test3",new ArrayList<>(),"test",new GregorianCalendar(2020,10,06),2);
         LectureIModel lectureIModel3 = new LectureIModel(LectureType.JAVA_CORE,"test4",new ArrayList<>(),"test",new GregorianCalendar(2020,10,06),3);
@@ -105,11 +105,10 @@ class LecturesCacheTest {
         ParserLecturesJSON.parseLecturesInJSON(testListL);
         LecturesCache cache = new LecturesCache();
 
-        cache.setCurrentDate(new GregorianCalendar(2020,10,06));
+        cache.setCurrentDate(new GregorianCalendar(2020,10,05));
 
         List<Lecture> assertedTestListL = new ArrayList<>();
-        assertedTestListL.add(lectureIModel2);
-        assertedTestListL.add(lectureIModel3);
+        assertedTestListL.add(lectureIModel);
 
         assertEquals(assertedTestListL, cache.returnList());
 
