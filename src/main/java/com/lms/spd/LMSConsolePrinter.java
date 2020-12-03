@@ -11,10 +11,9 @@ import java.util.stream.Collectors;
 
 public class LMSConsolePrinter {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-
-    String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
-    private static int count = 1;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    private String tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
+    private int count = 1;
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
         if (lectures.isEmpty()) {
@@ -144,7 +143,7 @@ public class LMSConsolePrinter {
     }
 
 
-    void showAllLectureInfo(Lecture lecture) {
+    public void showAllLectureInfo(Lecture lecture) {
         String lectureInfo = "Lecture: ID" + lecture.getId() + " " + lecture.getNameOfLecture() + " \n" + "The lecture is lecturing by: " + lecture.getLectorName() + "\n" +
                 "Lecture date: " + sdf.format(lecture.getLectureDate().getTime()) +
                 " Lecture Type: " + lecture.getType();

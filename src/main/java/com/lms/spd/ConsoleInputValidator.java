@@ -51,7 +51,6 @@ public class ConsoleInputValidator {
         while (true) {
             dateInString = ConsoleInputValidator.readString();
             try {
-                DATE_FORMAT.setLenient(false);
                 lectureDate.setTime(DATE_FORMAT.parse(dateInString));
                 if (!dateInString.matches(LECTURE_DATE_REG_EXP)) {
                     throw new DateFormatException("the date of the lecture cannot be later than 2000");
@@ -70,7 +69,7 @@ public class ConsoleInputValidator {
         if (validate.equals("lectureName")) {
             System.out.println("Enter the title of the lecture");
         }
-        String line = null;
+        String line ;
         while (true) {
             try {
                 line = reader.readLine();
