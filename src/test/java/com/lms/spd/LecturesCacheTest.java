@@ -71,7 +71,7 @@ class LecturesCacheTest {
     @Test
     @Order(43)
     @Description("Method2 test that should return a list of lectures on a given date")
-    void returnList2() {
+    void testCaseTwoReturnAListOfLecturesOnAGivenDate() {
         LectureIModel lectureIModel = new LectureIModel(LectureType.CAREER,"test",new ArrayList<>(),"test",new GregorianCalendar(2020,10,05),1);
         LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON,"test",new ArrayList<>(),"test",new GregorianCalendar(2020,10,06),2);
         List<Lecture> testListL = new ArrayList<>();
@@ -93,7 +93,7 @@ class LecturesCacheTest {
     @Test
     @Order(44)
     @Description("Method2 test that should return a list of lectures on a given date")
-    void returnList3() {
+    void testCaseThreeReturnAListOfLecturesOnAGivenDate() {
         LectureIModel lectureIModel = new LectureIModel(LectureType.CAREER,"test",new ArrayList<>(),"test",new GregorianCalendar(2020,10,05),1);
         LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON,"test3",new ArrayList<>(),"test",new GregorianCalendar(2020,10,06),2);
         LectureIModel lectureIModel3 = new LectureIModel(LectureType.JAVA_CORE,"test4",new ArrayList<>(),"test",new GregorianCalendar(2020,10,06),3);
