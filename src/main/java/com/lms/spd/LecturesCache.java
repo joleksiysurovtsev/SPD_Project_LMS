@@ -56,24 +56,12 @@ public class LecturesCache {
         cash.put(lectureAdded.getLectureDate(), listLectureWithCurrentDate);
     }
 
-
     public static void removeLectureFromCache(int[] lectureRemove, List<Lecture> lectures) {
         //
         List<Lecture> listR = new ArrayList<>();
         Arrays.stream(lectureRemove).forEach(x -> lectures.stream().filter(lr -> lr.getId() == x).forEach(listR::add));
         LecturesCache.updateCashAfterRemove(listR);
     }
-
-//    public static void removeLectureFromCache(int[] lectureRemove) {
-//        //(lecture -> lecture.getId() != x)..collect(Collectors.toList())//.forEach(lecture -> lecture.getId() == x).removeIf(lecture -> lecture.getId() == x)
-//        //Map<Calendar, List<Lecture>> cash2 = cash;
-//
-//        for (int x : lectureRemove) {
-//            cash.forEach((calendar, lectures1) -> lectures1 = lectures1.stream().filter(lecture -> lecture.getId() != x).collect(Collectors.toList()));
-//        }
-//        //cash = cash2;
-//    }
-
 
     private static void updateCashAfterRemove(List<Lecture> lectureDeleted) {
         lectureDeleted.forEach(lectures1 -> {

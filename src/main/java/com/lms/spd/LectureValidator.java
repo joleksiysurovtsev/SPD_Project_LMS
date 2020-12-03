@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class LectureValidator {
-    LiteratureValidator literatureValidator = new LiteratureValidator();
+    private LiteratureValidator literatureValidator = new LiteratureValidator();
 
     public Lecture createLecture() {
         String nameOfLecture = createTheLectureTitle();

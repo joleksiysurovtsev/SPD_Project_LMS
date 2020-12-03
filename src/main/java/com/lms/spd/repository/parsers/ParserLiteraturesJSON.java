@@ -1,7 +1,6 @@
 package com.lms.spd.repository.parsers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.io.*;

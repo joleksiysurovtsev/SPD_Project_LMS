@@ -1,7 +1,5 @@
 package com.lms.spd.repository.parsers;
 
-import com.lms.spd.models.interfaces.Lecture;
-
 import java.io.*;
 import java.nio.CharBuffer;
 import java.util.stream.Stream;
