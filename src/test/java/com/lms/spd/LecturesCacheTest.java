@@ -50,7 +50,7 @@ class LecturesCacheTest {
     @Test
     @Order(42)
     @Description("Method test that should return a list of lectures on a given date")
-    void returnList() {
+    void returnListOfLecturesOnAGivenDate() {
         LectureIModel lectureIModel = new LectureIModel(LectureType.CAREER,"test",new ArrayList<>(),"test",new GregorianCalendar(2020,10,05),1);
         LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON,"test",new ArrayList<>(),"test",new GregorianCalendar(2020,10,06),2);
         List<Lecture> testListL = new ArrayList<>();
