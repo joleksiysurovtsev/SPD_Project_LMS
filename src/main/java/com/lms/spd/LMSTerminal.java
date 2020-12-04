@@ -1,14 +1,11 @@
 package com.lms.spd;
 
 import com.lms.spd.exceptions.ListIsEmptyException;
-import com.lms.spd.exceptions.NullLectureException;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
 import com.lms.spd.services.interfaces.LectureService;
 import com.lms.spd.services.interfaces.LiteratureService;
-
-import java.io.IOException;
 
 public class LMSTerminal {
     public static LecturesCache cash = new LecturesCache();
@@ -75,7 +72,11 @@ public class LMSTerminal {
                 print.printAllLectureTable(cash.returnList());
                 break;
             case "type & date":
-                print.printLectureListByNumberAndType(lectureValidator.selectLectureType(),ConsoleInputValidator.enterTheDateOnlyDayMonthYear(),lectureServiceImpl.getMapSortedByType());
+                print.printLectureListByTypeAndDate(lectureValidator.selectLectureType(), ConsoleInputValidator.enterTheDateOnlyDayMonthYear(), lectureServiceImpl.getMapSortedByType());
+                break;
+            case "stat":
+                print.printLectureListStatisticsByType(lectureValidator.selectLectureType(), lectureServiceImpl.getMapSortedByType());
+                break;
             case "exit":
                 startLMS();
             default:

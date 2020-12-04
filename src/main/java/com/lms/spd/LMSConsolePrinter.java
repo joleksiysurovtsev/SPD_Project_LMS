@@ -132,6 +132,7 @@ public class LMSConsolePrinter {
                 + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n" + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
                 + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date\n"
                 + "\u001B[34m\"TYPE & DATE\"\u001B[0m Display lectures by curend type & date\n"
+                + "\u001B[33m\"STAT\"\u001B[0m Display lectures statistics by curend type \n"
                 + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu");
     }
 
@@ -155,7 +156,7 @@ public class LMSConsolePrinter {
     /**
      * The method prints a list of lectures by type and date
      * */
-    public void printLectureListByNumberAndType(LectureType selectLectureType, Calendar enterTheDate, Map<LectureType, List<Lecture>> mapSortedByType) {
+    public void printLectureListByTypeAndDate(LectureType selectLectureType, Calendar enterTheDate, Map<LectureType, List<Lecture>> mapSortedByType) {
         System.out.println("The method prints a list of lectures by type and date");
         System.out.println(selectLectureType.name());
         System.out.println(enterTheDate.getTime());
@@ -164,6 +165,14 @@ public class LMSConsolePrinter {
         System.out.println("+1 Day ???  "+beforeDate.getTime());
                                                                         //если дата проведения лекции
        // mapSortedByType.get(selectLectureType).stream().filter(lecture -> lecture.getLectureDate().after(enterTheDate)).filter(lecture -> lecture.getLectureDate().before(beforeDate)).forEach(lecture -> {printlecture(lecture)});
+
+    }
+
+    public void printLectureListStatisticsByType(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType) {
+
+        //если дата проведения лекции
+        // mapSortedByType.get(selectLectureType).stream().filter(lecture -> lecture.getLectureDate().after(enterTheDate)).filter(lecture -> lecture.getLectureDate().before(beforeDate)).forEach(lecture -> {printlecture(lecture)});
+
     }
 
     private void printlecture(Lecture lecture) {
