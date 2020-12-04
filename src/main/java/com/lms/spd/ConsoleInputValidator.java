@@ -33,7 +33,7 @@ public class ConsoleInputValidator {
     }
 
     public static String readString() {
-        String line ="";
+        String line = "";
         try {
             line = reader.readLine();
         } catch (IOException ioException) {
@@ -59,6 +59,24 @@ public class ConsoleInputValidator {
                 break;
             } catch (DateFormatException f) {
                 System.err.println(f.getMessage());
+            } catch (ParseException e) {
+                System.err.println("The date is entered incorrectly, try again");
+            }
+        }
+        return lectureDate;
+    }
+
+    public static Calendar enterTheDateOnlyDayMonthYear() {
+        System.out.println("Enter the lecture date for example: 19-10-2020");
+        Calendar lectureDate = new GregorianCalendar();
+        lectureDate.setTimeZone(TimeZone.getDefault());
+        SimpleDateFormat dateFormatOnlyDayOfWeekMonthYear = new SimpleDateFormat("dd-MM-yyyy");
+        String dateInString;
+        while (true) {
+            dateInString = ConsoleInputValidator.readString();
+            try {
+                lectureDate.setTime(dateFormatOnlyDayOfWeekMonthYear.parse(dateInString));
+                break;
             } catch (ParseException e) {
                 System.err.println("The date is entered incorrectly, try again");
             }

@@ -72,7 +72,6 @@ public class LMSConsolePrinter {
     }
 
 
-
     public List<Literature> sortLitByDateAndType(List<Literature> litArr) {
         return litArr.stream().distinct().sorted(Comparator.comparing(Literature::getType).thenComparing(Literature::getDateResourceWasAdded)).collect(Collectors.toList());
     }
@@ -132,6 +131,7 @@ public class LMSConsolePrinter {
         System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n" + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by ID\n"
                 + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n" + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
                 + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date\n"
+                + "\u001B[34m\"TYPE & DATE\"\u001B[0m Display lectures by curend type & date\n"
                 + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu");
     }
 
@@ -150,5 +150,23 @@ public class LMSConsolePrinter {
                 " Lecture Type: " + lecture.getType();
         System.out.println(lectureInfo);
         printListLit(lecture);
+    }
+
+    /**
+     * The method prints a list of lectures by type and date
+     * */
+    public void printLectureListByNumberAndType(LectureType selectLectureType, Calendar enterTheDate, Map<LectureType, List<Lecture>> mapSortedByType) {
+        System.out.println("The method prints a list of lectures by type and date");
+        System.out.println(selectLectureType.name());
+        System.out.println(enterTheDate.getTime());
+        Calendar beforeDate = enterTheDate;
+        beforeDate.roll(Calendar.DATE,1);
+        System.out.println("+1 Day ???  "+beforeDate.getTime());
+                                                                        //если дата проведения лекции
+       // mapSortedByType.get(selectLectureType).stream().filter(lecture -> lecture.getLectureDate().after(enterTheDate)).filter(lecture -> lecture.getLectureDate().before(beforeDate)).forEach(lecture -> {printlecture(lecture)});
+    }
+
+    private void printlecture(Lecture lecture) {
+        System.out.println("Lecture: "+lecture.getNameOfLecture()+ " Lector:" + lecture.getLectorName() + " Lecture date" + lecture.getLectureDate().getTime());
     }
 }

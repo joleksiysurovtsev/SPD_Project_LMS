@@ -74,6 +74,8 @@ public class LMSTerminal {
                 cash.setCurrentDate(ConsoleInputValidator.enterTheDate());
                 print.printAllLectureTable(cash.returnList());
                 break;
+            case "type & date":
+                print.printLectureListByNumberAndType(lectureValidator.selectLectureType(),ConsoleInputValidator.enterTheDateOnlyDayMonthYear(),lectureServiceImpl.getMapSortedByType());
             case "exit":
                 startLMS();
             default:

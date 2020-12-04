@@ -1,8 +1,10 @@
 package com.lms.spd.services.interfaces;
 
+import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LectureService {
     List<Lecture> getLectures();
@@ -16,4 +18,6 @@ public interface LectureService {
     void addLecture(Lecture lecture) ;
 
     void removeLectures(int[] lectureRemove) ;
+
+    Map<LectureType,List<Lecture>> getMapSortedByType();
 }
