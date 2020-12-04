@@ -1,6 +1,6 @@
-package com.lms.spd;
+package com.lms.spd.models;
 
-import com.lms.spd.models.BookModel;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BookModelTest {
 
     @Test
+    @Order(6)
     void print() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         BookModel testBook = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
@@ -17,6 +18,7 @@ class BookModelTest {
     }
 
     @Test
+    @Order(7)
     void testToString() {
         BookModel testBook = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
         String expected = "Book: Философия Java, author: 'Брюс Эккель' genre 'Computer Science', published in year 2015";
@@ -24,6 +26,7 @@ class BookModelTest {
     }
 
     @Test
+    @Order(8)
     void testEquals() {
         BookModel testBook = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
         BookModel testBook2 = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
@@ -33,6 +36,7 @@ class BookModelTest {
     }
 
     @Test
+    @Order(9)
     void testHashCode() {
         BookModel testBook = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
         int hashCode = testBook.hashCode();

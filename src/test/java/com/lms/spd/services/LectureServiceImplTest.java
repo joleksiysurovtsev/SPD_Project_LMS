@@ -2,12 +2,21 @@ package com.lms.spd.services;
 
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.exceptions.NullLectureException;
+import com.lms.spd.models.BookModel;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.models.interfaces.Literature;
+import com.lms.spd.repository.LectureRepository;
+import com.lms.spd.repository.parsers.ParserLecturesJSON;
+import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
+import com.lms.spd.services.interfaces.LectureService;
+import jdk.jfr.Description;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -15,85 +24,113 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LectureServiceImplTest {
-
-    private LectureServiceImpl lectureService;
-
-
+    @AfterEach
     @BeforeEach
-    void createLectureService() {
-        lectureService = new LectureServiceImpl();
-        ArrayList<Lecture> lectures = new ArrayList<>();
-        lectures.add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5), 50));
-        lectures.add(new LectureIModel(2, "Writes text to."));
-        lectures.add(new LectureIModel(3, "Core Java API"));
-
-        lectureService.setLectures(lectures);
+    public void cleanUpFiles() {
+        File targetFile = new File("src/test/resources/json/Lectures.json");
+        File targetFile2 = new File("src/test/resources/json/Literatures.json");
+        targetFile.delete();
+        targetFile2.delete();
+        ParserLecturesJSON.seturl("src/test/resources/json/");
+        ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
 
     @Test
-    @DisplayName("setSelectedLecture method selects by position in the array")
+    @Order(31)
+    @Description("Test method to get all lectures: " +
+            "Should get the entire list of lectures that have been written to a JSON file")
+    void getLectures() {
+        LectureServiceImpl lsImpl = new LectureServiceImpl();
+        LectureIModel lectureIModel = new LectureIModel("testLect");
+        LectureIModel lectureIModel2 = new LectureIModel("testLect2");
+        List<Lecture> testListL = new ArrayList<>();
+        testListL.add(lectureIModel);
+        testListL.add(lectureIModel2);
+
+        LectureRepository lre = new LectureRepository();
+        //wrote a lecture to a file for verification
+        lre.setAll(testListL);
+
+        //expect to receive the lecture we write
+        assertEquals(ParserLecturesJSON.parseLecturesFromJSON(), lsImpl.getLectures());
+    }
+
+    @Test
+    @Order(32)
+    @Description("The method should send the entire list of lectures for writing in a JSON file")
+    void setLectures() {
+        LectureServiceImpl lsImpl = new LectureServiceImpl();
+        LectureIModel lectureIModel = new LectureIModel("testLect");
+        List<Lecture> testListL = new ArrayList<>();
+        testListL.add(lectureIModel);
+
+        //spotted a lecture
+        lsImpl.setLectures(testListL);
+
+        //expect to receive the lecture that we have attended
+        assertEquals(testListL, ParserLecturesJSON.parseLecturesFromJSON());
+    }
+
+    @Test
+    @Order(33)
+    @Description("Test method that should return a lecture by its ID number")
     void getSelectedLecture() {
-        try {
-            lectureService.setSelectedLecture(0);
-        } catch (NullLectureException e) {
-            e.printStackTrace();
-        }
-        Lecture expectedLecture = new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5), 50);
-        assertEquals(expectedLecture, lectureService.getSelectedLecture());
+        //created a lecture list
+        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 1);
+        LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON, "TestL2", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 2);
+        List<Lecture> testListL = new ArrayList<>();
+        testListL.add(lectureIModel);
+        testListL.add(lectureIModel2);
 
+        //wrote the sheet to a file
+        ParserLecturesJSON.parseLecturesInJSON(testListL);
+
+        LectureServiceImpl lectureService = new LectureServiceImpl();
+
+        lectureService.setSelectedLecture(1);
+        Lecture actual = lectureService.getSelectedLecture();
+
+        assertEquals(lectureIModel, actual);
     }
 
     @Test
-    @DisplayName("checking if an exception is thrown if there is no lecture")
-    void getSelectedLectureExeption() {
-
-        assertThrows(NullLectureException.class, () -> {
-            lectureService.setSelectedLecture(-1);
-        });
-    }
-
-
-    @Test
-    @DisplayName("Add new lecture to array "
-            + "expected: one more lecture will be added to the end of the lecture array")
+    @Order(34)
+    @Description("Testing adding lectures to a JSON file")
     void addLecture() {
+        //created a lecture added it to the list
+        LectureIModel lectureByTest = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2020, 01, 4), 1);
+
         LectureServiceImpl lectureService = new LectureServiceImpl();
-        List<Lecture> tested = lectureService.getLectures();
-        {
-            tested.add(new LectureIModel(LectureType.getValueByNumber(1), 1, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2022, 06, 15)));
-        }
-        lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 1, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2022, 06, 15)));
-        assertEquals(tested, lectureService.getLectures());
+        lectureService.addLecture(lectureByTest);
+
+        Lecture actualLecture = ParserLecturesJSON.parseLecturesFromJSON().get(0);
+        assertEquals(lectureByTest,actualLecture);
     }
 
     @Test
-    @DisplayName("Adding a lecture to the middle of the array")
-    void addLecture2() {
+    @Order(35)
+    void removeLecturesTested() {
+
+        List<Literature> literature2 = new ArrayList<>();
+        literature2.add(new BookModel("Title2", "author2", "genre", 1986, 1));
+        List<Literature> literature = new ArrayList<>();
+        literature.add(new BookModel("Title", "author", "genre", 1986, 1));
+        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", literature, "testLector", new GregorianCalendar(2020, 01, 4), 1);
+        LectureIModel lectureIModel2 = new LectureIModel(LectureType.JAVA_CORE, "TestL1", literature2, "testLector", new GregorianCalendar(2020, 01, 4), 2);
+        List<Lecture> lectures = new ArrayList<>();
+        lectures.add(lectureIModel);
+        lectures.add(lectureIModel2);
+
+        ParserLecturesJSON.parseLecturesInJSON(lectures);
+
         LectureServiceImpl lectureService = new LectureServiceImpl();
-        List<Lecture> expectedLectures = lectureService.getLectures();
-        {
-            expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
-        }
 
-        lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
-        assertEquals(expectedLectures, lectureService.getLectures());
+        int[] remove = {1};
+        lectureService.removeLectures(remove);
+        List<Lecture> expectedlist = new ArrayList<>();
+        expectedlist.add(lectureIModel2);
+
+        List<Lecture> actuallist = ParserLecturesJSON.parseLecturesFromJSON();
+        assertEquals(expectedlist, actuallist);
     }
-
-    @Test
-    @DisplayName("Adding a lecture to the middle of the array")
-    void addLecture3() {
-        LectureServiceImpl lectureService = new LectureServiceImpl();
-        ArrayList<Lecture> lectures = new ArrayList<>();
-        lectureService.setLectures(lectures);
-
-        List<Lecture> expectedLectures = lectureService.getLectures();
-        {
-            expectedLectures.add(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
-        }
-
-        lectureService.addLecture(new LectureIModel(LectureType.getValueByNumber(1), 3, "BufferedReader.", new ArrayList<>(), "Egorov", new GregorianCalendar(2020, 10, 6)));
-        assertEquals(expectedLectures, lectureService.getLectures());
-    }
-
-
 }

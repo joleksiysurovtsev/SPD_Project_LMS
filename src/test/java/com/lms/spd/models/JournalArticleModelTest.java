@@ -1,6 +1,6 @@
-package com.lms.spd;
+package com.lms.spd.models;
 
-import com.lms.spd.models.JournalArticleModel;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import java.text.SimpleDateFormat;
 
@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class JournalArticleModelTest {
 
     @Test
+    @Order(14)
     void print() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
@@ -16,6 +17,7 @@ class JournalArticleModelTest {
     }
 
     @Test
+    @Order(15)
     void testToString() {
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         String expected = "Journal article: \"This keyword {in examples}\", in the journal \"java world\", issue of the journal: 5, author:'Dmitry Denisov'";
@@ -23,6 +25,7 @@ class JournalArticleModelTest {
     }
 
     @Test
+    @Order(16)
     void testEquals() {
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         JournalArticleModel journalArticle2 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
@@ -33,6 +36,7 @@ class JournalArticleModelTest {
     }
 
     @Test
+    @Order(17)
     void testHashCode() {
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         int hashCode = journalArticle.hashCode();

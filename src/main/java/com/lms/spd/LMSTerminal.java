@@ -43,7 +43,7 @@ public class LMSTerminal {
                     break;
             }
             print.showStartMenu();
-        } catch (ListIsEmptyException | IOException e) {
+        } catch (ListIsEmptyException e) {
             System.err.println(e.getMessage());
             startLMS();
         }
@@ -99,13 +99,13 @@ public class LMSTerminal {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-    private void point2MainMenuAddingLecture() throws IOException {
+    private void point2MainMenuAddingLecture() {
         lectureServiceImpl.addLecture(lectureValidator.createLecture());
         System.out.println("Entering a new lecture?");
         subMenuAddingLectureToList();
     }
 
-    private void subMenuAddingLectureToList() throws IOException {
+    private void subMenuAddingLectureToList() {
         System.out.println("what to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"-\"" + "\u001B[0m"
                 + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program");
         switch (ConsoleInputValidator.readString().toUpperCase()) {
@@ -127,15 +127,17 @@ public class LMSTerminal {
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-    private void point3MainMenuRemovalLecture() throws IOException {
-        System.out.println("Please enter the number of the lecture if you want to delete one or more comma separated ");
-        String numbRemovalLecture = ConsoleInputValidator.readString();
-        String[] lectureRemove = lectureValidator.stringToDeleteLecture(numbRemovalLecture, lectureServiceImpl.getLectures());
-        lectureServiceImpl.removeLectures(lectureRemove);
+    private void point3MainMenuRemovalLecture() {
+        System.out.println("Please enter the ID of the lecture if you want to delete one or more comma separated ");
+        int[] arr = Util.getStringsNumberLecture(ConsoleInputValidator.readString());
+        if (arr == null) subMenuRemovalLecture();
+        else {
+            lectureServiceImpl.removeLectures(arr);
+        }
         subMenuRemovalLecture();
     }
 
-    private void subMenuRemovalLecture() throws IOException {
+    private void subMenuRemovalLecture() {
         System.out.println("Do you want to delete another one? \n" +
                 "if yes then enter " + "\u001B[31m" + "\"+\" " +
                 "\u001B[0m" + "if you wont return to the menu " + "\u001B[32m" + "\"-\"" +
@@ -160,7 +162,7 @@ public class LMSTerminal {
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-    private void point4MainMenuChoiceOfLecture() throws IOException {
+    private void point4MainMenuChoiceOfLecture() {
         System.out.println("Enter the number of the lecture, " +
                 "information about which you want to see " +
                 "if you change your mind to exit to the menu enter " + "\u001B[32m" + "0" + "\u001B[0m");
@@ -168,15 +170,11 @@ public class LMSTerminal {
         if (numbOfLecture == 0) {
             startLMS();
         } else {
-            if ((lectureServiceImpl.getLectures().size() <= numbOfLecture - 1)) {
+            lectureServiceImpl.setSelectedLecture(numbOfLecture);
+            if (lectureServiceImpl.getLectures().stream().noneMatch(lecture -> lecture.getId() == numbOfLecture)) {
                 System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
                 point4MainMenuChoiceOfLecture();
             } else {
-                try {
-                    lectureServiceImpl.setSelectedLecture(numbOfLecture - 1);
-                } catch (NullLectureException e) {
-                    System.err.println("List lecture is empty");
-                }
                 System.out.println("Selected lecture: ");
                 System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
                 print.printLectureTable(lectureServiceImpl.getSelectedLecture());
@@ -188,7 +186,7 @@ public class LMSTerminal {
         subMenu2Point4();
     }
 
-    private void subMenu2Point4() throws IOException {
+    private void subMenu2Point4() {
         switch (ConsoleInputValidator.readInt()) {
             case 1: // 1. --> choose another lecture
                 point4MainMenuChoiceOfLecture();
@@ -216,14 +214,14 @@ public class LMSTerminal {
         }
     }
 
-    private void point4_2ViewListOfLit() throws IOException {
-       print.printListLit(lectureServiceImpl.getSelectedLecture());
-       System.out.println("what do we do with the bibliography");
+    private void point4_2ViewListOfLit() {
+        print.printListLit(lectureServiceImpl.getSelectedLecture());
+        System.out.println("what do we do with the bibliography");
         print.showFourthMenu();
         subMenu2Point4();
     }
 
-    private void point4_3AddLit() throws IOException {
+    private void point4_3AddLit() {
         Literature newLit = literatureValidator.createLiterature();
         if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)) {
             System.out.println("this literature is already there");
@@ -231,27 +229,30 @@ public class LMSTerminal {
             literatureServiceImpl.addLiterature(newLit, lectureServiceImpl.getSelectedLecture().getLiteratures());
             System.out.println("Book added what to do next");
         }
-        while (true) {
-            System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
-                    "you will return to the lecture selection menu, to complete the work, exit ");
-            switch (ConsoleInputValidator.readString().toUpperCase()) {
-                case "+":
-                    point4_3AddLit();
-                    break;
-                case "-":
-                    point4MainMenuChoiceOfLecture();
-                    break;
-                case "EXIT":
-                    System.exit(0);
-                    break;
-                default:
-                    print.printErrMassage(1);
-                    break;
-            }
+        point4_3Navigate();
+    }
+
+    private void point4_3Navigate() {
+        System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
+                "you will return to the lecture selection menu, to complete the work, exit ");
+        switch (ConsoleInputValidator.readString().toUpperCase()) {
+            case "+":
+                point4_3AddLit();
+                break;
+            case "-":
+                point4MainMenuChoiceOfLecture();
+                break;
+            case "EXIT":
+                System.exit(0);
+                break;
+            default:
+                print.printErrMassage(1);
+                point4_3Navigate();
+                break;
         }
     }
 
-    private void point4_4DeleteLit() throws IOException {
+    private void point4_4DeleteLit() {
         System.out.println("Please enter the number of the book you want to delete");
         int indexLit = ConsoleInputValidator.readInt();
         boolean flag = false;
@@ -269,7 +270,7 @@ public class LMSTerminal {
         subMenuPoint4_4DeleteLit();
     }
 
-    private void subMenuPoint4_4DeleteLit() throws IOException {
+    private void subMenuPoint4_4DeleteLit() {
         System.out.println("\"+\" YES or \"-\" NO");
         switch (ConsoleInputValidator.readString()) {
             case "+":
@@ -286,7 +287,7 @@ public class LMSTerminal {
         }
     }
 
-    private void point4_5showLectureInfo() throws IOException {
+    private void point4_5showLectureInfo() {
         print.showAllLectureInfo(lectureServiceImpl.getSelectedLecture());
         print.showFourthMenu();
         subMenu2Point4();

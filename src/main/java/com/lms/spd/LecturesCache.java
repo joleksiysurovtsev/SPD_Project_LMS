@@ -10,7 +10,7 @@ public class LecturesCache {
 
     private LectureServiceImpl lectureService = new LectureServiceImpl();
     private List<Lecture> lectures = lectureService.getLectures();
-    private Calendar currentDate = new GregorianCalendar(2020, Calendar.OCTOBER, 5);
+    private Calendar currentDate;
     private static Map<Calendar, List<Lecture>> cash = new HashMap();
 
     public Calendar getCurrentDate() {
@@ -26,17 +26,17 @@ public class LecturesCache {
     }
 
     public List<Lecture> returnList() {
-        return cash.get(currentDate) != null ? cash.get(currentDate) : new ArrayList<>();
+        return cash.get(currentDate);
     }
 
     /**
      * method initializes cache
      */
     private void cashInit() {
-        //бежим по всему массиву основных лекций
-        //берём первый элемент
-        // проверяем есть ли ключ эта дата в мапе
-        //если в мапе нет такого ключа то генерируем лист с єтими датами и пихаем
+        // run through the entire array of main lectures
+        // take the first element
+        // check if there is a key for this date in the map
+        // if there is no such key in the map then generate a sheet with these dates and shove
         lectures.stream().map(Lecture::getLectureDate).filter(date -> !cash.containsKey(date)).forEach(this::listLectureByDate);
     }
 
@@ -46,29 +46,27 @@ public class LecturesCache {
     }
 
 
-
+    /**
+     * the method adds a lecture to the map cache by key (date),
+     * if there is no such key, it creates a key value and writes it to the cache
+     */
     public static void updateCashAfterAdd(Lecture lectureAdded) {
-        List<Lecture> listLectureWithCurrentDate;
-        if (cash.containsKey(lectureAdded.getLectureDate())) {
-            listLectureWithCurrentDate = cash.get(lectureAdded.getLectureDate()); //в лист лекций из кеша по дате
-        } else {
-            listLectureWithCurrentDate = new ArrayList<>();                  //или создаём если небыло
-        }
-        listLectureWithCurrentDate.add(lectureAdded);                             //добавляем лекцию
-        cash.put(lectureAdded.getLectureDate(), listLectureWithCurrentDate);      //возвращаем в мапу
+        List<Lecture> listLectureWithCurrentDate = cash.containsKey(lectureAdded.getLectureDate()) ? cash.get(lectureAdded.getLectureDate()) : new ArrayList<>();
+        listLectureWithCurrentDate.add(lectureAdded);
+        cash.put(lectureAdded.getLectureDate(), listLectureWithCurrentDate);
     }
 
-    public static void removeLectCash(String[] lectureRemove, List<Lecture> lectures) {
+    public static void removeLectureFromCache(int[] lectureRemove, List<Lecture> lectures) {
         List<Lecture> listR = new ArrayList<>();
-        Arrays.stream(lectureRemove).mapToInt(Integer::parseInt).forEach(x -> lectures.stream().filter(lr -> lr.getNumberOfLecture() == x).forEach(listR::add));
+        Arrays.stream(lectureRemove).forEach(x -> lectures.stream().filter(lr -> lr.getId() == x).forEach(listR::add));
         LecturesCache.updateCashAfterRemove(listR);
     }
 
     private static void updateCashAfterRemove(List<Lecture> lectureDeleted) {
-        lectureDeleted.forEach(lectures -> {
-            List<Lecture> lsc = cash.get(lectures.getLectureDate());
-            lsc.removeIf(lecture -> lecture.getNameOfLecture().equals(lectures.getNameOfLecture()));
-            cash.put(lectures.getLectureDate(), lsc);
+        lectureDeleted.forEach(lectures1 -> {
+            List<Lecture> lsc = cash.get(lectures1.getLectureDate());
+            lsc.removeIf(lecture -> lecture.getNameOfLecture().equals(lectures1.getNameOfLecture()));
+            cash.put(lectures1.getLectureDate(), lsc);
         });
     }
 }

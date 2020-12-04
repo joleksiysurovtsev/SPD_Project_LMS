@@ -1,23 +1,38 @@
 package com.lms.spd.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public class BookModel implements Literature {
+public class BookModel implements Literature, Serializable {
+    @JsonProperty("Title")
     private String title;
+    @JsonProperty("Author")
     private String author;
+    @JsonProperty("Genre")
     private String genre;
+    @JsonProperty("PublishedInYear")
     private int publishedInYear;
+    @JsonProperty("Literature type")
     private LiteratureType type;
+    @JsonProperty("Date resource was added")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Calendar dateResourceWasAdded;
+    @JsonProperty("ID")
     private int id;
 
-    public BookModel(String title, String author, String genre, int publishedInYear,int id) {
+    public BookModel() {
+
+    }
+
+    public BookModel(String title, String author, String genre, int publishedInYear, int id) {
         this.genre = genre;
         this.publishedInYear = publishedInYear;
         setTitle(title);

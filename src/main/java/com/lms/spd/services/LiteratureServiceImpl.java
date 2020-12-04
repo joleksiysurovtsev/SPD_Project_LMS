@@ -6,6 +6,8 @@ import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LiteratureServiceImpl implements LiteratureService {
 
@@ -18,15 +20,19 @@ public class LiteratureServiceImpl implements LiteratureService {
     @Override
     public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) {
         litAdded.setId(generateIdLit(repository.getAll()));
-        repository.addLiterature(litAdded);
         lit.add(litAdded);
+        List<Literature> allLit = new ArrayList<>(repository.getAll());
+        allLit.add(litAdded);
+        repository.setAll(allLit);
         return lit;
     }
 
     @Override
     public List<Literature> removeLiterature(int numberLit, List<Literature> lit) {
-        int id = lit.get(numberLit-1).getId();
-        repository.removeLiterature(id);
+        int id = lit.get(numberLit - 1).getId();
+        List<Literature> allLit = new ArrayList<>(repository.getAll());
+        allLit.removeIf(literature -> literature.getId() == id);
+        repository.setAll(allLit);
         if (lit.size() == 1) {
             lit = new ArrayList<>();
         } else {
@@ -36,6 +42,7 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     public static int generateIdLit(List<Literature> literatures) {
-        return (literatures.stream().map(Literature::getId).max(Integer::compareTo).orElse(0))+1;
+        AtomicInteger i = new AtomicInteger();
+        return (literatures.stream().map(Literature::getId).mapToInt(x -> x = i.incrementAndGet()).max().orElse(0));
     }
 }

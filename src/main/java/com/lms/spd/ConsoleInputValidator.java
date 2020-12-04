@@ -10,9 +10,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class ConsoleInputValidator {
-
 
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static final String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2})$";
@@ -45,6 +45,7 @@ public class ConsoleInputValidator {
     public static Calendar enterTheDate() {
         System.out.println("Enter the lecture date for example: 19-10-2020");
         Calendar lectureDate = new GregorianCalendar();
+        lectureDate.setTimeZone(TimeZone.getDefault());
         String dateInString;
         while (true) {
             dateInString = ConsoleInputValidator.readString();
@@ -67,7 +68,7 @@ public class ConsoleInputValidator {
         if (validate.equals("lectureName")) {
             System.out.println("Enter the title of the lecture");
         }
-        String line = null;
+        String line ;
         while (true) {
             try {
                 line = reader.readLine();

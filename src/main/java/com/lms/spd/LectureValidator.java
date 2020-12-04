@@ -6,13 +6,12 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class LectureValidator {
-    LiteratureValidator literatureValidator = new LiteratureValidator();
+    private LiteratureValidator literatureValidator = new LiteratureValidator();
 
     public Lecture createLecture() {
         String nameOfLecture = createTheLectureTitle();
@@ -20,7 +19,7 @@ public class LectureValidator {
         LectureType lectureType = selectLectureType();
         Calendar lectureDate = ConsoleInputValidator.enterTheDate();
         List<Literature> literatures = literatureValidator.addLitOrNot();
-        return new LectureIModel(lectureType, 1, nameOfLecture, literatures, lectorName, lectureDate);
+        return new LectureIModel(lectureType, nameOfLecture, literatures, lectorName, lectureDate);
     }
 
     /**
@@ -81,23 +80,4 @@ public class LectureValidator {
         return types;
     }
 
-    public String[] stringToDeleteLecture(String lectureRemove, List<Lecture> list) {
-        String[] numbDeletedLect = lectureRemove.replaceAll("\\s+", "").split(",(?!\\s)");
-        IntStream.range(0, numbDeletedLect.length).forEach(i -> numbDeletedLect[i] = numbDeletedLect[i].replaceAll("[a-zA-Zа]*", ""));
-        String[] numbToDisplay = Arrays.stream(numbDeletedLect).filter(x -> !(x.isEmpty())).toArray(String[]::new);
-        StringBuilder stringContains = new StringBuilder("Lectures: ");
-        boolean flag = true;
-        for (String item : numbToDisplay) {
-            for (Lecture value : list) {
-                if (value.getNumberOfLecture() == Integer.parseInt(item)) {
-                    flag = false;
-                    stringContains.append(" ").append(item).append(" ");
-                    break;
-                }
-            }
-        }
-        System.out.println(stringContains.toString());
-        stringContains.append(!flag ? "successfully removed the rest are missing." : "are missing.");
-        return numbToDisplay;
-    }
 }

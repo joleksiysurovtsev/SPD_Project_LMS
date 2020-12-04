@@ -1,75 +1,20 @@
 package com.lms.spd.repository;
 
-import com.lms.spd.enums.LectureType;
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.repository.interfaces.LectureRepositoryInterface;
+import com.lms.spd.repository.parsers.ParserLecturesJSON;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class LectureRepository implements LectureRepositoryInterface {
 
-    private List<Lecture> lectures = new ArrayList<>() {
-        {
-            add(new LectureIModel(LectureType.JAVA_CORE, 1, "\"Intro. Java Basics\"", new ArrayList<>(), "Vova Shevchenko", new GregorianCalendar(2020, 9, 5), 1));
-            add(new LectureIModel(LectureType.COMMON, 2, "\"Intellij IDEA Features. GitLab flow.\"", new ArrayList<>(), "Andrii Zaiats", new GregorianCalendar(2020, 9, 5), 2));
-            add(new LectureIModel(LectureType.JAVA_CORE, 3, "\"JAVA_CORE Java API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 12), 3));
-            add(new LectureIModel(LectureType.COMMON, 4, "\"Debugging. Build Tools: Graddle. Unit-testing basics\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 9, 14), 4));
-            add(new LectureIModel(LectureType.JAVA_CORE, 5, "\"Class design\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 19), 5));
-            add(new LectureIModel(LectureType.COMMON, 6, "\"Programming Principles: DRY, KISS, YAGNI. Refactoring.\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 9, 21), 6));
-            add(new LectureIModel(LectureType.JAVA_CORE, 7, "\"Enums. Generics\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 9, 26), 7));
-            add(new LectureIModel(LectureType.COMMON, 8, "\"Refactoring techniques\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 9, 28), 8));
-            add(new LectureIModel(LectureType.JAVA_CORE, 9, "\"Collection API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 10, 2), 9));
-            add(new LectureIModel(LectureType.COMMON, 10, "\"TDD\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 10, 4), 10));
-            add(new LectureIModel(LectureType.JAVA_CORE, 11, "\"Exceptions\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 10, 9), 11));
-            add(new LectureIModel(LectureType.COMMON, 12, "\"SOLID\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 10, 11), 12));
-            add(new LectureIModel(LectureType.JAVA_CORE, 13, "\"Functional programming basics\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 10, 16), 13));
-            add(new LectureIModel(LectureType.JAVA_CORE, 14, "\"Stream API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 10, 18), 14));
-            add(new LectureIModel(LectureType.JAVA_CORE, 15, "\"IO & File API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 10, 23), 15));
-            add(new LectureIModel(LectureType.COMMON, 16, "\"Design patterns & Antipatterns\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2020, 10, 26), 16));
-            add(new LectureIModel(LectureType.JAVA_CONCURRENCY, 17, "\"Threads. Executors\"", new ArrayList<>(), "	Mykola Popadyk	", new GregorianCalendar(2020, 10, 30), 17));
-            add(new LectureIModel(LectureType.DB, 18, "\"SQL\"", new ArrayList<>(), "	Ruslan Pistriak	", new GregorianCalendar(2020, 11, 2),18));
-            add(new LectureIModel(LectureType.JAVA_CONCURRENCY, 19, "\"Concurrency (part 1)\"", new ArrayList<>(), "	Mykola Popadyk	", new GregorianCalendar(2020, 11, 7), 19));
-            add(new LectureIModel(LectureType.DB, 20, "\"Database migrations: Flyway\"", new ArrayList<>(), "	Ruslan Pistriak	", new GregorianCalendar(2020, 11, 9),20));
-            add(new LectureIModel(LectureType.JAVA_CONCURRENCY, 21, "\"Concurrency (part 2)\"", new ArrayList<>(), "	Mykola Popadyk	", new GregorianCalendar(2020, 11, 14), 21));
-            add(new LectureIModel(LectureType.DB, 22, "\"JDBC\"", new ArrayList<>(), "	Ruslan Pistriak	", new GregorianCalendar(2020, 11, 16),22));
-            add(new LectureIModel(LectureType.JAVA_CONCURRENCY, 23, "\"Concurrency (part 3)\"", new ArrayList<>(), "	Mykola Popadyk	", new GregorianCalendar(2020, 11, 21), 23));
-            add(new LectureIModel(LectureType.JAVA_CORE, 24, "\"Reflection API\"", new ArrayList<>(), "	Vova Shevchenko	", new GregorianCalendar(2020, 11, 23), 24));
-            add(new LectureIModel(LectureType.EE, 25, "\"Servlet API (part 1)\"", new ArrayList<>(), "	Vasya Rudas	", new GregorianCalendar(2021, 0, 11), 25));
-            add(new LectureIModel(LectureType.COMMON, 26, "\"Modern Software Architecture\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2021, 0, 13), 26));
-            add(new LectureIModel(LectureType.EE, 27, "\"Servlet API (part 2)\"", new ArrayList<>(), "	Vasya Rudas	", new GregorianCalendar(2021, 0, 18), 27));
-            add(new LectureIModel(LectureType.COMMON, 28, "\"REST, Swagger, Open API\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2021, 0, 20), 28));
-            add(new LectureIModel(LectureType.EE, 29, "\"Spring overview. Spring DI.\"", new ArrayList<>(), "	Vasya Rudas	", new GregorianCalendar(2021, 0, 25), 29));
-            add(new LectureIModel(LectureType.DB, 30, "\"Java Persistence: Hibernate\"", new ArrayList<>(), "	Ruslan Pistriak	", new GregorianCalendar(2021, 0, 27), 30));
-            add(new LectureIModel(LectureType.EE, 31, "\"Spring MVC. Thymeleaf.\"", new ArrayList<>(), "	Vasya Rudas	", new GregorianCalendar(2021, 1, 1), 31));
-            add(new LectureIModel(LectureType.DB, 32, "\"Java Persistence: Spring Data JPA\"", new ArrayList<>(), "	Ruslan Pistriak	", new GregorianCalendar(2021, 1, 3), 32));
-            add(new LectureIModel(LectureType.EE, 34, "\"Spring in depth.\"", new ArrayList<>(), "	Vasya Rudas	", new GregorianCalendar(2021, 1, 8), 33));
-            add(new LectureIModel(LectureType.COMMON, 35, "\"Code quality\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2021, 1, 10), 34));
-            add(new LectureIModel(LectureType.EE, 36, "\"Spring Security. (part 1)\"", new ArrayList<>(), "	Vasya Rudas	", new GregorianCalendar(2021, 1, 15), 35));
-            add(new LectureIModel(LectureType.COMMON, 37, "\"Deploy (AWS). CI/CD\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2021, 1, 17), 36));
-            add(new LectureIModel(LectureType.EE, 38, "\"Spring Security. (part 2)\"", new ArrayList<>(), "	Vasya Rudas	", new GregorianCalendar(2021, 1, 22), 37));
-            add(new LectureIModel(LectureType.COMMON, 39, "\"Deploy (AWS). CI/CD - practice\"", new ArrayList<>(), "	Andrii Zaiats	", new GregorianCalendar(2021, 1, 24), 38));
-        }
-    };
-
+    @Override
     public List<Lecture> getAll() {
-        return lectures;
+        return ParserLecturesJSON.parseLecturesFromJSON();
     }
 
+    @Override
     public void setAll(List<Lecture> lectures) {
-        this.lectures = lectures;
+        ParserLecturesJSON.parseLecturesInJSON(lectures);
     }
-
-    @Override
-    public void addLecture(Lecture lecture) {
-        lectures.add(lecture);
-    }
-
-    @Override
-    public void removeLecture(int id) {
-        lectures.removeIf(e -> e.getId() == id);
-    }
-
 }

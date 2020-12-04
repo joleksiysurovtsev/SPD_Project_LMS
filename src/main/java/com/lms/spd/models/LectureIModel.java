@@ -1,59 +1,58 @@
 package com.lms.spd.models;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
+import java.io.Serializable;
+
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
-public class LectureIModel implements Lecture {
-    @JSONField(name = "NAME OF LECTURE")
+
+public class LectureIModel implements Lecture,Serializable {
+
+    @JsonProperty("NameOfLecture")
     private String nameOfLecture;
 
-    @JSONField(name = "NUMBER OF LECTURE")
-    private int numberOfLecture;
-
-    @JSONField(name = "LIST LITERATURES")
+    @JsonProperty("List literatures")
     private List<Literature> literatures;
 
-    @JSONField(name = "LECTURE DATE", format = "dd/MM/yyyy")
+    @JsonProperty("Date of lecture")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Calendar lectureDate;
 
-    @JSONField(name = "LECTOR NAME")
+    @JsonProperty("Lector Name")
     private String lectorName;
 
-    @JSONField(name = "LECTURE TYPE")
+    @JsonProperty("Lecture type")
     private LectureType type;
 
-    @JSONField(name = "LECTURE ID")
+    @JsonProperty("Lecture ID")
     private int id;
     //lecture constructor____________________________________________________________________________________________//
+
+
+    public LectureIModel() {}
 
     public LectureIModel(String nameOfLecture) {
         this.nameOfLecture = nameOfLecture;
     }
 
-    public LectureIModel(int numberOfLecture, String nameOfLecture) {
-        this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
-    }
-
-    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate) {
+    public LectureIModel(LectureType type, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
     }
 
-    public LectureIModel(LectureType type, int numberOfLecture, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate, int id) {
+    public LectureIModel(LectureType type, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate, int id) {
         this.type = type;
         this.nameOfLecture = nameOfLecture;
-        this.numberOfLecture = numberOfLecture;
+
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
@@ -70,16 +69,6 @@ public class LectureIModel implements Lecture {
     @Override
     public String getNameOfLecture() {
         return nameOfLecture;
-    }
-
-    @Override
-    public void setNumberOfLecture(int numberOfLecture) {
-        this.numberOfLecture = numberOfLecture;
-    }
-
-    @Override
-    public int getNumberOfLecture() {
-        return this.numberOfLecture;
     }
 
     @Override
@@ -136,11 +125,11 @@ public class LectureIModel implements Lecture {
     public String toString() {
         return "LectureIModel{" +
                 "nameOfLecture='" + nameOfLecture + '\'' +
-                ", numberOfLecture=" + numberOfLecture +
                 ", literatures=" + literatures +
                 ", lectureDate=" + lectureDate +
                 ", lectorName='" + lectorName + '\'' +
                 ", type=" + type +
+                ", id=" + id +
                 '}';
     }
 
@@ -151,24 +140,23 @@ public class LectureIModel implements Lecture {
 
         LectureIModel that = (LectureIModel) o;
 
-        if (numberOfLecture != that.numberOfLecture) return false;
         if (id != that.id) return false;
-        if (!Objects.equals(lectorName, that.lectorName)) return false;
-        if (!Objects.equals(literatures, that.literatures)) return false;
-        if (!Objects.equals(lectureDate, that.lectureDate)) return false;
-        if (!Objects.equals(nameOfLecture, that.nameOfLecture)) return false;
+        if (nameOfLecture != null ? !nameOfLecture.equals(that.nameOfLecture) : that.nameOfLecture != null)
+            return false;
+        if (literatures != null ? !literatures.equals(that.literatures) : that.literatures != null) return false;
+        if (lectureDate != null ? !lectureDate.equals(that.lectureDate) : that.lectureDate != null) return false;
+        if (lectorName != null ? !lectorName.equals(that.lectorName) : that.lectorName != null) return false;
         return type == that.type;
     }
 
     @Override
     public int hashCode() {
-        int result = getNameOfLecture().hashCode();
-        result = 31 * result + getNumberOfLecture();
-        result = 31 * result + getLiteratures().hashCode();
-        result = 31 * result + getLectureDate().hashCode();
-        result = 31 * result + getLectorName().hashCode();
-        result = 31 * result + getType().hashCode();
-        result = 31 * result + getId();
+        int result = nameOfLecture != null ? nameOfLecture.hashCode() : 0;
+        result = 31 * result + (literatures != null ? literatures.hashCode() : 0);
+        result = 31 * result + (lectureDate != null ? lectureDate.hashCode() : 0);
+        result = 31 * result + (lectorName != null ? lectorName.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
 }
