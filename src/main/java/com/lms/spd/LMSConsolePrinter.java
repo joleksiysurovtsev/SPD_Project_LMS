@@ -169,6 +169,16 @@ public class LMSConsolePrinter {
     }
 
     public void printLectureListStatisticsByType(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType) {
+      //  Реализовать функционал по подсчету статистики по лекциях по определенном типу.
+      //  Необходимо посчитать общее время проведения лекций / среднее/минимальное/максимальное время проведения лекции, а также общее количество лекций в модуле.
+        IntSummaryStatistics statistics = Arrays.stream(mapSortedByType.get(selectLectureType).stream().mapToInt(Lecture::getDurationOfTheLesson).toArray()).summaryStatistics();
+
+        System.out.println("total lecture time" +  statistics.getCount());
+        System.out.println("average lecture time" +  statistics.getAverage());
+        System.out.println("minimal lecture time" +  statistics.getAverage());
+        System.out.println("maximum lecture time" +  statistics.getAverage());
+        System.out.println("maximum lecture time" );
+
 
         //если дата проведения лекции
         // mapSortedByType.get(selectLectureType).stream().filter(lecture -> lecture.getLectureDate().after(enterTheDate)).filter(lecture -> lecture.getLectureDate().before(beforeDate)).forEach(lecture -> {printlecture(lecture)});

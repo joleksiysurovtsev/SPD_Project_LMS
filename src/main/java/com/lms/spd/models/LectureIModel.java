@@ -35,7 +35,7 @@ public class LectureIModel implements Lecture,Serializable {
     private int id;
 
     @JsonProperty("Duration Of The Lesson")
-    private long durationOfTheLesson;
+    private int durationOfTheLesson;
     //lecture constructor____________________________________________________________________________________________//
 
 
@@ -62,7 +62,7 @@ public class LectureIModel implements Lecture,Serializable {
         this.id = id;
     }
 
-    public LectureIModel(String nameOfLecture, List<Literature> literatures, Calendar lectureDate, String lectorName, LectureType type, int id, long durationOfTheLesson) {
+    public LectureIModel(String nameOfLecture, List<Literature> literatures, Calendar lectureDate, String lectorName, LectureType type, int id, int durationOfTheLesson) {
         this.nameOfLecture = nameOfLecture;
         this.literatures = literatures;
         this.lectureDate = lectureDate;
@@ -132,11 +132,11 @@ public class LectureIModel implements Lecture,Serializable {
         this.id = id;
     }
 
-    public long getDurationOfTheLesson() {
+    public int getDurationOfTheLesson() {
         return durationOfTheLesson;
     }
 
-    public void setDurationOfTheLesson(long durationOfTheLesson) {
+    public void setDurationOfTheLesson(int durationOfTheLesson) {
         this.durationOfTheLesson = durationOfTheLesson;
     }
 
