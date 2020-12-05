@@ -75,7 +75,7 @@ public class LMSTerminal {
                 print.printLectureListByTypeAndDate(lectureValidator.selectLectureType(), ConsoleInputValidator.enterTheDateOnlyDayMonthYear(), lectureServiceImpl.getMapSortedByType());
                 break;
             case "stat":
-                print.printLectureListStatisticsByType(lectureValidator.selectLectureType(), lectureServiceImpl.getMapSortedByType());
+                print.printLectureListStatistics(lectureServiceImpl.getMapSortedByType().get(lectureValidator.selectLectureType()));
                 break;
             case "exit":
                 startLMS();
