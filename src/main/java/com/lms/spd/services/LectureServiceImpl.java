@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class LectureServiceImpl implements LectureService {
 
-    private LectureRepository repository;
+    private static LectureRepository repository;
     private Lecture selectedLecture;
 
     public LectureServiceImpl() {
@@ -42,7 +42,7 @@ public class LectureServiceImpl implements LectureService {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     @Override
     public void addLecture(Lecture lecture) {
-        lecture.setId(generateLectureID(repository.getAll()));
+        lecture.setId(generateLectureID());
         List<Lecture> addList = repository.getAll();
         addList.add(lecture);
         repository.setAll(addList.stream().sorted(Comparator.comparing(Lecture::getLectureDate)).collect(Collectors.toList()));
@@ -65,13 +65,13 @@ public class LectureServiceImpl implements LectureService {
     }
 
 
-
     //________________________________________________________________________________________________//
-    public static int generateLectureID(List<Lecture> lectures) {
-        return (lectures.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) + 1;
+    public static int generateLectureID() {
+        List<Lecture> lectureList = repository.getAll();
+        return (lectureList.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) + 1;
     }
 
-    public Map<LectureType,List<Lecture>> getMapSortedByType() {
+    public Map<LectureType, List<Lecture>> getMapSortedByType() {
         return new HashMap<LectureType, List<Lecture>>();
     }
 

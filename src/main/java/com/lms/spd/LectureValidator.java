@@ -4,6 +4,7 @@ import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
+import com.lms.spd.services.LectureServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,8 +19,15 @@ public class LectureValidator {
         String lectorName = enterLektorName();
         LectureType lectureType = selectLectureType();
         Calendar lectureDate = ConsoleInputValidator.enterTheDate();
+        int lectureDuration = lectureDuration();
+        int ID = LectureServiceImpl.generateLectureID();
         List<Literature> literatures = literatureValidator.addLitOrNot();
-        return new LectureIModel(lectureType, nameOfLecture, literatures, lectorName, lectureDate);
+        return new LectureIModel(nameOfLecture, literatures, lectureDate, lectorName, lectureType, ID, lectureDuration);
+    }
+
+    private int lectureDuration() {
+        System.out.println("Lecture duration");
+        return ConsoleInputValidator.readInt();
     }
 
     /**

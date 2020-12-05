@@ -7,13 +7,14 @@ import com.lms.spd.models.interfaces.Literature;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class LMSConsolePrinter {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-    String tabulator = "|%-1s| %-12s | %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
+    String tabulator = "|%-1s| %-12s | %-19s|№: %-13d|№: %-10d|%-46.46s| %-18.18s|%-4.4s minutes|";
     private static int count = 1;
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
@@ -28,9 +29,9 @@ public class LMSConsolePrinter {
 
     public void printPreviewLectureList(List<Lecture> lectures) throws ListIsEmptyException {
         System.out.println("Lecture preview");
-        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.15s| %-24.24s|";
+        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-10d|%-46.15s| %-24.24s|%-3s|";
         printAllLectureTable(lectures);
-        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-13d|%-50.50s| %-24.24s|";
+        tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-10d|%-46.46s| %-24.24s|%-3s|";
     }
 
     public void printLectureListByType(LectureType type, List<Lecture> lectures) throws ListIsEmptyException {
@@ -58,16 +59,16 @@ public class LMSConsolePrinter {
 
     private void printTopOfTable() {
         System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|\u1005|       Date       |  Lecture type      | Lecture number | Lecture ID     |                   Lecture title                  |      Lecturer name      |");
+        System.out.println("|\u1005|       Date       |  Lecture type      | Lecture number | Lecture ID  |                   Lecture title              |  Lecturer name    | Duration   |");
         System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
     }
 
     //Печатает таблицу
     public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
-            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(),lecture.getDurationOfTheLesson()));
         } else {
-            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim()));
+            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(),lecture.getDurationOfTheLesson()));
         }
     }
 
@@ -156,36 +157,29 @@ public class LMSConsolePrinter {
     /**
      * The method prints a list of lectures by type and date
      * */
-    public void printLectureListByTypeAndDate(LectureType selectLectureType, Calendar enterTheDate, Map<LectureType, List<Lecture>> mapSortedByType) {
-        System.out.println("The method prints a list of lectures by type and date");
-        System.out.println(selectLectureType.name());
-        System.out.println(enterTheDate.getTime());
+    public void printLectureListByTypeAndDate(LectureType selectLectureType, Calendar enterTheDate, Map<LectureType, List<Lecture>> mapSortedByType) throws ListIsEmptyException {
         Calendar beforeDate = enterTheDate;
         beforeDate.roll(Calendar.DATE,1);
-        System.out.println("+1 Day ???  "+beforeDate.getTime());
-                                                                        //если дата проведения лекции
-       // mapSortedByType.get(selectLectureType).stream().filter(lecture -> lecture.getLectureDate().after(enterTheDate)).filter(lecture -> lecture.getLectureDate().before(beforeDate)).forEach(lecture -> {printlecture(lecture)});
 
+        List<Lecture> lectureList = mapSortedByType.get(selectLectureType).stream()
+                .filter(lecture -> lecture.getLectureDate().after(enterTheDate))
+                .filter(lecture -> lecture.getLectureDate().before(beforeDate))
+                .collect(Collectors.toList());
+
+        printAllLectureTable(lectureList);
     }
 
     public void printLectureListStatisticsByType(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType) {
-      //  Реализовать функционал по подсчету статистики по лекциях по определенном типу.
-      //  Необходимо посчитать общее время проведения лекций / среднее/минимальное/максимальное время проведения лекции, а также общее количество лекций в модуле.
-        IntSummaryStatistics statistics = Arrays.stream(mapSortedByType.get(selectLectureType).stream().mapToInt(Lecture::getDurationOfTheLesson).toArray()).summaryStatistics();
+        IntSummaryStatistics statistics = Arrays.stream(mapSortedByType.get(selectLectureType)
+                .stream()
+                .mapToInt(Lecture::getDurationOfTheLesson)
+                .toArray())
+                .summaryStatistics();
 
-        System.out.println("total lecture time" +  statistics.getCount());
+        System.out.println("total number of lectures" +  statistics.getCount());
         System.out.println("average lecture time" +  statistics.getAverage());
         System.out.println("minimal lecture time" +  statistics.getAverage());
         System.out.println("maximum lecture time" +  statistics.getAverage());
-        System.out.println("maximum lecture time" );
-
-
-        //если дата проведения лекции
-        // mapSortedByType.get(selectLectureType).stream().filter(lecture -> lecture.getLectureDate().after(enterTheDate)).filter(lecture -> lecture.getLectureDate().before(beforeDate)).forEach(lecture -> {printlecture(lecture)});
-
     }
 
-    private void printlecture(Lecture lecture) {
-        System.out.println("Lecture: "+lecture.getNameOfLecture()+ " Lector:" + lecture.getLectorName() + " Lecture date" + lecture.getLectureDate().getTime());
-    }
 }

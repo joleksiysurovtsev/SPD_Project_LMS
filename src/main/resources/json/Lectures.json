@@ -1,2 +1,2 @@
-{"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"Тестовая","List literatures":[],"Date of lecture":"19-10-2020 00:00","Lector Name":"19-10-2020 18:00","Lecture type":"JAVA_CORE","Lecture ID":1}
-{"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"1","List literatures":[],"Date of lecture":"19-10-2020 18:30","Lector Name":"1","Lecture type":"JAVA_CORE","Lecture ID":2}
+{"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"Intro. Java Basics","List literatures":[],"Date of lecture":"05-10-2020 18:30","Lector Name":"Vova Shevchenko","Lecture type":"JAVA_CORE","Lecture ID":1,"Duration Of The Lesson":180}
+{"@ class":"com.lms.spd.models.LectureIModel","NameOfLecture":"Intellij IDEA Features. GitLab flow.","List literatures":[],"Date of lecture":"07-10-2020 18:30","Lector Name":"Andrii Zaiats","Lecture type":"COMMON","Lecture ID":2,"Duration Of The Lesson":120}

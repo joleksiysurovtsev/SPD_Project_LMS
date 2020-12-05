@@ -64,17 +64,6 @@ public class LecturesCache {
         LecturesCache.updateCashAfterRemove(listR);
     }
 
-//    public static void removeLectureFromCache(int[] lectureRemove) {
-//        //(lecture -> lecture.getId() != x)..collect(Collectors.toList())//.forEach(lecture -> lecture.getId() == x).removeIf(lecture -> lecture.getId() == x)
-//        //Map<Calendar, List<Lecture>> cash2 = cash;
-//
-//        for (int x : lectureRemove) {
-//            cash.forEach((calendar, lectures1) -> lectures1 = lectures1.stream().filter(lecture -> lecture.getId() != x).collect(Collectors.toList()));
-//        }
-//        //cash = cash2;
-//    }
-
-
     private static void updateCashAfterRemove(List<Lecture> lectureDeleted) {
         lectureDeleted.forEach(lectures1 -> {
             List<Lecture> lsc = cash.get(lectures1.getLectureDate());
