@@ -14,8 +14,7 @@ import java.util.TimeZone;
 
 public class ConsoleInputValidator {
 
-
-    static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static final String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2}) ([01]?[0-9]|2[0-3]):[0-5][0-9]$";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
@@ -51,7 +50,6 @@ public class ConsoleInputValidator {
         while (true) {
             dateInString = ConsoleInputValidator.readString();
             try {
-                DATE_FORMAT.setLenient(false);
                 lectureDate.setTime(DATE_FORMAT.parse(dateInString));
                 if (!dateInString.matches(LECTURE_DATE_REG_EXP)) {
                     throw new DateFormatException("the date of the lecture cannot be later than 2000");
@@ -59,24 +57,6 @@ public class ConsoleInputValidator {
                 break;
             } catch (DateFormatException f) {
                 System.err.println(f.getMessage());
-            } catch (ParseException e) {
-                System.err.println("The date is entered incorrectly, try again");
-            }
-        }
-        return lectureDate;
-    }
-
-    public static Calendar enterTheDateOnlyDayMonthYear() {
-        System.out.println("Enter the lecture date for example: 19-10-2020");
-        Calendar lectureDate = new GregorianCalendar();
-        lectureDate.setTimeZone(TimeZone.getDefault());
-        SimpleDateFormat dateFormatOnlyDayOfWeekMonthYear = new SimpleDateFormat("dd-MM-yyyy");
-        String dateInString;
-        while (true) {
-            dateInString = ConsoleInputValidator.readString();
-            try {
-                lectureDate.setTime(dateFormatOnlyDayOfWeekMonthYear.parse(dateInString));
-                break;
             } catch (ParseException e) {
                 System.err.println("The date is entered incorrectly, try again");
             }

@@ -7,12 +7,11 @@ import com.lms.spd.models.interfaces.Literature;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class LMSConsolePrinter {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
     String tabulator = "|%-1s| %-12s | %-19s|№: %-13d|№: %-10d|%-46.46s| %-18.18s|%-4.4s minutes|";
     private static int count = 1;
@@ -64,7 +63,9 @@ public class LMSConsolePrinter {
         System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
     }
 
-    //Печатает таблицу
+    /**
+     * Method prints the table
+     * */
     public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
             System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(), lecture.getDurationOfTheLesson()));
@@ -73,11 +74,16 @@ public class LMSConsolePrinter {
         }
     }
 
-
+    /**
+     * Method sorts the bibliography by type and date
+     */
     public List<Literature> sortLitByDateAndType(List<Literature> litArr) {
         return litArr.stream().distinct().sorted(Comparator.comparing(Literature::getType).thenComparing(Literature::getDateResourceWasAdded)).collect(Collectors.toList());
     }
 
+    /**
+     * method displays the main menu
+     */
     public void showStartMenu() {
         System.out.println("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" +
                 "\"" + ": learning management system" + "\u001B[0m\n" +
@@ -90,14 +96,15 @@ public class LMSConsolePrinter {
     /**
      * point 4 main menu: method deleting the lecture list
      */
-
     public void showFourthMenu() {
         System.out.println("\"1. --> choose another lecture\n" + "\"2. --> view the list of literature\n" +
                 "\"3. --> add new literature\n" + "\"4. --> remove literature\n" +
                 "\"5. --> view all lecture information\n" + "\"6. --> exit to the main menu");
     }
 
-
+    /**
+     * The method displays messages when creating literature
+     * */
     public void printMessagesAddLit(int message) {
         Map<Integer, String> massageMap = Map.of(1, "Please enter a title:",
                 2, "Please enter a author name",
@@ -111,6 +118,11 @@ public class LMSConsolePrinter {
         }
     }
 
+    /**
+     * The method displays a List<Lecture>,
+     * it also checks the List<Lecture> is empty or not,
+     * if List<Lecture> is empty, then throws an error and processes it
+     */
     public void printListLit(Lecture lecture) {
         List<Literature> litArr = lecture.getLiteratures();
         if (litArr.isEmpty()) {
@@ -129,12 +141,13 @@ public class LMSConsolePrinter {
         }
     }
 
+    /**
+     * Method of displaying the first item of the terminal main menu
+     */
     public void printMenuPoint1() {
         System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n" + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by ID\n"
                 + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n" + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
                 + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date\n"
-                + "\u001B[34m\"TYPE & DATE\"\u001B[0m Display lectures by curend type & date\n"
-                + "\u001B[33m\"STAT\"\u001B[0m Display lectures statistics by curend type \n"
                 + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu");
     }
 
@@ -146,7 +159,9 @@ public class LMSConsolePrinter {
         }
     }
 
-
+    /**
+     * The method displays all information about the lesion
+     */
     void showAllLectureInfo(Lecture lecture) {
         String lectureInfo = "Lecture: ID" + lecture.getId() + " " + lecture.getNameOfLecture() + " \n" + "The lecture is lecturing by: " + lecture.getLectorName() + "\n" +
                 "Lecture date: " + sdf.format(lecture.getLectureDate().getTime()) +
@@ -158,26 +173,20 @@ public class LMSConsolePrinter {
     /**
      * The method prints a list of lectures by type and date
      */
-    public void printLectureListByTypeAndDate(LectureType selectLectureType, Calendar enterTheDate, Map<LectureType, List<Lecture>> mapSortedByType) throws ListIsEmptyException {
-        Calendar beforeDate = enterTheDate;
-        beforeDate.roll(Calendar.DATE, 1);
-
-        List<Lecture> lectureList = mapSortedByType.get(selectLectureType).stream()
-                .filter(lecture -> lecture.getLectureDate().after(enterTheDate))
-                .filter(lecture -> lecture.getLectureDate().before(beforeDate))
-                .collect(Collectors.toList());
-
+    public void printLectureListByType(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType) throws ListIsEmptyException {
+        List<Lecture> lectureList = mapSortedByType.get(selectLectureType);
         printAllLectureTable(lectureList);
-
     }
 
+    /**
+     * method prints statistics about lecture time
+     */
     public void printLectureListStatistics(List<Lecture> lectures) {
         IntSummaryStatistics statistics = Arrays.stream((lectures.stream().mapToInt(Lecture::getDurationOfTheLesson).toArray())).summaryStatistics();
-
         System.out.println("\ntotal number of lectures " + statistics.getCount());
-        System.out.println("average lecture time " + statistics.getAverage());
-        System.out.println("minimal lecture time" + statistics.getMin());
-        System.out.println("maximum lecture time" + statistics.getMax());
-        System.out.println("total lecture time" + statistics.getSum());
+        System.out.println("average lecture time " + (int) (statistics.getAverage() / 60) + " hours " + ((int) statistics.getAverage() % 60) + " minutes");
+        System.out.println("minimal lecture time " + (statistics.getMin() / 60) + " hours " + (statistics.getMin() % 60) + " minutes");
+        System.out.println("maximum lecture time " + (statistics.getMax() / 60) + " hours " + (statistics.getMax() % 60) + " minutes");
+        System.out.println("total lecture time " + (statistics.getSum() / 60) + " hours " + (statistics.getSum() % 60) + " minutes");
     }
 }

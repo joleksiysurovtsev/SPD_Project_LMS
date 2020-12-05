@@ -9,6 +9,9 @@ import java.util.stream.Collector;
 
 public class LectureCollector implements Collector<Lecture, Map<LectureType, List<Lecture>>, Map<LectureType, List<Lecture>>> {
 
+    /**
+     * constructor
+     * */
     public static LectureCollector collectToSortedMapByType() {
         return new LectureCollector();
     }
@@ -66,7 +69,7 @@ public class LectureCollector implements Collector<Lecture, Map<LectureType, Lis
     /**
      * method is used to provide Stream with some additional information that will be used for internal optimizations.
      */
-    @Override //характеристики
+    @Override
     public Set<Collector.Characteristics> characteristics() {
         Set<Characteristics> characteristics = new HashSet<>();
         characteristics.add(Characteristics.CONCURRENT);

@@ -2,7 +2,6 @@ package com.lms.spd.services.interfaces;
 
 import com.lms.spd.models.interfaces.Literature;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface LiteratureService {

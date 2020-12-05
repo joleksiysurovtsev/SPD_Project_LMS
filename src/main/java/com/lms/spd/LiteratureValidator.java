@@ -10,8 +10,8 @@ import com.lms.spd.services.LiteratureServiceImpl;
 import java.util.*;
 
 public class LiteratureValidator {
-    LMSConsolePrinter print = new LMSConsolePrinter();
-    LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
+    private LMSConsolePrinter print = new LMSConsolePrinter();
+    private LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
 
     public Literature createLiterature() {
         Literature lit;
@@ -84,6 +84,4 @@ public class LiteratureValidator {
         }
         return newLiteratureArr;
     }
-
-
 }

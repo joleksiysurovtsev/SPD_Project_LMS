@@ -8,7 +8,6 @@ import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.services.interfaces.LectureService;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class LectureServiceImpl implements LectureService {

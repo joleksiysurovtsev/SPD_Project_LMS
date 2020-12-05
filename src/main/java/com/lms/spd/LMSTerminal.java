@@ -65,14 +65,11 @@ public class LMSTerminal {
                 print.printPreviewLectureList(lectureServiceImpl.getLectures());
                 break;
             case "type":
-                print.printLectureListByType(lectureValidator.selectLectureType(lectureValidator.arrayLecturesTypesInvolved(lectureServiceImpl.getLectures())), lectureServiceImpl.getLectures());
+                print.printLectureListByType(lectureValidator.selectLectureType(), lectureServiceImpl.getMapSortedByType());
                 break;
             case "date":
                 cash.setCurrentDate(ConsoleInputValidator.enterTheDate());
                 print.printAllLectureTable(cash.returnList());
-                break;
-            case "type & date":
-                print.printLectureListByTypeAndDate(lectureValidator.selectLectureType(), ConsoleInputValidator.enterTheDateOnlyDayMonthYear(), lectureServiceImpl.getMapSortedByType());
                 break;
             case "stat":
               //  print.printLectureListStatistics(lectureServiceImpl.getMapSortedByType().get(lectureValidator.selectLectureType()));
