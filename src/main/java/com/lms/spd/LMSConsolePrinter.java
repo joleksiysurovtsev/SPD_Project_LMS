@@ -25,6 +25,7 @@ public class LMSConsolePrinter {
             lectures.forEach(this::printLectureTable);
             count = 1;
         }
+        printLectureListStatistics(lectures);
     }
 
     public void printPreviewLectureList(List<Lecture> lectures) throws ListIsEmptyException {
@@ -66,9 +67,9 @@ public class LMSConsolePrinter {
     //Печатает таблицу
     public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
-            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(),lecture.getDurationOfTheLesson()));
+            System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(), lecture.getDurationOfTheLesson()));
         } else {
-            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(),lecture.getDurationOfTheLesson()));
+            System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(), lecture.getDurationOfTheLesson()));
         }
     }
 
@@ -156,10 +157,10 @@ public class LMSConsolePrinter {
 
     /**
      * The method prints a list of lectures by type and date
-     * */
+     */
     public void printLectureListByTypeAndDate(LectureType selectLectureType, Calendar enterTheDate, Map<LectureType, List<Lecture>> mapSortedByType) throws ListIsEmptyException {
         Calendar beforeDate = enterTheDate;
-        beforeDate.roll(Calendar.DATE,1);
+        beforeDate.roll(Calendar.DATE, 1);
 
         List<Lecture> lectureList = mapSortedByType.get(selectLectureType).stream()
                 .filter(lecture -> lecture.getLectureDate().after(enterTheDate))
@@ -167,19 +168,16 @@ public class LMSConsolePrinter {
                 .collect(Collectors.toList());
 
         printAllLectureTable(lectureList);
+
     }
 
-    public void printLectureListStatisticsByType(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType) {
-        IntSummaryStatistics statistics = Arrays.stream(mapSortedByType.get(selectLectureType)
-                .stream()
-                .mapToInt(Lecture::getDurationOfTheLesson)
-                .toArray())
-                .summaryStatistics();
+    public void printLectureListStatistics(List<Lecture> lectures) {
+        IntSummaryStatistics statistics = Arrays.stream((lectures.stream().mapToInt(Lecture::getDurationOfTheLesson).toArray())).summaryStatistics();
 
-        System.out.println("total number of lectures" +  statistics.getCount());
-        System.out.println("average lecture time" +  statistics.getAverage());
-        System.out.println("minimal lecture time" +  statistics.getAverage());
-        System.out.println("maximum lecture time" +  statistics.getAverage());
+        System.out.println("\ntotal number of lectures " + statistics.getCount());
+        System.out.println("average lecture time " + statistics.getAverage());
+        System.out.println("minimal lecture time" + statistics.getMin());
+        System.out.println("maximum lecture time" + statistics.getMax());
+        System.out.println("total lecture time" + statistics.getSum());
     }
-
 }
