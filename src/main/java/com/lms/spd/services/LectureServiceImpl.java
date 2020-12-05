@@ -1,5 +1,6 @@
 package com.lms.spd.services;
 
+import com.lms.spd.LectureCollector;
 import com.lms.spd.LecturesCache;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class LectureServiceImpl implements LectureService {
 
-    private static LectureRepository repository;
+    private LectureRepository repository;
     private Lecture selectedLecture;
 
     public LectureServiceImpl() {
@@ -66,13 +67,13 @@ public class LectureServiceImpl implements LectureService {
 
 
     //________________________________________________________________________________________________//
-    public static int generateLectureID() {
+    public  int generateLectureID() {
         List<Lecture> lectureList = repository.getAll();
         return (lectureList.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) + 1;
     }
 
     public Map<LectureType, List<Lecture>> getMapSortedByType() {
-        return new HashMap<LectureType, List<Lecture>>();
+        return repository.getAll().stream().collect(LectureCollector.collectToSortedMapByType());
     }
 
 }

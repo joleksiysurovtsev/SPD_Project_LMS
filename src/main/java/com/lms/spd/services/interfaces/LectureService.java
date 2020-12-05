@@ -19,5 +19,5 @@ public interface LectureService {
 
     void removeLectures(int[] lectureRemove) ;
 
-    Map<LectureType,List<Lecture>> getMapSortedByType();
+    Map<LectureType, List<Lecture>> getMapSortedByType();
 }

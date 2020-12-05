@@ -13,14 +13,14 @@ import java.util.stream.IntStream;
 
 public class LectureValidator {
     LiteratureValidator literatureValidator = new LiteratureValidator();
-
+    LectureServiceImpl lectureService = new LectureServiceImpl();
     public Lecture createLecture() {
         String nameOfLecture = createTheLectureTitle();
         String lectorName = enterLektorName();
         LectureType lectureType = selectLectureType();
         Calendar lectureDate = ConsoleInputValidator.enterTheDate();
         int lectureDuration = lectureDuration();
-        int ID = LectureServiceImpl.generateLectureID();
+        int ID = lectureService.generateLectureID();
         List<Literature> literatures = literatureValidator.addLitOrNot();
         return new LectureIModel(nameOfLecture, literatures, lectureDate, lectorName, lectureType, ID, lectureDuration);
     }
