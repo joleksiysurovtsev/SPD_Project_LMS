@@ -211,6 +211,6 @@ public class LMSConsolePrinter {
         System.out.println("average lecture time " + (int) (statistics.getAverage() / 60) + " hours " + ((int) statistics.getAverage() % 60) + " minutes");
         System.out.println("minimal lecture time " + (statistics.getMin() / 60) + " hours " + (statistics.getMin() % 60) + " minutes");
         System.out.println("maximum lecture time " + (statistics.getMax() / 60) + " hours " + (statistics.getMax() % 60) + " minutes");
-        System.out.println("maximum lecture time " + (statistics.getSum() / 60) + " hours " + (statistics.getSum() % 60) + " minutes");
+        System.out.println("all lecture time " + (statistics.getSum() / 60) + " hours " + (statistics.getSum() % 60) + " minutes");
     }
 }
