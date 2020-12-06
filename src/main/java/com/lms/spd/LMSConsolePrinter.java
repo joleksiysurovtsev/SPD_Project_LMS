@@ -65,7 +65,7 @@ public class LMSConsolePrinter {
 
     /**
      * Method prints the table
-     * */
+     */
     public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
             System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(), lecture.getDurationOfTheLesson()));
@@ -104,7 +104,7 @@ public class LMSConsolePrinter {
 
     /**
      * The method displays messages when creating literature
-     * */
+     */
     public void printMessagesAddLit(int message) {
         Map<Integer, String> massageMap = Map.of(1, "Please enter a title:",
                 2, "Please enter a author name",
@@ -148,6 +148,7 @@ public class LMSConsolePrinter {
         System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n" + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by ID\n"
                 + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n" + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
                 + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date\n"
+                + "\u001B[34m\"TYPE AND DATE\"\u001B[0m Display lectures by curend date\n"
                 + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu");
     }
 
@@ -171,15 +172,38 @@ public class LMSConsolePrinter {
     }
 
     /**
-     * The method prints a list of lectures by type and date
+     * <b>The method prints a List of  {@code <Lectures>}  by {@code LectureType} </b>
      */
     public void printLectureListByType(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType) throws ListIsEmptyException {
         List<Lecture> lectureList = mapSortedByType.get(selectLectureType);
         printAllLectureTable(lectureList);
     }
 
+
     /**
-     * method prints statistics about lecture time
+     * The method prints a List of  {@link com.lms.spd.models.interfaces.Lecture Lectures}
+     * by {@link com.lms.spd.enums.LectureType LectureType}  & {@link java.util.GregorianCalendar Date} </b>
+     */
+    public void printLectureListByTypeAndDate(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType, Calendar currentdate) throws ListIsEmptyException {
+        Map<Boolean, List<Lecture>> booleanListMap = Util.getCollectByDate(selectLectureType, mapSortedByType, currentdate);
+        if (booleanListMap.containsKey(false)) {
+            System.out.println("on this date such lectures have been completed");
+            printAllLectureTable(booleanListMap.get(false));
+        }
+        if (booleanListMap.containsKey(true)) {
+            System.out.println("such lectures to be held");
+            printAllLectureTable(booleanListMap.get(true));
+        }
+    }
+
+    /**
+     * <b>Method prints statistics about lecture time
+     * <pre>{@code "total number of lecture"
+     * "average lecture time"
+     * "minimal lecture time"
+     * "maximum lecture time"
+     * "maximum lecture time"
+     * </pre>
      */
     public void printLectureListStatistics(List<Lecture> lectures) {
         IntSummaryStatistics statistics = Arrays.stream((lectures.stream().mapToInt(Lecture::getDurationOfTheLesson).toArray())).summaryStatistics();
@@ -187,6 +211,6 @@ public class LMSConsolePrinter {
         System.out.println("average lecture time " + (int) (statistics.getAverage() / 60) + " hours " + ((int) statistics.getAverage() % 60) + " minutes");
         System.out.println("minimal lecture time " + (statistics.getMin() / 60) + " hours " + (statistics.getMin() % 60) + " minutes");
         System.out.println("maximum lecture time " + (statistics.getMax() / 60) + " hours " + (statistics.getMax() % 60) + " minutes");
-        System.out.println("total lecture time " + (statistics.getSum() / 60) + " hours " + (statistics.getSum() % 60) + " minutes");
+        System.out.println("maximum lecture time " + (statistics.getSum() / 60) + " hours " + (statistics.getSum() % 60) + " minutes");
     }
 }

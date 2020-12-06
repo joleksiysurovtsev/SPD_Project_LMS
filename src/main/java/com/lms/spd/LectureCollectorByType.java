@@ -7,13 +7,11 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collector;
 
-public class LectureCollector implements Collector<Lecture, Map<LectureType, List<Lecture>>, Map<LectureType, List<Lecture>>> {
+public class LectureCollectorByType implements Collector<Lecture, Map<LectureType, List<Lecture>>, Map<LectureType, List<Lecture>>> {
 
-    /**
-     * constructor
-     * */
-    public static LectureCollector collectToSortedMapByType() {
-        return new LectureCollector();
+
+    public static LectureCollectorByType collectToSortedMapByType() {
+        return new LectureCollectorByType();
     }
 
     /**
@@ -61,7 +59,7 @@ public class LectureCollector implements Collector<Lecture, Map<LectureType, Lis
     @Override
     public Function<Map<LectureType, List<Lecture>>, Map<LectureType, List<Lecture>>> finisher() {
         return (map) -> {
-            map.forEach((key, value) -> value.sort(Comparator.comparing(Lecture::getType).reversed()));
+            map.forEach((key, value) -> value.sort(Comparator.comparing(Lecture::getLectureDate)));
             return map;
         };
     }

@@ -1,6 +1,6 @@
 package com.lms.spd.services;
 
-import com.lms.spd.LectureCollector;
+import com.lms.spd.LectureCollectorByType;
 import com.lms.spd.LecturesCache;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
@@ -72,7 +72,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     public Map<LectureType, List<Lecture>> getMapSortedByType() {
-        return repository.getAll().stream().collect(LectureCollector.collectToSortedMapByType());
+        return repository.getAll().stream().collect(LectureCollectorByType.collectToSortedMapByType());
     }
 
 }
