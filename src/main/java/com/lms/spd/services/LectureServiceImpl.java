@@ -8,6 +8,7 @@ import com.lms.spd.repository.LectureRepository;
 import com.lms.spd.services.interfaces.LectureService;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class LectureServiceImpl implements LectureService {
@@ -56,12 +57,12 @@ public class LectureServiceImpl implements LectureService {
      */
     @Override
     public void removeLectures(int[] lectureRemove) {
-        LecturesCache.removeLectureFromCache(lectureRemove, repository.getAll());
         List<Lecture> lectures = repository.getAll();
-        for (int s : lectureRemove) {
-            lectures = lectures.stream().filter(lecture -> lecture.getId() != s).collect(Collectors.toList());
+        for (int lectureNumberToBeDeleted : lectureRemove) {
+            lectures = lectures.stream().filter(lecture -> lecture.getId() != lectureNumberToBeDeleted).collect(Collectors.toList());
         }
         repository.setAll(lectures);
+        LecturesCache.removeLectureFromCache(lectureRemove, repository.getAll());
     }
 
 

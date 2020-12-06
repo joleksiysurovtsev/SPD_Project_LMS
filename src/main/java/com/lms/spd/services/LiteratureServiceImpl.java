@@ -6,6 +6,8 @@ import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LiteratureServiceImpl implements LiteratureService {
 
@@ -40,6 +42,7 @@ public class LiteratureServiceImpl implements LiteratureService {
     }
 
     public static int generateIdLit(List<Literature> literatures) {
-        return (literatures.stream().map(Literature::getId).max(Integer::compareTo).orElse(0)) + 1;
+        AtomicInteger i = new AtomicInteger();
+        return (literatures.stream().map(Literature::getId).mapToInt(x -> x = i.incrementAndGet()).max().orElse(0));
     }
 }

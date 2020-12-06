@@ -68,7 +68,7 @@ public class ConsoleInputValidator {
         if (validate.equals("lectureName")) {
             System.out.println("Enter the title of the lecture");
         }
-        String line = null;
+        String line ;
         while (true) {
             try {
                 line = reader.readLine();

@@ -56,7 +56,6 @@ public class LecturesCache {
         cash.put(lectureAdded.getLectureDate(), listLectureWithCurrentDate);
     }
 
-
     public static void removeLectureFromCache(int[] lectureRemove, List<Lecture> lectures) {
         List<Lecture> listR = new ArrayList<>();
         Arrays.stream(lectureRemove).forEach(x -> lectures.stream().filter(lr -> lr.getId() == x).forEach(listR::add));

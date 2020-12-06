@@ -71,19 +71,19 @@ public class ParserLecturesJSON {
     }
 
     private static boolean checkDirectoryAndFileExist() {
-        boolean flag = true;
+        boolean ifDirorFileNotExist = true;
         try {
             if (Files.notExists(Path.of(DIR_NAME))) {
                 Files.createDirectories(Path.of(DIR_NAME));
-                flag = false;
+                ifDirorFileNotExist = false;
             }
             if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
                 Files.createFile(Path.of(DIR_NAME + FILE_NAME));
-                flag = false;
+                ifDirorFileNotExist = false;
             }
         } catch (IOException e) {
             System.out.println("unable to create file");
         }
-        return flag;
+        return ifDirorFileNotExist;
     }
 }

@@ -109,33 +109,24 @@ class LectureServiceImplTest {
 
     @Test
     @Order(35)
-    void removeLectures() {
+    void removeLecturesTested() {
 
-        //создали лекцию
+        List<Literature> literature2 = new ArrayList<>();
+        literature2.add(new BookModel("Title2", "author2", "genre", 1986, 1));
         List<Literature> literature = new ArrayList<>();
         literature.add(new BookModel("Title", "author", "genre", 1986, 1));
-        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", null, "testLector", new GregorianCalendar(2020, 01, 4), 1);
+        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", literature, "testLector", new GregorianCalendar(2020, 01, 4), 1);
+        LectureIModel lectureIModel2 = new LectureIModel(LectureType.JAVA_CORE, "TestL1", literature2, "testLector", new GregorianCalendar(2020, 01, 4), 2);
         List<Lecture> lectures = new ArrayList<>();
         lectures.add(lectureIModel);
+        lectures.add(lectureIModel2);
 
-        //записал лекцию в фаил
         ParserLecturesJSON.parseLecturesInJSON(lectures);
 
-        //создал вторую лекцию
-        List<Literature> literature2 = new ArrayList<>();
-        literature2.add(new BookModel("Title2", "author2", "genre", 1986, 2));
-        LectureIModel lectureIModel2 = new LectureIModel(LectureType.JAVA_CORE, "TestL1", literature2, "testLector", new GregorianCalendar(2020, 01, 4), 2);
-
-        //добавил её к лекциям
         LectureServiceImpl lectureService = new LectureServiceImpl();
-        lectureService.addLecture(lectureIModel2);
-
 
         int[] remove = {1};
-        //удалил первую лекцию
         lectureService.removeLectures(remove);
-
-        //ожидаем лист c второй лекцией
         List<Lecture> expectedlist = new ArrayList<>();
         expectedlist.add(lectureIModel2);
 
