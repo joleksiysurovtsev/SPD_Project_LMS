@@ -30,7 +30,11 @@ public interface Lecture {
 
     void setType(LectureType type);
 
-    public int getId();
+    int getId();
 
-    public void setId(int id);
+    void setId(int id);
+
+    int getDurationOfTheLesson();
+
+    void setDurationOfTheLesson(int durationOfTheLesson);
 }

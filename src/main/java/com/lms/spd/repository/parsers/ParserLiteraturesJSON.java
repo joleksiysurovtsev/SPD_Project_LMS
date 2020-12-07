@@ -33,7 +33,7 @@ public class ParserLiteraturesJSON {
         try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DIR_NAME + FILE_NAME), StandardCharsets.UTF_8)))  {
             StringBuilder stringBuilderEntity = new StringBuilder("");
             for (Literature lit : literature) {
-                stringBuilderEntity.append(mapper.writeValueAsString(lit) + "\n");
+                stringBuilderEntity.append(mapper.writeValueAsString(lit)).append("\n");
             }
             myWriter.write(stringBuilderEntity.toString());
             myWriter.flush();
@@ -44,22 +44,26 @@ public class ParserLiteraturesJSON {
 
 
     public static List<Literature> parseLiteraturesFromJSON() {
+        //check if the file exists if not then create it
         if (!checkDirectoryAndFileExist()) {
             return new ArrayList<>();
         }
-        List<Literature> lect = new ArrayList<>();
-        try (ReaderWrapper mywrapper = new ReaderWrapper(new InputStreamReader(new FileInputStream(new File(DIR_NAME + FILE_NAME))))) {
-            String line = mywrapper.readLine();
-            while (line != null) {
-                lect.add(mapper.readValue(line, Literature.class));
-                line = mywrapper.readLine();
-            }
+        List<Literature> readLectures = new ArrayList<>();
+        try (var stream = Files.lines(Path.of(DIR_NAME + FILE_NAME))) {
+            stream.forEach(lines -> readLectures(readLectures, lines));
         } catch (IOException e) {
-            System.err.println("Could not read the file");
+            e.printStackTrace();
         }
-        return lect;
+        return readLectures;
     }
 
+    private static void readLectures(List<Literature> literature, String s) {
+        try {
+            literature.add(mapper.readValue(s, Literature.class));
+        } catch (IOException e) {
+            System.out.println("It is impossible to count lectures");
+        }
+    }
 
     private static boolean checkDirectoryAndFileExist() {
         boolean flag = true;

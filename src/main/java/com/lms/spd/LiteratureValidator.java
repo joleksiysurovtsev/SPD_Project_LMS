@@ -84,6 +84,4 @@ public class LiteratureValidator {
         }
         return newLiteratureArr;
     }
-
-
 }
