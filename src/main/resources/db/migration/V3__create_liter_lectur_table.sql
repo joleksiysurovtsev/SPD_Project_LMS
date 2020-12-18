@@ -1,19 +1,14 @@
-create table literatures_lecture
-(
-	lecturesID int not null,
-	literatureID int not null,
-	primary key (lecturesID, literatureID),
-	constraint FK_lectures
-		foreign key () references literatures_lecture
-			on update cascade on delete cascade,
-	constraint FK_literature
-		foreign key () references literatures_lecture
-			on update cascade on delete cascade
+CREATE TABLE literature_to_lectures (
+                              id SERIAL PRIMARY KEY,
+                              literature_id INTEGER NOT NULL,
+                              lecture_id INTEGER NOT NULL,
+                              CONSTRAINT "FK_user_id" FOREIGN KEY (literature_id)
+                                  REFERENCES "literature" ("lit_id"),
+                              CONSTRAINT "FK_site_id" FOREIGN KEY (lecture_id)
+                                  REFERENCES "lectures" ("lect_id")
 );
 
-
-
-create index literatures_lecture__index
-	on literatures_lecture ();
-
-
+CREATE UNIQUE INDEX "UI_literature_to_lectures_literature_id_lectures_id"
+    ON "literature_to_lectures"
+        USING btree
+        ("literature_id", "lecture_id");
