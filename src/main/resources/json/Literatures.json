@@ -9,3 +9,6 @@
 {"@ class":"com.lms.spd.models.InternetArticleModel","Title":"58","Author":"57","URL":"56","Literature type":"INTERNET_ARTICLE","ID":8,"Date resource was added":"24-12-2020"}
 {"@ class":"com.lms.spd.models.BookModel","Title":"45","Author":"55","Genre":"5","PublishedInYear":5,"Literature type":"BOOK","Date resource was added":"24-12-2020","ID":9}
 {"@ class":"com.lms.spd.models.BookModel","Title":"5555","Author":"5555","Genre":"555","PublishedInYear":1986,"Literature type":"BOOK","Date resource was added":"24-12-2020","ID":10}
+{"@ class":"com.lms.spd.models.BookModel","Title":"dddd","Author":"dddd","Genre":"ddd","PublishedInYear":159,"Literature type":null,"Date resource was added":"24-12-2020","ID":11}
+{"@ class":"com.lms.spd.models.InternetArticleModel","Title":"1587","Author":"154","URL":"5","Literature type":null,"ID":12,"Date resource was added":"24-12-2020"}
+{"@ class":"com.lms.spd.models.InternetArticleModel","Title":"5478","Author":"6","URL":"5","Literature type":null,"ID":13,"Date resource was added":"24-12-2020"}
