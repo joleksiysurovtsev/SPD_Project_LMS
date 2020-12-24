@@ -6,7 +6,7 @@ import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.interfaces.LectureService;
 
 class Point1Menu implements ITerminal {
-    public static LecturesCache cash = new LecturesCache();
+    public static LecturesCache cash = LecturesCache.getInstance();
     private LectureService lectureServiceImpl = new LectureServiceImpl();
     private LMSConsolePrinter print = new LMSConsolePrinter();
     private LectureValidator lectureValidator = new LectureValidator();

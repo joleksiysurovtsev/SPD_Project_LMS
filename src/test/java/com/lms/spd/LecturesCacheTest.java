@@ -41,7 +41,7 @@ class LecturesCacheTest {
         testListL.add(lectureIModel2);
 
         ParserLecturesJSON.parseLecturesInJSON(testListL);
-        LecturesCache cache = new LecturesCache();
+        LecturesCache cache = LecturesCache.getInstance();
         cache.setCurrentDate(new GregorianCalendar(2020,10,05));
 
         assertEquals(new GregorianCalendar(2020,10,05), cache.getCurrentDate());
@@ -58,7 +58,7 @@ class LecturesCacheTest {
         testListL.add(lectureIModel2);
 
         ParserLecturesJSON.parseLecturesInJSON(testListL);
-        LecturesCache cache = new LecturesCache();
+        LecturesCache cache = LecturesCache.getInstance();
         cache.setCurrentDate(new GregorianCalendar(2020,10,06));
 
         List<Lecture> assertedTestListL = new ArrayList<>();
@@ -79,7 +79,7 @@ class LecturesCacheTest {
         testListL.add(lectureIModel2);
 
         ParserLecturesJSON.parseLecturesInJSON(testListL);
-        LecturesCache cache = new LecturesCache();
+        LecturesCache cache = LecturesCache.getInstance();
         cache.setCurrentDate(new GregorianCalendar(2020,10,05));
 
         List<Lecture> assertedTestListL = new ArrayList<>();
@@ -103,7 +103,7 @@ class LecturesCacheTest {
         testListL.add(lectureIModel3);
 
         ParserLecturesJSON.parseLecturesInJSON(testListL);
-        LecturesCache cache = new LecturesCache();
+        LecturesCache cache = LecturesCache.getInstance();
 
         cache.setCurrentDate(new GregorianCalendar(2020,10,05));
 
