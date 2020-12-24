@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class LMSTerminal {
     private static final LMSConsolePrinter print = new LMSConsolePrinter();
-    private static StartMenuStrategyConstructor menu;
 
     private static final Map<Integer, StartMenuStrategyConstructor> menuPoints = Map.of(
             1, new StartMenuStrategyConstructor(new Point1Menu()),
@@ -18,15 +17,15 @@ public class LMSTerminal {
     );
 
     public static void startLMS() {
+        StartMenuStrategyConstructor menu;
         while (true) {
             print.showStartMenu();
-            try {
-                menu = menuPoints.get(ConsoleInputValidator.readInt());
-            } catch (NullPointerException e) {
+            menu = menuPoints.get(ConsoleInputValidator.readInt());
+            if (menu != null) {
+                menu.executeMenu();
+            } else {
                 System.err.println("No such menu item exists try again");
-                startLMS();
             }
-            menu.executeMenu();
         }
     }
 }

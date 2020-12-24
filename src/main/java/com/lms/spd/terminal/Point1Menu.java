@@ -5,7 +5,7 @@ import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.interfaces.LectureService;
 
-public class Point1Menu implements ITerminal {
+class Point1Menu implements ITerminal {
     public static LecturesCache cash = new LecturesCache();
     private LectureService lectureServiceImpl = new LectureServiceImpl();
     private LMSConsolePrinter print = new LMSConsolePrinter();

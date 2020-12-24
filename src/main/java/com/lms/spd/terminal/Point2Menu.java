@@ -4,7 +4,7 @@ import com.lms.spd.*;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.interfaces.LectureService;
 
-public class Point2Menu implements ITerminal {
+class Point2Menu implements ITerminal {
 
     private LectureService lectureServiceImpl = new LectureServiceImpl();
     private LMSConsolePrinter print = new LMSConsolePrinter();

@@ -9,7 +9,7 @@ import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.util.List;
 
-public class Point4Menu implements ITerminal {
+class Point4Menu implements ITerminal {
 
     private LectureService lectureServiceImpl = new LectureServiceImpl();
     private LiteratureService literatureServiceImpl = new LiteratureServiceImpl();

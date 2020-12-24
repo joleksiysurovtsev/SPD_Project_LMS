@@ -16,10 +16,8 @@ public class JDBCConnector {
 
     public static void connect() {
         DataSource dataSource = createDataSource();
-
         Flyway flyway = createFlyway(dataSource);
         flyway.migrate();
-
     }
 
     private static Flyway createFlyway(DataSource dataSource){
