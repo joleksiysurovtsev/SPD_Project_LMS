@@ -3,3 +3,9 @@
 {"@ class":"com.lms.spd.models.BookModel","Title":"Thinking in Java","Author":"Bruce Eckel","Genre":"Programming","PublishedInYear":1998,"Literature type":"BOOK","Date resource was added":"05-12-2020","ID":3}
 {"@ class":"com.lms.spd.models.BookModel","Title":"1","Author":"1","Genre":"1","PublishedInYear":1,"Literature type":"BOOK","Date resource was added":"05-12-2020","ID":4}
 {"@ class":"com.lms.spd.models.BookModel","Title":"df","Author":"df","Genre":"fdf","PublishedInYear":19,"Literature type":"BOOK","Date resource was added":"05-12-2020","ID":5}
+{"@ class":"com.lms.spd.models.BookModel","Title":"dddd","Author":"ddd","Genre":"dddd","PublishedInYear":1985,"Literature type":"BOOK","Date resource was added":"24-12-2020","ID":5}
+{"@ class":"com.lms.spd.models.BookModel","Title":"5555","Author":"55","Genre":"555","PublishedInYear":1986,"Literature type":"BOOK","Date resource was added":"24-12-2020","ID":6}
+{"@ class":"com.lms.spd.models.JournalArticleModel","Title":"Unknown","Author":"59","Title of article":"59","Issue of the journal":5,"Literature type":"JOURNAL_ARTICLE","ID":7,"Date resource was added":"24-12-2020"}
+{"@ class":"com.lms.spd.models.InternetArticleModel","Title":"58","Author":"57","URL":"56","Literature type":"INTERNET_ARTICLE","ID":8,"Date resource was added":"24-12-2020"}
+{"@ class":"com.lms.spd.models.BookModel","Title":"45","Author":"55","Genre":"5","PublishedInYear":5,"Literature type":"BOOK","Date resource was added":"24-12-2020","ID":9}
+{"@ class":"com.lms.spd.models.BookModel","Title":"5555","Author":"5555","Genre":"555","PublishedInYear":1986,"Literature type":"BOOK","Date resource was added":"24-12-2020","ID":10}

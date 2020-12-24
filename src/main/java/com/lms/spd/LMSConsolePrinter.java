@@ -123,18 +123,17 @@ public class LMSConsolePrinter {
      * it also checks the List<Lecture> is empty or not,
      * if List<Lecture> is empty, then throws an error and processes it
      */
-    public void printListLit(Lecture lecture) {
-        List<Literature> litArr = lecture.getLiteratures();
-        if (litArr.isEmpty()) {
+    public void printListLit(List <Literature> literature) {
+        if (literature.isEmpty()) {
             try {
                 throw new ListIsEmptyException("Literature list is empty, please add literature first");
             } catch (ListIsEmptyException e) {
                 System.err.println(e.getMessage());
             }
         } else {
-            litArr = sortLitByDateAndType(litArr);
+            literature = sortLitByDateAndType(literature);
             int i = 1;
-            for (Literature x : litArr) {
+            for (Literature x : literature) {
                 System.out.println(i + "" + x.print());
                 i++;
             }
@@ -144,7 +143,7 @@ public class LMSConsolePrinter {
     /**
      * Method of displaying the first item of the terminal main menu
      */
-    public void printMenuPoint1() {
+    public static void printMenuPoint1() {
         System.out.println("\u001b[36;1m\"+\"\u001B[0m Display all lectures\n" + "\u001b[31;1m\"-\" \u001B[0mSpecifically some by ID\n"
                 + "\u001B[32m\"SMALL\"\u001B[0m To preview lectures\n" + "\u001B[35m\"TYPE\"\u001B[0m Display lectures of a certain type \n"
                 + "\u001B[36m\"DATE\"\u001B[0m Display lectures by curend date\n"
@@ -163,12 +162,12 @@ public class LMSConsolePrinter {
     /**
      * The method displays all information about the lesion
      */
-    void showAllLectureInfo(Lecture lecture) {
+    public void showAllLectureInfo(Lecture lecture) {
         String lectureInfo = "Lecture: ID" + lecture.getId() + " " + lecture.getNameOfLecture() + " \n" + "The lecture is lecturing by: " + lecture.getLectorName() + "\n" +
                 "Lecture date: " + sdf.format(lecture.getLectureDate().getTime()) +
                 " Lecture Type: " + lecture.getType();
         System.out.println(lectureInfo);
-        printListLit(lecture);
+        printListLit(lecture.getLiteratures());
     }
 
     /**
