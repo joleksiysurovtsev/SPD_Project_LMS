@@ -1,10 +1,10 @@
 package com.lms.spd.terminal;
 
-public class StartMenu {
+public class StartMenuStrategyConstructor {
 
     ITerminal terminal ;
 
-    public StartMenu(ITerminal terminal) {
+    public StartMenuStrategyConstructor(ITerminal terminal) {
         this.terminal = terminal;
     }
 
