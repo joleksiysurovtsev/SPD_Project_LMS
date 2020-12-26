@@ -8,6 +8,7 @@ import com.lms.spd.models.interfaces.Literature;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
 
@@ -44,16 +45,15 @@ public class LMSConsolePrinter {
         }
     }
 
-    public void printLectureListByNumber(String s, List<Lecture> lectures) throws ListIsEmptyException {
-        if (lectures.isEmpty()) {
-            throw new ListIsEmptyException("I can not print the list of lectures it is empty");
-        } else {
+    public void printLectureListByNumber(String strWithNum, List<Lecture> lectures) throws ListIsEmptyException {
+        if (!lectures.isEmpty()) {
             printTopOfTable();
-            int[] numbToDisplay = Util.getStringsNumberLecture(s);
-
-            Arrays.stream(numbToDisplay).forEach(value -> lectures.stream()
-                    .filter(x -> value == x.getId())
-                    .forEach(this::printLectureTable));
+            Arrays.stream(Util.getStringsNumberLecture(strWithNum))
+                    .forEach(value -> lectures.stream()
+                            .filter(x -> value == x.getId())
+                            .forEach(this::printLectureTable));
+        } else {
+            throw new ListIsEmptyException("It is not possible to print the list of lectures, the List is empty");
         }
     }
 
@@ -119,23 +119,21 @@ public class LMSConsolePrinter {
     }
 
     /**
-     * The method displays a List<Lecture>,
-     * it also checks the List<Lecture> is empty or not,
-     * if List<Lecture> is empty, then throws an error and processes it
+     * The method displays a List<Literature>,
+     * it also checks the List<Literature> is empty or not,
+     * if List<Literature> is empty, then throws an error and processes it
      */
-    public void printListLit(List <Literature> literature) {
-        if (literature.isEmpty()) {
+    public void printListLit(List<Literature> literature) {
+        if (!literature.isEmpty()) {
+            List<Literature> lit = sortLitByDateAndType(literature);
+            IntStream.range(0, literature.size())
+                    .mapToObj(id -> (id + 1) + " " + lit.get(id).print())
+                    .forEach(System.out::println);
+        } else {
             try {
                 throw new ListIsEmptyException("Literature list is empty, please add literature first");
             } catch (ListIsEmptyException e) {
                 System.err.println(e.getMessage());
-            }
-        } else {
-            literature = sortLitByDateAndType(literature);
-            int i = 1;
-            for (Literature x : literature) {
-                System.out.println(i + "" + x.print());
-                i++;
             }
         }
     }

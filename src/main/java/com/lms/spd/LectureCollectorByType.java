@@ -31,10 +31,8 @@ public class LectureCollectorByType implements Collector<Lecture, Map<LectureTyp
             List<Lecture> lectureList = new ArrayList<>();
             if(map.containsKey(s.getType())) {
                 lectureList = map.get(s.getType());
-                lectureList.add(s);
-            } else {
-                lectureList.add(s);
             }
+            lectureList.add(s);
             map.put(s.getType(), lectureList);
         };
     }

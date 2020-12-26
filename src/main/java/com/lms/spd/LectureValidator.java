@@ -55,11 +55,11 @@ public class LectureValidator {
         while (true) {
             int number = ConsoleInputValidator.readInt() - 1;
             lectureType = LectureType.stream().filter(d -> d.ordinal() == number).findFirst().orElse(null);
-            if (lectureType == null) {
+            if (lectureType != null) {
+                break;
+            } else {
                 System.out.println("Unknown type: try again");
-                continue;
             }
-            break;
         }
         return lectureType;
     }
