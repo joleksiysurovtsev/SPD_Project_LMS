@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +26,11 @@ class ParserLiteraturesJSONTest {
         ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
 
-
-
     @Test
     @Order(25)
     void parseLiteratureJSON() {
 
-        Literature literature = new BookModel("testBook","testautor","testgenre",1999,1);
+        Literature literature = new BookModel("testBook", "testautor", "testgenre", 1999, 1);
         List<Literature> testListL = new ArrayList<>();
         testListL.add(literature);
         ParserLiteraturesJSON.parseLiteraturesInJSON(testListL);

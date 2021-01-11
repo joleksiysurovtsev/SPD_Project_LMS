@@ -1,6 +1,7 @@
 package com.lms.spd.terminal;
 
 import com.lms.spd.*;
+import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.interfaces.LectureService;
@@ -13,7 +14,7 @@ class Point1Menu implements ITerminal {
 
     @Override
     public void showContext() {
-        LMSConsolePrinter.printMenuPoint1();
+        ConsoleMassage.MESSAGE_HEAD_MENU_POINT_1.printMassage();
         String choice = ConsoleInputValidator.readString();
         try {
             switch (choice.toLowerCase()) {
@@ -21,7 +22,7 @@ class Point1Menu implements ITerminal {
                     print.printAllLectureTable(lectureServiceImpl.getLectures());
                     break;
                 case "-":
-                    System.out.println("Enter numbers separated by commas");
+                    ConsoleMassage.MESSAGE_ENTER_NUMBERS_SEP.printMassage();
                     print.printLectureListByNumber(ConsoleInputValidator.readString(), lectureServiceImpl.getLectures());
                     break;
                 case "small":
@@ -41,14 +42,14 @@ class Point1Menu implements ITerminal {
                     LMSTerminal.startLMS();
                     break;
                 default:
-                    print.printErrMassage(1);
+                    ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
                     showContext();
                     break;
             }
         } catch (ListIsEmptyException e) {
             System.err.println(e.getMessage());
         }
-        System.out.println("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program ");
+        ConsoleMassage.MESSAGE_Q_WHAT_TO_DO_NEXT.printMassage();
         subMenuShowLectures();
     }
 
@@ -59,8 +60,8 @@ class Point1Menu implements ITerminal {
         } else if ("EXIT".equals(s)) {
             System.exit(0);
         } else {
-            print.printErrMassage(1);
-            System.out.println("you must enter either \"0\" or EXIT");
+            ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
+            ConsoleMassage.MESSAGE_ERR_YOU_MUST_ENTER_EITHER.printMassage();
             subMenuShowLectures();
         }
     }

@@ -2,7 +2,7 @@ package com.lms.spd.litfactory;
 
 import com.lms.spd.ConsoleInputValidator;
 import com.lms.spd.LMSConsolePrinter;
-import com.lms.spd.enums.LiteratureType;
+import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.interfaces.Literature;
 
@@ -11,14 +11,13 @@ public class LitBookBuilder implements LitBuilder {
 
     @Override
     public Literature createLiterature() {
-        LiteratureType typeLit = LiteratureType.BOOK;
-        print.printMessagesAddLit(1);
+        ConsoleMassage.MESSAGE_ENTER_TITLE.printMassage();
         String title = ConsoleInputValidator.readString();
-        print.printMessagesAddLit(2);
+        ConsoleMassage.MESSAGE_ENTER_AUTHOR.printMassage();
         String author = ConsoleInputValidator.readString();
-        print.printMessagesAddLit(6);
+        ConsoleMassage.MESSAGE_ENTER_GENRE_NAME.printMassage();
         String genre = ConsoleInputValidator.readString();
-        print.printMessagesAddLit(7);
+        ConsoleMassage.MESSAGE_ENTER_YEAR_OF_PUBLICATION.printMassage();
         int year = ConsoleInputValidator.readInt();
         return new BookModel(title, author, genre, year);
     }

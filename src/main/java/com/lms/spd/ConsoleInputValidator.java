@@ -1,5 +1,6 @@
 package com.lms.spd;
 
+import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.exceptions.DateFormatException;
 import com.lms.spd.exceptions.ValidateInputException;
 
@@ -25,7 +26,7 @@ public class ConsoleInputValidator {
                 number = Integer.parseInt(reader.readLine());
                 break;
             } catch (NumberFormatException | IOException e) {
-                System.err.println("Invalid format you must enter a number");
+                ConsoleMassage.MESSAGE_ERR_INCORRECT_INPUT.printMassage();
             }
         }
         return number;
@@ -36,7 +37,7 @@ public class ConsoleInputValidator {
         try {
             line = reader.readLine();
         } catch (IOException ioException) {
-            System.err.println("Input wrong");
+            ConsoleMassage.MESSAGE_ERR_INCORRECT_INPUT.printMassage();
         }
         if (line.isEmpty()) return "Unknown";
         return line;
@@ -58,7 +59,7 @@ public class ConsoleInputValidator {
             } catch (DateFormatException f) {
                 System.err.println(f.getMessage());
             } catch (ParseException e) {
-                System.err.println("The date is entered incorrectly, try again");
+                ConsoleMassage.MESSAGE_ERR_INCORRECT_INPUT.printMassage();
             }
         }
         return lectureDate;
@@ -66,7 +67,7 @@ public class ConsoleInputValidator {
 
     public static String readString(String validate) {
         if (validate.equals("lectureName")) {
-            System.out.println("Enter the title of the lecture");
+            ConsoleMassage.MESSAGE_ENTER_TITLE_LECTURE.printMassage();
         }
         String line ;
         while (true) {

@@ -1,6 +1,7 @@
 package com.lms.spd.terminal;
 
 import com.lms.spd.*;
+import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
@@ -19,26 +20,22 @@ class Point4Menu implements ITerminal {
     @Override
 
     public void showContext() {
-        System.out.println("Enter the number of the lecture, " +
-                "information about which you want to see " +
-                "if you change your mind to exit to the menu enter " + "\u001B[32m" + "0" + "\u001B[0m");
+        ConsoleMassage.MESSAGE_HEAD_MENU_POINT_4.printMassage();
         int numbOfLecture = ConsoleInputValidator.readInt();
         if (numbOfLecture == 0) {
-            //go to main meny
         } else {
             lectureServiceImpl.setSelectedLecture(numbOfLecture);
             if (lectureServiceImpl.getLectures().stream().noneMatch(lecture -> lecture.getId() == numbOfLecture)) {
-                System.out.println("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again");
+                ConsoleMassage.MESSAGE_ERR_NO_SUCH_LECTURE.printMassage();
+
                 showContext();
             } else {
-                System.out.println("Selected lecture: ");
-                System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+                ConsoleMassage.MESSAGE_ST_SELECT_LECT.printMassage();
                 print.printLectureTable(lectureServiceImpl.getSelectedLecture());
-                System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
-                System.out.println("What are the next actions?");
+                ConsoleMassage.MESSAGE_Q_WHAT_NEXT_ACTIONS.printMassage();
             }
         }
-        print.showFourthMenu();
+        ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }
 
@@ -64,7 +61,7 @@ class Point4Menu implements ITerminal {
                 LMSTerminal.startLMS();
                 break;
             default:
-                print.printErrMassage(1);
+                ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
                 subMenu2Point4();
                 break;
         }
@@ -72,7 +69,7 @@ class Point4Menu implements ITerminal {
 
     private void point4_2ViewListOfLit() {
         print.printListLit(lectureServiceImpl.getSelectedLecture().getLiteratures());
-        print.showFourthMenu();
+        ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }
 
@@ -80,20 +77,19 @@ class Point4Menu implements ITerminal {
         Literature newLit = literatureValidator.createLiterature();
         System.out.println(newLit);
         if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)) {
-            System.out.println("this literature is already there");
+            ConsoleMassage.MESSAGE_ERR_LITERATURE_ALREADY.printMassage();
         } else {
             List<Literature> literatures = lectureServiceImpl.getSelectedLecture().getLiteratures();
             literatures.add(newLit);
             lectureServiceImpl.getSelectedLecture().setLiteratures(literatures);
             literatureServiceImpl.addLiterature(newLit, lectureServiceImpl.getSelectedLecture().getLiteratures());
-            System.out.println("Book added what to do next");
+            ConsoleMassage.MESSAGE_Q_BOOK_ADDED_WHAT_DO_NEXT.printMassage();
         }
         point4_3Navigate();
     }
 
     private void point4_3Navigate() {
-        System.out.println("Add more ? if YES then enter \"+\" if NOT then \"-\" " +
-                "you will return to the lecture selection menu, to complete the work, exit ");
+        ConsoleMassage.MESSAGE_Q_ADD_MORE_LIT_NAV.printMassage();
         switch (ConsoleInputValidator.readString().toUpperCase()) {
             case "+":
                 point4_3AddLit();
@@ -105,32 +101,31 @@ class Point4Menu implements ITerminal {
                 System.exit(0);
                 break;
             default:
-                print.printErrMassage(1);
+                ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
                 point4_3Navigate();
                 break;
         }
     }
 
     private void point4_4DeleteLit() {
-        System.out.println("Please enter the number of the book you want to delete");
+        ConsoleMassage.MESSAGE_ENTER_NUMBERS_DEL_BOOK.printMassage();
         int indexLit = ConsoleInputValidator.readInt();
         boolean flag = false;
         if (lectureServiceImpl.getSelectedLecture().getLiteratures().size() >= indexLit) {
             flag = true;
         }
         if (!flag) {
-            System.out.println("Literature under this number do not exist");
-            System.out.println("try again");
+            ConsoleMassage.MESSAGE_ERR_LITERATURE_UNDER_THIS_NUMBER.printMassage();
             return;
         }
         lectureServiceImpl.getSelectedLecture().setLiteratures(literatureServiceImpl.removeLiterature(indexLit, lectureServiceImpl.getSelectedLecture().getLiteratures()));
-        System.out.println("\"Successfully\" Delete again ?");
-        System.out.println("\"+\" YES or \"-\" NO");
+        ConsoleMassage.MESSAGE_Q_DELETE_AGAIN.printMassage();
+        ConsoleMassage.MESSAGE_Q_YES_OR_NO.printMassage();
         subMenuPoint4_4DeleteLit();
     }
 
     private void subMenuPoint4_4DeleteLit() {
-        System.out.println("\"+\" YES or \"-\" NO");
+        ConsoleMassage.MESSAGE_Q_YES_OR_NO.printMassage();
         switch (ConsoleInputValidator.readString()) {
             case "+":
                 point4_4DeleteLit();
@@ -139,8 +134,7 @@ class Point4Menu implements ITerminal {
                 showContext();
                 break;
             default:
-                print.printErrMassage(1);
-                System.out.println("please choice from the offered");
+                ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
                 subMenuPoint4_4DeleteLit();
                 break;
         }
@@ -148,7 +142,7 @@ class Point4Menu implements ITerminal {
 
     private void point4_5showLectureInfo() {
         print.showAllLectureInfo(lectureServiceImpl.getSelectedLecture());
-        print.showFourthMenu();
+        ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }
 }
