@@ -26,7 +26,28 @@ public interface Literature {
 
     void setDateResourceWasAdded(Calendar dateResourceWasAdded);
 
-    public int getId();
+    int getId();
 
-    public void setId(int id);
+    void setId(int id);
+
+    String getGenre();
+
+    void setGenre(String genre);
+
+    String getTitleOfArticle();
+
+    void setTitleOfArticle(String titleOfArticle);
+
+    int getIssueOfTheJournal();
+
+    void setIssueOfTheJournal(int issueOfTheJournal);
+
+    String getUrlAddress();
+
+    void setUrlAddress(String urlAddress);
+
+    int getPublishedInYear();
+
+    void setPublishedInYear(int publishedInYear);
+
 }

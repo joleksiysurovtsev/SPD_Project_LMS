@@ -13,21 +13,22 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class JournalArticleModel implements Literature, Serializable {
+    @JsonProperty("ID")
+    private int id;
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Author")
     private String author;
+    @JsonProperty("Literature type")
+    private LiteratureType type;
+    @JsonProperty("Date resource was added")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Calendar dateResourceWasAdded;
+
     @JsonProperty("Title of article")
     private String titleOfArticle;
     @JsonProperty("Issue of the journal")
     private int issueOfTheJournal;
-    @JsonProperty("Literature type")
-    private LiteratureType type;
-    @JsonProperty("ID")
-    private int id;
-    @JsonProperty("Date resource was added")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Calendar dateResourceWasAdded;
 
     public JournalArticleModel() { }
 
@@ -39,6 +40,16 @@ public class JournalArticleModel implements Literature, Serializable {
     @Override
     public void setDateResourceWasAdded(Calendar dateResourceWasAdded) {
         this.dateResourceWasAdded = dateResourceWasAdded;
+    }
+
+    public JournalArticleModel(int id, String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String titleOfArticle, int issueOfTheJournal) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.dateResourceWasAdded = dateResourceWasAdded;
+        this.titleOfArticle = titleOfArticle;
+        this.issueOfTheJournal = issueOfTheJournal;
     }
 
     public JournalArticleModel(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
@@ -95,6 +106,26 @@ public class JournalArticleModel implements Literature, Serializable {
         this.issueOfTheJournal = issueOfTheJournal;
     }
 
+    @Override
+    public String getUrlAddress() {
+        return null;
+    }
+
+    @Override
+    public void setUrlAddress(String urlAddress) {
+
+    }
+
+    @Override
+    public int getPublishedInYear() {
+        return 0;
+    }
+
+    @Override
+    public void setPublishedInYear(int publishedInYear) {
+
+    }
+
 
     @Override
     public int getId() {
@@ -104,6 +135,16 @@ public class JournalArticleModel implements Literature, Serializable {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String getGenre() {
+        return null;
+    }
+
+    @Override
+    public void setGenre(String genre) {
+
     }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//

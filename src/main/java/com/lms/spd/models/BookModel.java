@@ -12,24 +12,35 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class BookModel implements Literature, Serializable {
+    @JsonProperty("ID")
+    private int id;
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Author")
     private String author;
-    @JsonProperty("Genre")
-    private String genre;
-    @JsonProperty("PublishedInYear")
-    private int publishedInYear;
     @JsonProperty("Literature type")
     private LiteratureType type;
     @JsonProperty("Date resource was added")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Calendar dateResourceWasAdded;
-    @JsonProperty("ID")
-    private int id;
+
+    @JsonProperty("Genre")
+    private String genre;
+    @JsonProperty("PublishedInYear")
+    private int publishedInYear;
 
     public BookModel() {
 
+    }
+
+    public BookModel(int id, String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String genre, int publishedInYear) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.dateResourceWasAdded = dateResourceWasAdded;
+        this.genre = genre;
+        this.publishedInYear = publishedInYear;
     }
 
     public BookModel(String title, String author, String genre, int publishedInYear, int id) {
@@ -106,6 +117,36 @@ public class BookModel implements Literature, Serializable {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public String getTitleOfArticle() {
+        return null;
+    }
+
+    @Override
+    public void setTitleOfArticle(String titleOfArticle) {
+
+    }
+
+    @Override
+    public int getIssueOfTheJournal() {
+        return 0;
+    }
+
+    @Override
+    public void setIssueOfTheJournal(int issueOfTheJournal) {
+
+    }
+
+    @Override
+    public String getUrlAddress() {
+        return null;
+    }
+
+    @Override
+    public void setUrlAddress(String urlAddress) {
+
     }
 
     public int getPublishedInYear() {

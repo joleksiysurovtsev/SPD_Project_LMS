@@ -13,21 +13,31 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class InternetArticleModel implements Literature, Serializable {
+    @JsonProperty("ID")
+    private int id;
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Author")
     private String author;
-    @JsonProperty("URL")
-    private String urlAddress;
     @JsonProperty("Literature type")
     private LiteratureType type;
-    @JsonProperty("ID")
-    private int id;
     @JsonProperty("Date resource was added")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Calendar dateResourceWasAdded;
 
+    @JsonProperty("URL")
+    private String urlAddress;
+
     public InternetArticleModel() {}
+
+    public InternetArticleModel(int id, String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String urlAddress) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.dateResourceWasAdded = dateResourceWasAdded;
+        this.urlAddress = urlAddress;
+    }
 
     public InternetArticleModel(String title, String author, String urlAddress) {
         setAuthor(author);
@@ -42,6 +52,16 @@ public class InternetArticleModel implements Literature, Serializable {
 
     public void setUrlAddress(String urlAddress) {
         this.urlAddress = urlAddress;
+    }
+
+    @Override
+    public int getPublishedInYear() {
+        return 0;
+    }
+
+    @Override
+    public void setPublishedInYear(int publishedInYear) {
+
     }
 
     @Override
@@ -83,6 +103,36 @@ public class InternetArticleModel implements Literature, Serializable {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String getGenre() {
+        return null;
+    }
+
+    @Override
+    public void setGenre(String genre) {
+
+    }
+
+    @Override
+    public String getTitleOfArticle() {
+        return null;
+    }
+
+    @Override
+    public void setTitleOfArticle(String titleOfArticle) {
+
+    }
+
+    @Override
+    public int getIssueOfTheJournal() {
+        return 0;
+    }
+
+    @Override
+    public void setIssueOfTheJournal(int issueOfTheJournal) {
+
     }
 
     @Override

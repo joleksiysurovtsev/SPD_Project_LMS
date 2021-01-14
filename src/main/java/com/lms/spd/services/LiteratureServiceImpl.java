@@ -1,12 +1,14 @@
 package com.lms.spd.services;
 
+import com.lms.spd.lmsjdbc.JDBCConnector;
 import com.lms.spd.models.interfaces.Literature;
+import com.lms.spd.repository.DBPostgresLiteratureRepository;
 import com.lms.spd.repository.LiteratureRepository;
+import com.lms.spd.repository.interfaces.IRepository;
 import com.lms.spd.services.interfaces.LiteratureService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class LiteratureServiceImpl implements LiteratureService {
@@ -44,5 +46,10 @@ public class LiteratureServiceImpl implements LiteratureService {
     public static int generateIdLit(List<Literature> literatures) {
         AtomicInteger i = new AtomicInteger();
         return (literatures.stream().map(Literature::getId).mapToInt(x -> x = i.incrementAndGet()).max().orElse(0));
+    }
+
+    public List<Literature> getAll() {
+        IRepository<Literature>repository=new DBPostgresLiteratureRepository(JDBCConnector.connection);
+        return repository.readAll();
     }
 }

@@ -4,15 +4,14 @@ import java.util.List;
 
 public interface IRepository<T> extends AutoCloseable{
 
-    List<T> getAll();
+    List<T> readAll();
 
-    T getItem(int id);
+    T getByID(int id);
 
-    void create(T item);
+    boolean create(T item);
 
-    void update(T item);
+    boolean update(T item);
 
-    void delete(int id);
+    boolean delete(int id);
 
-    void save();
 }
