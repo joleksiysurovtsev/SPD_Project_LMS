@@ -1,5 +1,6 @@
 package com.lms.spd;
 
+import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -8,7 +9,6 @@ import com.lms.spd.services.LectureServiceImpl;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class LectureValidator {
     private LiteratureValidator literatureValidator = new LiteratureValidator();
@@ -26,7 +26,7 @@ public class LectureValidator {
     }
 
     private int lectureDuration() {
-        System.out.println("Lecture duration");
+        ConsoleMassage.MESSAGE_ENTER_LECTURE_DURATION.printMassage();
         return ConsoleInputValidator.readInt();
     }
 
@@ -41,7 +41,7 @@ public class LectureValidator {
      * Returns a string with the name of the lecturer, if no name is entered then the name is unknown
      */
     private String enterLektorName() {
-        System.out.println("Enter lecturer name");
+        ConsoleMassage.MESSAGE_ENTER_LECTURER_NAME.printMassage();
         return ConsoleInputValidator.readString();
     }
 
@@ -49,8 +49,7 @@ public class LectureValidator {
      * Returns the lecture type implemented by type checking.
      */
     public LectureType selectLectureType() {
-        System.out.println("Please, choose lecture type: ");
-        IntStream.range(1, LectureType.values().length + 1).mapToObj(i -> i + ". " + LectureType.getValueByNumber(i) + " ").forEach(System.out::println);
+        ConsoleMassage.MESSAGE_CHOOSE_LECTURE_TYPE.printMassage();
         LectureType lectureType;
         while (true) {
             int number = ConsoleInputValidator.readInt() - 1;
@@ -58,7 +57,7 @@ public class LectureValidator {
             if (lectureType != null) {
                 break;
             } else {
-                System.out.println("Unknown type: try again");
+                ConsoleMassage.MESSAGE_ERR_UNKNOWN_TYPE.printMassage();
             }
         }
         return lectureType;

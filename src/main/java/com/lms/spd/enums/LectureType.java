@@ -22,4 +22,11 @@ public enum LectureType {
         return Arrays.stream(LectureType.values());
     }
 
+    public static String toListString() {
+        String list = "";
+        for (int i = 0; i < LiteratureType.values().length; i++) {
+            list += (i+1)+ ". " + LiteratureType.values()[i] +"\n";
+        }
+        return list;
+    }
 }

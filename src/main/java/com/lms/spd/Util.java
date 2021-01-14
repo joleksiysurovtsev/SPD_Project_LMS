@@ -1,5 +1,6 @@
 package com.lms.spd;
 
+import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 
@@ -18,7 +19,7 @@ public class Util {
         try {
             arr = Arrays.stream(s.replaceAll("[^0-9,]", "").split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray();
         } catch (NumberFormatException e) {
-            System.out.println("Incorrect input");
+            ConsoleMassage.MESSAGE_ERR_INCORRECT_INPUT.printMassage();
         }
         return arr;
     }

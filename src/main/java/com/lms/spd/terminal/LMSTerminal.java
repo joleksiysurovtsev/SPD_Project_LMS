@@ -2,6 +2,7 @@ package com.lms.spd.terminal;
 
 import com.lms.spd.ConsoleInputValidator;
 import com.lms.spd.LMSConsolePrinter;
+import com.lms.spd.enums.ConsoleMassage;
 
 import java.util.Map;
 
@@ -19,12 +20,12 @@ public class LMSTerminal {
     public static void startLMS() {
         StartMenuStrategyConstructor menu;
         while (true) {
-            print.showStartMenu();
+            ConsoleMassage.MESSAGE_HEAD_START_MENU.printMassage();
             menu = menuPoints.get(ConsoleInputValidator.readInt());
             if (menu != null) {
                 menu.executeMenu();
             } else {
-                System.err.println("No such menu item exists try again");
+                ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
             }
         }
     }
