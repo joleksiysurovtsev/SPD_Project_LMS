@@ -13,7 +13,7 @@ import java.util.List;
 class Point4Menu implements ITerminal {
 
     private LectureServiceImpl lectureServiceImpl = new LectureServiceImpl();
-    private IService<Literature> literatureServiceImpl = new LiteratureServiceImpl();
+    private LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
     private LMSConsolePrinter print = new LMSConsolePrinter();
     private LiteratureValidator literatureValidator = new LiteratureValidator();
 
@@ -27,7 +27,6 @@ class Point4Menu implements ITerminal {
             lectureServiceImpl.setSelectedItem(numbOfLecture);
             if (lectureServiceImpl.getItems().stream().noneMatch(lecture -> lecture.getId() == numbOfLecture)) {
                 ConsoleMassage.MESSAGE_ERR_NO_SUCH_LECTURE.printMassage();
-
                 showContext();
             } else {
                 ConsoleMassage.MESSAGE_ST_SELECT_LECT.printMassage();
@@ -67,8 +66,11 @@ class Point4Menu implements ITerminal {
         }
     }
 
+    /*✅*/
     private void point4_2ViewListOfLit() {
-        print.printListLit(lectureServiceImpl.getSelectedItem().getLiteratures());
+        //вернуть лист литературы из лекций
+        int id = lectureServiceImpl.getSelectedItem().getId();
+        print.printListLit(literatureServiceImpl.getLiteraturesBYLectureID(id));
         ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }

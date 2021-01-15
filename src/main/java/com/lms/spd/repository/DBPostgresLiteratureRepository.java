@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DBPostgresLiteratureRepository implements IRepository<Literature> {
 
@@ -42,7 +43,7 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
     public Literature getByID(int id) {
         Literature result = null;
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM literature WHERE literature.lit_id = (?)")) {
+                "SELECT * FROM literature WHERE lit_id = (?)")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -56,7 +57,7 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
 
     private Literature getItem(ResultSet rs) throws SQLException {
         Literature literature = null;
-        int litid = rs.getInt("id");
+        int litid = rs.getInt("lit_id");
         String title = rs.getString("title");
         String author = rs.getString("author");
         LiteratureType type = LiteratureType.valueOf(rs.getString("type"));
@@ -150,6 +151,27 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public List<Literature> literaturesBYLectureID(int id) {
+        List<Integer> idLitList = getListLectureId(id);
+        return idLitList.stream().map(this::getByID).collect(Collectors.toList());
+    }
+
+    private List<Integer> getListLectureId(int id) {
+        List<Integer> idLitList = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT lit_id FROM literature_to_lectures WHERE lect_id = (?)")) {
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                idLitList.add(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idLitList;
     }
 
     @Override

@@ -203,6 +203,12 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
 
 
     @Override
+    @Deprecated
+    public List<Lecture> literaturesBYLectureID(int id) {
+        return null;
+    }
+
+    @Override
     public void close() throws Exception {
         connection.close();
     }

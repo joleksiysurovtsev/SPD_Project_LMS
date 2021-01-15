@@ -59,5 +59,8 @@ public class LiteratureCache {
     }
 
 
+    public List<Literature> getLiteraturesBYLectureID(int id) {
 
+        return literatureRepository.literaturesBYLectureID(id);
+    }
 }
