@@ -8,7 +8,6 @@ import com.lms.spd.services.LectureServiceImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class Point2Menu implements ITerminal {
 

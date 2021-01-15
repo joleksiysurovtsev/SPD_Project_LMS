@@ -8,7 +8,9 @@ import com.lms.spd.services.LiteratureServiceImpl;
 import com.lms.spd.services.interfaces.IService;
 import com.lms.spd.utils.Util;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class Point4Menu implements ITerminal {
 
@@ -68,7 +70,6 @@ class Point4Menu implements ITerminal {
 
     /*✅*/
     private void point4_2ViewListOfLit() {
-        //вернуть лист литературы из лекций
         int id = lectureServiceImpl.getSelectedItem().getId();
         print.printListLit(literatureServiceImpl.getLiteraturesBYLectureID(id));
         ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
@@ -76,16 +77,11 @@ class Point4Menu implements ITerminal {
     }
 
     private void point4_3AddLit() {
-        Literature newLit = literatureValidator.createLiterature();
-        System.out.println(newLit);
-        if (lectureServiceImpl.getSelectedItem().getLiteratures().contains(newLit)) {
-            ConsoleMassage.MESSAGE_ERR_LITERATURE_ALREADY.printMassage();
-        } else {
-            List<Literature> literatures = lectureServiceImpl.getSelectedItem().getLiteratures();
-            literatures.add(newLit);
-            lectureServiceImpl.getSelectedItem().setLiteratures(literatures);
-            ConsoleMassage.MESSAGE_Q_BOOK_ADDED_WHAT_DO_NEXT.printMassage();
-        }
+        List<Literature> newLiteratureArr = new ArrayList<>();
+        newLiteratureArr.add(literatureServiceImpl.addItem(literatureValidator.createLiterature()));
+        List<Integer> integers = newLiteratureArr.stream().map(Literature::getId).collect(Collectors.toList());
+        lectureServiceImpl.addLinkLiteratureLectures(lectureServiceImpl.getSelectedItem().getId(), integers);
+        ConsoleMassage.MESSAGE_Q_BOOK_ADDED_WHAT_DO_NEXT.printMassage();
         point4_3Navigate();
     }
 
