@@ -5,15 +5,15 @@ import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
-import com.lms.spd.services.interfaces.LectureService;
-import com.lms.spd.services.interfaces.LiteratureService;
+import com.lms.spd.services.interfaces.IService;
+import com.lms.spd.utils.Util;
 
 import java.util.List;
 
 class Point4Menu implements ITerminal {
 
-    private LectureService lectureServiceImpl = new LectureServiceImpl();
-    private LiteratureService literatureServiceImpl = new LiteratureServiceImpl();
+    private LectureServiceImpl lectureServiceImpl = new LectureServiceImpl();
+    private IService<Literature> literatureServiceImpl = new LiteratureServiceImpl();
     private LMSConsolePrinter print = new LMSConsolePrinter();
     private LiteratureValidator literatureValidator = new LiteratureValidator();
 
@@ -24,14 +24,14 @@ class Point4Menu implements ITerminal {
         int numbOfLecture = ConsoleInputValidator.readInt();
         if (numbOfLecture == 0) {
         } else {
-            lectureServiceImpl.setSelectedLecture(numbOfLecture);
-            if (lectureServiceImpl.getLectures().stream().noneMatch(lecture -> lecture.getId() == numbOfLecture)) {
+            lectureServiceImpl.setSelectedItem(numbOfLecture);
+            if (lectureServiceImpl.getItems().stream().noneMatch(lecture -> lecture.getId() == numbOfLecture)) {
                 ConsoleMassage.MESSAGE_ERR_NO_SUCH_LECTURE.printMassage();
 
                 showContext();
             } else {
                 ConsoleMassage.MESSAGE_ST_SELECT_LECT.printMassage();
-                print.printLectureTable(lectureServiceImpl.getSelectedLecture());
+                print.printLectureTable(lectureServiceImpl.getSelectedItem());
                 ConsoleMassage.MESSAGE_Q_WHAT_NEXT_ACTIONS.printMassage();
             }
         }
@@ -68,7 +68,7 @@ class Point4Menu implements ITerminal {
     }
 
     private void point4_2ViewListOfLit() {
-        print.printListLit(lectureServiceImpl.getSelectedLecture().getLiteratures());
+        print.printListLit(lectureServiceImpl.getSelectedItem().getLiteratures());
         ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }
@@ -76,13 +76,12 @@ class Point4Menu implements ITerminal {
     private void point4_3AddLit() {
         Literature newLit = literatureValidator.createLiterature();
         System.out.println(newLit);
-        if (lectureServiceImpl.getSelectedLecture().getLiteratures().contains(newLit)) {
+        if (lectureServiceImpl.getSelectedItem().getLiteratures().contains(newLit)) {
             ConsoleMassage.MESSAGE_ERR_LITERATURE_ALREADY.printMassage();
         } else {
-            List<Literature> literatures = lectureServiceImpl.getSelectedLecture().getLiteratures();
+            List<Literature> literatures = lectureServiceImpl.getSelectedItem().getLiteratures();
             literatures.add(newLit);
-            lectureServiceImpl.getSelectedLecture().setLiteratures(literatures);
-            literatureServiceImpl.addLiterature(newLit, lectureServiceImpl.getSelectedLecture().getLiteratures());
+            lectureServiceImpl.getSelectedItem().setLiteratures(literatures);
             ConsoleMassage.MESSAGE_Q_BOOK_ADDED_WHAT_DO_NEXT.printMassage();
         }
         point4_3Navigate();
@@ -109,16 +108,8 @@ class Point4Menu implements ITerminal {
 
     private void point4_4DeleteLit() {
         ConsoleMassage.MESSAGE_ENTER_NUMBERS_DEL_BOOK.printMassage();
-        int indexLit = ConsoleInputValidator.readInt();
-        boolean flag = false;
-        if (lectureServiceImpl.getSelectedLecture().getLiteratures().size() >= indexLit) {
-            flag = true;
-        }
-        if (!flag) {
-            ConsoleMassage.MESSAGE_ERR_LITERATURE_UNDER_THIS_NUMBER.printMassage();
-            return;
-        }
-        lectureServiceImpl.getSelectedLecture().setLiteratures(literatureServiceImpl.removeLiterature(indexLit, lectureServiceImpl.getSelectedLecture().getLiteratures()));
+        int[] indexLit = Util.getStringsNumberLecture(ConsoleInputValidator.readString());
+        literatureServiceImpl.removeItems(indexLit);
         ConsoleMassage.MESSAGE_Q_DELETE_AGAIN.printMassage();
         ConsoleMassage.MESSAGE_Q_YES_OR_NO.printMassage();
         subMenuPoint4_4DeleteLit();
@@ -141,7 +132,7 @@ class Point4Menu implements ITerminal {
     }
 
     private void point4_5showLectureInfo() {
-        print.showAllLectureInfo(lectureServiceImpl.getSelectedLecture());
+        print.showAllLectureInfo(lectureServiceImpl.getSelectedItem());
         ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }

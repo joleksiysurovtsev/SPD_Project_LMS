@@ -24,8 +24,8 @@ public enum LectureType {
 
     public static String toListString() {
         String list = "";
-        for (int i = 0; i < LiteratureType.values().length; i++) {
-            list += (i+1)+ ". " + LiteratureType.values()[i] +"\n";
+        for (int i = 0; i < LectureType.values().length; i++) {
+            list += (i+1)+ ". " + LectureType.values()[i] +"\n";
         }
         return list;
     }

@@ -1,14 +1,19 @@
 package com.lms.spd.terminal;
 
 import com.lms.spd.*;
+import com.lms.spd.cashes.LecturesCache;
 import com.lms.spd.enums.ConsoleMassage;
+import com.lms.spd.enums.LectureType;
 import com.lms.spd.exceptions.ListIsEmptyException;
+import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.services.LectureServiceImpl;
-import com.lms.spd.services.interfaces.LectureService;
+import com.lms.spd.utils.Util;
+
+import java.util.List;
 
 class Point1Menu implements ITerminal {
     public static LecturesCache cash = LecturesCache.getInstance();
-    private LectureService lectureServiceImpl = new LectureServiceImpl();
+    private LectureServiceImpl lectureServiceImpl = new LectureServiceImpl();
     private LMSConsolePrinter print = new LMSConsolePrinter();
     private LectureValidator lectureValidator = new LectureValidator();
 
@@ -18,27 +23,29 @@ class Point1Menu implements ITerminal {
         String choice = ConsoleInputValidator.readString();
         try {
             switch (choice.toLowerCase()) {
-                case "+":
-                    print.printAllLectureTable(lectureServiceImpl.getLectures());
+                case "+"://✅
+                    print.printAllLectureTable(lectureServiceImpl.getItems());
                     break;
-                case "-":
+                case "-"://✅
                     ConsoleMassage.MESSAGE_ENTER_NUMBERS_SEP.printMassage();
-                    print.printLectureListByNumber(ConsoleInputValidator.readString(), lectureServiceImpl.getLectures());
+                    print.printAllLectureTable(lectureServiceImpl.getLecturesByNumber(Util.getStringsNumberLecture(ConsoleInputValidator.readString())));
                     break;
-                case "small":
-                    print.printPreviewLectureList(lectureServiceImpl.getLectures());
+                case "small"://✅
+                    print.printPreviewLectureList(lectureServiceImpl.getItems());
                     break;
-                case "type":
-                    print.printLectureListByType(lectureValidator.selectLectureType(), lectureServiceImpl.getMapSortedByType());
+                case "type"://✅
+                    LectureType lectureType = lectureValidator.selectLectureType();
+                    List<Lecture> lectureListByType = lectureServiceImpl.getLectureListByType(lectureType);
+                    print.printAllLectureTable(lectureListByType);
                     break;
-                case "date":
-                    cash.setCurrentDate(ConsoleInputValidator.enterTheDate());
-                    print.printAllLectureTable(cash.returnList());
+                case "date"://✅
+                    print.printAllLectureTable(lectureServiceImpl.getLectureListByDate(ConsoleInputValidator.enterTheDate()));
                     break;
-                case "type and date":
-                    print.printLectureListByTypeAndDate(lectureValidator.selectLectureType(), lectureServiceImpl.getMapSortedByType(), ConsoleInputValidator.enterTheDate());
+                case "type and date"://✅
+                    List<Lecture> lectureListByTypeAndDate = lectureServiceImpl.getLectureListByTypeAndDate(lectureValidator.selectLectureType(), ConsoleInputValidator.enterTheDate());
+                    print.printAllLectureTable(lectureListByTypeAndDate);
                     break;
-                case "exit":
+                case "exit"://✅
                     LMSTerminal.startLMS();
                     break;
                 default:

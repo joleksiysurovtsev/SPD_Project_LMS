@@ -2,17 +2,28 @@ package com.lms.spd.terminal;
 
 import com.lms.spd.*;
 import com.lms.spd.enums.ConsoleMassage;
+import com.lms.spd.models.interfaces.Lecture;
+import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
-import com.lms.spd.services.interfaces.LectureService;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class Point2Menu implements ITerminal {
 
-    private LectureService lectureServiceImpl = new LectureServiceImpl();
+    private LectureServiceImpl lectureServiceImpl = new LectureServiceImpl();
     private LectureValidator lectureValidator = new LectureValidator();
+    private LiteratureValidator literatureValidator = new LiteratureValidator();
 
     @Override
     public void showContext() {
-        lectureServiceImpl.addLecture(lectureValidator.createLecture());
+        Lecture lecture = lectureServiceImpl.addItem(lectureValidator.createLecture());
+        List<Literature> literature = literatureValidator.addLitOrNot();
+        if (!literature.isEmpty()) {
+            List<Integer> integers = literature.stream().map(Literature::getId).collect(Collectors.toList());
+            lectureServiceImpl.addLinkLiteratureLectures(lecture.getId(), integers);
+        }
         ConsoleMassage.MESSAGE_Q_ENTER_LECTURE.printMassage();
         subMenuAddingLectureToList();
     }

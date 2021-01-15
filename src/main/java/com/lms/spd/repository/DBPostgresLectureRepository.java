@@ -60,7 +60,9 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
         return result;
     }
 
-
+    /**
+     * <font color="green">✅</font>
+     */
     private Lecture getItem(ResultSet rs) throws SQLException {
         LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
         Lecture lecture = new LectureIModel();
@@ -69,13 +71,15 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
         lecture.setNameOfLecture(rs.getString("name_of_lecture"));
 
         Calendar lectureDate = new GregorianCalendar();
-        lectureDate.setTime(rs.getDate("date_was_added"));
+        Timestamp date_was_added1 = rs.getTimestamp("lecture_date");
+
+        lectureDate.setTime(date_was_added1);
         lecture.setLectureDate(lectureDate);
 
         lecture.setLectorName(rs.getString("lector_name"));
         lecture.setType(LectureType.valueOf(rs.getString("lecture_type")));
         lecture.setDurationOfTheLesson(rs.getInt("duration_of_lesson"));
-        lecture.setLiteratures(getListDifferences(literatureService.getAll(), getIdListLit(lectureID)));
+        lecture.setLiteratures(getListDifferences(literatureService.getItems(), getIdListLit(lectureID)));
         return lecture;
     }
 
@@ -96,47 +100,48 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
     }
 
     @Override
-    public boolean create(Lecture item) {
-        boolean result = false;
+    public Lecture create(Lecture item) {
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO lectures ( name_of_lecture, " +
                         "lecture_date, " +
                         "lector_name," +
                         "lecture_type," +
-                        "duration_of_lesson) VALUES ((?),(?),(?),(?),(?)) RETURNING lect_id")) {
-            int id = getCreateUpdateLectureStatement(item, statement);
-            if (!item.getLiteratures().isEmpty()) {
-                addIdMapToLiteratureToLeturesTable(id, item.getLiteratures());
-            }
+                        "duration_of_lesson) VALUES ((?),(?),(?),(?),(?)) RETURNING lect_id as rsId")) {
+            //вернули айдишку лекции
+            int result = getCreateUpdateLectureStatement(item, statement);
+            item.setId(result);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+        return item;
     }
 
     private int getCreateUpdateLectureStatement(Lecture item, PreparedStatement statement) throws SQLException {
         statement.setString(1, item.getNameOfLecture());
-        statement.setDate(2, (Date) item.getLectureDate().getTime());
+        statement.setTimestamp(2, new Timestamp(item.getLectureDate().getTimeInMillis()));
         statement.setString(3, item.getLectorName());
         statement.setString(4, item.getType().toString());
         statement.setInt(5, item.getDurationOfTheLesson());
-
-        int id = statement.executeQuery().getInt("lect_id");
+        int id = -1;
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            id = resultSet.getInt("rsId");
+        }
         return id;
     }
 
-    private void addIdMapToLiteratureToLeturesTable(int id, List<Literature> literatureList) {
-        for (Literature literature : literatureList) {
+    public void addIdMapToLiteratureToLeturesTable(int id, List<Integer> literatureList) {
+        literatureList.forEach(idLitList -> {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO literature_to_lectures ( lect_id,lit_id) VALUES ((?),(?)) RETURNING lect_id")) {
+                    "INSERT INTO literature_to_lectures ( lect_id,lit_id) VALUES ((?),(?)) ")) {
                 statement.setInt(1, id);
-                statement.setInt(1, literature.getId());
-                ResultSet resultSet = statement.executeQuery();
+                statement.setInt(2, idLitList);
+                statement.executeUpdate();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        }
+        });
     }
 
     /**

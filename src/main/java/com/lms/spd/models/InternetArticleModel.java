@@ -28,7 +28,16 @@ public class InternetArticleModel implements Literature, Serializable {
     @JsonProperty("URL")
     private String urlAddress;
 
-    public InternetArticleModel() {}
+    public InternetArticleModel() {
+    }
+
+    public InternetArticleModel(LiteratureType type, String title, String author, String urlAddress, Calendar dateResourceWasAdded) {
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.dateResourceWasAdded = dateResourceWasAdded;
+        this.urlAddress = urlAddress;
+    }
 
     public InternetArticleModel(int id, String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String urlAddress) {
         this.id = id;

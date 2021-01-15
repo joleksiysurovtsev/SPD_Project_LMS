@@ -84,33 +84,29 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
     }
 
     @Override
-    public boolean create(Literature item) {
-        boolean result = false;
+    public Literature create(Literature item) {
+        int result = -1;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO literature ( " +
-                        "type, " +
-                        "title, " +
-                        "author," +
-                        "date_was_added," +
-                        "genre," +
-                        "published_in_year," +
-                        "url_address," +
-                        "issue_of_journal," +
-                        "title_of_article) VALUES (DEFAULT, (?), (?), (?),(?),(?),(?),(?),(?)) RETURNING lit_id")) {
+                "INSERT INTO literature (lit_id, type, title, author, date_was_added, genre, published_in_year, url_address, issue_of_journal, title_of_article) VALUES (DEFAULT, (?), (?), (?),(?),(?),(?),(?),(?),(?)) RETURNING lit_id")) {
             statement.setString(1, item.getType().toString());
             statement.setString(2, item.getTitle());
             statement.setString(3, item.getAuthor());
-            statement.setDate(4, (Date) item.getDateResourceWasAdded().getTime());
+            statement.setTimestamp(4, new Timestamp(item.getDateResourceWasAdded().getTimeInMillis()));
             statement.setString(5, item.getGenre());
             statement.setInt(6, item.getPublishedInYear());
             statement.setString(7, item.getUrlAddress());
             statement.setInt(8, item.getIssueOfTheJournal());
             statement.setString(9, item.getTitleOfArticle());
-            result = statement.executeQuery().next();
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt("lit_id");
+                item.setId(result);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+        return item;
     }
 
     @Override
@@ -154,6 +150,12 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    @Deprecated
+    public void addIdMapToLiteratureToLeturesTable(int id, List<Integer> integers) {
+
     }
 
     @Override

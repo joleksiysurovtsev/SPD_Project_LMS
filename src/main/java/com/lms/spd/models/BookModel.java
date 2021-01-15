@@ -33,6 +33,15 @@ public class BookModel implements Literature, Serializable {
 
     }
 
+    public BookModel(String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String genre, int publishedInYear) {
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.dateResourceWasAdded = dateResourceWasAdded;
+        this.genre = genre;
+        this.publishedInYear = publishedInYear;
+    }
+
     public BookModel(int id, String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String genre, int publishedInYear) {
         this.id = id;
         this.title = title;

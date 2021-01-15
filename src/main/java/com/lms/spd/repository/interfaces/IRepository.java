@@ -1,5 +1,7 @@
 package com.lms.spd.repository.interfaces;
 
+import com.lms.spd.models.interfaces.Lecture;
+
 import java.util.List;
 
 public interface IRepository<T> extends AutoCloseable{
@@ -8,10 +10,11 @@ public interface IRepository<T> extends AutoCloseable{
 
     T getByID(int id);
 
-    boolean create(T item);
+    T create(T item);
 
     boolean update(T item);
 
     boolean delete(int id);
 
+    void addIdMapToLiteratureToLeturesTable(int id, List<Integer> integers);
 }

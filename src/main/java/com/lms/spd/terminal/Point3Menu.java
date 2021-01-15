@@ -3,11 +3,11 @@ package com.lms.spd.terminal;
 import com.lms.spd.*;
 import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.services.LectureServiceImpl;
-import com.lms.spd.services.interfaces.LectureService;
+import com.lms.spd.utils.Util;
 
 class Point3Menu implements ITerminal {
 
-    private LectureService lectureServiceImpl = new LectureServiceImpl();
+    private LectureServiceImpl lectureServiceImpl = new LectureServiceImpl();
 
     @Override
     public void showContext() {
@@ -15,7 +15,7 @@ class Point3Menu implements ITerminal {
         int[] arr = Util.getStringsNumberLecture(ConsoleInputValidator.readString());
         if (arr == null) subMenuRemovalLecture();
         else {
-            lectureServiceImpl.removeLectures(arr);
+            lectureServiceImpl.removeItems(arr);
         }
         subMenuRemovalLecture();
     }

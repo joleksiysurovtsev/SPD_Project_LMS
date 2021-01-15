@@ -4,6 +4,7 @@ import com.lms.spd.enums.LectureType;
 import com.lms.spd.exceptions.ListIsEmptyException;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
+import com.lms.spd.utils.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -68,13 +69,11 @@ public class LMSConsolePrinter {
      */
     public void printLectureTable(Lecture lecture) {
         if (lecture.getLectureDate().before(Calendar.getInstance())) {
-            System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
             System.out.println(String.format(tabulator, "\u001b[31;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(), lecture.getDurationOfTheLesson()));
-            System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
         } else {
-            System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
             System.out.println(String.format(tabulator, "\u001b[32;1m\u1005\u001B[0m", sdf.format(lecture.getLectureDate().getTime()), lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(), lecture.getLectorName().trim(), lecture.getDurationOfTheLesson()));
-            System.out.println("+----------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------+");
         }
     }
 
@@ -127,8 +126,8 @@ public class LMSConsolePrinter {
 
 
     /**
-     * The method prints a List of  {@link com.lms.spd.models.interfaces.Lecture Lectures}
-     * by {@link com.lms.spd.enums.LectureType LectureType}  & {@link java.util.GregorianCalendar Date} </b>
+     * The method prints a List of  {@link Lecture Lectures}
+     * by {@link LectureType LectureType}  & {@link GregorianCalendar Date} </b>
      */
     public void printLectureListByTypeAndDate(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType, Calendar currentdate) throws ListIsEmptyException {
         Map<Boolean, List<Lecture>> booleanListMap = Util.getCollectByDate(selectLectureType, mapSortedByType, currentdate);

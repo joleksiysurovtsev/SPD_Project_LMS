@@ -6,13 +6,14 @@ import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
+import com.lms.spd.services.LiteratureServiceImpl;
+import com.lms.spd.services.interfaces.IService;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class LectureValidator {
     private LiteratureValidator literatureValidator = new LiteratureValidator();
-    private LectureServiceImpl lectureService = new LectureServiceImpl();
 
     public Lecture createLecture() {
         String nameOfLecture = createTheLectureTitle();
@@ -20,9 +21,7 @@ public class LectureValidator {
         LectureType lectureType = selectLectureType();
         Calendar lectureDate = ConsoleInputValidator.enterTheDate();
         int lectureDuration = lectureDuration();
-        int ID = lectureService.generateLectureID();
-        List<Literature> literatures = literatureValidator.addLitOrNot();
-        return new LectureIModel(nameOfLecture, literatures, lectureDate, lectorName, lectureType, ID, lectureDuration);
+        return new LectureIModel(nameOfLecture, lectureDate, lectorName, lectureType,  lectureDuration);
     }
 
     private int lectureDuration() {

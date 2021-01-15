@@ -42,15 +42,15 @@ public class LiteratureValidator {
     }
 //____________________________________________________________________________________________________________________//
 
-    List<Literature> addLitOrNot() {
+    public List<Literature> addLitOrNot() {
         ConsoleMassage.MESSAGE_CHOIOSE_ADD_LIT_CHOOSE.printMassage();
         List<Literature> newLiteratureArr = new ArrayList<>();
         switch (ConsoleInputValidator.readString()) {
             case "+":
-                literatureServiceImpl.addLiterature(createLiterature(), newLiteratureArr);
+                newLiteratureArr.add( literatureServiceImpl.addItem(createLiterature()));
                 ConsoleMassage.MESSAGE_Q_ADD_MORE_LIT.printMassage();
                 while (!ConsoleInputValidator.readString().equals("-")) {
-                    literatureServiceImpl.addLiterature(createLiterature(), newLiteratureArr);
+                    newLiteratureArr.add(literatureServiceImpl.addItem(createLiterature()));
                     ConsoleMassage.MESSAGE_Q_ADD_MORE_LIT.printMassage();
                 }
                 break;

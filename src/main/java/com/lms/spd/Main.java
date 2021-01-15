@@ -1,15 +1,13 @@
 package com.lms.spd;
 
-import com.lms.spd.lmsjdbc.JDBCConnector;
 import com.lms.spd.terminal.LMSTerminal;
 
 public class Main  {
 
 
     public static void main(String[] args) {
-        JDBCConnector.getConnection();
+      //  JDBCConnector.getConnection();
         LMSTerminal.startLMS();
-
     }
 
     

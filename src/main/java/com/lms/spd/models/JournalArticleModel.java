@@ -32,6 +32,15 @@ public class JournalArticleModel implements Literature, Serializable {
 
     public JournalArticleModel() { }
 
+    public JournalArticleModel(String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String titleOfArticle, int issueOfTheJournal) {
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.dateResourceWasAdded = dateResourceWasAdded;
+        this.titleOfArticle = titleOfArticle;
+        this.issueOfTheJournal = issueOfTheJournal;
+    }
+
     @Override
     public Calendar getDateResourceWasAdded() {
         return dateResourceWasAdded;
