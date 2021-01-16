@@ -2,6 +2,7 @@ package com.lms.spd.terminal;
 
 import com.lms.spd.*;
 import com.lms.spd.enums.ConsoleMassage;
+import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
@@ -130,7 +131,9 @@ class Point4Menu implements ITerminal {
     }
 
     private void point4_5showLectureInfo() {
-        print.showAllLectureInfo(lectureServiceImpl.getSelectedItem());
+        Lecture selectedItem = lectureServiceImpl.getSelectedItem();
+        print.showAllLectureInfo(selectedItem);
+        //print.printListLit(literatureServiceImpl.getLiteraturesBYLectureID(selectedItem.getId()));
         ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }

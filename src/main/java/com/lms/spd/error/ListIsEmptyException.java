@@ -1,4 +1,4 @@
-package com.lms.spd.exceptions;
+package com.lms.spd.error;
 
 public class ListIsEmptyException extends Exception {
     public ListIsEmptyException() {

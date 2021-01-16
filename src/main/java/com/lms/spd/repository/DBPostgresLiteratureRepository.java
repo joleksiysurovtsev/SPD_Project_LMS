@@ -18,6 +18,10 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
 
     private Connection connection;
 
+    public DBPostgresLiteratureRepository() {
+
+    }
+
     public DBPostgresLiteratureRepository(Connection connection) {
         this.connection = connection;
     }
@@ -159,6 +163,7 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
         return idLitList.stream().map(this::getByID).collect(Collectors.toList());
     }
 
+
     private List<Integer> getListLectureId(int id) {
         List<Integer> idLitList = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(
@@ -175,9 +180,8 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
     }
 
     @Override
-    @Deprecated
-    public void addIdMapToLiteratureToLeturesTable(int id, List<Integer> integers) {
-
+    public int addIdMapToLiteratureToLeturesTable(int id, Integer integers) {
+        return -1;
     }
 
     @Override

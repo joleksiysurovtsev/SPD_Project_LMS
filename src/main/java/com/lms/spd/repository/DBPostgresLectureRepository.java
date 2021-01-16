@@ -16,7 +16,12 @@ import java.util.stream.Collectors;
 
 public class DBPostgresLectureRepository implements IRepository<Lecture> {
 
-    private final Connection connection;
+    private Connection connection;
+
+    public DBPostgresLectureRepository() {
+
+    }
+
 
     public DBPostgresLectureRepository(Connection connection) {
         this.connection = connection;
@@ -131,17 +136,17 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
         return id;
     }
 
-    public void addIdMapToLiteratureToLeturesTable(int id, List<Integer> literatureList) {
-        literatureList.forEach(idLitList -> {
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO literature_to_lectures ( lect_id,lit_id) VALUES ((?),(?)) ")) {
-                statement.setInt(1, id);
-                statement.setInt(2, idLitList);
-                statement.executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
+    public int addIdMapToLiteratureToLeturesTable(int id, Integer litIDInteger) {
+        int result = -1;
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO literature_to_lectures ( lect_id,lit_id) VALUES ((?),(?)) ")) {
+            statement.setInt(1, id);
+            statement.setInt(2, litIDInteger);
+            result = statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.lms.spd.cashes;
 
-import com.lms.spd.lmsjdbc.JDBCConnector;
+import com.lms.spd.pgsql.JDBCConnector;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.DBPostgresLiteratureRepository;
 import com.lms.spd.repository.interfaces.IRepository;
@@ -17,9 +17,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class LiteratureCache {
 
     private static volatile LiteratureCache instance;
+    public static List<Literature> cashedLiteratureList = new CopyOnWriteArrayList<>();
+
+    public void setLiteratureRepository(IRepository<Literature> literatureRepository) {
+        this.literatureRepository = literatureRepository;
+    }
 
     private IRepository<Literature> literatureRepository = new DBPostgresLiteratureRepository(JDBCConnector.connection);
-    public List<Literature> cashedLiteratureList = new CopyOnWriteArrayList<>();
+
+
+    public LiteratureCache(IRepository<Literature> literatureRepository) {
+        this.literatureRepository = literatureRepository;
+        cashInit();
+    }
 
     private LiteratureCache() {
         cashInit();
@@ -38,19 +48,18 @@ public class LiteratureCache {
         return localInstance;
     }
 
-
     private void cashInit() {
         cashedLiteratureList = literatureRepository.readAll();
     }
-
 
     public Literature getByID(int selected) {
         return cashedLiteratureList.get(selected);
     }
 
-    public Literature addLiteratire(Literature lecture) {
-        cashedLiteratureList.add(lecture);
-        return literatureRepository.create(lecture);
+    public Literature addLiteratire(Literature literature) {
+        Literature returnedLiterature = literatureRepository.create(literature);
+        cashedLiteratureList.add(returnedLiterature);
+        return returnedLiterature;
     }
 
     public void removeLecturesByID(int lectureRemove) {
@@ -58,9 +67,15 @@ public class LiteratureCache {
         literatureRepository.delete(lectureRemove);
     }
 
-
     public List<Literature> getLiteraturesBYLectureID(int id) {
-
         return literatureRepository.literaturesBYLectureID(id);
+    }
+
+    public List<Literature> getCashedLiteratureList() {
+        return cashedLiteratureList;
+    }
+
+    public void updateCashedLiteratures(){
+        cashedLiteratureList = literatureRepository.readAll();
     }
 }

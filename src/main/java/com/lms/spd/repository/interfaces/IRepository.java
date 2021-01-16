@@ -16,8 +16,7 @@ public interface IRepository<T> extends AutoCloseable{
 
     boolean delete(int id);
 
-    void addIdMapToLiteratureToLeturesTable(int id, List<Integer> integers);
-
     List<T> literaturesBYLectureID(int id);
 
+    int addIdMapToLiteratureToLeturesTable(int id, Integer integers);
 }

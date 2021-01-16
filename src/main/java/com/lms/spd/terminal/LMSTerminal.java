@@ -6,7 +6,8 @@ import com.lms.spd.enums.ConsoleMassage;
 
 import java.util.Map;
 
-public class LMSTerminal {
+
+public class LMSTerminal  {
     private static final LMSConsolePrinter print = new LMSConsolePrinter();
 
     private static final Map<Integer, StartMenuStrategyConstructor> menuPoints = Map.of(

@@ -3,9 +3,7 @@ package com.lms.spd.services;
 import com.lms.spd.utils.LectureCollectorByType;
 import com.lms.spd.cashes.LecturesCache;
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.lmsjdbc.JDBCConnector;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.repository.DBPostgresLectureRepository;
 import com.lms.spd.services.interfaces.IService;
 
 import java.util.*;
@@ -18,7 +16,7 @@ public class LectureServiceImpl implements IService<Lecture> {
     /*✅*/
     @Override
     public List<Lecture> getItems() {
-        return LecturesCache.getInstance().cashedLectureList;
+        return LecturesCache.getInstance().getCashedLectureList();
     }
 
     /*✅*/
@@ -31,10 +29,6 @@ public class LectureServiceImpl implements IService<Lecture> {
     @Override
     public void setSelectedItem(int selected) {
         selectedLecture = LecturesCache.getInstance().getByID(selected);
-        if (selectedLecture == null) {
-            selectedLecture = new DBPostgresLectureRepository(JDBCConnector.connection).getByID(selected);
-        }
-
     }
 
     /*✅*/
@@ -49,12 +43,12 @@ public class LectureServiceImpl implements IService<Lecture> {
     }
 
     public List<Lecture> getLectureListByType(LectureType lectureType) {
-        Map<LectureType, List<Lecture>> collect = LecturesCache.getInstance().cashedLectureList.stream().collect(LectureCollectorByType.collectToSortedMapByType());
+        Map<LectureType, List<Lecture>> collect = LecturesCache.getInstance().getCashedLectureList().stream().collect(LectureCollectorByType.collectToSortedMapByType());
         return collect.get(lectureType);
     }
 
     public List<Lecture> getLectureListByDate(Calendar enterTheDate) {
-        return LecturesCache.getInstance().cashedLectureList.stream().filter(lecture -> lecture.getLectureDate().getTime().compareTo(enterTheDate.getTime()) == 0).collect(Collectors.toList());
+        return LecturesCache.getInstance().getCashedLectureList().stream().filter(lecture -> lecture.getLectureDate().getTime().compareTo(enterTheDate.getTime()) == 0).collect(Collectors.toList());
     }
 
     public List<Lecture> getLecturesByNumber(int[] getLectures) {
@@ -71,6 +65,6 @@ public class LectureServiceImpl implements IService<Lecture> {
 
 
     public void addLinkLiteratureLectures(int id, List<Integer> integers) {
-        LecturesCache.getInstance().addLinkLiteratureLectures(id,integers);
+        integers.forEach(integer ->  LecturesCache.getInstance().addLinkLiteratureLectures(id,integer));
     }
 }

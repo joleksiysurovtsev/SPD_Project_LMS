@@ -1,8 +1,8 @@
 package com.lms.spd;
 
 import com.lms.spd.enums.ConsoleMassage;
-import com.lms.spd.exceptions.DateFormatException;
-import com.lms.spd.exceptions.ValidateInputException;
+import com.lms.spd.error.DateFormatException;
+import com.lms.spd.error.ValidateInputException;
 
 import java.io.BufferedReader;
 import java.io.IOException;

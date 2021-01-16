@@ -1,136 +1,118 @@
 package com.lms.spd.services;
 
+import com.lms.spd.cashes.mocks.DBPostgresLectureRepositoryMock;
+import com.lms.spd.cashes.mocks.DBPostgresLiteratureRepositoryMock;
+import com.lms.spd.cashes.LecturesCache;
+import com.lms.spd.cashes.LiteratureCache;
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.exceptions.NullLectureException;
-import com.lms.spd.models.BookModel;
+import com.lms.spd.pgsql.JDBCConnector;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.repository.LectureRepository;
-import com.lms.spd.repository.parsers.ParserLecturesJSON;
-import com.lms.spd.repository.parsers.ParserLiteraturesJSON;
-import com.lms.spd.services.interfaces.LectureService;
-import jdk.jfr.Description;
+import com.lms.spd.repository.DBPostgresLectureRepository;
+import com.lms.spd.repository.DBPostgresLiteratureRepository;
+import com.lms.spd.services.interfaces.IService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LectureServiceImplTest {
-    @AfterEach
+
     @BeforeEach
+    public void updateEvents() {
+        DBPostgresLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBPostgresLectureRepositoryMock();
+        LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepositoryMock);
+        dbPostgresLectureRepositoryMock.updates();
+        LecturesCache.getInstance().updateCashedLectures();
+
+        DBPostgresLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBPostgresLiteratureRepositoryMock();
+        LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepositoryMock);
+        dbPostgresLiteratureRepositoryMock.updates();
+        LiteratureCache.getInstance().updateCashedLiteratures();
+    }
+    @Test
+    @Order(1)
+    void getItems() {
+        IService<Lecture> service = new LectureServiceImpl();
+        assertEquals(LecturesCache.getInstance().getCashedLectureList(), service.getItems());
+    }
+
+    @Test
+    @Order(2)
+    void setSelectedItem() {
+        IService<Lecture> service = new LectureServiceImpl();
+
+        service.setSelectedItem(1);
+        Calendar calendar = new GregorianCalendar(2020, 1, 16);
+        List<Literature> literatures = new ArrayList<>();
+
+        assertEquals(new LectureIModel(LectureType.JAVA_CORE, "nameOfLecture1", literatures, "lectorName1", calendar, 1), service.getSelectedItem());
+    }
+
+    @Test
+    @Order(3)
+    void addItem() {
+        IService<Lecture> service = new LectureServiceImpl();
+        Calendar calendar = new GregorianCalendar(2020, 1, 16);
+        List<Literature> literatures = new ArrayList<>();
+        LectureIModel lectureIModel = new LectureIModel(LectureType.COMMON, "nameOfLecture3", literatures, "lectorName4", calendar);
+        LectureIModel lectureIModelExpected = new LectureIModel(LectureType.COMMON, "nameOfLecture3", literatures, "lectorName4", calendar, 4);
+        assertEquals(lectureIModelExpected, service.addItem(lectureIModel));
+    }
+
+    @Test
+    @Order(4)
+    void removeItems() {
+        IService<Lecture> service = new LectureServiceImpl();
+        int size = service.getItems().size();
+        int size1 = LecturesCache.getInstance().getCashedLectureList().size();
+        assertEquals(size, size1);
+        int[] ints = {2};
+        service.removeItems(ints);
+        assertEquals(service.getItems().size(), size1 - 1);
+    }
+
+    @Test
+    @Order(5)
+    void getLectureListByType() {
+        LectureServiceImpl service = new LectureServiceImpl();
+        Calendar calendar = new GregorianCalendar(2020, 1, 16);
+        List<Literature> literatures = new ArrayList<>();
+        List<Lecture> lectureTestList = new ArrayList<>();
+        lectureTestList.add(new LectureIModel(LectureType.DB, "nameOfLecture3", literatures, "lectorName4", calendar, 3));
+        assertEquals(lectureTestList, service.getLectureListByType(LectureType.DB));
+    }
+
+    @Test
+    @Order(6)
+    void getLectureListByDate() {
+    }
+
+    @Test
+    void getLecturesByNumber() {
+    }
+
+    @Test
+    void getLectureListByTypeAndDate() {
+    }
+
+    @Test
+    void addLinkLiteratureLectures() {
+    }
+
+    @AfterEach
     public void cleanUpFiles() {
-        File targetFile = new File("src/test/resources/json/Lectures.json");
-        File targetFile2 = new File("src/test/resources/json/Literatures.json");
-        targetFile.delete();
-        targetFile2.delete();
-        ParserLecturesJSON.seturl("src/test/resources/json/");
-        ParserLiteraturesJSON.seturl("src/test/resources/json/");
-    }
-
-    @Test
-    @Order(31)
-    @Description("Test method to get all lectures: " +
-            "Should get the entire list of lectures that have been written to a JSON file")
-    void getLectures() {
-        LectureServiceImpl lsImpl = new LectureServiceImpl();
-        LectureIModel lectureIModel = new LectureIModel("testLect");
-        LectureIModel lectureIModel2 = new LectureIModel("testLect2");
-        List<Lecture> testListL = new ArrayList<>();
-        testListL.add(lectureIModel);
-        testListL.add(lectureIModel2);
-
-        LectureRepository lre = new LectureRepository();
-        //wrote a lecture to a file for verification
-        lre.setAll(testListL);
-
-        //expect to receive the lecture we write
- //       assertEquals(ParserLecturesJSON.parseLecturesFromJSON(), lsImpl.getLectures());
-    }
-
-    @Test
-    @Order(32)
-    @Description("The method should send the entire list of lectures for writing in a JSON file")
-    void setLectures() {
-        LectureServiceImpl lsImpl = new LectureServiceImpl();
-        LectureIModel lectureIModel = new LectureIModel("testLect");
-        List<Lecture> testListL = new ArrayList<>();
-        testListL.add(lectureIModel);
-
-        //spotted a lecture
-     //   lsImpl.setLectures(testListL);
-
-        //expect to receive the lecture that we have attended
-        assertEquals(testListL, ParserLecturesJSON.parseLecturesFromJSON());
-    }
-
-    @Test
-    @Order(33)
-    @Description("Test method that should return a lecture by its ID number")
-    void getSelectedLecture() {
-        //created a lecture list
-        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 1);
-        LectureIModel lectureIModel2 = new LectureIModel(LectureType.COMMON, "TestL2", new ArrayList<>(), "testLector", new GregorianCalendar(2005, 10, 12), 2);
-        List<Lecture> testListL = new ArrayList<>();
-        testListL.add(lectureIModel);
-        testListL.add(lectureIModel2);
-
-        //wrote the sheet to a file
-        ParserLecturesJSON.parseLecturesInJSON(testListL);
-
-        LectureServiceImpl lectureService = new LectureServiceImpl();
-
-     //   lectureService.setSelectedLecture(1);
-      //  Lecture actual = lectureService.getSelectedLecture();
-
-    //    assertEquals(lectureIModel, actual);
-    }
-
-    @Test
-    @Order(34)
-    @Description("Testing adding lectures to a JSON file")
-    void addLecture() {
-        //created a lecture added it to the list
-        LectureIModel lectureByTest = new LectureIModel(LectureType.JAVA_CORE, "TestL1", new ArrayList<>(), "testLector", new GregorianCalendar(2020, 01, 4), 1);
-
-        LectureServiceImpl lectureService = new LectureServiceImpl();
-       // lectureService.addLecture(lectureByTest);
-
-        Lecture actualLecture = ParserLecturesJSON.parseLecturesFromJSON().get(0);
-        assertEquals(lectureByTest,actualLecture);
-    }
-
-    @Test
-    @Order(35)
-    void removeLecturesTested() {
-
-        List<Literature> literature2 = new ArrayList<>();
-        literature2.add(new BookModel("Title2", "author2", "genre", 1986, 1));
-        List<Literature> literature = new ArrayList<>();
-        literature.add(new BookModel("Title", "author", "genre", 1986, 1));
-        LectureIModel lectureIModel = new LectureIModel(LectureType.JAVA_CORE, "TestL1", literature, "testLector", new GregorianCalendar(2020, 01, 4), 1);
-        LectureIModel lectureIModel2 = new LectureIModel(LectureType.JAVA_CORE, "TestL1", literature2, "testLector", new GregorianCalendar(2020, 01, 4), 2);
-        List<Lecture> lectures = new ArrayList<>();
-        lectures.add(lectureIModel);
-        lectures.add(lectureIModel2);
-
-        ParserLecturesJSON.parseLecturesInJSON(lectures);
-
-        LectureServiceImpl lectureService = new LectureServiceImpl();
-
-        int[] remove = {1};
-       // lectureService.removeLectures(remove);
-        List<Lecture> expectedlist = new ArrayList<>();
-        expectedlist.add(lectureIModel2);
-
-        List<Lecture> actuallist = ParserLecturesJSON.parseLecturesFromJSON();
-        assertEquals(expectedlist, actuallist);
+        LecturesCache.getInstance().setLectureRepository(new DBPostgresLectureRepository(JDBCConnector.connection));
+        LecturesCache.getInstance().updateCashedLectures();
+        LiteratureCache.getInstance().setLiteratureRepository(new DBPostgresLiteratureRepository(JDBCConnector.connection));
+        LiteratureCache.getInstance().updateCashedLiteratures();
     }
 }

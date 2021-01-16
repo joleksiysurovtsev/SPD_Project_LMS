@@ -10,11 +10,10 @@ import java.util.*;
 
 public class LiteratureValidator {
     private LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
-    private static final Map<LiteratureType, LitFactory> factories = Map.of(
+    private static final Map<LiteratureType,LitFactory> factories = Map.of(
             LiteratureType.BOOK, new LBookFactory(),
             LiteratureType.INTERNET_ARTICLE, new LInternetArticleFactory(),
             LiteratureType.JOURNAL_ARTICLE, new LJournalFactory()
-
     );
 
     private static LitFactory createLitFactory(LiteratureType type) {

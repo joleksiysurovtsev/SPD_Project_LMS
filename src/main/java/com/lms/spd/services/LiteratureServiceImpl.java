@@ -14,7 +14,7 @@ public class LiteratureServiceImpl implements IService<Literature> {
     /*✅*/
     @Override
     public List<Literature> getItems() {
-        return LiteratureCache.getInstance().cashedLiteratureList;
+        return LiteratureCache.getInstance().getCashedLiteratureList();
     }
 
     /*✅*/
@@ -40,7 +40,7 @@ public class LiteratureServiceImpl implements IService<Literature> {
     public void removeItems(int[] lectureRemove) {
         Arrays.stream(lectureRemove).forEach(id -> LiteratureCache.getInstance().removeLecturesByID(id));
     }
-
+    /*✅*/
     public List<Literature> getLiteraturesBYLectureID(int id){
        return LiteratureCache.getInstance().getLiteraturesBYLectureID(id);
     }

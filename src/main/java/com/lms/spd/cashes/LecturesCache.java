@@ -1,6 +1,6 @@
 package com.lms.spd.cashes;
 
-import com.lms.spd.lmsjdbc.JDBCConnector;
+import com.lms.spd.pgsql.JDBCConnector;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.repository.DBPostgresLectureRepository;
 import com.lms.spd.repository.interfaces.IRepository;
@@ -17,9 +17,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class LecturesCache {
 
     private static volatile LecturesCache instance;
+    private static List<Lecture> cashedLectureList = new CopyOnWriteArrayList<>();
+    private static IRepository<Lecture> lectureRepository = new DBPostgresLectureRepository(JDBCConnector.connection);
 
-    private IRepository<Lecture> lectureRepository = new DBPostgresLectureRepository(JDBCConnector.connection);
-    public List<Lecture> cashedLectureList = new CopyOnWriteArrayList<>();
+
+    public void setLectureRepository(IRepository<Lecture> lectureRepository) {
+        this.lectureRepository = lectureRepository;
+    }
+
+    public LecturesCache(IRepository<Lecture> lectureRepository) {
+        this.lectureRepository = lectureRepository;
+        cashInit();
+    }
 
     private LecturesCache() {
         cashInit();
@@ -38,33 +47,34 @@ public class LecturesCache {
         return localInstance;
     }
 
-
     private void cashInit() {
         cashedLectureList = lectureRepository.readAll();
     }
 
-
     public Lecture getByID(int selected) {
-        Lecture lecture1 = cashedLectureList.stream().filter(lecture -> lecture.getId() == selected).findFirst().orElse(null);
-        if (lecture1 != null) {
-            return lecture1;
-        }
-        return lectureRepository.getByID(selected);
+        return cashedLectureList.stream().filter(lecture -> lecture.getId() == selected).findFirst().orElseGet(() -> lectureRepository.getByID(selected));
     }
 
     public Lecture addLecture(Lecture lecture) {
-        cashedLectureList.add(lecture);
-        return lectureRepository.create(lecture);
+        Lecture returnedLecture = lectureRepository.create(lecture);
+        cashedLectureList.add(returnedLecture);
+        return returnedLecture;
     }
 
-    public void removeLecturesByID(int lectureRemove) {
+    public boolean removeLecturesByID(int lectureRemove) {
         cashedLectureList.removeIf(lecture -> lecture.getId() == lectureRemove);
-        lectureRepository.delete(lectureRemove);
+        return lectureRepository.delete(lectureRemove);
     }
 
-    public void addLinkLiteratureLectures(int id, List<Integer> integers){
-        lectureRepository.addIdMapToLiteratureToLeturesTable(id,integers);
-
+    public void addLinkLiteratureLectures(int id, Integer integers) {
+        lectureRepository.addIdMapToLiteratureToLeturesTable(id, integers);
     }
 
+    public List<Lecture> getCashedLectureList() {
+        return cashedLectureList;
+    }
+    
+    public void updateCashedLectures(){
+        cashedLectureList = lectureRepository.readAll();
+    }
 }

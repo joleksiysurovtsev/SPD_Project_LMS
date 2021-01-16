@@ -1,10 +1,8 @@
 package com.lms.spd;
 
-import com.lms.spd.enums.LectureType;
-import com.lms.spd.exceptions.ListIsEmptyException;
+import com.lms.spd.error.ListIsEmptyException;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.utils.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -19,9 +17,10 @@ public class LMSConsolePrinter {
     private static int count = 1;
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
-        if (lectures.isEmpty()) {
+        if (lectures.isEmpty() || lectures == null) {
             throw new ListIsEmptyException("I can not print the list of lectures it is empty");
         } else {
+            System.out.println(lectures);
             printTopOfTable();
             lectures.forEach(this::printLectureTable);
             count = 1;
@@ -36,27 +35,6 @@ public class LMSConsolePrinter {
         tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-10d|%-46.46s| %-24.24s|%-3s|";
     }
 
-    public void printLectureListByType(LectureType type, List<Lecture> lectures) throws ListIsEmptyException {
-        if (lectures.isEmpty()) {
-            throw new ListIsEmptyException("I can not print the list of lectures it is empty");
-        } else {
-            printTopOfTable();
-            lectures.stream().filter(lecture -> lecture.getType() == type).forEach(this::printLectureTable);
-            count = 1;
-        }
-    }
-
-    public void printLectureListByNumber(String strWithNum, List<Lecture> lectures) throws ListIsEmptyException {
-        if (!lectures.isEmpty()) {
-            printTopOfTable();
-            Arrays.stream(Util.getStringsNumberLecture(strWithNum))
-                    .forEach(value -> lectures.stream()
-                            .filter(x -> value == x.getId())
-                            .forEach(this::printLectureTable));
-        } else {
-            throw new ListIsEmptyException("It is not possible to print the list of lectures, the List is empty");
-        }
-    }
 
     private void printTopOfTable() {
         System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
@@ -114,31 +92,6 @@ public class LMSConsolePrinter {
                 " Lecture Type: " + lecture.getType();
         System.out.println(lectureInfo);
         printListLit(lecture.getLiteratures());
-    }
-
-    /**
-     * <b>The method prints a List of  {@code <Lectures>}  by {@code LectureType} </b>
-     */
-    public void printLectureListByType(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType) throws ListIsEmptyException {
-        List<Lecture> lectureList = mapSortedByType.get(selectLectureType);
-        printAllLectureTable(lectureList);
-    }
-
-
-    /**
-     * The method prints a List of  {@link Lecture Lectures}
-     * by {@link LectureType LectureType}  & {@link GregorianCalendar Date} </b>
-     */
-    public void printLectureListByTypeAndDate(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType, Calendar currentdate) throws ListIsEmptyException {
-        Map<Boolean, List<Lecture>> booleanListMap = Util.getCollectByDate(selectLectureType, mapSortedByType, currentdate);
-        if (booleanListMap.containsKey(false)) {
-            System.out.println("on this date such lectures have been completed");
-            printAllLectureTable(booleanListMap.get(false));
-        }
-        if (booleanListMap.containsKey(true)) {
-            System.out.println("such lectures to be held");
-            printAllLectureTable(booleanListMap.get(true));
-        }
     }
 
     /**

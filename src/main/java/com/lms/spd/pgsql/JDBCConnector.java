@@ -1,4 +1,4 @@
-package com.lms.spd.lmsjdbc;
+package com.lms.spd.pgsql;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -21,7 +21,7 @@ public class JDBCConnector {
         Flyway flyway = createFlyway(dataSource);
         flyway.migrate();
         try {
-            return connection = dataSource.getConnection();
+            return dataSource.getConnection();
         } catch (SQLException throwables) {
             System.err.println("connection failed");
         }

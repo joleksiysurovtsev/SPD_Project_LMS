@@ -1,4 +1,4 @@
-package com.lms.spd.exceptions;
+package com.lms.spd.error;
 
 public class NullLectureException extends Exception {
     public NullLectureException() {

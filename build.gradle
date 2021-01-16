@@ -9,6 +9,23 @@ repositories {
 
 test {
     useJUnitPlatform()
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                element = 'CLASS'
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 1.0
+                }
+                excludes = [
+                        'src.main.java.com.lms.spd.terminal.*'
+                ]
+            }
+        }
+    }
+
+
     finalizedBy jacocoTestReport
 }
 
@@ -21,7 +38,6 @@ dependencies{
     compile group: 'com.zaxxer', name: 'HikariCP', version: '3.4.5'
     // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
     compile group: 'org.flywaydb', name: 'flyway-core', version: '7.3.2'
-
     compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.4.26.Final'
 }
 
