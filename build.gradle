@@ -1,4 +1,4 @@
-plugins{
+plugins {
     id 'application'
     id 'jacoco'
 }
@@ -7,32 +7,23 @@ repositories {
     mavenCentral()
 }
 
+
 test {
     useJUnitPlatform()
-    jacocoTestCoverageVerification {
-        violationRules {
-            rule {
-                element = 'CLASS'
-                limit {
-                    counter = 'LINE'
-                    value = 'COVEREDRATIO'
-                    minimum = 1.0
-                }
-                excludes = [
-                        'src.main.java.com.lms.spd.terminal.*'
-                ]
-            }
+    finalizedBy jacocoTestReport {
+        afterEvaluate {
+            classDirectories.from = files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: ['com/lms/spd/terminal/**','com/lms/spd/litfactory/**','com/lms/spd/pgsql/**','com/lms/spd/repository/DBPostgresLectureRepository.java','com/lms/spd/repository/DBPostgresLiteratureRepository.java'])
+            })
         }
     }
-
-
-    finalizedBy jacocoTestReport
 }
 
-dependencies{
+
+dependencies {
     implementation 'junit:junit:4.12'
-    testImplementation"org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testRuntimeOnly"org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
     compile group: 'com.zaxxer', name: 'HikariCP', version: '3.4.5'

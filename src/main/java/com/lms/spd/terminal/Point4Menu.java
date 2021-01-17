@@ -6,7 +6,6 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
-import com.lms.spd.services.interfaces.IService;
 import com.lms.spd.utils.Util;
 
 import java.util.ArrayList;

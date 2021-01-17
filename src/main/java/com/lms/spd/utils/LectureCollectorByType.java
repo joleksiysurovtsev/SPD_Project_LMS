@@ -66,7 +66,7 @@ public class LectureCollectorByType implements Collector<Lecture, Map<LectureTyp
      * method is used to provide Stream with some additional information that will be used for internal optimizations.
      */
     @Override
-    public Set<Characteristics> characteristics() {
+    public Set<Collector.Characteristics> characteristics() {
         Set<Characteristics> characteristics = new HashSet<>();
         characteristics.add(Characteristics.CONCURRENT);
         return characteristics;

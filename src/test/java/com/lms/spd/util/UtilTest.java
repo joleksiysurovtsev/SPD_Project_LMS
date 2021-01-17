@@ -1,5 +1,6 @@
-package com.lms.spd;
+package com.lms.spd.util;
 
+import com.lms.spd.utils.Util;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;

@@ -3,12 +3,12 @@ package com.lms.spd.terminal;
 import com.lms.spd.ConsoleInputValidator;
 import com.lms.spd.LMSConsolePrinter;
 import com.lms.spd.LectureValidator;
+import com.lms.spd.utils.Util;
 import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.error.ListIsEmptyException;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.services.LectureServiceImpl;
-import com.lms.spd.utils.Util;
 
 import java.util.List;
 

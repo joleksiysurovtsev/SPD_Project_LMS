@@ -6,8 +6,33 @@ import org.junit.jupiter.api.Test;
 import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class JournalArticleModelTest {
+
+    @Test
+    public void testConstructor() {
+        // TODO: This test is incomplete.
+        //   Reason: No meaningful assertions found.
+        //   To help Diffblue Cover to find assertions, please add getters to the
+        //   class under test that return fields written by the method under test.
+        //   See https://diff.blue/R004
+
+        new JournalArticleModel();
+    }
+
+
+    @Test
+    public void testConstructor4() {
+        // TODO: This test is incomplete.
+        //   Reason: No meaningful assertions found.
+        //   To help Diffblue Cover to find assertions, please add getters to the
+        //   class under test that return fields written by the method under test.
+        //   See https://diff.blue/R004
+
+        new JournalArticleModel("Dr", "JaneDoe", "Dr", 1);
+    }
 
     @Test
     @Order(14)
