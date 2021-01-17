@@ -18,7 +18,7 @@ public class LecturesCache {
 
     private static volatile LecturesCache instance;
     private static List<Lecture> cashedLectureList = new CopyOnWriteArrayList<>();
-    private static IRepository<Lecture> lectureRepository = new DBPostgresLectureRepository(JDBCConnector.connection);
+    private static IRepository<Lecture> lectureRepository;
 
 
     public void setLectureRepository(IRepository<Lecture> lectureRepository) {
@@ -27,11 +27,10 @@ public class LecturesCache {
 
     public LecturesCache(IRepository<Lecture> lectureRepository) {
         this.lectureRepository = lectureRepository;
-        cashInit();
     }
 
     private LecturesCache() {
-        cashInit();
+
     }
 
     public static LecturesCache getInstance() {

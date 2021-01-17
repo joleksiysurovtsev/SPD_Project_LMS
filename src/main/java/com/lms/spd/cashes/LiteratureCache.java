@@ -23,16 +23,14 @@ public class LiteratureCache {
         this.literatureRepository = literatureRepository;
     }
 
-    private IRepository<Literature> literatureRepository = new DBPostgresLiteratureRepository(JDBCConnector.connection);
+    private IRepository<Literature> literatureRepository;
 
 
     public LiteratureCache(IRepository<Literature> literatureRepository) {
         this.literatureRepository = literatureRepository;
-        cashInit();
     }
 
     private LiteratureCache() {
-        cashInit();
     }
 
     public static LiteratureCache getInstance() {

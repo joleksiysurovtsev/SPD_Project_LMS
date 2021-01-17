@@ -38,6 +38,7 @@ class LectureServiceImplTest {
         dbPostgresLiteratureRepositoryMock.updates();
         LiteratureCache.getInstance().updateCashedLiteratures();
     }
+
     @Test
     @Order(1)
     void getItems() {
@@ -108,11 +109,4 @@ class LectureServiceImplTest {
     void addLinkLiteratureLectures() {
     }
 
-    @AfterEach
-    public void cleanUpFiles() {
-        LecturesCache.getInstance().setLectureRepository(new DBPostgresLectureRepository(JDBCConnector.connection));
-        LecturesCache.getInstance().updateCashedLectures();
-        LiteratureCache.getInstance().setLiteratureRepository(new DBPostgresLiteratureRepository(JDBCConnector.connection));
-        LiteratureCache.getInstance().updateCashedLiteratures();
-    }
 }

@@ -34,7 +34,6 @@ class LiteratureServiceImplTest {
         dbPostgresLiteratureRepositoryMock.updates();
         LiteratureCache.getInstance().updateCashedLiteratures();
     }
-
     @Test
     void getItems() {
         IService<Literature> service = new LiteratureServiceImpl();
