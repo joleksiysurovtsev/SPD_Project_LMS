@@ -5,8 +5,8 @@ import com.lms.spd.cashes.LiteratureCache;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.pgsql.JDBCConnector;
-import com.lms.spd.repository.DBPostgresLectureRepository;
-import com.lms.spd.repository.DBPostgresLiteratureRepository;
+import com.lms.spd.repository.DBLectureRepository;
+import com.lms.spd.repository.DBLiteratureRepository;
 import com.lms.spd.repository.interfaces.IRepository;
 import com.lms.spd.terminal.LMSTerminal;
 
@@ -19,8 +19,8 @@ public class Main {
     }
 
     private static void initCashes() {
-        IRepository<Lecture> dbPostgresLectureRepository = new DBPostgresLectureRepository(JDBCConnector.connection);
-        IRepository<Literature> dbPostgresLiteratureRepository = new DBPostgresLiteratureRepository(JDBCConnector.connection);
+        IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.connection);
+        IRepository<Literature> dbPostgresLiteratureRepository = new DBLiteratureRepository(JDBCConnector.connection);
 
         LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepository);
         LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepository);

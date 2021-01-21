@@ -4,11 +4,11 @@ import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.repository.DBPostgresLectureRepository;
+import com.lms.spd.repository.DBLectureRepository;
 
 import java.util.*;
 
-public class DBPostgresLectureRepositoryMock extends DBPostgresLectureRepository {
+public class DBLectureRepositoryMock extends DBLectureRepository {
 
     private static List<Lecture> lectureTestList = initLectLists();
 

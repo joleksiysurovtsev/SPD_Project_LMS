@@ -1,7 +1,7 @@
 package com.lms.spd.cashes;
 
-import com.lms.spd.cashes.mocks.DBPostgresLectureRepositoryMock;
-import com.lms.spd.cashes.mocks.DBPostgresLiteratureRepositoryMock;
+import com.lms.spd.cashes.mocks.DBLectureRepositoryMock;
+import com.lms.spd.cashes.mocks.DBLiteratureRepositoryMock;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -20,12 +20,12 @@ class LecturesCacheTest {
 
     @BeforeEach
     public void updateEvents() {
-        DBPostgresLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBPostgresLectureRepositoryMock();
+        DBLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBLectureRepositoryMock();
         LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepositoryMock);
         dbPostgresLectureRepositoryMock.updates();
         LecturesCache.getInstance().updateCashedLectures();
 
-        DBPostgresLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBPostgresLiteratureRepositoryMock();
+        DBLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBLiteratureRepositoryMock();
         LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepositoryMock);
         dbPostgresLiteratureRepositoryMock.updates();
         LiteratureCache.getInstance().updateCashedLiteratures();
@@ -34,7 +34,7 @@ class LecturesCacheTest {
 
     @Test
     void getInstance() {
-        LecturesCache cache = new LecturesCache(new DBPostgresLectureRepositoryMock());
+        LecturesCache cache = new LecturesCache(new DBLectureRepositoryMock());
         LecturesCache instance1 = cache.getInstance();
         LecturesCache instance = LecturesCache.getInstance();
         assertEquals(instance1, instance);
@@ -42,7 +42,7 @@ class LecturesCacheTest {
 
     @Test
     void getByID() {
-        LecturesCache cache = new LecturesCache(new DBPostgresLectureRepositoryMock());
+        LecturesCache cache = new LecturesCache(new DBLectureRepositoryMock());
         Calendar calendar = new GregorianCalendar(2020, 1, 16);
         List<Literature> literatures = new ArrayList<>();
         Lecture lecture = new LectureIModel(LectureType.JAVA_CORE, "nameOfLecture1", literatures, "lectorName1", calendar, 1);
@@ -51,7 +51,7 @@ class LecturesCacheTest {
 
     @Test
     void addLecture() {
-        LecturesCache cache = new LecturesCache(new DBPostgresLectureRepositoryMock());
+        LecturesCache cache = new LecturesCache(new DBLectureRepositoryMock());
         Calendar calendar = new GregorianCalendar(2020, 1, 16);
         List<Literature> literatures = new ArrayList<>();
         Lecture lecture = new LectureIModel(LectureType.JAVA_CORE, "nameOfLecture1", literatures, "lectorName1", calendar, 4);
@@ -62,7 +62,7 @@ class LecturesCacheTest {
 
     @Test
     void removeLecturesByID() {
-        DBPostgresLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBPostgresLectureRepositoryMock();
+        DBLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBLectureRepositoryMock();
         LecturesCache cache = new LecturesCache(dbPostgresLectureRepositoryMock);
         //проверили размер кеша и базы
         assertEquals(cache.getCashedLectureList().size(), dbPostgresLectureRepositoryMock.getLectureTestList().size());
@@ -80,8 +80,8 @@ class LecturesCacheTest {
 
     @Test
     void getCashedLectureList() {
-        LecturesCache cache = new LecturesCache(new DBPostgresLectureRepositoryMock());
-        DBPostgresLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBPostgresLectureRepositoryMock();
+        LecturesCache cache = new LecturesCache(new DBLectureRepositoryMock());
+        DBLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBLectureRepositoryMock();
         List<Lecture> cashedLectureList = cache.getCashedLectureList();
         List<Lecture> lectureList = dbPostgresLectureRepositoryMock.readAll();
         assertEquals(cashedLectureList, lectureList);

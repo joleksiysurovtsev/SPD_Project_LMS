@@ -14,15 +14,15 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DBPostgresLiteratureRepository implements IRepository<Literature> {
+public class DBLiteratureRepository implements IRepository<Literature> {
 
     private Connection connection;
 
-    public DBPostgresLiteratureRepository() {
+    public DBLiteratureRepository() {
 
     }
 
-    public DBPostgresLiteratureRepository(Connection connection) {
+    public DBLiteratureRepository(Connection connection) {
         this.connection = connection;
     }
 
@@ -47,7 +47,7 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
     public Literature getByID(int id) {
         Literature result = null;
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM literature WHERE lit_id = (?)")) {
+                "SELECT * FROM literature WHERE id = (?)")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -92,7 +92,7 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
     public Literature create(Literature item) {
         int result = -1;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO literature (lit_id, type, title, author, date_was_added, genre, published_in_year, url_address, issue_of_journal, title_of_article) VALUES (DEFAULT, (?), (?), (?),(?),(?),(?),(?),(?),(?)) RETURNING lit_id")) {
+                "INSERT INTO literature (id, type, title, author, date_was_added, genre, published_in_year, url_address, issue_of_journal, title_of_article) VALUES (DEFAULT, (?), (?), (?),(?),(?),(?),(?),(?),(?)) RETURNING id")) {
             statement.setString(1, item.getType().toString());
             statement.setString(2, item.getTitle());
             statement.setString(3, item.getAuthor());
@@ -126,7 +126,7 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
                         "published_in_year = (?)," +
                         "url_address = (?)," +
                         "issue_of_journal =(?)," +
-                        "title_of_article =(?) WHERE lit_id = (?) RETURNING lit_id")) {
+                        "title_of_article =(?) WHERE id = (?) RETURNING id")) {
             statement.setString(1, item.getTitle());
             statement.setString(2, item.getAuthor());
             statement.setDate(3, (Date) item.getDateResourceWasAdded().getTime());
@@ -148,7 +148,7 @@ public class DBPostgresLiteratureRepository implements IRepository<Literature> {
     public boolean delete(int id) {
         boolean result = false;
         try (PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM literature WHERE lit_id = (?) RETURNING lit_id")) {
+                "DELETE FROM literature WHERE id = (?) RETURNING id")) {
             statement.setInt(1, id);
             result = statement.executeQuery().next();
         } catch (SQLException e) {

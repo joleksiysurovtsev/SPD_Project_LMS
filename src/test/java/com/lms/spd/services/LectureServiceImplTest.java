@@ -1,18 +1,14 @@
 package com.lms.spd.services;
 
-import com.lms.spd.cashes.mocks.DBPostgresLectureRepositoryMock;
-import com.lms.spd.cashes.mocks.DBPostgresLiteratureRepositoryMock;
+import com.lms.spd.cashes.mocks.DBLectureRepositoryMock;
+import com.lms.spd.cashes.mocks.DBLiteratureRepositoryMock;
 import com.lms.spd.cashes.LecturesCache;
 import com.lms.spd.cashes.LiteratureCache;
 import com.lms.spd.enums.LectureType;
-import com.lms.spd.pgsql.JDBCConnector;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.repository.DBPostgresLectureRepository;
-import com.lms.spd.repository.DBPostgresLiteratureRepository;
 import com.lms.spd.services.interfaces.IService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -28,12 +24,12 @@ class LectureServiceImplTest {
 
     @BeforeEach
     public void updateEvents() {
-        DBPostgresLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBPostgresLectureRepositoryMock();
+        DBLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBLectureRepositoryMock();
         LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepositoryMock);
         dbPostgresLectureRepositoryMock.updates();
         LecturesCache.getInstance().updateCashedLectures();
 
-        DBPostgresLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBPostgresLiteratureRepositoryMock();
+        DBLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBLiteratureRepositoryMock();
         LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepositoryMock);
         dbPostgresLiteratureRepositoryMock.updates();
         LiteratureCache.getInstance().updateCashedLiteratures();

@@ -1,8 +1,6 @@
 package com.lms.spd.cashes;
 
-import com.lms.spd.pgsql.JDBCConnector;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.repository.DBPostgresLectureRepository;
 import com.lms.spd.repository.interfaces.IRepository;
 
 import java.util.List;

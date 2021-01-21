@@ -1,7 +1,7 @@
 package com.lms.spd.cashes;
 
-import com.lms.spd.cashes.mocks.DBPostgresLectureRepositoryMock;
-import com.lms.spd.cashes.mocks.DBPostgresLiteratureRepositoryMock;
+import com.lms.spd.cashes.mocks.DBLectureRepositoryMock;
+import com.lms.spd.cashes.mocks.DBLiteratureRepositoryMock;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.interfaces.Literature;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class LiteratureCacheTest {
     @BeforeEach
     public void updateEvents() {
-        DBPostgresLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBPostgresLectureRepositoryMock();
+        DBLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBLectureRepositoryMock();
         LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepositoryMock);
         dbPostgresLectureRepositoryMock.updates();
         LecturesCache.getInstance().updateCashedLectures();
 
-        DBPostgresLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBPostgresLiteratureRepositoryMock();
+        DBLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBLiteratureRepositoryMock();
         LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepositoryMock);
         dbPostgresLiteratureRepositoryMock.updates();
         LiteratureCache.getInstance().updateCashedLiteratures();
@@ -25,7 +25,7 @@ class LiteratureCacheTest {
 
     @Test
     void getInstance() {
-        LiteratureCache cache = new LiteratureCache(new DBPostgresLiteratureRepositoryMock());
+        LiteratureCache cache = new LiteratureCache(new DBLiteratureRepositoryMock());
         LiteratureCache instance1 = cache.getInstance();
         LiteratureCache instance = LiteratureCache.getInstance();
         assertEquals(instance1, instance);
@@ -33,14 +33,14 @@ class LiteratureCacheTest {
 
     @Test
     void getByID() {
-        LiteratureCache cache = new LiteratureCache(new DBPostgresLiteratureRepositoryMock());
+        LiteratureCache cache = new LiteratureCache(new DBLiteratureRepositoryMock());
         BookModel bookModel = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 1);
         assertEquals(bookModel, cache.getByID(1));
     }
 
     @Test
     void addLiteratire() {
-        LiteratureCache cache = new LiteratureCache(new DBPostgresLiteratureRepositoryMock());
+        LiteratureCache cache = new LiteratureCache(new DBLiteratureRepositoryMock());
 
         BookModel bookModel = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
         BookModel bookModel2 = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015,4);
@@ -51,7 +51,7 @@ class LiteratureCacheTest {
 
     @Test
     void removeLecturesByID() {
-        DBPostgresLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBPostgresLiteratureRepositoryMock();
+        DBLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBLiteratureRepositoryMock();
         LiteratureCache cache = new LiteratureCache(dbPostgresLiteratureRepositoryMock);
         //проверили размер кеша и базы
         assertEquals(cache.getCashedLiteratureList().size(), dbPostgresLiteratureRepositoryMock.getLiteratureList().size());
@@ -65,7 +65,7 @@ class LiteratureCacheTest {
 
     @Test
     void getCashedLiteratureList() {
-        DBPostgresLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBPostgresLiteratureRepositoryMock();
+        DBLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBLiteratureRepositoryMock();
         LiteratureCache cache = new LiteratureCache(dbPostgresLiteratureRepositoryMock);
         assertEquals(cache.getCashedLiteratureList(), dbPostgresLiteratureRepositoryMock.getLiteratureList());
     }

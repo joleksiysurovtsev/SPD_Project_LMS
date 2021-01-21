@@ -1,21 +1,18 @@
 package com.lms.spd.cashes.mocks;
 
-import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.BookModel;
-import com.lms.spd.models.LectureIModel;
-import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.repository.DBPostgresLiteratureRepository;
+import com.lms.spd.repository.DBLiteratureRepository;
 
 import java.util.*;
 
-public class DBPostgresLiteratureRepositoryMock extends DBPostgresLiteratureRepository {
+public class DBLiteratureRepositoryMock extends DBLiteratureRepository {
 
     private static List<Literature> literatureList = initLectLists();
     private static Map<Integer, Integer> lect_litMaps = initMap();
 
 
-    public DBPostgresLiteratureRepositoryMock() {
+    public DBLiteratureRepositoryMock() {
     }
 
     public static List<Literature> getLiteratureList() {

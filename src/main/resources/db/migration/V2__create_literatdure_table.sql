@@ -1,6 +1,6 @@
 create table literature
 (
-	lit_id serial not null,
+	id serial primary key not null,
 	type varchar(50) not null,
 	title varchar(255) not null,
 	author varchar(50) not null,
@@ -12,11 +12,5 @@ create table literature
 	title_of_article varchar(255)
 );
 
-create unique index literature_lit_id_uindex
-	on literature (lit_id);
-
-alter table literature
-	add constraint literature_pk
-		primary key (lit_id);
 
 

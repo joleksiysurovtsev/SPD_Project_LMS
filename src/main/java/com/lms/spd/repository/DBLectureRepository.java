@@ -14,16 +14,16 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DBPostgresLectureRepository implements IRepository<Lecture> {
+public class DBLectureRepository implements IRepository<Lecture> {
 
     private Connection connection;
 
-    public DBPostgresLectureRepository() {
+    public DBLectureRepository() {
 
     }
 
 
-    public DBPostgresLectureRepository(Connection connection) {
+    public DBLectureRepository(Connection connection) {
         this.connection = connection;
     }
 
@@ -53,7 +53,7 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
     public Lecture getByID(int id) {
         Lecture result = null;
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM lectures WHERE lect_id = (?)")) {
+                "SELECT * FROM lectures WHERE id = (?)")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -111,7 +111,7 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
                         "lecture_date, " +
                         "lector_name," +
                         "lecture_type," +
-                        "duration_of_lesson) VALUES ((?),(?),(?),(?),(?)) RETURNING lect_id as rsId")) {
+                        "duration_of_lesson) VALUES ((?),(?),(?),(?),(?)) RETURNING id as rsId")) {
             //вернули айдишку лекции
             int result = getCreateUpdateLectureStatement(item, statement);
             item.setId(result);
@@ -156,7 +156,7 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
     public boolean update(Lecture item) {
         boolean result = false;
         try (PreparedStatement statement = connection.prepareStatement(
-                "UPDATE lectures SET name_of_lecture = (?), lecture_date= (?), lector_name= (?), lecture_type= (?),duration_of_lesson= (?) WHERE lect_id = (?) RETURNING lect_id")) {
+                "UPDATE lectures SET name_of_lecture = (?), lecture_date= (?), lector_name= (?), lecture_type= (?),duration_of_lesson= (?) WHERE id = (?) RETURNING id")) {
             getCreateUpdateLectureStatement(item, statement);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -171,7 +171,7 @@ public class DBPostgresLectureRepository implements IRepository<Lecture> {
     public boolean delete(int id) {
         boolean result = false;
         try (PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM lectures WHERE lect_id = (?) RETURNING lect_id")) {
+                "DELETE FROM lectures WHERE id = (?) RETURNING id")) {
             statement.setInt(1, id);
             deleteFromLitToLectures(id);
             result = statement.executeQuery().next();
