@@ -76,9 +76,9 @@ public class DBLectureRepository implements IRepository<Lecture> {
         lecture.setNameOfLecture(rs.getString("name_of_lecture"));
 
         Calendar lectureDate = new GregorianCalendar();
-        Timestamp date_was_added1 = rs.getTimestamp("lecture_date");
+        Timestamp dateWasAdded = rs.getTimestamp("lecture_date");
 
-        lectureDate.setTime(date_was_added1);
+        lectureDate.setTime(dateWasAdded);
         lecture.setLectureDate(lectureDate);
 
         lecture.setLectorName(rs.getString("lector_name"));

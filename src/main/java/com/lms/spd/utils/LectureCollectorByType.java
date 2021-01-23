@@ -56,7 +56,7 @@ public class LectureCollectorByType implements Collector<Lecture, Map<LectureTyp
      */
     @Override
     public Function<Map<LectureType, List<Lecture>>, Map<LectureType, List<Lecture>>> finisher() {
-        return (map) -> {
+        return map -> {
             map.forEach((key, value) -> value.sort(Comparator.comparing(Lecture::getLectureDate)));
             return map;
         };

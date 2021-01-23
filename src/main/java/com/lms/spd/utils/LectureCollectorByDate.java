@@ -11,7 +11,7 @@ import java.util.stream.Collector;
 
 public class LectureCollectorByDate implements Collector<Lecture, Map<Boolean, List<Lecture>>, Map<Boolean, List<Lecture>>> {
 
-    private static Calendar currentDate;
+    private Calendar currentDate;
 
     public LectureCollectorByDate(Calendar currentDate) {
         this.currentDate = currentDate;
@@ -65,7 +65,7 @@ public class LectureCollectorByDate implements Collector<Lecture, Map<Boolean, L
      */
     @Override
     public Function<Map<Boolean, List<Lecture>>, Map<Boolean, List<Lecture>>> finisher() {
-        return (map) -> {
+        return map -> {
             map.forEach((key, value) -> value.sort(Comparator.comparing(Lecture::getLectureDate)));
             return map;
         };

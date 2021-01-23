@@ -4,16 +4,10 @@ import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.services.LectureServiceImpl;
-import com.lms.spd.services.LiteratureServiceImpl;
-import com.lms.spd.services.interfaces.IService;
 
 import java.util.Calendar;
-import java.util.List;
 
 public class LectureValidator {
-    private LiteratureValidator literatureValidator = new LiteratureValidator();
 
     public Lecture createLecture() {
         String nameOfLecture = createTheLectureTitle();

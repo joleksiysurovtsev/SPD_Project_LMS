@@ -24,8 +24,7 @@ class Point4Menu implements ITerminal {
     public void showContext() {
         ConsoleMassage.MESSAGE_HEAD_MENU_POINT_4.printMassage();
         int numbOfLecture = ConsoleInputValidator.readInt();
-        if (numbOfLecture == 0) {
-        } else {
+        if (numbOfLecture != 0) {
             lectureServiceImpl.setSelectedItem(numbOfLecture);
             if (lectureServiceImpl.getItems().stream().noneMatch(lecture -> lecture.getId() == numbOfLecture)) {
                 ConsoleMassage.MESSAGE_ERR_NO_SUCH_LECTURE.printMassage();
@@ -132,7 +131,6 @@ class Point4Menu implements ITerminal {
     private void point4_5showLectureInfo() {
         Lecture selectedItem = lectureServiceImpl.getSelectedItem();
         print.showAllLectureInfo(selectedItem);
-        //print.printListLit(literatureServiceImpl.getLiteraturesBYLectureID(selectedItem.getId()));
         ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }

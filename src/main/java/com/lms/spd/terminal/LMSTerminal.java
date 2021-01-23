@@ -1,15 +1,12 @@
 package com.lms.spd.terminal;
 
 import com.lms.spd.ConsoleInputValidator;
-import com.lms.spd.LMSConsolePrinter;
 import com.lms.spd.enums.ConsoleMassage;
 
 import java.util.Map;
 
 
 public class LMSTerminal  {
-    private static final LMSConsolePrinter print = new LMSConsolePrinter();
-
     private static final Map<Integer, StartMenuStrategyConstructor> menuPoints = Map.of(
             1, new StartMenuStrategyConstructor(new Point1Menu()),
             2, new StartMenuStrategyConstructor(new Point2Menu()),
@@ -29,5 +26,8 @@ public class LMSTerminal  {
                 ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
             }
         }
+    }
+
+    private LMSTerminal() {
     }
 }

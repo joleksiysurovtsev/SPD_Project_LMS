@@ -17,13 +17,12 @@ public class LMSConsolePrinter {
     private static int count = 1;
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
-        if (lectures.isEmpty() || lectures == null) {
+        if (lectures.isEmpty()) {
             throw new ListIsEmptyException("I can not print the list of lectures it is empty");
         } else {
             System.out.println(lectures);
             printTopOfTable();
             lectures.forEach(this::printLectureTable);
-            count = 1;
         }
         printLectureListStatistics(lectures);
     }

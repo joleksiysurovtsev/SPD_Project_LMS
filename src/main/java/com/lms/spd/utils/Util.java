@@ -34,4 +34,7 @@ public class Util {
         LectureCollectorByDate collectorByDate = new LectureCollectorByDate(currentdate);
         return mapSortedByType.get(selectLectureType).stream().collect(collectorByDate);
     }
+
+    private Util() {
+    }
 }
