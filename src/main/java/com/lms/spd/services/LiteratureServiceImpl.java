@@ -1,48 +1,47 @@
 package com.lms.spd.services;
 
+import com.lms.spd.cashes.LiteratureCache;
 import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.repository.LiteratureRepository;
-import com.lms.spd.services.interfaces.LiteratureService;
+import com.lms.spd.services.interfaces.IService;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class LiteratureServiceImpl implements LiteratureService {
+public class LiteratureServiceImpl implements IService<Literature> {
 
-    private LiteratureRepository repository;
+    private Literature selectedLiterature;
 
-    public LiteratureServiceImpl() {
-        this.repository = new LiteratureRepository();
-    }
-
+    /*✅*/
     @Override
-    public List<Literature> addLiterature(Literature litAdded, List<Literature> lit) {
-        litAdded.setId(generateIdLit(repository.getAll()));
-        lit.add(litAdded);
-        List<Literature> allLit = new ArrayList<>(repository.getAll());
-        allLit.add(litAdded);
-        repository.setAll(allLit);
-        return lit;
+    public List<Literature> getItems() {
+        return LiteratureCache.getInstance().getCashedLiteratureList();
     }
 
+    /*✅*/
     @Override
-    public List<Literature> removeLiterature(int numberLit, List<Literature> lit) {
-        int id = lit.get(numberLit - 1).getId();
-        List<Literature> allLit = new ArrayList<>(repository.getAll());
-        allLit.removeIf(literature -> literature.getId() == id);
-        repository.setAll(allLit);
-        if (lit.size() == 1) {
-            lit = new ArrayList<>();
-        } else {
-            lit.remove(numberLit - 1);
-        }
-        return lit;
+    public Literature getSelectedItem() {
+        return selectedLiterature;
     }
 
-    public static int generateIdLit(List<Literature> literatures) {
-        AtomicInteger i = new AtomicInteger();
-        return (literatures.stream().map(Literature::getId).mapToInt(x -> x = i.incrementAndGet()).max().orElse(0));
+    /*✅*/
+    @Override
+    public void setSelectedItem(int selected) {
+        selectedLiterature = LiteratureCache.getInstance().getByID(selected);
+    }
+
+    /*✅*/
+    @Override
+    public Literature addItem(Literature literature) {
+        return LiteratureCache.getInstance().addLiteratire(literature);
+    }
+
+    /*✅*/
+    @Override
+    public void removeItems(int[] lectureRemove) {
+        Arrays.stream(lectureRemove).forEach(id -> LiteratureCache.getInstance().removeLecturesByID(id));
+    }
+    /*✅*/
+    public List<Literature> getLiteraturesBYLectureID(int id){
+       return LiteratureCache.getInstance().getLiteraturesBYLectureID(id);
     }
 }

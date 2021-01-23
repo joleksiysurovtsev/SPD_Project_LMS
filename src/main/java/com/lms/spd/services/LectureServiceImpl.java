@@ -1,79 +1,70 @@
 package com.lms.spd.services;
 
-import com.lms.spd.LectureCollectorByType;
-import com.lms.spd.LecturesCache;
+import com.lms.spd.utils.LectureCollectorByType;
+import com.lms.spd.cashes.LecturesCache;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.repository.LectureRepository;
-import com.lms.spd.services.interfaces.LectureService;
+import com.lms.spd.services.interfaces.IService;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class LectureServiceImpl implements LectureService {
+public class LectureServiceImpl implements IService<Lecture> {
 
-    private LectureRepository repository;
     private Lecture selectedLecture;
 
-    public LectureServiceImpl() {
-        this.repository = new LectureRepository();
+    /*✅*/
+    @Override
+    public List<Lecture> getItems() {
+        return LecturesCache.getInstance().getCashedLectureList();
     }
 
+    /*✅*/
     @Override
-    public List<Lecture> getLectures() {
-        return repository.getAll();
-    }
-
-    @Override
-    public void setLectures(List<Lecture> lectures) {
-        repository.setAll(lectures);
-    }
-
-    @Override
-    public Lecture getSelectedLecture() {
+    public Lecture getSelectedItem() {
         return selectedLecture;
     }
 
+    /*✅*/
     @Override
-    public void setSelectedLecture(int selected) {
-        selectedLecture = repository.getAll().stream().filter(lecture -> lecture.getId() == selected).findFirst().orElse(selectedLecture);
+    public void setSelectedItem(int selected) {
+        selectedLecture = LecturesCache.getInstance().getByID(selected);
     }
 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    /*✅*/
     @Override
-    public void addLecture(Lecture lecture) {
-        lecture.setId(generateLectureID());
-        List<Lecture> addList = repository.getAll();
-        addList.add(lecture);
-        repository.setAll(addList.stream().sorted(Comparator.comparing(Lecture::getLectureDate)).collect(Collectors.toList()));
-        LecturesCache.updateCashAfterAdd(lecture);
+    public Lecture addItem(Lecture lecture) {
+        return LecturesCache.getInstance().addLecture(lecture);
     }
 
-    //______________________________________________________________________________________________________________//
-
-    /**
-     * Remove lecture from array
-     */
     @Override
-    public void removeLectures(int[] lectureRemove) {
-        List<Lecture> lectures = repository.getAll();
-        for (int lectureNumberToBeDeleted : lectureRemove) {
-            lectures = lectures.stream().filter(lecture -> lecture.getId() != lectureNumberToBeDeleted).collect(Collectors.toList());
-        }
-        repository.setAll(lectures);
-        LecturesCache.removeLectureFromCache(lectureRemove, repository.getAll());
+    public void removeItems(int[] lectureRemove) {
+        Arrays.stream(lectureRemove).forEach(id -> LecturesCache.getInstance().removeLecturesByID(id));
+    }
+
+    public List<Lecture> getLectureListByType(LectureType lectureType) {
+        Map<LectureType, List<Lecture>> collect = LecturesCache.getInstance().getCashedLectureList().stream().collect(LectureCollectorByType.collectToSortedMapByType());
+        return collect.get(lectureType);
+    }
+
+    public List<Lecture> getLectureListByDate(Calendar enterTheDate) {
+        return LecturesCache.getInstance().getCashedLectureList().stream().filter(lecture -> lecture.getLectureDate().getTime().compareTo(enterTheDate.getTime()) == 0).collect(Collectors.toList());
+    }
+
+    public List<Lecture> getLecturesByNumber(int[] getLectures) {
+        List<Lecture> lectures = new ArrayList<>();
+        Arrays.stream(getLectures).forEach(id -> lectures.add(LecturesCache.getInstance().getByID(id)));
+        return lectures;
+    }
+
+    public List<Lecture> getLectureListByTypeAndDate(LectureType selectLectureType, Calendar enterTheDate) {
+        List<Lecture> lectureListByType = getLectureListByType(selectLectureType);
+        List<Lecture> lectureListByDate = getLectureListByDate(enterTheDate);
+        return lectureListByType.stream().filter(lectureListByDate::contains).collect(Collectors.toList());
     }
 
 
-    //________________________________________________________________________________________________//
-    public  int generateLectureID() {
-        List<Lecture> lectureList = repository.getAll();
-        return (lectureList.stream().map(Lecture::getId).max(Integer::compareTo).orElse(0)) + 1;
+    public void addLinkLiteratureLectures(int id, List<Integer> integers) {
+        integers.forEach(integer ->  LecturesCache.getInstance().addLinkLiteratureLectures(id,integer));
     }
-
-    public Map<LectureType, List<Lecture>> getMapSortedByType() {
-        return repository.getAll().stream().collect(LectureCollectorByType.collectToSortedMapByType());
-    }
-
 }

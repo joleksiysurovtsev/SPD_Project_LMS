@@ -1,17 +1,24 @@
-package com.lms.spd;
+package com.lms.spd.utils;
 
-import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 
 import java.util.*;
-import java.util.function.*;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collector;
 
-public class LectureCollectorByType implements Collector<Lecture, Map<LectureType, List<Lecture>>, Map<LectureType, List<Lecture>>> {
+public class LectureCollectorByDate implements Collector<Lecture, Map<Boolean, List<Lecture>>, Map<Boolean, List<Lecture>>> {
 
+    private static Calendar currentDate;
 
-    public static LectureCollectorByType collectToSortedMapByType() {
-        return new LectureCollectorByType();
+    public LectureCollectorByDate(Calendar currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public static LectureCollectorByDate collectToSortedMapByDate(Calendar currentDate) {
+        return new LectureCollectorByDate(currentDate);
     }
 
     /**
@@ -19,23 +26,23 @@ public class LectureCollectorByType implements Collector<Lecture, Map<LectureTyp
      * so, in this case, we can simply write:
      **/
     @Override
-    public Supplier<Map<LectureType, List<Lecture>>> supplier() {
+    public Supplier<Map<Boolean, List<Lecture>>> supplier() {
         return HashMap::new;
     }
 
     /**
      * method returns a function that is used for adding a new element to an existing accumulator object
      */
-    public BiConsumer<Map<LectureType, List<Lecture>>, Lecture> accumulator() {
-        return (map, s) ->  {
+    public BiConsumer<Map<Boolean, List<Lecture>>, Lecture> accumulator() {
+        return (map, s) -> {
             List<Lecture> lectureList = new ArrayList<>();
-            if(map.containsKey(s.getType())) {
-                lectureList = map.get(s.getType());
+            if (map.containsKey(s.getLectureDate().after(currentDate))) {
+                lectureList = map.get(s.getLectureDate().after(currentDate));
                 lectureList.add(s);
             } else {
                 lectureList.add(s);
             }
-            map.put(s.getType(), lectureList);
+            map.put(s.getLectureDate().after(currentDate), lectureList);
         };
     }
 
@@ -43,8 +50,8 @@ public class LectureCollectorByType implements Collector<Lecture, Map<LectureTyp
      * The combiner() method returns a function that is used for merging two accumulators together:
      */
     @Override
-    public BinaryOperator<Map<LectureType, List<Lecture>>> combiner() {
-        return (map1, map2) ->  {
+    public BinaryOperator<Map<Boolean, List<Lecture>>> combiner() {
+        return (map1, map2) -> {
             map2.forEach((k, v) -> map1.merge(k, v, (v1, v2) -> {
                 v1.addAll(v2);
                 return v1;
@@ -57,7 +64,7 @@ public class LectureCollectorByType implements Collector<Lecture, Map<LectureTyp
      * method returns a function that is used for converting an accumulator to final result type.
      */
     @Override
-    public Function<Map<LectureType, List<Lecture>>, Map<LectureType, List<Lecture>>> finisher() {
+    public Function<Map<Boolean, List<Lecture>>, Map<Boolean, List<Lecture>>> finisher() {
         return (map) -> {
             map.forEach((key, value) -> value.sort(Comparator.comparing(Lecture::getLectureDate)));
             return map;

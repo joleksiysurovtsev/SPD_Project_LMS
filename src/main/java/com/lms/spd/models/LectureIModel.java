@@ -39,6 +39,14 @@ public class LectureIModel implements Lecture,Serializable {
     //lecture constructor____________________________________________________________________________________________//
 
 
+    public LectureIModel(String nameOfLecture, Calendar lectureDate, String lectorName, LectureType type, int durationOfTheLesson) {
+        this.nameOfLecture = nameOfLecture;
+        this.lectureDate = lectureDate;
+        this.lectorName = lectorName;
+        this.type = type;
+        this.durationOfTheLesson = durationOfTheLesson;
+    }
+
     public LectureIModel() {}
 
     public LectureIModel(String nameOfLecture) {
@@ -51,6 +59,15 @@ public class LectureIModel implements Lecture,Serializable {
         this.literatures = literatures;
         this.lectureDate = lectureDate;
         this.lectorName = lectorName;
+    }
+
+    public LectureIModel(String nameOfLecture, List<Literature> literatures, Calendar lectureDate, String lectorName, LectureType type, int durationOfTheLesson) {
+        this.nameOfLecture = nameOfLecture;
+        this.literatures = literatures;
+        this.lectureDate = lectureDate;
+        this.lectorName = lectorName;
+        this.type = type;
+        this.durationOfTheLesson = durationOfTheLesson;
     }
 
     public LectureIModel(LectureType type, String nameOfLecture, List<Literature> literatures, String lectorName, Calendar lectureDate, int id) {
