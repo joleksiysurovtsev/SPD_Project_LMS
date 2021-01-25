@@ -1,0 +1,240 @@
+/* Прописываем селектор боди и записываем в него семейство шрифтов которые используется в основном, также выясняем какой в оновном размер шрифта */
+
+body {
+    margin: 0;
+    /*Устанавливает величину отступа от каждого края элемента. Отступом является пространство от границы текущего элемента до внутренней границы его родительского элемента 
+    по умолчанию отступы всегда 8 пикселей */
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    color: #6c7279;
+    background-color: #fff;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    /* Алгоритм подсчёта размера блоков с учётом отступов и границ  */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+p {
+    margin: 0 0 10px 0;
+}
+
+
+/*--------Container--------
+Создадим основной контейнер и пропишем для него основные стили  */
+
+.container {
+    width: 100%;
+    max-width: 1170px;
+    /*прописали что ширина контейнера 100% но максимальная его ширина 1170 пикселей*/
+    margin: 0 auto;
+    /* выравняли его по центру сверху и с низу по нулям слева и с права автоматом по центру*/
+}
+
+
+/*
+----------Header---------
+сдесь мы будем стелизовать нашу шапку (наш хедер)
+*/
+
+.header {
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header__inner {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 3px solid #505369;
+    padding: 5px 0;
+    align-items: center;
+    /*выравняли все элементы по центру */
+}
+
+
+/*---- Блок навигации ----*/
+
+.nav {
+    display: flex;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+
+.navlink {
+    margin-left: 50px;
+    color: #fff;
+    text-decoration: none;
+    opacity: .75;
+    transition: opacity .1s linear;
+}
+
+.navlink:first-child {
+    margin-left: 0;
+}
+
+.navlink:hover {
+    opacity: 1;
+}
+
+
+/*---- Блок intro ----*/
+
+.intro_inner {
+    width: 100%;
+    max-width: 970px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.intro {
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 650px;
+    background: #31344e url(img/introbg.jpg) center no-repeat;
+}
+
+.intro_title {
+    margin: 0 0 20px 0;
+    /*отступ внешний снизу*/
+    font-family: 'Open Sans', sans-serif;
+    font-size: 50px;
+    line-height: 1.1;
+    /*Отступ*/
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    /*выравняли по центру */
+}
+
+.IntroSubTitle {
+    margin: 0 0 20px 0;
+    /*отступ внешний снизу*/
+    font-size: 25;
+    font-weight: 400;
+    color: darkslategray;
+    line-height: 1.5;
+    /*Отступ*/
+    text-align: center;
+    /*выравняли по центру */
+}
+
+
+/*---- Кнопка ----*/
+
+.btn {
+    display: inline-block;
+    /*Чтобы можно было задавать отступы*/
+    vertical-align: top;
+    padding: 14px 40px;
+    border-radius: 10px;
+    position: absolute;
+    left: 40%;
+    height: auto;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .5s linear;
+}
+
+.btn--red {
+    background-color: #e84545;
+}
+
+.btn--red:hover {
+    background-color: #b72a2a;
+}
+
+
+/*---- Коробки с иконками ----*/
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    /*перенос елементов*/
+    margin: 35px 0;
+    /*Сделали отступ сверху и снизу*/
+}
+
+.boxitem {
+    width: 33.33333%;
+    margin-bottom: 35px;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.boxicon {
+    margin-bottom: 10px;
+    width: 60px;
+}
+
+.box_title {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    color: black;
+    text-transform: uppercase;
+}
+
+.box_text {
+    font-size: 14px;
+    /* шрифт */
+    line-height: 1.5;
+    color: darkslateblue;
+}
+
+
+/*---- Низ с двумя контейнерами ----*/
+.footer{
+    padding: 20px 0; /*отступ сверзу и снизу*/
+    background-image: url(img/downfon.jpg) /*фон*/
+
+}
+
+.footer_inner{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footerblok{
+    width: 50%;
+    text-align: center;
+}
+
+.footer_title{
+    color: aliceblue;
+    text-transform: uppercase;
+    padding: 10px 0;
+}
+
+.faddress{
+     color: #e8e8e8;
+    font-size: 14px;
+    font-weight: 700;
+    
+}
+
+.footericon{
+    margin: 10px 20px 10px 10px;
+    width: 60px;
+}

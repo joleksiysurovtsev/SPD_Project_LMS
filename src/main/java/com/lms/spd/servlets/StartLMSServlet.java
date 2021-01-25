@@ -3,6 +3,7 @@ package com.lms.spd.servlets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +16,7 @@ public class StartLMSServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try (var writer = resp.getWriter()) {
-            writer.println("Welcome to LMS");
-            writer.flush();
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        }
-
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("src/main/webapp/web/display.jsp");
+        requestDispatcher.forward(req, resp);
     }
 }

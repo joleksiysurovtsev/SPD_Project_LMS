@@ -11,7 +11,7 @@
 
     <servlet-mapping>
         <servlet-name>StartLMSServlet</servlet-name>
-        <url-pattern>/startLMS</url-pattern>
+        <url-pattern>/index</url-pattern>
     </servlet-mapping>
 
 
