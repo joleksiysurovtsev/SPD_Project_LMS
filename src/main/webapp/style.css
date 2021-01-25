@@ -108,7 +108,7 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 650px;
+    height: 550px;
     background: #31344e url(img/introbg.jpg) center no-repeat;
 }
 

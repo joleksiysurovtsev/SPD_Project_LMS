@@ -26,10 +26,12 @@
         <div class="header__inner">
             <div class="header__logo"><img src="img/logo.png" alt=""></div>
             <nav class="nav">
-                <a class="navlink" href="#">Display lectures</a>
-                <a class="navlink" href="#">Add a new lecture</a>
-                <a class="navlink" href="#">Delete a lecture by its ID</a>
-                <a class="navlink" href="#">Choose a lecture by its ID</a>
+                <a class="navlink" href="lectnav.html">Display lectures</a>
+                <a class="navlink" href="addLect.html">Add a new lecture</a>
+                <a class="navlink" href="removeLect.html">Delete a lecture by its ID</a>
+                <a class="navlink" href="choose.html">Choose a lecture by its ID</a>
+            </nav>
+            >
         </div>
     </div>
 </header>
@@ -37,8 +39,43 @@
 <div class="intro">
     <div class="container">
         <div class="intro_inner">
+            <p><strong>Enter the title of the lecture</strong></p>
+            <p><label><input class="lecture_title"  maxlength="50" size="150" ></label></p>
+
+            <p><strong>Enter the lecturer name</strong></p>
+            <p><label><input maxlength="50" size="50"></label></p>
+
+            <p><strong>
+                <label>Please, choose lecture type:
+                    <select class="lecture-type" name="Type">
+                        <option value="JAVA_CORE">Java Core</option>
+                        <option value="JAVA_CONCURRENCY">Java Concurrency</option>
+                        <option value="DB">Database</option>
+                        <option value="EE">Java Enterprise Edition</option>
+                        <option value="COMMON">Java Common</option>
+                        <option value="SOFT_SKILLS">Soft skills</option>
+                        <option value="TECH_SKILLS">Tech skills</option>
+                        <option value="CAREER">Career</option>
+                    </select>
+                </label>
+            </strong></p>
+
+            <p>
+            <form>
+            <label><strong> Please, choose lecture date:</strong></label>>
+                <input class="lecture-date" type="date" name="calendar">
+            </form>
+            </p>
+
+            <p><strong>Please enter the lecture duration</strong></p>
+            <p><label><input maxlength="50" size="50"></label></p>
+
+
             <h1 class="intro_title"></h1>
-            <h2 class="IntroSubTitle"></h2> <a class="btn btn--red" href="#">More information</a></div>
+            <h2 class="IntroSubTitle"></h2> <a class="btn btn--red" href="#">Add lecture</a>
+        </div>
+
+
     </div>
 </div>
 

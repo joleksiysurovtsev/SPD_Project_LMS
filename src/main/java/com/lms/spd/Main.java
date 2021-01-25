@@ -16,7 +16,10 @@ public class Main {
     public static void main(String[] args) {
         initCashes();
         LMSTerminal.startLMS();
+
     }
+
+
 
     private static void initCashes() {
         IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.connection);
