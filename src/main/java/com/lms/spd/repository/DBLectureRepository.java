@@ -71,7 +71,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
     private Lecture getItem(ResultSet rs) throws SQLException {
         LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
         Lecture lecture = new LectureIModel();
-        int lectureID = rs.getInt("lect_id");
+        int lectureID = rs.getInt("id");
         lecture.setId(lectureID);
         lecture.setNameOfLecture(rs.getString("name_of_lecture"));
 
