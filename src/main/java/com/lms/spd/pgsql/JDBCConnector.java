@@ -13,13 +13,13 @@ import java.util.Properties;
 
 public class JDBCConnector {
 
-    public static Connection connection = getConnection();
+    // public static Connection connection = getConnection();
 
     public static Connection getConnection() {
         Connection connection = null;
         DataSource dataSource = createDataSource();
-        Flyway flyway = createFlyway(dataSource);
-        flyway.migrate();
+        //   Flyway flyway = createFlyway(dataSource);
+        //   flyway.migrate();
         try {
             return dataSource.getConnection();
         } catch (SQLException throwables) {
@@ -47,10 +47,10 @@ public class JDBCConnector {
     private static DataSource createDataSource() {
         Properties properties = loadProperties();
         HikariConfig cfg = new HikariConfig();
-        cfg.setJdbcUrl(properties.getProperty("jdbc.url"));
-        cfg.setPassword(properties.getProperty("jdbc.password"));
-        cfg.setUsername(properties.getProperty("jdbc.username"));
-        cfg.setMaximumPoolSize(Integer.parseInt(properties.getProperty("jdbc.poll.maxConnection")));
+        cfg.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
+        cfg.setPassword("CA2122AP");
+        cfg.setUsername("postgres");
+        cfg.setDriverClassName("org.postgresql.Driver");
         return new HikariDataSource(cfg);
     }
 }
