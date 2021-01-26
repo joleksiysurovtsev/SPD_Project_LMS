@@ -23,14 +23,14 @@ public class ShowLectureServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.getConnection());
+        IRepository<Literature> dbPostgresLiteratureRepository = new DBLiteratureRepository(JDBCConnector.getConnection());
+
         LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepository);
+        LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepository);
 
         LecturesCache.getInstance().updateCashedLectures();
         LiteratureCache.getInstance().updateCashedLiteratures();
-
-
         List<Lecture> lectures = LecturesCache.getInstance().getCashedLectureList();
 
         PrintWriter writer = resp.getWriter();

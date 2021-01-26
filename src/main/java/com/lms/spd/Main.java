@@ -22,8 +22,8 @@ public class Main {
 
 
     private static void initCashes() {
-        IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.connection);
-        IRepository<Literature> dbPostgresLiteratureRepository = new DBLiteratureRepository(JDBCConnector.connection);
+        IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.getConnection());
+        IRepository<Literature> dbPostgresLiteratureRepository = new DBLiteratureRepository(JDBCConnector.getConnection());
 
         LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepository);
         LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepository);
