@@ -1,7 +1,12 @@
 package com.lms.spd.servlets;
 
+import com.lms.spd.ConsoleInputValidator;
 import com.lms.spd.cashes.LecturesCache;
 import com.lms.spd.cashes.LiteratureCache;
+import com.lms.spd.enums.ConsoleMassage;
+import com.lms.spd.enums.LectureType;
+import com.lms.spd.error.DateFormatException;
+import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.pgsql.JDBCConnector;
@@ -17,11 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
-@WebServlet(urlPatterns = {"/dell"})
-public class RemoveLectureServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/addLecture"})
+public class AddLectureServlet extends HttpServlet {
 
     private static void initCashes() {
         IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.getConnection());
@@ -48,32 +55,38 @@ public class RemoveLectureServlet extends HttpServlet {
        generate the page showing all the request parameters
      */
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
         initCashes();
         LectureServiceImpl service = new LectureServiceImpl();
+        Lecture lecture = new LectureIModel();
         response.setStatus(200);
         PrintWriter out = response.getWriter();
         response.setContentType("text/plain");
         // Получить значения всех параметров запроса
-        Enumeration en = request.getParameterNames();
-        while (en.hasMoreElements()) {
-            // Получить имя параметра запроса
-            String name = (String) en.nextElement();
-            if (name.equals("number")) {
-                // Get the value of the request parameter
-                String value = request.getParameter(name);
-                int[] stringsNumberLecture = Util.getStringsNumberLecture(value);
-                if (stringsNumberLecture.length > 0) {
-                    boolean resultByDellete = service.removeItems(stringsNumberLecture);
-                    if (resultByDellete) {
-                        out.println("Lecture under ID No. " + stringsNumberLecture.toString() + " removed removed from the database");
-                    } else {
-                        out.println("Lecture under ID No. " + stringsNumberLecture.toString() + " missing in the database");
-                    }
-                }else {
-                    out.println("Incorrect input");
-                }
-            }
-        }
+        lecture.setNameOfLecture(request.getParameter("title"));
+        lecture.setLectorName(request.getParameter("lector_name"));
+        lecture.setType(LectureType.valueOf(request.getParameter("type")));
+        String dateAndTime = request.getParameter("calendar")+" "+request.getParameter("cron");
+        lecture.setLectureDate(enterTheDate(dateAndTime));
+        lecture.setDurationOfTheLesson(Integer.parseInt(request.getParameter("duration")));
+        Lecture lecture1 = service.addItem(lecture);
+        out.println(lecture1.toString());
         out.close();
     }
+
+
+    public static Calendar enterTheDate(String dateAndTime) {
+        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-mm-dd HH:mm");
+        Calendar lectureDate = new GregorianCalendar();
+        lectureDate.setTimeZone(TimeZone.getDefault());
+        try {
+            lectureDate.setTime(DATE_FORMAT.parse(dateAndTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return lectureDate;
+    }
+
+
 }

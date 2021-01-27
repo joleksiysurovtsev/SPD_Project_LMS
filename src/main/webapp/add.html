@@ -27,7 +27,7 @@
             <div class="header__logo"><img src="img/logo.png" alt=""></div>
             <nav class="nav">
                 <a class="navlink" href="lectnav.html">Display lectures</a>
-                <a class="navlink" href="addLect.html">Add a new lecture</a>
+                <a class="navlink" href="add.html">Add a new lecture</a>
                 <a class="navlink" href="remove_lecture.html">Delete a lecture by its ID</a>
                 <a class="navlink" href="choose.html">Choose a lecture by its ID</a>
             </nav>
@@ -39,40 +39,51 @@
 <div class="intro">
     <div class="container">
         <div class="intro_inner">
-            <form name="test" method="post" action="/AddLecture">
+            <form action="/addLecture">
+                <br>
+                <br>
                 <p><strong>Enter the title of the lecture</strong></p>
-                <p><label><input class="lecture_title" maxlength="50" size="150"></label></p>
-
+                <label> <input name="title" maxlength="50" size="50"/> </label>
+                <br>
+                <br>
                 <p><strong>Enter the lecturer name</strong></p>
-                <p><label><input maxlength="50" size="50"></label></p>
+                <p><label><input name="lector_name" maxlength="50" size="50"/></label></p>
+                <br>
 
-                <p><strong>
-                    <label>Please, choose lecture type:
-                        <select class="lecture-type" name="Type">
-                            <option value="JAVA_CORE">Java Core</option>
-                            <option value="JAVA_CONCURRENCY">Java Concurrency</option>
-                            <option value="DB">Database</option>
-                            <option value="EE">Java Enterprise Edition</option>
-                            <option value="COMMON">Java Common</option>
-                            <option value="SOFT_SKILLS">Soft skills</option>
-                            <option value="TECH_SKILLS">Tech skills</option>
-                            <option value="CAREER">Career</option>
-                        </select>
-                    </label>
-                </strong></p>
+                <p><strong>Please, choose lecture type:</strong></p>
+                <label>
+                    <select name="type">
+                        <option value="JAVA_CORE">Java Core</option>
+                        <option value="JAVA_CONCURRENCY">Java Concurrency</option>
+                        <option value="DB">Database</option>
+                        <option value="EE">Java Enterprise Edition</option>
+                        <option value="COMMON">Java Common</option>
+                        <option value="SOFT_SKILLS">Soft skills</option>
+                        <option value="TECH_SKILLS">Tech skills</option>
+                        <option value="CAREER">Career</option>
+                    </select>
+                </label>
 
-                <p>
-                    <label><strong> Please, choose lecture date:</strong></label>>
-                    <input class="lecture-date" type="date" name="calendar">
-                </p>
+                <br>
+                <br>
+                <p><strong> Please, choose lecture date and time: </strong></p>
+                <label>
+                    <input type="date" name="calendar" value="2021-10-19">
+                </label>
 
+                <label>
+                    <input type="time" name="cron" value="18:30"/>
+                </label>
+
+                <br>
+                <br>
                 <p><strong>Please enter the lecture duration</strong></p>
-                <p><label><input maxlength="50" size="50"></label></p>
+                <p><label><input name="duration" maxlength="50" size="50"></label></p>
 
-
-                <h1 class="intro_title"></h1>
-                <h2 class="IntroSubTitle"></h2> <a class="btn btn--red" href="#">Add lecture</a>
+                <input type="submit" value="Add Lecture"/>
             </form>
+
+
         </div>
 
 
