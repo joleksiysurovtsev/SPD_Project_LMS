@@ -4,12 +4,14 @@ import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Util {
+
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
     /**
      * The method filters the string by removing all elements
      * except digits and commas, and returns an array of these numbers
@@ -35,6 +37,16 @@ public class Util {
         return mapSortedByType.get(selectLectureType).stream().collect(collectorByDate);
     }
 
+    public static Calendar enterTheDate(String dateAndTime) {
+        Calendar lectureDate = new GregorianCalendar();
+        lectureDate.setTimeZone(TimeZone.getDefault());
+        try {
+            lectureDate.setTime(DATE_FORMAT.parse(dateAndTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return lectureDate;
+    }
     private Util() {
     }
 }
