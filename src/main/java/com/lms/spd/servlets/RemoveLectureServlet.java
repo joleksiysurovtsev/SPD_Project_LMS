@@ -23,17 +23,6 @@ import java.util.Enumeration;
 @WebServlet(urlPatterns = {"/dell"})
 public class RemoveLectureServlet extends HttpServlet {
 
-    private static void initCashes() {
-        IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.getConnection());
-        IRepository<Literature> dbPostgresLiteratureRepository = new DBLiteratureRepository(JDBCConnector.getConnection());
-
-        LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepository);
-        LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepository);
-
-        LecturesCache.getInstance().updateCashedLectures();
-        LiteratureCache.getInstance().updateCashedLiteratures();
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         this.process(request, response);
@@ -48,12 +37,13 @@ public class RemoveLectureServlet extends HttpServlet {
        generate the page showing all the request parameters
      */
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        initCashes();
+        Util.initCashes();
         LectureServiceImpl service = new LectureServiceImpl();
         response.setStatus(200);
-        PrintWriter out = response.getWriter();
         response.setContentType("text/plain");
+
         // Получить значения всех параметров запроса
+        PrintWriter out = response.getWriter();
         Enumeration en = request.getParameterNames();
         while (en.hasMoreElements()) {
             // Получить имя параметра запроса
@@ -69,7 +59,7 @@ public class RemoveLectureServlet extends HttpServlet {
                     } else {
                         out.println("Lecture under ID No. " + stringsNumberLecture.toString() + " missing in the database");
                     }
-                }else {
+                } else {
                     out.println("Incorrect input");
                 }
             }

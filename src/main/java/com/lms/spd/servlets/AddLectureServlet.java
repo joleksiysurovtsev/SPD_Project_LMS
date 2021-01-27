@@ -29,17 +29,6 @@ import java.util.TimeZone;
 @WebServlet(urlPatterns = {"/addLecture"})
 public class AddLectureServlet extends HttpServlet {
 
-    private static void initCashes() {
-        IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.getConnection());
-        IRepository<Literature> dbPostgresLiteratureRepository = new DBLiteratureRepository(JDBCConnector.getConnection());
-
-        LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepository);
-        LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepository);
-
-        LecturesCache.getInstance().updateCashedLectures();
-        LiteratureCache.getInstance().updateCashedLiteratures();
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         this.process(request, response);
@@ -54,7 +43,7 @@ public class AddLectureServlet extends HttpServlet {
        generate the page showing all the request parameters
      */
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        initCashes();
+        Util.initCashes();
         LectureServiceImpl service = new LectureServiceImpl();
         Lecture lecture = new LectureIModel();
         response.setStatus(200);
