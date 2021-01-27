@@ -238,3 +238,16 @@ p {
     margin: 10px 20px 10px 10px;
     width: 60px;
 }
+
+
+.viewButton {
+    background: -moz-linear-gradient(#D0ECF4, #5BC9E1, #D0ECF4);
+    background: -webkit-gradient(linear, 0 0, 0  100%, from(#D0ECF4), to(#D0ECF4), color-stop(0.5, #5BC9E1));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00BBD6', endColorstr='#EBFFFF');
+    padding: 3px 7px;
+    color: #333;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #666;
+}
