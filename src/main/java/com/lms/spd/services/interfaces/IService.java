@@ -12,7 +12,7 @@ public interface IService<T> {
 
     T addItem (T lecture);
 
-    void removeItems(int[] lectureRemove);
+    boolean removeItems(int[] lectureRemove);
 
 
 

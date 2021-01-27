@@ -13,13 +13,13 @@ import java.util.Properties;
 
 public class JDBCConnector {
 
-    // public static Connection connection = getConnection();
+    public static Connection connection = getConnection();
 
     public static Connection getConnection() {
         Connection connection = null;
         DataSource dataSource = createDataSource();
-        //   Flyway flyway = createFlyway(dataSource);
-        //   flyway.migrate();
+           Flyway flyway = createFlyway(dataSource);
+           flyway.migrate();
         try {
             return dataSource.getConnection();
         } catch (SQLException throwables) {

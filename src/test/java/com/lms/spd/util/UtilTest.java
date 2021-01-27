@@ -24,7 +24,7 @@ class UtilTest {
     @DisplayName("getStringsNumberLecture 2")
     @Description("Case 2: The method should return null")
     void getStringsNumberLecture2() {
-        int[] expected = null;
-        assertArrayEquals(null, Util.getStringsNumberLecture(""));
+        int[] expected = {};
+        assertArrayEquals(expected, Util.getStringsNumberLecture(""));
     }
 }

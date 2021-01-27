@@ -15,7 +15,7 @@ public class Util {
      * except digits and commas, and returns an array of these numbers
      */
     public static int[] getStringsNumberLecture(String s) {
-        int[] arr = null;
+        int[] arr = {};
         try {
             arr = Arrays.stream(s.replaceAll("[^0-9,]", "").split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray();
         } catch (NumberFormatException e) {

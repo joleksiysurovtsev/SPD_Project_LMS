@@ -13,6 +13,7 @@ public class LectureServiceImpl implements IService<Lecture> {
 
     private Lecture selectedLecture;
 
+
     /*✅*/
     @Override
     public List<Lecture> getItems() {
@@ -38,8 +39,9 @@ public class LectureServiceImpl implements IService<Lecture> {
     }
 
     @Override
-    public void removeItems(int[] lectureRemove) {
-        Arrays.stream(lectureRemove).forEach(id -> LecturesCache.getInstance().removeLecturesByID(id));
+    public boolean removeItems(int[] lectureRemove) {
+
+        return Arrays.stream(lectureRemove).anyMatch(id -> LecturesCache.getInstance().removeLecturesByID(id));
     }
 
     public List<Lecture> getLectureListByType(LectureType lectureType) {

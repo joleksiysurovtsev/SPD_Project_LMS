@@ -28,21 +28,22 @@
             <nav class="nav">
                 <a class="navlink" href="lectnav.html">Display lectures</a>
                 <a class="navlink" href="addLect.html">Add a new lecture</a>
-                <a class="navlink" href="dell-servlet.html">Delete a lecture by its ID</a>
+                <a class="navlink" href="remove_lecture.html">Delete a lecture by its ID</a>
                 <a class="navlink" href="choose.html">Choose a lecture by its ID</a>
             </nav>
-            >
         </div>
     </div>
 </header>
+
 
 <!--Интро-->
 <div class="intro">
     <div class="container">
         <div class="intro_inner">
-            <form method="post" action="/dell-servlet">
-                <input name="number">
-                <button type="submit">Delete</button>
+            <form action="/dell">
+                number: <label>
+                <input name="number"/>
+            </label> <input type="submit" value="Submit"/>
             </form>
         </div>
     </div>
@@ -52,7 +53,6 @@
 <div class="footer">
     <div class="conteiner">
         <div class="footer_inner">
-
             <div class="footerblok">
                 <h4 class="footer_title">Contact details</h4>
                 <address class="faddress">

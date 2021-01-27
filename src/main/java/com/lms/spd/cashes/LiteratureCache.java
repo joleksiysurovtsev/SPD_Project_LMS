@@ -58,9 +58,9 @@ public class LiteratureCache {
         return returnedLiterature;
     }
 
-    public void removeLecturesByID(int lectureRemove) {
+    public boolean removeLecturesByID(int lectureRemove) {
         cashedLiteratureList.removeIf(lecture -> lecture.getId() == lectureRemove);
-        literatureRepository.delete(lectureRemove);
+       return literatureRepository.delete(lectureRemove);
     }
 
     public List<Literature> getLiteraturesBYLectureID(int id) {

@@ -8,6 +8,7 @@ import com.lms.spd.pgsql.JDBCConnector;
 import com.lms.spd.repository.DBLectureRepository;
 import com.lms.spd.repository.DBLiteratureRepository;
 import com.lms.spd.repository.interfaces.IRepository;
+import com.lms.spd.services.LectureServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +22,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/all"})
 public class ShowLectureServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private static void initCashes() {
         IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.getConnection());
         IRepository<Literature> dbPostgresLiteratureRepository = new DBLiteratureRepository(JDBCConnector.getConnection());
 
@@ -31,10 +31,20 @@ public class ShowLectureServlet extends HttpServlet {
 
         LecturesCache.getInstance().updateCashedLectures();
         LiteratureCache.getInstance().updateCashedLiteratures();
-        List<Lecture> lectures = LecturesCache.getInstance().getCashedLectureList();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        initCashes();
+        LectureServiceImpl service = new LectureServiceImpl();
+        List<Lecture> lectures = service.getItems();
 
         PrintWriter writer = resp.getWriter();
-        lectures.forEach(lecture -> writer.println(lecture.toString()));
+        lectures.forEach(lecture -> writer.println(
+                "Lecture:" + lecture.getNameOfLecture() + "\n" +
+                "Lector" + lecture.getLectorName()
+
+        ));
     }
 
     @Override

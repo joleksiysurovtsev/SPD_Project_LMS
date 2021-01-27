@@ -1,5 +1,6 @@
 package com.lms.spd.services;
 
+import com.lms.spd.cashes.LecturesCache;
 import com.lms.spd.cashes.LiteratureCache;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.interfaces.IService;
@@ -37,8 +38,8 @@ public class LiteratureServiceImpl implements IService<Literature> {
 
     /*✅*/
     @Override
-    public void removeItems(int[] lectureRemove) {
-        Arrays.stream(lectureRemove).forEach(id -> LiteratureCache.getInstance().removeLecturesByID(id));
+    public boolean removeItems(int[] lectureRemove) {
+        return Arrays.stream(lectureRemove).anyMatch(id -> LiteratureCache.getInstance().removeLecturesByID(id));
     }
     /*✅*/
     public List<Literature> getLiteraturesBYLectureID(int id){
