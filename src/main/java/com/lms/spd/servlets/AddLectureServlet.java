@@ -7,6 +7,8 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.utils.Util;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,21 +37,32 @@ public class AddLectureServlet extends HttpServlet {
 
         LectureServiceImpl service = new LectureServiceImpl();
         Lecture lecture = new LectureIModel();
-        PrintWriter out = response.getWriter();
 
-        response.setStatus(200);
-        response.setContentType("text/plain");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/add.jsp");
 
         lecture.setNameOfLecture(request.getParameter("title"));
         lecture.setLectorName(request.getParameter("lector_name"));
         lecture.setType(LectureType.valueOf(request.getParameter("type")));
-        lecture.setLectureDate(Util.enterTheDate(request.getParameter("calendar")+" "+request.getParameter("cron")));
+        lecture.setLectureDate(Util.enterTheDate(request.getParameter("calendar") + " " + request.getParameter("cron")));
         lecture.setDurationOfTheLesson(Integer.parseInt(request.getParameter("duration")));
 
         Lecture lecture1 = service.addItem(lecture);
 
-        out.println(lecture1.toString());
 
-        out.close();
+        request.setAttribute("message", buildMassage(lecture1));
+
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String buildMassage(Lecture lecture) {
+        return "ID: " + lecture.getId() + "Lecture:" + lecture.getNameOfLecture() + "\n"
+                + "Lector: " + lecture.getLectorName() + "\n"
+                + "Type: " + lecture.getType() + "\n"
+                + "Date: " + lecture.getLectureDate().getTime() + "\n"
+                + "Duration: " + lecture.getDurationOfTheLesson() + "\n";
     }
 }
