@@ -37,7 +37,7 @@ public class RemoveLectureServlet extends HttpServlet {
        generate the page showing all the request parameters
      */
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Util.initCashes();
+
         LectureServiceImpl service = new LectureServiceImpl();
         response.setStatus(200);
         response.setContentType("text/plain");

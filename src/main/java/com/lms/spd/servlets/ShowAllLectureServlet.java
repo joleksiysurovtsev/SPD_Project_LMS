@@ -1,15 +1,7 @@
 package com.lms.spd.servlets;
 
-import com.lms.spd.cashes.LecturesCache;
-import com.lms.spd.cashes.LiteratureCache;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.pgsql.JDBCConnector;
-import com.lms.spd.repository.DBLectureRepository;
-import com.lms.spd.repository.DBLiteratureRepository;
-import com.lms.spd.repository.interfaces.IRepository;
 import com.lms.spd.services.LectureServiceImpl;
-import com.lms.spd.utils.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +18,6 @@ public class ShowAllLectureServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Util.initCashes();
         LectureServiceImpl service = new LectureServiceImpl();
         List<Lecture> lectures = service.getItems();
 
