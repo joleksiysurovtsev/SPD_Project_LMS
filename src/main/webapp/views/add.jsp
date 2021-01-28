@@ -21,7 +21,7 @@
 
 
 <div>
-    <button onclick="location.href='/remove_lecture.html'">Back</button>
+    <button onclick="location.href='/add.html'">Back</button>
 </div>
 </body>
 </html>

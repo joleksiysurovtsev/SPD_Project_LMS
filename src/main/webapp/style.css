@@ -56,8 +56,9 @@ p {
     left: 0;
     z-index: 1000;
 }
-.header__logo{
-    width:40%;
+
+.header__logo {
+    width: 40%;
     height: 40px;
 }
 
@@ -209,36 +210,36 @@ p {
 
 
 /*---- Низ с двумя контейнерами ----*/
-.footer{
+.footer {
     padding: 20px 0; /*отступ сверзу и снизу*/
     background-image: url(img/downfon.jpg) /*фон*/
 
 }
 
-.footer_inner{
+.footer_inner {
     display: flex;
     flex-wrap: wrap;
 }
 
-.footerblok{
+.footerblok {
     width: 50%;
     text-align: center;
 }
 
-.footer_title{
+.footer_title {
     color: aliceblue;
     text-transform: uppercase;
     padding: 10px 0;
 }
 
-.faddress{
-     color: #e8e8e8;
+.faddress {
+    color: #e8e8e8;
     font-size: 14px;
     font-weight: 700;
-    
+
 }
 
-.footericon{
+.footericon {
     margin: 10px 20px 10px 10px;
     width: 60px;
 }
@@ -246,7 +247,7 @@ p {
 
 .viewButton {
     background: -moz-linear-gradient(#D0ECF4, #5BC9E1, #D0ECF4);
-    background: -webkit-gradient(linear, 0 0, 0  100%, from(#D0ECF4), to(#D0ECF4), color-stop(0.5, #5BC9E1));
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#D0ECF4), to(#D0ECF4), color-stop(0.5, #5BC9E1));
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00BBD6', endColorstr='#EBFFFF');
     padding: 3px 7px;
     color: #333;

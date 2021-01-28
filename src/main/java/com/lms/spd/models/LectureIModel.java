@@ -117,7 +117,7 @@ public class LectureIModel implements Lecture,Serializable {
     }
 
     @Override
-    public Calendar getLectureDate() {
+    public Calendar  getLectureDate() {
         return lectureDate;
     }
 
