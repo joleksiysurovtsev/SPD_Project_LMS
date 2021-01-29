@@ -41,46 +41,47 @@
         <div class="intro_inner">
             <br>
             <br>
+            <!------------------------------------------------------------------------------------------>
             <form action="/all">
                 <p>
                 <h2><strong>View all lecture</strong></h2>
                 <label> <input class="viewButton" type="submit" value="view"/> </label>
                 <br>
             </form>
-
-               <br>
-                <form action="/type">
-                    <p>
-                    <h2><strong>View lecture by type</strong></h2>
-                    <label>
-                        <select name="type">
-                            <option value="JAVA_CORE">Java Core</option>
-                            <option value="JAVA_CONCURRENCY">Java Concurrency</option>
-                            <option value="DB">Database</option>
-                            <option value="EE">Java Enterprise Edition</option>
-                            <option value="COMMON">Java Common</option>
-                            <option value="SOFT_SKILLS">Soft skills</option>
-                            <option value="TECH_SKILLS">Tech skills</option>
-                            <option value="CAREER">Career</option>
-                        </select>
-                    </label>
-                    <label> <input class="viewButton" type="button" value="view"/> </label>
-                    <br>
-                </form>
-
-                <form action="/date">
-                    <br>
-                    <h2><strong> View lecture by date : </strong></h2>
-                    <label>
-                        <input type="date" name="calendar" value="2021-10-19">
-                        <input class="viewButton" type="button" value="view"/>
-                    </label>
-                </form>
-
-                <br>
+            <!------------------------------------------------------------------------------------------>
+            <br>
+            <form action="/type">
+                <p>
+                <h2><strong>View lecture by type</strong></h2>
                 <label>
-                    <input class="viewButton" type="button" value="view by day and type "/>
+                    <select name="type">
+                        <option value="JAVA_CORE">Java Core</option>
+                        <option value="JAVA_CONCURRENCY">Java Concurrency</option>
+                        <option value="DB">Database</option>
+                        <option value="EE">Java Enterprise Edition</option>
+                        <option value="COMMON">Java Common</option>
+                        <option value="SOFT_SKILLS">Soft skills</option>
+                        <option value="TECH_SKILLS">Tech skills</option>
+                        <option value="CAREER">Career</option>
+                    </select>
+                    <input class="viewButton" type="submit" value="view"/>
                 </label>
+                <br>
+            </form>
+            <!------------------------------------------------------------------------------------------>
+            <form action="/date">
+                <br>
+                <h2><strong> View lecture by date : </strong></h2>
+                <label>
+                    <input type="date" name="calendar" value="2021-10-19">
+                </label>
+                <input class="viewButton" type="submit" value="view"/>
+            </form>
+
+            <br>
+            <label>
+                <input class="viewButton" type="button" value="view by day and type "/>
+            </label>
 
         </div>
     </div>

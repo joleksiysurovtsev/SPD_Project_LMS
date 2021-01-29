@@ -46,11 +46,17 @@ public class LectureServiceImpl implements IService<Lecture> {
 
     public List<Lecture> getLectureListByType(LectureType lectureType) {
         Map<LectureType, List<Lecture>> collect = LecturesCache.getInstance().getCashedLectureList().stream().collect(LectureCollectorByType.collectToSortedMapByType());
+        if (!collect.containsKey(lectureType)) {
+            return new ArrayList<>();
+        }
         return collect.get(lectureType);
     }
 
     public List<Lecture> getLectureListByDate(Calendar enterTheDate) {
-        return LecturesCache.getInstance().getCashedLectureList().stream().filter(lecture -> lecture.getLectureDate().getTime().compareTo(enterTheDate.getTime()) == 0).collect(Collectors.toList());
+        return LecturesCache.getInstance().getCashedLectureList().stream()
+                .filter(lecture -> (lecture.getLectureDate().get(Calendar.YEAR) == enterTheDate.get(Calendar.YEAR) &&
+                        lecture.getLectureDate().get(Calendar.DAY_OF_YEAR) == enterTheDate.get(Calendar.DAY_OF_YEAR))
+                ).collect(Collectors.toList());
     }
 
     public List<Lecture> getLecturesByNumber(int[] getLectures) {
@@ -67,6 +73,6 @@ public class LectureServiceImpl implements IService<Lecture> {
 
 
     public void addLinkLiteratureLectures(int id, List<Integer> integers) {
-        integers.forEach(integer ->  LecturesCache.getInstance().addLinkLiteratureLectures(id,integer));
+        integers.forEach(integer -> LecturesCache.getInstance().addLinkLiteratureLectures(id, integer));
     }
 }
