@@ -22,7 +22,8 @@ public class ShowByDateLectureServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         LectureServiceImpl service = new LectureServiceImpl();
 
-        Calendar calendar =  Util.enterTheDate(req.getParameter("calendar"));
+        Calendar calendar =  Util.enterTheDateWithoutTime(req.getParameter("calendar"));
+        System.out.println(calendar.getTime());
         List<Lecture> lectures = service.getLectureListByDate(calendar);
         RequestDispatcher requestDispatcher;
         if (lectures.isEmpty()) {

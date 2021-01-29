@@ -18,6 +18,7 @@ import java.util.*;
 public class Util {
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static final SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * The method filters the string by removing all elements
@@ -54,17 +55,21 @@ public class Util {
         }
         return lectureDate;
     }
+
+    public static Calendar enterTheDateWithoutTime(String dateAndTime) {
+        Calendar lectureDate = new GregorianCalendar();
+        lectureDate.setTimeZone(TimeZone.getDefault());
+        try {
+            lectureDate.setTime(DATE_FORMAT2.parse(dateAndTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return lectureDate;
+    }
+
+
     private Util() {
     }
 
-    public static void initCashes() {
-        IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.getConnection());
-        IRepository<Literature> dbPostgresLiteratureRepository = new DBLiteratureRepository(JDBCConnector.getConnection());
 
-        LecturesCache.getInstance().setLectureRepository(dbPostgresLectureRepository);
-        LiteratureCache.getInstance().setLiteratureRepository(dbPostgresLiteratureRepository);
-
-        LecturesCache.getInstance().updateCashedLectures();
-        LiteratureCache.getInstance().updateCashedLiteratures();
-    }
 }
