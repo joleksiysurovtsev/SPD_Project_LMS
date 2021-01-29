@@ -50,7 +50,7 @@
             </form>
             <!------------------------------------------------------------------------------------------>
             <br>
-            <form action="/type">
+            <form action="/type" id="type">
                 <p>
                 <h2><strong>View lecture by type</strong></h2>
                 <label>
@@ -69,7 +69,7 @@
                 <br>
             </form>
             <!------------------------------------------------------------------------------------------>
-            <form action="/date">
+            <form action="/date" id="date">
                 <br>
                 <h2><strong> View lecture by date : </strong></h2>
                 <label>
@@ -79,9 +79,36 @@
             </form>
 
             <br>
-            <label>
-                <input class="viewButton" type="button" value="view by day and type "/>
-            </label>
+            <div id="button1">
+                <button>My click text</button>
+            </div>
+
+            <script>
+                $('#button1').click(function(){
+                    form1 = $('#type');
+                    form2 = $('#date');
+                    $.ajax({
+
+                        type: "POST",
+                        url: form1.attr('type'),
+                        data: form1.serialize(),
+                        success: function( response ) {
+                            console.log( response );
+                        }
+                    });
+                    $.ajax({
+                        type: "POST",
+                        url: form2.attr('calendar'),
+                        data: form2.serialize(),
+                        success: function( response2 ) {
+                            console.log( response2 );
+                        }
+                    });
+                });
+            </script>
+
+
+
 
         </div>
     </div>
