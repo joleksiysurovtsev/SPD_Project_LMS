@@ -14,11 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 
-@WebServlet(urlPatterns = {"/addLecture"})
-public class AddLectureServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/updateLecture"})
+public class ChoiseUpdateLectureServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -36,19 +35,14 @@ public class AddLectureServlet extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         LectureServiceImpl service = new LectureServiceImpl();
-        Lecture lecture = new LectureIModel();
+        String[] numbers = request.getParameterValues("number");
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/add.jsp");
+        service.setSelectedItem(Integer.parseInt(numbers[0]));
+        Lecture lecture = service.getSelectedItem();
 
-        lecture.setNameOfLecture(request.getParameter("title"));
-        lecture.setLectorName(request.getParameter("lector_name"));
-        lecture.setType(LectureType.valueOf(request.getParameter("type")));
-        lecture.setLectureDate(Util.enterTheDate(request.getParameter("calendar") + " " + request.getParameter("cron")));
-        lecture.setDurationOfTheLesson(Integer.parseInt(request.getParameter("duration")));
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/choiseupdate.jsp");
 
-        Lecture lecture1 = service.addItem(lecture);
-
-        request.setAttribute("message", buildMassage(lecture1));
+        request.setAttribute("lecture", lecture);
 
         try {
             requestDispatcher.forward(request, response);
@@ -57,11 +51,5 @@ public class AddLectureServlet extends HttpServlet {
         }
     }
 
-    private String buildMassage(Lecture lecture) {
-        return "ID: " + lecture.getId() + "Lecture:" + lecture.getNameOfLecture() + "\n"
-                + "Lector: " + lecture.getLectorName() + "\n"
-                + "Type: " + lecture.getType() + "\n"
-                + "Date: " + lecture.getLectureDate().getTime() + "\n"
-                + "Duration: " + lecture.getDurationOfTheLesson() + "\n";
-    }
+
 }

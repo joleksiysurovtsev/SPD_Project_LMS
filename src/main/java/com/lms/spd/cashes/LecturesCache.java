@@ -66,6 +66,15 @@ public class LecturesCache {
     public void addLinkLiteratureLectures(int id, Integer integers) {
         lectureRepository.addIdMapToLiteratureToLeturesTable(id, integers);
     }
+    public boolean update(Lecture lectureUpdate) {
+        cashedLectureList.forEach(lecture -> {
+            if (lecture.getId() == lectureUpdate.getId()){
+                lecture = lectureUpdate;
+            }
+        });
+
+        return lectureRepository.update(lectureUpdate);
+    }
 
     public List<Lecture> getCashedLectureList() {
         return cashedLectureList;

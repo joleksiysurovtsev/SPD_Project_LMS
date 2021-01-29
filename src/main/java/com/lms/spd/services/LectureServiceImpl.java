@@ -75,4 +75,8 @@ public class LectureServiceImpl implements IService<Lecture> {
     public void addLinkLiteratureLectures(int id, List<Integer> integers) {
         integers.forEach(integer -> LecturesCache.getInstance().addLinkLiteratureLectures(id, integer));
     }
+
+    public boolean updateLecture(Lecture updateLecture) {
+        return LecturesCache.getInstance().update(updateLecture);
+    }
 }

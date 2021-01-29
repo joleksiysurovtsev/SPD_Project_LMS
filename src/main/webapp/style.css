@@ -104,16 +104,19 @@ p {
 .intro_inner {
     width: 100%;
     max-width: 970px;
+
     justify-content: center;
     margin: 0 auto;
 }
 
 .intro {
+    height: 600px;
+    min-height: 80%;
     padding-top: 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 550px;
+    /*height: 550px;*/
     background: #31344e url(img/introbg.jpg) center no-repeat;
 }
 

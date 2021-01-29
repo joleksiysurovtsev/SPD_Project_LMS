@@ -1,5 +1,12 @@
+<%@ page import="com.lms.spd.models.interfaces.Lecture" %>
+<%@ page import="com.lms.spd.models.LectureIModel" %>
+<%@ page import="com.sun.xml.bind.v2.model.core.ID" %>
+<%@ page import="com.lms.spd.enums.LectureType" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!doctype html>
-<!-- обьявляем тип документа  -->
 <html>
 
 <head>
@@ -40,20 +47,48 @@
 <div class="intro">
     <div class="container">
         <div class="intro_inner">
-            <form action="/addLecture">
+            <form action="/update">
+                <%! int ID; %>
+                <%! String title = "Empty"; %>
+                <%! String lectorName = "Empty"; %>
+                <%! String type; %>
+                <%! int durationOfTheLesson; %>
+                <%! String date; %>
+                <%! String time; %>
+                <%
+                    if (request.getAttribute("lecture") != null) {
+                        Lecture lecture = (LectureIModel) request.getAttribute("lecture");
+                        ID = lecture.getId();
+                        title = lecture.getNameOfLecture();
+                        lectorName = lecture.getNameOfLecture();
+                        type = lecture.getType().toString();
+                        durationOfTheLesson = lecture.getDurationOfTheLesson();
+                        Calendar lectureDate = lecture.getLectureDate();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat dateFormatTime = new SimpleDateFormat("HH:mm");
+                        date = dateFormat.format(lectureDate.getTime());
+                        time = dateFormatTime.format(lectureDate.getTime());
+                        System.out.println(time);
+                    }
+                %>
+
+                <p><strong>Lectures ID</strong></p>
+                <label><input type="text" name="comment" size="20" value=<%=ID%> readonly></label>
+
                 <br>
                 <br>
                 <p><strong>Enter the title of the lecture</strong></p>
-                <label> <input name="title" maxlength="50" size="50"/> </label>
+                <label> <input name="title" maxlength="50" size="50" value=<%=title%>/> </label>
                 <br>
                 <br>
                 <p><strong>Enter the lecturer name</strong></p>
-                <p><label><input name="lector_name" maxlength="50" size="50"/></label></p>
+                <p><label><input name="lector_name" maxlength="50" size="50" value=<%=lectorName%>/></label></p>
                 <br>
 
                 <p><strong>Please, choose lecture type:</strong></p>
                 <label>
                     <select name="type">
+                        <option value<%=type%>><%=type%></option>
                         <option value="JAVA_CORE">Java Core</option>
                         <option value="JAVA_CONCURRENCY">Java Concurrency</option>
                         <option value="DB">Database</option>
@@ -69,22 +104,19 @@
                 <br>
                 <p><strong> Please, choose lecture date and time: </strong></p>
                 <label>
-                    <input type="date" name="calendar" value="2021-10-19">
+                    <input type="date" name="calendar" value=<%=date%>>
                 </label>
 
                 <label>
-                    <input type="time" name="cron" value="18:30"/>
+                    <input type="time" name="cron" value=<%=time%>>
                 </label>
 
                 <br>
                 <br>
                 <p><strong>Please enter the lecture duration</strong></p>
-                <p><label><input name="duration" maxlength="50" size="50"></label></p>
-
-                <input type="submit" value="Add Lecture"/>
+                <p><label><input name="duration" maxlength="50" size="50" value=<%=durationOfTheLesson%>></label></p>
+                <input type="submit" value="Update lecture Lecture"/>
             </form>
-
-
         </div>
     </div>
 </div>

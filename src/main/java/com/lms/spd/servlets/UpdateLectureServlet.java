@@ -14,11 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 
-@WebServlet(urlPatterns = {"/addLecture"})
-public class AddLectureServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/update"})
+public class UpdateLectureServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -38,17 +37,15 @@ public class AddLectureServlet extends HttpServlet {
         LectureServiceImpl service = new LectureServiceImpl();
         Lecture lecture = new LectureIModel();
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/add.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/choiseupdate.jsp");
 
         lecture.setNameOfLecture(request.getParameter("title"));
         lecture.setLectorName(request.getParameter("lector_name"));
         lecture.setType(LectureType.valueOf(request.getParameter("type")));
         lecture.setLectureDate(Util.enterTheDate(request.getParameter("calendar") + " " + request.getParameter("cron")));
         lecture.setDurationOfTheLesson(Integer.parseInt(request.getParameter("duration")));
-
-        Lecture lecture1 = service.addItem(lecture);
-
-        request.setAttribute("message", buildMassage(lecture1));
+        service.updateLecture(lecture);
+        request.setAttribute("message", buildMassage(lecture));
 
         try {
             requestDispatcher.forward(request, response);
