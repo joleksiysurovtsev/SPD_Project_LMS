@@ -128,6 +128,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
         statement.setString(3, item.getLectorName());
         statement.setString(4, item.getType().toString());
         statement.setInt(5, item.getDurationOfTheLesson());
+
         int id = -1;
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
@@ -201,9 +202,10 @@ public class DBLectureRepository implements IRepository<Lecture> {
      * that are not in the second collection
      */
     public static List<Literature> getListDifferences(List<Literature> litList, List<Integer> idLitList) {
-        return litList.stream()
-                .filter(literarure -> !idLitList.contains(literarure.getId()))
+        List<Literature> collect = litList.stream()
+                .filter(literature -> !idLitList.contains(literature.getId()))
                 .collect(Collectors.toList());
+        return collect.isEmpty() ? new ArrayList<Literature>() : collect;
     }
 
 
