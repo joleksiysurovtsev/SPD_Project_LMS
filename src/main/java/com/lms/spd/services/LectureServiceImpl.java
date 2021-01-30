@@ -40,7 +40,6 @@ public class LectureServiceImpl implements IService<Lecture> {
 
     @Override
     public boolean removeItems(int[] lectureRemove) {
-
         return Arrays.stream(lectureRemove).anyMatch(id -> LecturesCache.getInstance().removeLecturesByID(id));
     }
 
@@ -76,7 +75,16 @@ public class LectureServiceImpl implements IService<Lecture> {
         integers.forEach(integer -> LecturesCache.getInstance().addLinkLiteratureLectures(id, integer));
     }
 
+    public void addLinkLiteratureLectures(int id, int idLit) {
+        LecturesCache.getInstance().addLinkLiteratureLectures(id, idLit);
+
+    }
+
     public boolean updateLecture(Lecture updateLecture) {
         return LecturesCache.getInstance().update(updateLecture);
+    }
+
+    public Lecture getByID(int id) {
+        return LecturesCache.getInstance().getByID(id);
     }
 }

@@ -8,6 +8,7 @@ import com.lms.spd.models.interfaces.Literature;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class LectureIModel implements Lecture,Serializable {
     private String nameOfLecture;
 
     @JsonProperty("List literatures")
-    private List<Literature> literatures;
+    private List<Literature> literatures = new ArrayList<>();
 
     @JsonProperty("Date of lecture")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")

@@ -92,7 +92,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
     public Literature create(Literature item) {
         int result = -1;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO literature (id, type, title, author, date_was_added, genre, published_in_year, url_address, issue_of_journal, title_of_article) VALUES (DEFAULT, (?), (?), (?),(?),(?),(?),(?),(?),(?)) RETURNING id")) {
+                "INSERT INTO literature ( type, title, author, date_was_added, genre, published_in_year, url_address, issue_of_journal, title_of_article) VALUES ( (?), (?), (?),(?),(?),(?),(?),(?),(?)) RETURNING id")) {
             statement.setString(1, item.getType().toString());
             statement.setString(2, item.getTitle());
             statement.setString(3, item.getAuthor());
@@ -105,7 +105,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                result = resultSet.getInt("lit_id");
+                result = resultSet.getInt("id");
                 item.setId(result);
             }
         } catch (SQLException e) {

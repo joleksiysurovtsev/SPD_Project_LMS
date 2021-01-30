@@ -1,5 +1,7 @@
 package com.lms.spd.services.interfaces;
 
+import com.lms.spd.models.interfaces.Lecture;
+
 import java.util.*;
 
 public interface IService<T> {
@@ -14,6 +16,6 @@ public interface IService<T> {
 
     boolean removeItems(int[] lectureRemove);
 
-
+     T getByID(int id);
 
 }

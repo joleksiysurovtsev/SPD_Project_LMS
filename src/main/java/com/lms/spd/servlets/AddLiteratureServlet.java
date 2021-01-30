@@ -1,18 +1,14 @@
 package com.lms.spd.servlets;
 
 
-import com.lms.spd.enums.LectureType;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
-import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
 import com.lms.spd.services.LiteratureServiceImpl;
-import com.lms.spd.services.interfaces.IService;
-import com.lms.spd.utils.Util;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,11 +17,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 
 @WebServlet(urlPatterns = {"/addLiterature"})
 public class AddLiteratureServlet extends HttpServlet {
+    private LiteratureServiceImpl service = new LiteratureServiceImpl();
+    private LectureServiceImpl  serviceLecture = new LectureServiceImpl();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -41,7 +40,8 @@ public class AddLiteratureServlet extends HttpServlet {
        generate the page showing all the request parameters
      */
     private void process(HttpServletRequest request, HttpServletResponse response) {
-        IService<Literature> service = new LiteratureServiceImpl();
+
+
         LiteratureType type = LiteratureType.valueOf(request.getParameter("type"));
         Literature literature = null;
         switch (type) {
@@ -52,14 +52,15 @@ public class AddLiteratureServlet extends HttpServlet {
                 literature = buildJournal(request);
                 break;
             case INTERNET_ARTICLE:
-                literature = buildIntrenetArticle(request);
+                literature = buildInternetArticle(request);
                 break;
             default:
                 break;
         }
-        Literature addingLit = service.addItem(literature);
 
-        request.setAttribute("lecture", addingLit);
+        Lecture lecture = updateDB(request, literature);
+
+        request.setAttribute("lecture", lecture);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/add.jsp");
         try {
@@ -69,7 +70,18 @@ public class AddLiteratureServlet extends HttpServlet {
         }
     }
 
-    private Literature buildIntrenetArticle(HttpServletRequest request) {
+    private Lecture updateDB(HttpServletRequest request, Literature literature) {
+        Literature addingLit = service.addItem(literature);
+        Lecture lecture = serviceLecture.getByID(Integer.parseInt(request.getParameter("id")));
+        List<Literature> literatures = lecture.getLiteratures();
+        literatures.add(addingLit);
+        lecture.setLiteratures(literatures);
+        serviceLecture.updateLecture(lecture);
+        serviceLecture.addLinkLiteratureLectures(lecture.getId(),addingLit.getId());
+        return lecture;
+    }
+
+    private Literature buildInternetArticle(HttpServletRequest request) {
         Literature literature = new InternetArticleModel();
         literature.setAuthor(request.getParameter("author"));
         literature.setTitle(request.getParameter("title"));

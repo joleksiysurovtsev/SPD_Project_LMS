@@ -2,6 +2,7 @@ package com.lms.spd.services;
 
 import com.lms.spd.cashes.LecturesCache;
 import com.lms.spd.cashes.LiteratureCache;
+import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.interfaces.IService;
 
@@ -44,5 +45,9 @@ public class LiteratureServiceImpl implements IService<Literature> {
     /*✅*/
     public List<Literature> getLiteraturesBYLectureID(int id){
        return LiteratureCache.getInstance().getLiteraturesBYLectureID(id);
+    }
+
+    public Literature getByID(int id) {
+        return LiteratureCache.getInstance().getByID(id);
     }
 }

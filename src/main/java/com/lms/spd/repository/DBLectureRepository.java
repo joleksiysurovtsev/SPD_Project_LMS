@@ -80,7 +80,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
 
         lectureDate.setTime(dateWasAdded);
         lecture.setLectureDate(lectureDate);
-
+        lecture.setLiteratures(new ArrayList<>());
         lecture.setLectorName(rs.getString("lector_name"));
         lecture.setType(LectureType.valueOf(rs.getString("lecture_type")));
         lecture.setDurationOfTheLesson(rs.getInt("duration_of_lesson"));
