@@ -37,18 +37,14 @@ public class AddLectureServlet extends HttpServlet {
         LectureServiceImpl service = new LectureServiceImpl();
         Lecture lecture = new LectureIModel();
 
-        checkParameter(request,response);
+        checkParameter(request, response);
+        buildLectureModel(request, lecture);
+
+        Lecture addedLecture = service.addItem(lecture);
+
+        request.setAttribute("lecture", addedLecture);
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/add.jsp");
-        lecture.setNameOfLecture(request.getParameter("title"));
-        lecture.setLectorName(request.getParameter("lector_name"));
-        lecture.setType(LectureType.valueOf(request.getParameter("type")));
-        lecture.setLectureDate(Util.enterTheDate(request.getParameter("calendar") + " " + request.getParameter("cron")));
-        lecture.setDurationOfTheLesson(Integer.parseInt(request.getParameter("duration")));
-
-        Lecture lecture1 = service.addItem(lecture);
-
-        request.setAttribute("message", buildMassage(lecture1));
-
         try {
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
@@ -56,9 +52,16 @@ public class AddLectureServlet extends HttpServlet {
         }
     }
 
+    static void buildLectureModel(HttpServletRequest request, Lecture lecture) {
+        lecture.setNameOfLecture(request.getParameter("title"));
+        lecture.setLectorName(request.getParameter("lector_name"));
+        lecture.setType(LectureType.valueOf(request.getParameter("type")));
+        lecture.setLectureDate(Util.enterTheDate(request.getParameter("calendar") + " " + request.getParameter("cron")));
+        lecture.setDurationOfTheLesson(Integer.parseInt(request.getParameter("duration")));
+    }
+
     private void checkParameter(HttpServletRequest request, HttpServletResponse response) {
         Map<String, String[]> parameterMap = request.getParameterMap();
-
         parameterMap.forEach((key, value) -> {
             if (value[0].isEmpty()) {
                 request.setAttribute("message", "Unsuccessful field: " + key + "is empty");
@@ -70,14 +73,5 @@ public class AddLectureServlet extends HttpServlet {
                 }
             }
         });
-    }
-
-
-    private String buildMassage(Lecture lecture) {
-        return "ID: " + lecture.getId() + "Lecture:" + lecture.getNameOfLecture() + "\n"
-                + "Lector: " + lecture.getLectorName() + "\n"
-                + "Type: " + lecture.getType() + "\n"
-                + "Date: " + lecture.getLectureDate().getTime() + "\n"
-                + "Duration: " + lecture.getDurationOfTheLesson() + "\n";
     }
 }

@@ -1,11 +1,9 @@
 package com.lms.spd.servlets;
 
 
-import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.services.LectureServiceImpl;
-import com.lms.spd.utils.Util;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,11 +37,7 @@ public class UpdateLectureServlet extends HttpServlet {
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/choiseupdate.jsp");
 
-        lecture.setNameOfLecture(request.getParameter("title"));
-        lecture.setLectorName(request.getParameter("lector_name"));
-        lecture.setType(LectureType.valueOf(request.getParameter("type")));
-        lecture.setLectureDate(Util.enterTheDate(request.getParameter("calendar") + " " + request.getParameter("cron")));
-        lecture.setDurationOfTheLesson(Integer.parseInt(request.getParameter("duration")));
+        AddLectureServlet.buildLectureModel(request, lecture);
         service.updateLecture(lecture);
         request.setAttribute("message", buildMassage(lecture));
 

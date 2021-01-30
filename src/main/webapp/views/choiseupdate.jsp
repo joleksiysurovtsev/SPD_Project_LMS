@@ -1,7 +1,5 @@
 <%@ page import="com.lms.spd.models.interfaces.Lecture" %>
 <%@ page import="com.lms.spd.models.LectureIModel" %>
-<%@ page import="com.sun.xml.bind.v2.model.core.ID" %>
-<%@ page import="com.lms.spd.enums.LectureType" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

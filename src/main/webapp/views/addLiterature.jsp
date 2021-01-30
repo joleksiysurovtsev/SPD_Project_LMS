@@ -1,6 +1,11 @@
+<%@ page import="com.lms.spd.models.interfaces.Lecture" %>
+<%@ page import="com.lms.spd.models.LectureIModel" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <!doctype html>
-<!-- обьявляем тип документа  -->
-<html lang="en">
+<!-- обьявляем тип документа -->
+<html>
 
 <head>
     <!-- заголовок страници, подключают стили, шрифты и так далее -->
@@ -16,10 +21,15 @@
 </head>
 
 <body>
+<!--в бади пишем основной код который мы видем на странице-->
+<!--берём расписываем шапку-->
+<!--Создали хедер (класс хедер) в нём создаём контейнер,
+    в котором определяем саму шапочку header__inner,
+    в иннере расписываем лого и кнопки навигации -->
 <header class="header">
     <div class="container">
         <div class="header__inner">
-            <div class="header__logo"><img src="img/logo.png" alt=""></div>
+            <div class="header__logo"><img src="img/logo.png" alt="" width=50%;></div>
             <nav class="nav">
                 <a class="navlink" href="lectnav.html">Display lectures</a>
                 <a class="navlink" href="add.html">Add a new lecture</a>
@@ -29,55 +39,31 @@
         </div>
     </div>
 </header>
+
+<!--Интро-->
 <div class="intro">
     <div class="container">
         <div class="intro_inner">
-            <form action="/addLecture" method="post">
-                <br>
-                <br>
-                <p><strong>Enter the title of the lecture</strong></p>
-                <label> <input name="title" type="text" maxlength="50" size="50"/> </label>
-                <br>
-                <br>
-                <p><strong>Enter the lecturer name</strong></p>
-                <p><label><input name="lector_name" type="text" maxlength="50" size="50"/></label>
-                </p>
-                <br>
-                <p><strong>Please, choose lecture type:</strong></p>
-                <label>
-                    <select name="type">
-                        <option value="JAVA_CORE">Java Core</option>
-                        <option value="JAVA_CONCURRENCY">Java Concurrency</option>
-                        <option value="DB">Database</option>
-                        <option value="EE">Java Enterprise Edition</option>
-                        <option value="COMMON">Java Common</option>
-                        <option value="SOFT_SKILLS">Soft skills</option>
-                        <option value="TECH_SKILLS">Tech skills</option>
-                        <option value="CAREER">Career</option>
-                    </select>
-                </label>
-                <br>
-                <br>
-                <p><strong> Please, choose lecture date and time: </strong></p>
-                <label>
-                    <input type="date" name="calendar" value="2021-10-19">
-                </label>
-                <label>
-                    <input type="time" name="cron" value="18:30"/>
-                </label>
-                <br>
-                <br>
-                <p><strong>Please enter the lecture duration</strong></p>
-                <p><label><input type="number" pattern="[0-9]{,3}" name="duration" maxlength="50" size="50"></label></p>
-                <input type="submit" value="Add Lecture"/>
+            <%! int ID; %>
+            <%
+                if (request.getAttribute("id") != null) {
+                    ID = Integer.parseInt( request.getParameter("id"));
+                }
+            %>
+            <form action="viev/addLiterature.jsp">
+                <h2>"Lecture added assigned ID:" <label>
+                    <input type="number" name="id" value=<%=ID%> readonly="readonly"/>
+                </label></h2>
+                <input type="submit" value="Add Literature"/> <input type="button" value="Come Back"
+                                                                     onClick='location.href="/index.html"'>
             </form>
         </div>
     </div>
 </div>
+
 <div class="footer">
     <div class="conteiner">
         <div class="footer_inner">
-
             <div class="footerblok">
                 <h4 class="footer_title">Contact details</h4>
                 <address class="faddress">
@@ -95,5 +81,7 @@
         </div>
     </div>
 </div>
+
 </body>
+
 </html>
