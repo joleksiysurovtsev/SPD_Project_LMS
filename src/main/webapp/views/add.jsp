@@ -194,7 +194,9 @@
 
                         <a href="#openModal"  class="btn btn-primary" id="show-modal">Add Book</a>
                 <br>
+                <br>
                        <a href="#openModal2" class="btn btn-primary" id="show-modal2">Add Journal</a>
+                <br>
                 <br>
                        <a href="#openModal3" class="btn btn-primary" id="show-modal3">Add InternetArticle</a>
             </form>
