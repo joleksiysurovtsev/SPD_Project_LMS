@@ -14,32 +14,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Map;
 
 
 @WebServlet(urlPatterns = {"/addLecture"})
 public class AddLectureServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         this.process(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         this.process(request, response);
     }
 
     /*
        generate the page showing all the request parameters
      */
-    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    private void process(HttpServletRequest request, HttpServletResponse response) {
         LectureServiceImpl service = new LectureServiceImpl();
         Lecture lecture = new LectureIModel();
 
+        checkParameter(request,response);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/add.jsp");
-
         lecture.setNameOfLecture(request.getParameter("title"));
         lecture.setLectorName(request.getParameter("lector_name"));
         lecture.setType(LectureType.valueOf(request.getParameter("type")));
@@ -56,6 +55,23 @@ public class AddLectureServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    private void checkParameter(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+
+        parameterMap.forEach((key, value) -> {
+            if (value[0].isEmpty()) {
+                request.setAttribute("message", "Unsuccessful field: " + key + "is empty");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/addingErr.jsp");
+                try {
+                    requestDispatcher.forward(request, response);
+                } catch (ServletException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 
     private String buildMassage(Lecture lecture) {
         return "ID: " + lecture.getId() + "Lecture:" + lecture.getNameOfLecture() + "\n"
