@@ -20,10 +20,10 @@ public class InternetArticleModel implements Literature, Serializable {
     @JsonProperty("Author")
     private String author;
     @JsonProperty("Literature type")
-    private LiteratureType type;
+    private LiteratureType type = LiteratureType.INTERNET_ARTICLE;
     @JsonProperty("Date resource was added")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Calendar dateResourceWasAdded;
+    private Calendar dateResourceWasAdded = GregorianCalendar.getInstance();
 
     @JsonProperty("URL")
     private String urlAddress;

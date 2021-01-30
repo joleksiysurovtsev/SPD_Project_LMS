@@ -19,10 +19,10 @@ public class BookModel implements Literature, Serializable {
     @JsonProperty("Author")
     private String author;
     @JsonProperty("Literature type")
-    private LiteratureType type;
+    private LiteratureType type = LiteratureType.BOOK;
     @JsonProperty("Date resource was added")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Calendar dateResourceWasAdded;
+    private Calendar dateResourceWasAdded= GregorianCalendar.getInstance();
 
     @JsonProperty("Genre")
     private String genre;

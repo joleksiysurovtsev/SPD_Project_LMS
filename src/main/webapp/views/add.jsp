@@ -186,20 +186,18 @@
                     ID = addedLecture.getId();
                 }
             %>
-            <form action="viev/addLiterature.jsp">
-                <h2>"Lecture added assigned ID:" <label>
-                    <input type="number" name="id" value=<%=ID%> readonly="readonly"/>
-                </label></h2>
-                <!-- openModal - id модального окна (элемента div) -->
+            <h2>"Lecture added assigned ID:" <label>
+                <input type="number" name="id" value=<%=ID%> readonly="readonly"/>
+            </label></h2>
+            <!-- openModal - id модального окна (элемента div) -->
 
-                        <a href="#openModal"  class="btn btn-primary" id="show-modal">Add Book</a>
-                <br>
-                <br>
-                       <a href="#openModal2" class="btn btn-primary" id="show-modal2">Add Journal</a>
-                <br>
-                <br>
-                       <a href="#openModal3" class="btn btn-primary" id="show-modal3">Add InternetArticle</a>
-            </form>
+            <a href="#openModal" class="btn btn-primary" id="show-modal">Add Book</a>
+            <br>
+            <br>
+            <a href="#openModal2" class="btn btn-primary" id="show-modal2">Add Journal</a>
+            <br>
+            <br>
+            <a href="#openModal3" class="btn btn-primary" id="show-modal3">Add InternetArticle</a>
         </div>
     </div>
 </div>
