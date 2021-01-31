@@ -23,8 +23,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/addLiterature"})
 public class AddLiteratureServlet extends HttpServlet {
     private LiteratureServiceImpl service = new LiteratureServiceImpl();
-    private LectureServiceImpl  serviceLecture = new LectureServiceImpl();
-
+    private LectureServiceImpl serviceLecture = new LectureServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -40,8 +39,6 @@ public class AddLiteratureServlet extends HttpServlet {
        generate the page showing all the request parameters
      */
     private void process(HttpServletRequest request, HttpServletResponse response) {
-
-
         LiteratureType type = LiteratureType.valueOf(request.getParameter("type"));
         Literature literature = null;
         switch (type) {
@@ -57,11 +54,8 @@ public class AddLiteratureServlet extends HttpServlet {
             default:
                 break;
         }
-
         Lecture lecture = updateDB(request, literature);
-
         request.setAttribute("lecture", lecture);
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/add.jsp");
         try {
             requestDispatcher.forward(request, response);
@@ -77,7 +71,7 @@ public class AddLiteratureServlet extends HttpServlet {
         literatures.add(addingLit);
         lecture.setLiteratures(literatures);
         serviceLecture.updateLecture(lecture);
-        serviceLecture.addLinkLiteratureLectures(lecture.getId(),addingLit.getId());
+        serviceLecture.addLinkLiteratureLectures(lecture.getId(), addingLit.getId());
         return lecture;
     }
 
@@ -98,7 +92,7 @@ public class AddLiteratureServlet extends HttpServlet {
         return literature;
     }
 
-    public Literature buildBook(HttpServletRequest request){
+    public Literature buildBook(HttpServletRequest request) {
         Literature literature = new BookModel();
         literature.setAuthor(request.getParameter("author"));
         literature.setTitle(request.getParameter("title"));
@@ -106,12 +100,4 @@ public class AddLiteratureServlet extends HttpServlet {
         literature.setPublishedInYear(Integer.parseInt(request.getParameter("publishedInYear")));
         return literature;
     }
-
-
-
-
-
-
-
-
 }
