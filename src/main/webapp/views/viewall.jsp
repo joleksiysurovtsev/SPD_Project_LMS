@@ -78,7 +78,7 @@
                     </table>
                 </div>
             </div>
-            <a class="btnflip" href="/lectnav.html">
+            <a class="btnflip" href="/viewLectures.html">
                 <span class="btnflip-item btnflip__front">Come</span>
                 <span class="btnflip-item btnflip__center"></span>
                 <span class="btnflip-item btnflip__back">Back</span>
@@ -90,7 +90,7 @@
 <div class="footer">
     <div class="conteiner">
         <div class="footer_inner">
-            <div class="footerblok">
+            <div class="footer_blok">
                 <h4 class="footer_title">Contact details</h4>
                 <address class="faddress">
                     <p>Ukraine, Cherkasy</p>
@@ -98,7 +98,7 @@
                 </address>
             </div>
 
-            <div class="footerblok">
+            <div class="footer_blok">
                 <img class="footericon" src="img/fbico.png" alt="">
                 <img class="footericon" src="img/email.png" alt="">
                 <img class="footericon" src="img/teleg.png" alt="">

@@ -15,9 +15,18 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/all"})
 public class ShowAllLectureServlet extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        this.process(request, response);
+    }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        this.process(request, response);
+    }
+
+
+    protected void process(HttpServletRequest req, HttpServletResponse resp) {
         LectureServiceImpl service = new LectureServiceImpl();
         List<Lecture> lectures = service.getItems();
          RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/viewall.jsp");
@@ -29,8 +38,4 @@ public class ShowAllLectureServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
 }

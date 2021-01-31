@@ -30,9 +30,7 @@ public class AddLectureServlet extends HttpServlet {
         this.process(request, response);
     }
 
-    /*
-       generate the page showing all the request parameters
-     */
+
     private void process(HttpServletRequest request, HttpServletResponse response) {
         LectureServiceImpl service = new LectureServiceImpl();
         Lecture lecture = new LectureIModel();

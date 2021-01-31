@@ -14,10 +14,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class LecturesCache {
 
-    private static volatile LecturesCache instance;
+    private static LecturesCache instance;
     private static List<Lecture> cashedLectureList = new CopyOnWriteArrayList<>();
-    private static IRepository<Lecture> lectureRepository;
-
+    private IRepository<Lecture> lectureRepository;
 
     public void setLectureRepository(IRepository<Lecture> lectureRepository) {
         this.lectureRepository = lectureRepository;
@@ -28,7 +27,6 @@ public class LecturesCache {
     }
 
     private LecturesCache() {
-
     }
 
     public static LecturesCache getInstance() {
@@ -42,10 +40,6 @@ public class LecturesCache {
             }
         }
         return localInstance;
-    }
-
-    private void cashInit() {
-        cashedLectureList = lectureRepository.readAll();
     }
 
     public Lecture getByID(int selected) {
@@ -66,21 +60,22 @@ public class LecturesCache {
     public void addLinkLiteratureLectures(int id, Integer integers) {
         lectureRepository.addIdMapToLiteratureToLeturesTable(id, integers);
     }
-    public boolean update(Lecture lectureUpdate) {
-        cashedLectureList.forEach(lecture -> {
-            if (lecture.getId() == lectureUpdate.getId()){
-                lecture = lectureUpdate;
-            }
-        });
 
+    public boolean update(Lecture lectureUpdate) {
+        for (int i = 0, cashedLectureListSize = cashedLectureList.size(); i < cashedLectureListSize; i++) {
+            Lecture lecture = cashedLectureList.get(i);
+            if (lecture.getId() == lectureUpdate.getId()) {
+                cashedLectureList.set(i,lectureUpdate);
+            }
+        }
         return lectureRepository.update(lectureUpdate);
     }
 
     public List<Lecture> getCashedLectureList() {
         return cashedLectureList;
     }
-    
-    public void updateCashedLectures(){
+
+    public void updateCashedLectures() {
         cashedLectureList = lectureRepository.readAll();
     }
 }

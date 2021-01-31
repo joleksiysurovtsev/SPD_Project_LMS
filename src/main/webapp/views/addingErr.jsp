@@ -1,8 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
 <!doctype html>
-<!-- обьявляем тип документа -->
 <html>
 
 <head>
@@ -66,7 +63,7 @@
 <div class="footer">
     <div class="conteiner">
         <div class="footer_inner">
-            <div class="footerblok">
+            <div class="footer_blok">
                 <h4 class="footer_title">Contact details</h4>
                 <address class="faddress">
                     <p>Ukraine, Cherkasy</p>
@@ -74,7 +71,7 @@
                 </address>
             </div>
 
-            <div class="footerblok">
+            <div class="footer_blok">
                 <img class="footericon" src="img/fbico.png" alt="">
                 <img class="footericon" src="img/email.png" alt="">
                 <img class="footericon" src="img/teleg.png" alt="">
