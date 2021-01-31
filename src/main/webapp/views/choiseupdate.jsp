@@ -134,18 +134,19 @@
                 </table>
                 <table>
                     <tbody>
-                    <jsp:useBean id="literature" scope="request" type="java.util.List"/>
-                    <c:forEach items="${literature}" var="literature">
+                        <%
+                    for (Literature lit : literature) {
+                        %>
                     <tr>
-                        <td class="col1">${literature.getID()}</td>
-                        <td class="col2">${literature.getType()()}</td>
-                        <td class="col3">${literature.getTitle()}</td>
+                        <td class="col1"><%= lit.getId() %></td>
+                        <td class="col2"><%= lit.getType() %></td>
+                        <td class="col3"><%= lit.getTitle() %></td>
                     </tr>
-                    </c:forEach>
+                        <%
+                    }
+                    %>
                 </table>
-
             </div>
-
         </div>
     </div>
 </div>
