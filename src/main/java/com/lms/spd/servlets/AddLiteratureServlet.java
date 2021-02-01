@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,6 +69,9 @@ public class AddLiteratureServlet extends HttpServlet {
         Literature addingLit = service.addItem(literature);
         Lecture lecture = serviceLecture.getByID(Integer.parseInt(request.getParameter("id")));
         List<Literature> literatures = lecture.getLiteratures();
+        if (literatures == null){
+            literatures = new ArrayList<>();
+        }
         literatures.add(addingLit);
         lecture.setLiteratures(literatures);
         serviceLecture.updateLecture(lecture);
