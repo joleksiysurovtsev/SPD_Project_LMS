@@ -5,14 +5,15 @@
 
 <!doctype html>
 <!-- обьявляем тип документа -->
-<html>
+
+<html lang="en">
 
 <head>
     <!-- заголовок страници, подключают стили, шрифты и так далее -->
     <!-- в первую очередь в хеде задаём кодировку -->
     <meta charset="utf-8">
     <!--Подключаем фаил с нашими стилями (style.css)-->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <!--Подключаем наши шрифты заходим на fonts.google.com в поиске выбираем шрифты которые нам нужны выбираем если нужно латиницу и кирилицу и потом копируем ссылки на шрифты -->
     <link href="https://fonts.googleapis.com/css?family=Cardo:400i|Open+Sans|Raleway:400,600,700&display=swap&subset=cyrillic-ext"
           rel="stylesheet">
@@ -103,7 +104,6 @@
                 <img class="footericon" src="img/email.png" alt="">
                 <img class="footericon" src="img/teleg.png" alt="">
             </div>
-
         </div>
     </div>
 </div>

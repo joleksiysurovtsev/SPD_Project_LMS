@@ -12,7 +12,15 @@
     <link href="https://fonts.googleapis.com/css?family=Cardo:400i|Open+Sans|Raleway:400,600,700&display=swap&subset=cyrillic-ext"
           rel="stylesheet">
     <!--Далее заголовок-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="script/dellLect.js">    </script>
+
+
+
+
     <title>LMS</title>
+    <script src="script/dellLect.js"></script>
 </head>
 
 <body>
@@ -40,10 +48,9 @@
 <div class="intro">
     <div class="container">
         <div class="intro_inner">
-            <form action="/dell">
-                number: <label>
-                <input name="number"/>
-            </label> <input type="submit" value="Submit"/>
+            <form id="formx" onsubmit="call()"> <!--- вызов JavaScript события --->
+                <label for="number">Enter the ID of the lecture you want to delete</label><input id="number" name="number" value="" type="number"> <!---далее три строчка с полями--->
+                <input value="Отправить" type="submit">
             </form>
         </div>
     </div>

@@ -43,6 +43,10 @@ public class LectureServiceImpl implements IService<Lecture> {
         return Arrays.stream(lectureRemove).anyMatch(id -> LecturesCache.getInstance().removeLecturesByID(id));
     }
 
+    public boolean removeItem(int lectureRemove) {
+        return LecturesCache.getInstance().removeLecturesByID(lectureRemove);
+    }
+
     public List<Lecture> getLectureListByType(LectureType lectureType) {
         Map<LectureType, List<Lecture>> collect = LecturesCache.getInstance().getCashedLectureList().stream().collect(LectureCollectorByType.collectToSortedMapByType());
         if (!collect.containsKey(lectureType)) {
