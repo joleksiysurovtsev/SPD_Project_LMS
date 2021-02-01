@@ -9,24 +9,14 @@
 <html lang="en">
 
 <head>
-    <!-- заголовок страници, подключают стили, шрифты и так далее -->
-    <!-- в первую очередь в хеде задаём кодировку -->
     <meta charset="utf-8">
-    <!--Подключаем фаил с нашими стилями (style.css)-->
     <link rel="stylesheet" href="../style.css">
-    <!--Подключаем наши шрифты заходим на fonts.google.com в поиске выбираем шрифты которые нам нужны выбираем если нужно латиницу и кирилицу и потом копируем ссылки на шрифты -->
     <link href="https://fonts.googleapis.com/css?family=Cardo:400i|Open+Sans|Raleway:400,600,700&display=swap&subset=cyrillic-ext"
           rel="stylesheet">
-    <!--Далее заголовок-->
     <title>LMS</title>
 </head>
 
 <body>
-<!--в бади пишем основной код который мы видем на странице-->
-<!--берём расписываем шапку-->
-<!--Создали хедер (класс хедер) в нём создаём контейнер,
-    в котором определяем саму шапочку header__inner,
-    в иннере расписываем лого и кнопки навигации -->
 <header class="header">
     <div class="container">
         <div class="header__inner">
@@ -79,7 +69,7 @@
                     </table>
                 </div>
             </div>
-            <a class="btnflip" href="/viewLectures.html">
+            <a class="btnflip" href="/view_lectures.html">
                 <span class="btnflip-item btnflip__front">Come</span>
                 <span class="btnflip-item btnflip__center"></span>
                 <span class="btnflip-item btnflip__back">Back</span>
@@ -88,27 +78,27 @@
     </div>
 </div>
 
+
 <div class="footer">
-    <div class="conteiner">
+    <div class="container">
         <div class="footer_inner">
-            <div class="footer_blok">
+            <div class="footer_block">
                 <h4 class="footer_title">Contact details</h4>
                 <address class="faddress">
                     <p>Ukraine, Cherkasy</p>
                     <p>тел. +38(063)744-70-55</p>
                 </address>
             </div>
-
-            <div class="footer_blok">
-                <img class="footericon" src="img/fbico.png" alt="">
-                <img class="footericon" src="img/email.png" alt="">
-                <img class="footericon" src="img/teleg.png" alt="">
+            <div class="footer_block">
+                <a href="https://www.facebook.com/settings?tab=account&section=username&view">
+                    <img class="footer_icon" src="../img/fb_icon.png" alt=""> </a>
+                <a href="mailto:joleksiysurovtsev@gmail.com">
+                    <img class="footer_icon" src="../img/email.png" alt=""></a>
+                <a href="https://t.me/SurovcevAlexsey">
+                    <img class="footer_icon" src="../img/telegram.png" alt=""></a>
             </div>
         </div>
     </div>
 </div>
-
 </body>
-
 </html>
-

@@ -151,27 +151,27 @@
     </div>
 </div>
 
+
 <div class="footer">
-    <div class="conteiner">
+    <div class="container">
         <div class="footer_inner">
-            <div class="footer_blok">
+            <div class="footer_block">
                 <h4 class="footer_title">Contact details</h4>
                 <address class="faddress">
                     <p>Ukraine, Cherkasy</p>
                     <p>тел. +38(063)744-70-55</p>
                 </address>
             </div>
-
-            <div class="footer_blok">
-                <img class="footericon" src="img/fbico.png" alt="">
-                <img class="footericon" src="img/email.png" alt="">
-                <img class="footericon" src="img/teleg.png" alt="">
+            <div class="footer_block">
+                <a href="https://www.facebook.com/settings?tab=account&section=username&view">
+                    <img class="footer_icon" src="../img/fb_icon.png" alt=""> </a>
+                <a href="mailto:joleksiysurovtsev@gmail.com">
+                    <img class="footer_icon" src="../img/email.png" alt=""></a>
+                <a href="https://t.me/SurovcevAlexsey">
+                    <img class="footer_icon" src="../img/telegram.png" alt=""></a>
             </div>
-
         </div>
     </div>
 </div>
-
 </body>
-
 </html>

@@ -219,7 +219,7 @@ p {
     flex-wrap: wrap;
 }
 
-.footer_blok {
+.footer_block {
     width: 50%;
     text-align: center;
 }
@@ -237,7 +237,7 @@ p {
 
 }
 
-.footericon {
+.footer_icon {
     margin: 10px 20px 10px 10px;
     width: 60px;
 }
