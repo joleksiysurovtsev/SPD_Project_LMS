@@ -30,7 +30,7 @@ VALUES ('Intro. Java Basics', '05-10-2020 18:30', 'Vova Shevchenko ', 'JAVA_CORE
        ('Spring overview.Spring DI.', '26-01-2021 18:30', 'Vasya Rudas', 'EE', 120),
        ('Java Persistence: Hibernate', '27-01-2021 18:30', 'Ruslan Pistriak', 'DB', 120),
        ('Spring MVC.Thymeleaf.', '02-02-2021 18:30', 'Vasya Rudas', 'EE', 120),
-       ('Java Persistence: Spring Data JPA', '03 - 02 - 2021 18:30', 'Ruslan Pistriak', 'DB', 120),
+       ('Java Persistence: Spring Data JPA', '03-02-2021 18:30', 'Ruslan Pistriak', 'DB', 120),
        ('Spring in depth.', '09-02-2021 18:30', 'Vasya Rudas', 'EE', 45),
        ('REST, Swagger, Open API', '10-02-2021 18:30', 'Andrii Zaiats', 'COMMON', 120)        ,
        ('Spring Security.(part 1)', '16-02-2021 18:30', 'Vasya Rudas', 'EE', 120)        ,

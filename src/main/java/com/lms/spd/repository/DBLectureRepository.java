@@ -22,33 +22,27 @@ public class DBLectureRepository implements IRepository<Lecture> {
 
     }
 
-
     public DBLectureRepository(Connection connection) {
         this.connection = connection;
     }
 
-    /**
-     * <font color="green">✅</font>
-     */
     @Override
     public List<Lecture> readAll() {
+
         List<Lecture> customerList = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM lectures")) {
+
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM lectures")) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Lecture literature = getItem(rs);
-                customerList.add(literature);
+                Lecture lecture = getItem(rs);
+                customerList.add(lecture);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
         return customerList;
     }
 
-    /**
-     * <font color="green">✅</font>
-     */
     @Override
     public Lecture getByID(int id) {
         Lecture result = null;
@@ -70,21 +64,25 @@ public class DBLectureRepository implements IRepository<Lecture> {
      */
     private Lecture getItem(ResultSet rs) throws SQLException {
         LiteratureServiceImpl literatureService = new LiteratureServiceImpl();
+
         Lecture lecture = new LectureIModel();
-        int lectureID = rs.getInt("id");
-        lecture.setId(lectureID);
+
+        lecture.setId(rs.getInt("id"));
         lecture.setNameOfLecture(rs.getString("name_of_lecture"));
+        lecture.setLectorName(rs.getString("lector_name"));
+        lecture.setType(LectureType.valueOf(rs.getString("lecture_type")));
 
         Calendar lectureDate = new GregorianCalendar();
         Timestamp dateWasAdded = rs.getTimestamp("lecture_date");
-
         lectureDate.setTime(dateWasAdded);
         lecture.setLectureDate(lectureDate);
+
         lecture.setLiteratures(new ArrayList<>());
-        lecture.setLectorName(rs.getString("lector_name"));
-        lecture.setType(LectureType.valueOf(rs.getString("lecture_type")));
+
+        List<Literature> literature = literatureService.getLiteraturesBYLectureID(rs.getInt("id"));
+        lecture.setLiteratures(literature);
+
         lecture.setDurationOfTheLesson(rs.getInt("duration_of_lesson"));
-        lecture.setLiteratures(getListDifferences(literatureService.getItems(), getIdListLit(lectureID)));
         return lecture;
     }
 
@@ -202,8 +200,8 @@ public class DBLectureRepository implements IRepository<Lecture> {
      * that are not in the second collection
      */
     public static List<Literature> getListDifferences(List<Literature> litList, List<Integer> idLitList) {
-        List<Literature> collect = litList.stream()
-                .filter(literature -> !idLitList.contains(literature.getId()))
+
+        List<Literature> collect = litList.stream().filter(literature ->  idLitList.contains(literature.getId()))
                 .collect(Collectors.toList());
         return collect.isEmpty() ? new ArrayList<Literature>() : collect;
     }

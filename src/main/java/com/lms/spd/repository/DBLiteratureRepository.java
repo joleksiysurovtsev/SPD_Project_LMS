@@ -29,8 +29,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
     @Override
     public List<Literature> readAll() {
         List<Literature> customerList = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM literature")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM literature")) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Literature literature = getItem(rs);
@@ -61,7 +60,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
 
     private Literature getItem(ResultSet rs) throws SQLException {
         Literature literature = null;
-        int litid = rs.getInt("lit_id");
+        int litid = rs.getInt("id");
         String title = rs.getString("title");
         String author = rs.getString("author");
         LiteratureType type = LiteratureType.valueOf(rs.getString("type"));

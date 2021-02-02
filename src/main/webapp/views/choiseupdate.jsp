@@ -8,48 +8,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
-    <!-- заголовок страници, подключают стили, шрифты и так далее -->
-    <!-- в первую очередь в хеде задаём кодировку -->
     <meta charset="utf-8">
-    <!--Подключаем фаил с нашими стилями (style.css)-->
-    <link rel="stylesheet" href="style.css">
-    <!--Подключаем наши шрифты заходим на fonts.google.com в поиске выбираем шрифты которые нам нужны выбираем если нужно латиницу и кирилицу и потом копируем ссылки на шрифты -->
+    <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.googleapis.com/css?family=Cardo:400i|Open+Sans|Raleway:400,600,700&display=swap&subset=cyrillic-ext"
           rel="stylesheet">
-    <!--Далее заголовок-->
     <title>LMS</title>
 </head>
 
 <body>
-<!--в бади пишем основной код который мы видем на странице-->
-<!--берём расписываем шапку-->
-<!--Создали хедер (класс хедер) в нём создаём контейнер,
-    в котором определяем саму шапочку header__inner,
-    в иннере расписываем лого и кнопки навигации -->
 <header class="header">
     <div class="container">
         <div class="header__inner">
             <div class="header__logo"><img src="img/logo.png" alt=""></div>
             <nav class="nav">
-                <a class="navlink" href="lectnav.html">Display lectures</a>
-                <a class="navlink" href="add.html">Add a new lecture</a>
-                <a class="navlink" href="remove_lecture.html">Delete a lecture by its ID</a>
-                <a class="navlink" href="choose.html">Choose a lecture by its ID</a>
+                <a class="navlink" href="../view_lectures.html">Display lectures</a>
+                <a class="navlink" href="../add.html">Add a new lecture</a>
+                <a class="navlink" href="../remove_lecture.html">Delete a lecture by its ID</a>
+                <a class="navlink" href="../choose.html">Choose a lecture by its ID</a>
             </nav>
         </div>
     </div>
 </header>
-
-<!--Интро-->
-
-
 <div class="intro">
     <div class="container">
         <div class="intro_inner">
-            <%--    Left Block        --%>
             <div class="block-left">
                 <form action="/update">
                     <%! int ID; %>
@@ -129,6 +114,7 @@
                         <td class="col1">ID</td>
                         <td class="col2">Type</td>
                         <td class="col3">Title</td>
+                        <td class="col4">Remove</td>
                     </tr>
                     </thead>
                 </table>
@@ -138,9 +124,20 @@
                     for (Literature lit : literature) {
                         %>
                     <tr>
-                        <td class="col1"><%= lit.getId() %></td>
-                        <td class="col2"><%= lit.getType() %></td>
-                        <td class="col3"><%= lit.getTitle() %></td>
+
+                        <td class="col1"><%= lit.getId() %>
+                        </td>
+                        <td class="col2"><%= lit.getType() %>
+                        </td>
+                        <td class="col3"><%= lit.getTitle() %>
+                        </td>
+                        <td class="col4">
+                            <form action="/dell_literature" hidden><label>
+                                <input name="lit_id" type="text" value="<%= lit.getId() %>"/>
+                            </label>
+                            </form>
+                            <input type="submit" value="Dell Literature"/>
+                        </td>
                     </tr>
                         <%
                     }
