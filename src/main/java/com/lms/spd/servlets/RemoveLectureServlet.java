@@ -26,12 +26,8 @@ public class RemoveLectureServlet extends HttpServlet {
        generate the page showing all the request parameters
      */
     private void process(HttpServletRequest request, HttpServletResponse response) {
-
         LectureServiceImpl service = new LectureServiceImpl();
-        String number = request.getParameter("number");
-
-        boolean resultByDellete = service.removeItem(Integer.parseInt(number));
-
+        boolean resultByDellete = service.removeItem(Integer.parseInt(request.getParameter("number")));
         response.setContentType("text");
         if (!resultByDellete){
             try {

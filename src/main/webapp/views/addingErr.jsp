@@ -17,7 +17,7 @@
             <div class="header__logo"><img src="../img/logo.png" alt="" width=50%;></div>
             <nav class="nav">
                 <a class="navlink" href="../view_lectures.html">Display lectures</a>
-                <a class="navlink" href="../add.html">Add a new lecture</a>
+                <a class="navlink" href="../add_lecture.html">Add a new lecture</a>
                 <a class="navlink" href="../remove_lecture.html">Delete a lecture by its ID</a>
                 <a class="navlink" href="../choose.html">Choose a lecture by its ID</a>
             </nav>
@@ -39,7 +39,7 @@
             </div>
             <br>
             <div>
-                <a class="btnflip" href="${pageContext.request.contextPath}/add.html">
+                <a class="btnflip" href="${pageContext.request.contextPath}/add_lecture.html">
                     <span class="btnflip-item btnflip__front">Come</span>
                     <span class="btnflip-item btnflip__center"></span>
                     <span class="btnflip-item btnflip__back">Back</span>

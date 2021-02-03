@@ -18,7 +18,7 @@
             <div class="header__logo"><img src="../img/logo.png" alt="" width=50%;></div>
             <nav class="nav">
                 <a class="navlink" href="../view_lectures.html">Display lectures</a>
-                <a class="navlink" href="../add.html">Add a new lecture</a>
+                <a class="navlink" href="../add_lecture.html">Add a new lecture</a>
                 <a class="navlink" href="../remove_lecture.html">Delete a lecture by its ID</a>
                 <a class="navlink" href="../choose.html">Choose a lecture by its ID</a>
             </nav>
@@ -32,15 +32,15 @@
             <%! int ID; %>
             <%
                 if (request.getAttribute("id") != null) {
-                    ID = Integer.parseInt( request.getParameter("id"));
+                    ID = Integer.parseInt(request.getParameter("id"));
                 }
             %>
             <form action="addLiterature.jsp">
-                <h2>"Lecture added assigned ID:" <label>
-                    <input type="number" name="id" value=<%=ID%> readonly="readonly"/>
-                </label></h2>
-                <input type="submit" value="Add Literature"/> <input type="button" value="Come Back"
-                                                                     onClick='location.href="/index.html"'>
+                <h2>"Lecture added assigned ID:"
+                    <label> <input type="number" name="id" value=<%=ID%> readonly="readonly"/> </label>
+                </h2>
+                <input type="submit" value="Add Literature"/>
+                <input type="button" value="Come Back" onClick='location.href="/index.html"'>
             </form>
         </div>
     </div>

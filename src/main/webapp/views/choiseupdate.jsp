@@ -22,10 +22,10 @@
 <header class="header">
     <div class="container">
         <div class="header__inner">
-            <div class="header__logo"><img src="img/logo.png" alt=""></div>
+            <div class="header__logo"><img src="../img/logo.png" alt=""></div>
             <nav class="nav">
                 <a class="navlink" href="../view_lectures.html">Display lectures</a>
-                <a class="navlink" href="../add.html">Add a new lecture</a>
+                <a class="navlink" href="../add_lecture.html">Add a new lecture</a>
                 <a class="navlink" href="../remove_lecture.html">Delete a lecture by its ID</a>
                 <a class="navlink" href="../choose.html">Choose a lecture by its ID</a>
             </nav>
@@ -36,21 +36,21 @@
     <div class="container">
         <div class="intro_inner">
             <div class="block-left">
-                <form action="/update">
-                    <%! int ID; %>
-                    <%! String title = "Empty"; %>
-                    <%! String lectorName = "Empty"; %>
-                    <%! String type; %>
-                    <%! int durationOfTheLesson; %>
-                    <%! String date; %>
-                    <%! String time; %>
-                    <%! List<Literature> literature; %>
+                <form method="post" action="${pageContext.request.contextPath}update">
+                    <%! int ID;
+                        String title;
+                        String lectorName;
+                        String type;
+                        int durationOfTheLesson;
+                        String date;
+                        String time;
+                        List<Literature> literature; %>
                     <%
                         if (request.getAttribute("lecture") != null) {
                             Lecture lecture = (LectureIModel) request.getAttribute("lecture");
                             ID = lecture.getId();
                             title = lecture.getNameOfLecture();
-                            lectorName = lecture.getNameOfLecture();
+                            lectorName = lecture.getLectorName();
                             type = lecture.getType().toString();
                             durationOfTheLesson = lecture.getDurationOfTheLesson();
                             Calendar lectureDate = lecture.getLectureDate();
@@ -63,49 +63,41 @@
                     %>
 
                     <p><strong>Lectures ID</strong></p>
-                    <label><input type="text" name="comment" size="20" value=<%=ID%> readonly></label>
-                    <br>
-                    <br>
+                    <p><label> <input type="number" name="id" value=<%=ID%> readonly> </label></p>
+
                     <p><strong>Enter the title of the lecture</strong></p>
-                    <label> <input name="title" maxlength="50" size="50" value=<%=title%>/> </label>
-                    <br>
-                    <br>
+                    <p><label><input name="title" value=<%=title%>></label></p>
+
                     <p><strong>Enter the lecturer name</strong></p>
-                    <p><label><input name="lector_name" maxlength="50" size="50" value=<%=lectorName%>/></label></p>
+                    <p><label><input name="lector_name" value=<%=lectorName%>></label></p>
+
                     <p><strong>Please, choose lecture type:</strong></p>
-                    <label>
-                        <select name="type">
+                    <p>
+                        <label><select name="type">
                             <option value<%=type%>><%=type%>
                             </option>
-                            <option value="JAVA_CORE">Java Core</option>
-                            <option value="JAVA_CONCURRENCY">Java Concurrency</option>
-                            <option value="DB">Database</option>
-                            <option value="EE">Java Enterprise Edition</option>
-                            <option value="COMMON">Java Common</option>
-                            <option value="SOFT_SKILLS">Soft skills</option>
-                            <option value="TECH_SKILLS">Tech skills</option>
-                            <option value="CAREER">Career</option>
+                            <option value="JAVA_CORE">JAVA_CORE</option>
+                            <option value="JAVA_CONCURRENCY">JAVA_CONCURRENCY</option>
+                            <option value="DB">DB</option>
+                            <option value="EE">EE</option>
+                            <option value="COMMON">COMMON</option>
+                            <option value="SOFT_SKILLS">SOFT_SKILLS</option>
+                            <option value="TECH_SKILLS">TECH_SKILLS</option>
+                            <option value="CAREER">CAREER</option>
                         </select>
-                    </label>
-                    <br>
-                    <br>
-                    <p><strong> Please, choose lecture date and time: </strong></p>
-                    <label>
-                        <input type="date" name="calendar" value=<%=date%>>
-                    </label>
-
-                    <label>
-                        <input type="time" name="cron" value=<%=time%>>
-                    </label>
-
-                    <br>
-                    <br>
-                    <p><strong>Please enter the lecture duration</strong></p>
-                    <p><label><input name="duration" maxlength="50" size="50" value=<%=durationOfTheLesson%>></label>
+                        </label>
                     </p>
+
+                    <p><strong> Please, choose lecture date and time: </strong></p>
+                    <p><label> <input type="date" name="calendar" value=<%=date%>> </label></p>
+                    <label><input type="time" name="cron" value=<%=time%>></label>
+
+                    <p><strong>Please enter the lecture duration</strong></p>
+                    <p><label><input name="duration" value=<%=durationOfTheLesson%>></label></p>
                     <input type="submit" value="Update lecture Lecture"/>
                 </form>
             </div>
+
             <div class="block-right">
                 <p><strong>Lectures literature</strong></p>
                 <table>
@@ -132,17 +124,129 @@
                         <td class="col3"><%= lit.getTitle() %>
                         </td>
                         <td class="col4">
-                            <form action="/dell_literature" hidden><label>
-                                <input name="lit_id" type="text" value="<%= lit.getId() %>"/>
-                            </label>
+                            <form action="${pageContext.request.contextPath}/dell_literature">
+                                <label><input hidden name="lit_id" type="text" value="<%= lit.getId() %>"/></label>
+                                <label><input hidden name="lecture_id" type="text" value="<%= ID %>"/></label>
+                                <input type="submit" value="Dell Literature"/>
                             </form>
-                            <input type="submit" value="Dell Literature"/>
                         </td>
                     </tr>
                         <%
                     }
                     %>
                 </table>
+
+
+                <a href="#openModal" class="btn btn-primary" id="show-modal">Add Book</a>
+                <br>
+                <br>
+                <a href="#openModal2" class="btn btn-primary" id="show-modal2">Add Journal</a>
+                <br>
+                <br>
+                <a href="#openModal3" class="btn btn-primary" id="show-modal3">Add InternetArticle</a>
+
+                <div id="openModal" class="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Add book</h3>
+                                <a href="#close" title="Close" class="close">×</a>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="${pageContext.request.contextPath}addLiterature">
+                                    <input type="hidden" name="id" value=<%=ID%> readonly="readonly"/>
+                                    <label>
+                                        <input type="text" name="lit_type" value=BOOK readonly="readonly"/>
+                                    </label>
+                                    <br>
+                                    <p><strong>Enter the title of the book</strong></p>
+                                    <label> <input name="lit_title" type="text"/> </label>
+                                    <br>
+                                    <p><strong>Enter the author of the book</strong></p>
+                                    <label> <input name="lit_author" type="text"/> </label>
+                                    <br>
+                                    <br>
+                                    <p><strong>Enter the genre of the book</strong></p>
+                                    <label> <input name="genre" type="text"/> </label>
+                                    <br>
+                                    <br>
+                                    <p><strong>Enter the publishedInYear of the book</strong></p>
+                                    <label> <input name="publishedInYear" type="text"/> </label>
+                                    <br>
+                                    <input type="submit" value="Add Book"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="openModal2" class="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Add Journal</h3>
+                                <a href="#close" title="Close" class="close">×</a>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="${pageContext.request.contextPath}addLiterature">
+                                    <input type="hidden" name="id" value=<%=ID%> readonly="readonly"/>
+                                    <label>
+                                        <input type="text" name="lit_type" value=JOURNAL_ARTICLE readonly="readonly"/>
+                                    </label>
+                                    <br>
+                                    <p><strong>Enter the title of the Journal</strong></p>
+                                    <label> <input name="lit_title" type="text"/> </label>
+                                    <br>
+                                    <p><strong>Enter the author of the Journal</strong></p>
+                                    <label> <input name="lit_author" type="text"/> </label>
+                                    <br>
+                                    <br>
+                                    <p><strong>Enter the titleOfArticle of the Journal</strong></p>
+                                    <label> <input name="titleOfArticle" type="text"/> </label>
+                                    <br>
+                                    <br>
+                                    <p><strong>Enter the issueOfTheJournal of the Journal</strong></p>
+                                    <label> <input name="issueOfTheJournal" type="text"/> </label>
+                                    <br>
+                                    <input type="submit" value="Add Journal"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="openModal3" class="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Add InternetArticle</h3>
+                                <a href="#close" title="Close" class="close">×</a>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="${pageContext.request.contextPath}addLiterature">
+                                    <input type="hidden" name="id" value=<%=ID%> readonly="readonly"/>
+                                    <label>
+                                        <input type="text" name="lit_type" value=INTERNET_ARTICLE readonly="readonly"/>
+                                    </label>
+                                    <br>
+                                    <p><strong>Enter the title of the InternetArticle</strong></p>
+                                    <label> <input name="lit_title" type="text"/> </label>
+                                    <br>
+                                    <p><strong>Enter the author of the InternetArticle</strong></p>
+                                    <label> <input name="lit_author" type="text"/> </label>
+                                    <br>
+                                    <br>
+                                    <p><strong>Enter the urlAddress of the InternetArticle</strong></p>
+                                    <label> <input name="urlAddress" type="text"/> </label>
+                                    <br>
+                                    <br>
+                                    <input type="submit" value="Add Journal"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -172,3 +276,5 @@
 </div>
 </body>
 </html>
+
+

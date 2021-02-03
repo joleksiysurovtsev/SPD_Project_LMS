@@ -5,6 +5,7 @@ import com.lms.spd.repository.interfaces.IRepository;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.IntStream;
 
 
 /**
@@ -62,14 +63,12 @@ public class LecturesCache {
     }
 
     public boolean update(Lecture lectureUpdate) {
-        for (int i = 0, cashedLectureListSize = cashedLectureList.size(); i < cashedLectureListSize; i++) {
-            Lecture lecture = cashedLectureList.get(i);
-            if (lecture.getId() == lectureUpdate.getId()) {
-                cashedLectureList.set(i,lectureUpdate);
-            }
-        }
+        IntStream.range(0, cashedLectureList.size())
+                .filter(i -> cashedLectureList.get(i).getId() == lectureUpdate.getId())
+                .forEach(i -> cashedLectureList.set(i, lectureUpdate));
         return lectureRepository.update(lectureUpdate);
     }
+
 
     public List<Lecture> getCashedLectureList() {
         return cashedLectureList;

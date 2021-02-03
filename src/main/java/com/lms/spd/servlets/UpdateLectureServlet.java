@@ -30,18 +30,25 @@ public class UpdateLectureServlet extends HttpServlet {
     /*
        generate the page showing all the request parameters
      */
-    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void process(HttpServletRequest request, HttpServletResponse response) {
 
         LectureServiceImpl service = new LectureServiceImpl();
-        Lecture lecture = new LectureIModel();
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/choiseupdate.jsp");
+        int id = Integer.parseInt(request.getParameter("id"));
+        //получили лекцию по айди
+        Lecture id_lect = service.getByID(id);
+        //пересетили все поля из реквеста нам вернулась уже изменённая лекция
+        Lecture lecture1 = AddLectureServlet.buildLectureModel(request, id_lect);
 
-        AddLectureServlet.buildLectureModel(request, lecture);
-        service.updateLecture(lecture);
-        request.setAttribute("message", buildMassage(lecture));
+        service.updateLecture(lecture1);
 
+        Lecture byID = service.getByID(id);
+
+        //перетираем в реквесте нашу лекцию уже изменённую
+        request.setAttribute("lecture",byID);
         try {
+            //форвардим на изменённую
+
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
             e.printStackTrace();
