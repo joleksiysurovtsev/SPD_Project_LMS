@@ -10,3 +10,9 @@ test:
   artifacts:
     reports:
       junit: build/test-results/test/TEST-*.xml
+
+checkstyle:
+  stage: test
+  image: openjdk:11-jdk-slim
+  script:
+    -/gradlew checkstyleMain checkstyleTest
