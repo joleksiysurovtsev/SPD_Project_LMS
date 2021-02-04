@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-public class ParserLecturesJSON {
+public final class ParserLecturesJSON {
 
     private static String dirName = "src/main/resources/json/";
     private static String fileName = "Lectures.json";

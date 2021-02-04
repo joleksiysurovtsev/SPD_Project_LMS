@@ -40,24 +40,24 @@ class Point4Menu implements ITerminal {
     }
 
     private void subMenu2Point4() {
-        switch (ConsoleInputValidator.readInt()) {
-            case 1: // 1. --> choose another lecture
+        switch (ConsoleInputValidator.readString()) {
+            case "1": // 1. --> choose another lecture
                 showContext();
                 break;
-            case 2://  2. --> view the list of literature
+            case "2"://  2. --> view the list of literature
                 point42ViewListOfLit();
                 break;
-            case 3://  3. --> add new literature
+            case "3"://  3. --> add new literature
                 point43AddLit();
                 subMenu2Point4();
                 break;
-            case 4://  4. --> remove literature
+            case "4"://  4. --> remove literature
                 point44DeleteLit();
                 break;
-            case 5://  4. --> show lecture info
+            case "5"://  4. --> show lecture info
                 point45ShowLectureInfo();
                 break;
-            case 6:
+            case "6":
                 LMSTerminal.startLMS();
                 break;
             default:

@@ -89,7 +89,9 @@ public class DBLiteratureRepository implements IRepository<Literature> {
     public Literature create(Literature item) {
         int result;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO literature ( type, title, author, date_was_added, genre, published_in_year, url_address, issue_of_journal, title_of_article) VALUES ( (?), (?), (?),(?),(?),(?),(?),(?),(?)) RETURNING id")) {
+                "INSERT INTO literature ( type, title, author, date_was_added, " +
+                        "genre, published_in_year, url_address, issue_of_journal, title_of_article) " +
+                        "VALUES ( (?), (?), (?),(?),(?),(?),(?),(?),(?)) RETURNING id")) {
             statement.setString(1, item.getType().toString());
             statement.setString(2, item.getTitle());
             statement.setString(3, item.getAuthor());

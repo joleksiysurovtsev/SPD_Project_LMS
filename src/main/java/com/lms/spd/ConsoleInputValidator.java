@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class ConsoleInputValidator {
+public final class ConsoleInputValidator {
 
     private static final BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
     private static final String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2}) ([01]?[0-9]|2[0-3]):[0-5][0-9]$";

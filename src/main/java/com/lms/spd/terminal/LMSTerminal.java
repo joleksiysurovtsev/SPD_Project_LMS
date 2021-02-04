@@ -5,7 +5,7 @@ import com.lms.spd.enums.ConsoleMassage;
 
 import java.util.Map;
 
-public class LMSTerminal {
+public final class LMSTerminal {
 
     private static final Map<Integer, StartMenuStrategyConstructor> MENU_POINTS = Map.of(1, new StartMenuStrategyConstructor(new Point1Menu()),
             2, new StartMenuStrategyConstructor(new Point2Menu()),

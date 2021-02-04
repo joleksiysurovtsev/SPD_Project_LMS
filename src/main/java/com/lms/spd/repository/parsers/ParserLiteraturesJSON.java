@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-public class ParserLiteraturesJSON {
+public final class ParserLiteraturesJSON {
 
     private static String dirName = "src/main/resources/json/";
     private static String filename = "Literatures.json";
