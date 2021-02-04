@@ -87,22 +87,4 @@ class LectureServiceImplTest {
         lectureTestList.add(new LectureIModel(LectureType.DB, "nameOfLecture3", literatures, "lectorName4", calendar, 3));
         assertEquals(lectureTestList, service.getLectureListByType(LectureType.DB));
     }
-
-    @Test
-    @Order(6)
-    void getLectureListByDate() {
-    }
-
-    @Test
-    void getLecturesByNumber() {
-    }
-
-    @Test
-    void getLectureListByTypeAndDate() {
-    }
-
-    @Test
-    void addLinkLiteratureLectures() {
-    }
-
 }

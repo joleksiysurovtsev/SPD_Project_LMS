@@ -64,18 +64,12 @@ class LecturesCacheTest {
     void removeLecturesByID() {
         DBLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBLectureRepositoryMock();
         LecturesCache cache = new LecturesCache(dbPostgresLectureRepositoryMock);
-        //проверили размер кеша и базы
+
         assertEquals(cache.getCashedLectureList().size(), dbPostgresLectureRepositoryMock.getLectureTestList().size());
 
-        //удалили одну
         cache.removeLecturesByID(1);
 
         assertEquals(cache.getCashedLectureList().size(), dbPostgresLectureRepositoryMock.getLectureTestList().size());
-    }
-
-    @Test
-    void addLinkLiteratureLectures() {
-        //TODO: дописать тест когда будет готов мок на литературу
     }
 
     @Test

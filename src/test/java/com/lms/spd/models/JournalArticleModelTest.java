@@ -12,29 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class JournalArticleModelTest {
 
     @Test
-    public void testConstructor() {
-        // TODO: This test is incomplete.
-        //   Reason: No meaningful assertions found.
-        //   To help Diffblue Cover to find assertions, please add getters to the
-        //   class under test that return fields written by the method under test.
-        //   See https://diff.blue/R004
-
-        new JournalArticleModel();
-    }
-
-
-    @Test
-    public void testConstructor4() {
-        // TODO: This test is incomplete.
-        //   Reason: No meaningful assertions found.
-        //   To help Diffblue Cover to find assertions, please add getters to the
-        //   class under test that return fields written by the method under test.
-        //   See https://diff.blue/R004
-
-        new JournalArticleModel("Dr", "JaneDoe", "Dr", 1);
-    }
-
-    @Test
     @Order(14)
     void print() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -57,8 +34,8 @@ class JournalArticleModelTest {
         JournalArticleModel journalArticle2 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
         JournalArticleModel journalArticle3 = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 3);
 
-        assertTrue(journalArticle.equals(journalArticle2));
-        assertFalse(journalArticle.equals(journalArticle3));
+        assertEquals(journalArticle2, journalArticle);
+        assertNotEquals(journalArticle3, journalArticle);
     }
 
     @Test

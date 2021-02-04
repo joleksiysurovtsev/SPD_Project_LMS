@@ -43,7 +43,7 @@ class LiteratureCacheTest {
         LiteratureCache cache = new LiteratureCache(new DBLiteratureRepositoryMock());
 
         BookModel bookModel = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
-        BookModel bookModel2 = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015,4);
+        BookModel bookModel2 = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 4);
 
         Literature lecturetested = cache.addLiteratire(bookModel);
         assertEquals(bookModel2, lecturetested);
@@ -68,10 +68,5 @@ class LiteratureCacheTest {
         DBLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBLiteratureRepositoryMock();
         LiteratureCache cache = new LiteratureCache(dbPostgresLiteratureRepositoryMock);
         assertEquals(cache.getCashedLiteratureList(), dbPostgresLiteratureRepositoryMock.getLiteratureList());
-    }
-
-    @Test
-    void getLiteraturesBYLectureID() {
-        //TODO
     }
 }

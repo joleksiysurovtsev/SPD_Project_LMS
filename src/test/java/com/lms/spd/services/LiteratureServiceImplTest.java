@@ -47,12 +47,4 @@ class LiteratureServiceImplTest {
         BookModel bookModel2 = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 4);
         assertEquals(bookModel2, service.addItem(bookModel1));
     }
-
-    @Test
-    void removeItems() {
-    }
-
-    @Test
-    void getLiteraturesBYLectureID() {
-    }
 }
