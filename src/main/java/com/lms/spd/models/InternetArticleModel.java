@@ -22,7 +22,7 @@ public class InternetArticleModel implements Literature, Serializable {
     private LiteratureType type = LiteratureType.INTERNET_ARTICLE;
     @JsonProperty("Date resource was added")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Calendar dateResourceWasAdded = GregorianCalendar.getInstance();
+    private Calendar dateResourceWasAdded = Calendar.getInstance();
 
     @JsonProperty("URL")
     private String urlAddress;
@@ -51,7 +51,7 @@ public class InternetArticleModel implements Literature, Serializable {
         setAuthor(author);
         setTitle(title);
         this.urlAddress = urlAddress;
-        this.dateResourceWasAdded = GregorianCalendar.getInstance();
+        this.dateResourceWasAdded = Calendar.getInstance();
     }
 
     public String getUrlAddress() {
@@ -69,6 +69,7 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public void setPublishedInYear(int publishedInYear) {
+        //interface method literature refers to another model
     }
 
     @Override
@@ -118,6 +119,7 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public void setGenre(String genre) {
+        //interface method literature refers to another model
     }
 
     @Override
@@ -127,6 +129,7 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public void setTitleOfArticle(String titleOfArticle) {
+        //interface method literature refers to another model
     }
 
     @Override
@@ -136,6 +139,7 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public void setIssueOfTheJournal(int issueOfTheJournal) {
+        //interface method literature refers to another model
     }
 
     @Override

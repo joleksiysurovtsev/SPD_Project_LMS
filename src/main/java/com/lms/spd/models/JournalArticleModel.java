@@ -8,7 +8,6 @@ import com.lms.spd.models.interfaces.Literature;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class JournalArticleModel implements Literature, Serializable {
@@ -22,7 +21,7 @@ public class JournalArticleModel implements Literature, Serializable {
     private LiteratureType type = LiteratureType.JOURNAL_ARTICLE;
     @JsonProperty("Date resource was added")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Calendar dateResourceWasAdded = GregorianCalendar.getInstance();
+    private Calendar dateResourceWasAdded = Calendar.getInstance();
 
     @JsonProperty("Title of article")
     private String titleOfArticle;
@@ -66,7 +65,7 @@ public class JournalArticleModel implements Literature, Serializable {
         setTitle(titleJournal);
         this.titleOfArticle = titleOfArticle;
         this.issueOfTheJournal = issueOfTheJournal;
-        this.dateResourceWasAdded = GregorianCalendar.getInstance();
+        this.dateResourceWasAdded = Calendar.getInstance();
     }
 
     @Override
@@ -122,6 +121,7 @@ public class JournalArticleModel implements Literature, Serializable {
 
     @Override
     public void setUrlAddress(String urlAddress) {
+        //interface method literature refers to another model
     }
 
     @Override
@@ -131,6 +131,7 @@ public class JournalArticleModel implements Literature, Serializable {
 
     @Override
     public void setPublishedInYear(int publishedInYear) {
+        //interface method literature refers to another model
     }
 
     @Override
@@ -150,6 +151,7 @@ public class JournalArticleModel implements Literature, Serializable {
 
     @Override
     public void setGenre(String genre) {
+        //interface method literature refers to another model
     }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//

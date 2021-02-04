@@ -188,7 +188,6 @@ public class DBLectureRepository implements IRepository<Lecture> {
     }
 
     @Override
-    @Deprecated
     public List<Lecture> literaturesBYLectureID(int id) {
         return null;
     }

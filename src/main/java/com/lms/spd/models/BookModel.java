@@ -8,7 +8,6 @@ import com.lms.spd.models.interfaces.Literature;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class BookModel implements Literature, Serializable {
@@ -22,7 +21,7 @@ public class BookModel implements Literature, Serializable {
     private LiteratureType type = LiteratureType.BOOK;
     @JsonProperty("Date resource was added")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Calendar dateResourceWasAdded = GregorianCalendar.getInstance();
+    private Calendar dateResourceWasAdded = Calendar.getInstance();
 
     @JsonProperty("Genre")
     private String genre;
@@ -56,7 +55,7 @@ public class BookModel implements Literature, Serializable {
         this.publishedInYear = publishedInYear;
         setTitle(title);
         setAuthor(author);
-        this.dateResourceWasAdded = GregorianCalendar.getInstance();
+        this.dateResourceWasAdded = Calendar.getInstance();
         this.id = id;
     }
 
@@ -65,7 +64,7 @@ public class BookModel implements Literature, Serializable {
         this.publishedInYear = publishedInYear;
         setTitle(title);
         setAuthor(author);
-        this.dateResourceWasAdded = GregorianCalendar.getInstance();
+        this.dateResourceWasAdded = Calendar.getInstance();
     }
 
     @Override
@@ -133,6 +132,7 @@ public class BookModel implements Literature, Serializable {
 
     @Override
     public void setTitleOfArticle(String titleOfArticle) {
+        //interface method literature refers to another model
     }
 
     @Override
@@ -142,6 +142,7 @@ public class BookModel implements Literature, Serializable {
 
     @Override
     public void setIssueOfTheJournal(int issueOfTheJournal) {
+        //interface method literature refers to another model
     }
 
     @Override
@@ -151,6 +152,7 @@ public class BookModel implements Literature, Serializable {
 
     @Override
     public void setUrlAddress(String urlAddress) {
+        //interface method literature refers to another model
     }
 
     public int getPublishedInYear() {

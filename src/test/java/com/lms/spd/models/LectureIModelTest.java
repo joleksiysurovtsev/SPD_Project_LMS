@@ -44,7 +44,7 @@ class LectureIModelTest {
     }
 
     @Test
-    public void testConstructor2() {
+    void testConstructor2() {
         GregorianCalendar lectureDate = new GregorianCalendar(1, 1, 1);
         ArrayList<Literature> literatureList = new ArrayList<Literature>();
         new LectureIModel(LectureType.JAVA_CORE, "Name Of Lecture", literatureList, "Lector Name", lectureDate);
@@ -52,7 +52,7 @@ class LectureIModelTest {
     }
 
     @Test
-    public void testConstructor3() {
+    void testConstructor3() {
         GregorianCalendar lectureDate = new GregorianCalendar(1, 1, 1);
         ArrayList<Literature> literatureList = new ArrayList<Literature>();
         new LectureIModel(LectureType.JAVA_CORE, "Name Of Lecture", literatureList, "Lector Name", lectureDate, 1);
@@ -60,7 +60,7 @@ class LectureIModelTest {
     }
 
     @Test
-    public void testConstructor5() {
+    void testConstructor5() {
         GregorianCalendar lectureDate = new GregorianCalendar(1, 1, 1);
         ArrayList<Literature> literatureList = new ArrayList<Literature>();
         new LectureIModel("Name Of Lecture", literatureList, lectureDate, "Lector Name", LectureType.JAVA_CORE, 1, 1);

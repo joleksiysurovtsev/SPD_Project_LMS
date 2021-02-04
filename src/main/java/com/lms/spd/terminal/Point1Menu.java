@@ -55,7 +55,7 @@ class Point1Menu implements ITerminal {
                     break;
             }
         } catch (ListIsEmptyException e) {
-            System.err.println(e.getMessage());
+            Util.GLOBAL_LOGGER.info(e.getMessage());
         }
         ConsoleMassage.MESSAGE_Q_WHAT_TO_DO_NEXT.printMassage();
         subMenuShowLectures();

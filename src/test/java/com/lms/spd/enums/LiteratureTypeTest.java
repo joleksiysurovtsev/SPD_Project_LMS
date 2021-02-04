@@ -19,23 +19,23 @@ class LiteratureTypeTest {
     }
 
     @Test
-    public void testGetValueByNumber() {
+    void testGetValueByNumber() {
         assertEquals(LiteratureType.BOOK, LiteratureType.getValueByNumber(1));
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> LiteratureType.getValueByNumber(0));
     }
 
     @Test
-    public void testToListString() {
+    void testToListString() {
         assertEquals("1. BOOK\n2. JOURNAL_ARTICLE\n3. INTERNET_ARTICLE\n", LiteratureType.toListString());
     }
 
     @Test
-    public void testValueOf() {
+    void testValueOf() {
          assertEquals(LiteratureType.JOURNAL_ARTICLE, LiteratureType.valueOf("JOURNAL_ARTICLE"));
     }
 
     @Test
-    public void testValueOf2() {
+    void testValueOf2() {
         assertEquals(LiteratureType.BOOK, LiteratureType.valueOf("BOOK"));
     }
 

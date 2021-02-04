@@ -4,11 +4,7 @@ import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
 import org.junit.jupiter.api.*;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +19,7 @@ class ParserLecturesJSONTest {
         File targetFile2 = new File("src/test/resources/json/Literatures.json");
         targetFile.delete();
         targetFile2.delete();
-        ParserLecturesJSON.seturl("src/test/resources/json/");
+        ParserLecturesJSON.setURL("src/test/resources/json/");
         ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
 

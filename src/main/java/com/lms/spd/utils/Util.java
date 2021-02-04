@@ -7,11 +7,11 @@ import com.lms.spd.models.interfaces.Lecture;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 
 public final class Util {
 
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    public static final SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("yyyy-MM-dd");
+    public static final Logger GLOBAL_LOGGER = Logger.getGlobal();
 
     /**
      * The method filters the string by removing all elements
@@ -20,7 +20,8 @@ public final class Util {
     public static int[] getStringsNumberLecture(String s) {
         int[] arr = {};
         try {
-            arr = Arrays.stream(s.replaceAll("[^0-9,]", "").split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray();
+            arr = Arrays.stream(s.replaceAll("[^0-9,]", "").split(","))
+                    .map(String::trim).mapToInt(Integer::parseInt).toArray();
         } catch (NumberFormatException e) {
             ConsoleMassage.MESSAGE_ERR_INCORRECT_INPUT.printMassage();
         }
@@ -41,7 +42,7 @@ public final class Util {
         Calendar lectureDate = new GregorianCalendar();
         lectureDate.setTimeZone(TimeZone.getDefault());
         try {
-            lectureDate.setTime(DATE_FORMAT.parse(dateAndTime));
+            lectureDate.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateAndTime));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -52,7 +53,7 @@ public final class Util {
         Calendar lectureDate = new GregorianCalendar();
         lectureDate.setTimeZone(TimeZone.getDefault());
         try {
-            lectureDate.setTime(DATE_FORMAT2.parse(dateAndTime));
+            lectureDate.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(dateAndTime));
         } catch (ParseException e) {
             e.printStackTrace();
         }

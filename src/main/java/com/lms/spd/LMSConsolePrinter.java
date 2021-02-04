@@ -3,28 +3,27 @@ package com.lms.spd;
 import com.lms.spd.error.ListIsEmptyException;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
+import com.lms.spd.utils.Util;
 
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class LMSConsolePrinter {
 
     public static final int MIN = 60;
     public static final String TABLE_LINE = "+-------------------------------------------------------------------------------------------------------------------------+";
     public static final String TABLE_HEAD = "|\u1005|       Date       |  Lecture type      | Lecture number | Lecture ID  |                   Lecture title              |  Lecturer name    | Duration   |";
-    private final String format = "HH-mm-ss HH:mm";
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-
+    public static final String HOURS = " hours ";
+    public static final String MINUTES = " minutes";
     private String tabulator = "|%-1s| %-12s | %-19s|№: %-13d|№: %-10d|%-46.46s| %-18.18s|%-4.4s minutes|";
-    private static int count = 1;
+    private int count = 1;
 
     public void printAllLectureTable(List<Lecture> lectures) throws ListIsEmptyException {
         if (lectures.isEmpty()) {
             throw new ListIsEmptyException("I can not print the list of lectures it is empty");
         } else {
-            System.out.println(lectures);
             printHeadTable();
             lectures.forEach(this::printLectureTable);
         }
@@ -32,28 +31,29 @@ public class LMSConsolePrinter {
     }
 
     public void printPreviewLectureList(List<Lecture> lectures) throws ListIsEmptyException {
-        System.out.println("Lecture preview");
+        Util.GLOBAL_LOGGER.info("Lecture preview");
         tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-10d|%-46.15s| %-24.24s|%-3s|";
         printAllLectureTable(lectures);
         tabulator = "|%-1s| %-12s| %-19s|№: %-13d|№: %-10d|%-46.46s| %-24.24s|%-3s|";
     }
 
     private void printHeadTable() {
-        System.out.println(TABLE_LINE);
-        System.out.println(TABLE_HEAD);
-        System.out.println(TABLE_LINE);
+        Util.GLOBAL_LOGGER.info(TABLE_LINE);
+        Util.GLOBAL_LOGGER.info(TABLE_HEAD);
+        Util.GLOBAL_LOGGER.info(TABLE_LINE);
     }
 
     /**
      * Method prints the table
      */
     public void printLectureTable(Lecture lecture) {
-        System.out.printf((tabulator) + "%n", "\u001b[31;1m\u1005\u001B[0m",
-                dateFormat.format(lecture.getLectureDate().getTime()),
+        String table = String.format(tabulator, "%n", "\u001b[31;1m\u1005\u001B[0m",
+                new SimpleDateFormat("HH-mm-ss HH:mm").format(lecture.getLectureDate().getTime()),
                 lecture.getType(), count++, lecture.getId(), lecture.getNameOfLecture(),
                 lecture.getLectorName().trim(), lecture.getDurationOfTheLesson());
 
-        System.out.println(TABLE_LINE);
+        Util.GLOBAL_LOGGER.info(table);
+        Util.GLOBAL_LOGGER.info(TABLE_LINE);
     }
 
     /**
@@ -70,14 +70,16 @@ public class LMSConsolePrinter {
     public void printListLit(List<Literature> literature) {
         if (!literature.isEmpty()) {
             List<Literature> lit = sortLitByDateAndType(literature);
-            IntStream.range(0, literature.size())
-                    .mapToObj(id -> (id + 1) + " " + lit.get(id).print())
-                    .forEach(System.out::println);
+            int bound = literature.size();
+            for (int id = 0; id < bound; id++) {
+                String s = MessageFormat.format("{0} {1}", id + 1, lit.get(id).print());
+                Util.GLOBAL_LOGGER.info(s);
+            }
         } else {
             try {
                 throw new ListIsEmptyException("Literature list is empty, please add literature first");
             } catch (ListIsEmptyException e) {
-                System.err.println(e.getMessage());
+                Util.GLOBAL_LOGGER.info(e.getMessage());
             }
         }
     }
@@ -87,9 +89,9 @@ public class LMSConsolePrinter {
      */
     public void showAllLectureInfo(Lecture lecture) {
         String lectureInfo = "Lecture:ID" + lecture.getId() + " " + lecture.getNameOfLecture() + " \n" + "The lecture is lecturing by: "
-                + lecture.getLectorName() + "\n" + "Lecture date:" + dateFormat.format(lecture.getLectureDate().getTime())
+                + lecture.getLectorName() + "\n" + "Lecture date:" + new SimpleDateFormat("HH-mm-ss HH:mm").format(lecture.getLectureDate().getTime())
                 + "Type:" + lecture.getType();
-        System.out.println(lectureInfo);
+        Util.GLOBAL_LOGGER.info(lectureInfo);
         printListLit(lecture.getLiteratures());
     }
 
@@ -104,10 +106,10 @@ public class LMSConsolePrinter {
      */
     public void printLectureListStatistics(List<Lecture> lectures) {
         IntSummaryStatistics statistics = Arrays.stream((lectures.stream().mapToInt(Lecture::getDurationOfTheLesson).toArray())).summaryStatistics();
-        System.out.println("\ntotal number of lectures " + statistics.getCount());
-        System.out.println("average lecture time " + (int) (statistics.getAverage() / MIN) + " hours " + ((int) statistics.getAverage() % MIN) + " minutes");
-        System.out.println("minimal lecture time " + (statistics.getMin() / MIN) + " hours " + (statistics.getMin() % MIN) + " minutes");
-        System.out.println("maximum lecture time " + (statistics.getMax() / MIN) + " hours " + (statistics.getMax() % MIN) + " minutes");
-        System.out.println("all lecture time " + (statistics.getSum() / MIN) + " hours " + (statistics.getSum() % MIN) + " minutes");
+        Util.GLOBAL_LOGGER.info("\ntotal number of lectures " + statistics.getCount());
+        Util.GLOBAL_LOGGER.info("average lecture time " + (int) (statistics.getAverage() / MIN) + HOURS + ((int) statistics.getAverage() % MIN) + MINUTES);
+        Util.GLOBAL_LOGGER.info("minimal lecture time " + (statistics.getMin() / MIN) + HOURS + (statistics.getMin() % MIN) + MINUTES);
+        Util.GLOBAL_LOGGER.info("maximum lecture time " + (statistics.getMax() / MIN) + HOURS + (statistics.getMax() % MIN) + MINUTES);
+        Util.GLOBAL_LOGGER.info("all lecture time " + (statistics.getSum() / MIN) + HOURS + (statistics.getSum() % MIN) + MINUTES);
     }
 }

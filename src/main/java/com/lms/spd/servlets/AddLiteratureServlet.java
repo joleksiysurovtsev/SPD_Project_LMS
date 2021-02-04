@@ -22,6 +22,9 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/addLiterature"})
 public class AddLiteratureServlet extends HttpServlet {
 
+    public static final String LIT_AUTHOR_PARAM = "lit_author";
+    public static final String LIT_TITLE_PARAM = "lit_title";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         this.process(request, response);
@@ -80,16 +83,16 @@ public class AddLiteratureServlet extends HttpServlet {
 
     private Literature buildInternetArticle(HttpServletRequest request) {
         Literature literature = new InternetArticleModel();
-        literature.setAuthor(request.getParameter("lit_author"));
-        literature.setTitle(request.getParameter("lit_title"));
+        literature.setAuthor(request.getParameter(LIT_AUTHOR_PARAM));
+        literature.setTitle(request.getParameter(LIT_TITLE_PARAM));
         literature.setUrlAddress(request.getParameter("urlAddress"));
         return literature;
     }
 
     private Literature buildJournal(HttpServletRequest request) {
         Literature literature = new JournalArticleModel();
-        literature.setAuthor(request.getParameter("lit_author"));
-        literature.setTitle(request.getParameter("lit_title"));
+        literature.setAuthor(request.getParameter(LIT_AUTHOR_PARAM));
+        literature.setTitle(request.getParameter(LIT_TITLE_PARAM));
         literature.setTitleOfArticle(request.getParameter("titleOfArticle"));
         literature.setIssueOfTheJournal(Integer.parseInt(request.getParameter("issueOfTheJournal")));
         return literature;
@@ -97,8 +100,8 @@ public class AddLiteratureServlet extends HttpServlet {
 
     public Literature buildBook(HttpServletRequest request) {
         Literature literature = new BookModel();
-        literature.setAuthor(request.getParameter("lit_author"));
-        literature.setTitle(request.getParameter("lit_title"));
+        literature.setAuthor(request.getParameter(LIT_AUTHOR_PARAM));
+        literature.setTitle(request.getParameter(LIT_TITLE_PARAM));
         literature.setGenre(request.getParameter("genre"));
         literature.setPublishedInYear(Integer.parseInt(request.getParameter("publishedInYear")));
         return literature;

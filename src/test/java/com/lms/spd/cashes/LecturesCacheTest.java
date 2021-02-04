@@ -62,14 +62,13 @@ class LecturesCacheTest {
 
     @Test
     void removeLecturesByID() {
-        DBLectureRepositoryMock dbPostgresLectureRepositoryMock = new DBLectureRepositoryMock();
-        LecturesCache cache = new LecturesCache(dbPostgresLectureRepositoryMock);
+        LecturesCache cache = new LecturesCache(new DBLectureRepositoryMock());
 
-        assertEquals(cache.getCashedLectureList().size(), dbPostgresLectureRepositoryMock.getLectureTestList().size());
+        assertEquals(cache.getCashedLectureList().size(), DBLectureRepositoryMock.getLectureTestList().size());
 
         cache.removeLecturesByID(1);
 
-        assertEquals(cache.getCashedLectureList().size(), dbPostgresLectureRepositoryMock.getLectureTestList().size());
+        assertEquals(cache.getCashedLectureList().size(), DBLectureRepositoryMock.getLectureTestList().size());
     }
 
     @Test

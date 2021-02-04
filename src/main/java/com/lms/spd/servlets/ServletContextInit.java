@@ -2,6 +2,7 @@ package com.lms.spd.servlets;
 
 import com.lms.spd.Main;
 import com.lms.spd.pgsql.JDBCConnector;
+import com.lms.spd.utils.Util;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -19,12 +20,12 @@ public class ServletContextInit implements ServletContextListener {
         try {
             if (Objects.requireNonNull(JDBCConnector.getConnection()).isValid(TIMEOUT)) {
                 Main.initCashes();
-                System.out.println("Connection started");
+                Util.GLOBAL_LOGGER.info("Connection started");
             }
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
-        System.out.println("ServletContextListener init db connection for cashes ");
+        Util.GLOBAL_LOGGER.info("ServletContextListener init db connection for cashes ");
     }
 
     @Override
@@ -34,6 +35,6 @@ public class ServletContextInit implements ServletContextListener {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("ServletContextListener destroyed");
+        Util.GLOBAL_LOGGER.info("ServletContextListener destroyed");
     }
 }

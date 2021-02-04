@@ -1,5 +1,7 @@
 package com.lms.spd.enums;
 
+import com.lms.spd.utils.Util;
+
 public enum ConsoleMassage {
     MESSAGE_HEAD_START_MENU("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" +
             "\"" + ": learning management system" + "\u001B[0m\n" +
@@ -15,8 +17,11 @@ public enum ConsoleMassage {
             + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu"),
     MESSAGE_HEAD_MENU_POINT_3("Please enter the ID of the lecture if you want to delete one or more comma separated "),
     MESSAGE_HEAD_MENU_POINT_4("Enter the number of the lecture, information about which you want to see " +
-            "if you change your mind to exit to the menu enter " + "\u001B[32m" + "0" + "\u001B[0m"),
-    MESSAGE_MENU_POINT_4("\"1. --> choose another lecture\n" + "\"2. --> view the list of literature\n" + "\"3. --> add new literature\n" + "\"4. --> remove literature\n" + "\"5. --> view all lecture information\n" + "\"6. --> exit to the main menu"),
+            "if you change your mind to exit to the menu enter " + Constants.ANSI_GREEN + "0" + Constants.RESET),
+    MESSAGE_MENU_POINT_4("\"1. --> choose another lecture\n"
+            + "\"2. --> view the list of literature\n"
+            + "\"3. --> add new literature\n" + "\"4. --> remove literature\n"
+            + "\"5. --> view all lecture information\n" + "\"6. --> exit to the main menu"),
 
     MESSAGE_ENTER_TITLE("Please enter a title:"),
     MESSAGE_ENTER_TITLE_JOURNAL("Please enter a titleJournal name or press Enter:"),
@@ -40,18 +45,21 @@ public enum ConsoleMassage {
     MESSAGE_ST_SELECT_LECT("Selected lecture: "),
 
     MESSAGE_ERR_NO_SUCH_ITEM("There is no such item in the menu, let's try again"),
-    MESSAGE_ERR_NO_SUCH_LECTURE("\u001B[31m" + "There is no such lecture" + "\u001B[0m" + "\nlet's try again"),
+    MESSAGE_ERR_NO_SUCH_LECTURE(Constants.ANSI_RED + "There is no such lecture" + Constants.RESET + "\nlet's try again"),
     MESSAGE_ERR_YOU_MUST_ENTER_EITHER("You must enter either \"0\" or EXIT"),
     MESSAGE_ERR_YOU_MUST_ENTER_EITHER2("Please make the right choice, you must enter either \"+\" \"-\" or EXIT"),
     MESSAGE_ERR_INCORRECT_INPUT("Incorrect input"),
     MESSAGE_ERR_UNKNOWN_TYPE("Unknown type: try again"),
-    MESSAGE_ERR_LITERATURE_UNDER_THIS_NUMBER("Literature under this number do not exist \n try again"),
-    MESSAGE_ERR_LITERATURE_ALREADY("This literature is already there"),
 
     MESSAGE_Q_WHAT_TO_DO_NEXT_2("What to do next: add another one? entering " +
-            "\"+\"" + "\u001B[32m" + " \"-\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program"),
-    MESSAGE_Q_DELETE_ANOTHER_ONE("Do you want to delete another one? \n" + "if yes then enter " + "\u001B[31m" + "\"+\" " + "\u001B[0m" + "if you wont return to the menu " + "\u001B[32m" + "\"-\"" + "\u001B[0m" + "" + " or \u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program"),
-    MESSAGE_Q_WHAT_TO_DO_NEXT("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program "),
+            "+" + Constants.ANSI_GREEN + " \"-\"" + Constants.RESET
+            + " go to the main menu or " + Constants.ANSI_RED + "EXIT" + Constants.RESET + " end the program"),
+    MESSAGE_Q_DELETE_ANOTHER_ONE("Do you want to delete another one? \n" + "if yes then enter "
+            + Constants.ANSI_RED + "\"+\" " + Constants.RESET + "if you wont return to the menu "
+            + Constants.ANSI_GREEN + "\"-\"" + Constants.RESET + " or " + Constants.ANSI_RED + "EXIT" + Constants.RESET
+            + " end the program"),
+    MESSAGE_Q_WHAT_TO_DO_NEXT("What to do next:" + Constants.ANSI_GREEN + " \"0\"" + Constants.RESET
+            + " go to the main menu or " + Constants.ANSI_RED + "\"EXIT\"" + Constants.RESET + " end the program "),
     MESSAGE_Q_ENTER_LECTURE("Entering a new lecture?"),
     MESSAGE_Q_ADD_MORE_LIT("Add more literature? if not enter minus"),
     MESSAGE_Q_DELETE_AGAIN("\"Successfully\" Delete again ?"),
@@ -60,13 +68,23 @@ public enum ConsoleMassage {
     MESSAGE_Q_ADD_MORE_LIT_NAV("Add more ? if YES then enter \"+\" if NOT then \"-\" you will return to the lecture selection menu, to complete the work, exit "),
     MESSAGE_Q_BOOK_ADDED_WHAT_DO_NEXT("Book added what to do next?");
 
-    private String massage;
+    private static String massage;
 
     ConsoleMassage(String massage) {
-        this.massage = massage;
+        setMassage(massage);
+    }
+
+    private static void setMassage(String massage) {
+        ConsoleMassage.massage = massage;
     }
 
     public void printMassage() {
-        System.out.println(this.massage);
+        Util.GLOBAL_LOGGER.info(massage);
+    }
+
+    private static class Constants {
+        public static final String RESET = "\u001B[0m";
+        public static final String ANSI_RED = "\u001B[31m";
+        public static final String ANSI_GREEN = "\u001B[32m";
     }
 }

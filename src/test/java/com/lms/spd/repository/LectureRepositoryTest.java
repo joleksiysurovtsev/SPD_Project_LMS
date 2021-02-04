@@ -23,7 +23,7 @@ class LectureRepositoryTest {
         File targetFile2 = new File("src/test/resources/json/Literatures.json");
         targetFile.delete();
         targetFile2.delete();
-        ParserLecturesJSON.seturl("src/test/resources/json/");
+        ParserLecturesJSON.setURL("src/test/resources/json/");
         ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
 

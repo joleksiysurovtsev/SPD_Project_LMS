@@ -20,7 +20,7 @@ public class UpdateLectureServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         this.process(request, response);
     }
 
@@ -47,13 +47,5 @@ public class UpdateLectureServlet extends HttpServlet {
         } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String buildMassage(Lecture lecture) {
-        return "ID: " + lecture.getId() + "Lecture:" + lecture.getNameOfLecture() + "\n"
-                + "Lector: " + lecture.getLectorName() + "\n"
-                + "Type: " + lecture.getType() + "\n"
-                + "Date: " + lecture.getLectureDate().getTime() + "\n"
-                + "Duration: " + lecture.getDurationOfTheLesson() + "\n";
     }
 }
