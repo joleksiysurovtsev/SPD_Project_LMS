@@ -7,14 +7,11 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 
 import java.io.Serializable;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-
-public class LectureIModel implements Lecture,Serializable {
+public class LectureIModel implements Lecture, Serializable {
 
     @JsonProperty("NameOfLecture")
     private String nameOfLecture;
@@ -39,7 +36,6 @@ public class LectureIModel implements Lecture,Serializable {
     private int durationOfTheLesson;
     //lecture constructor____________________________________________________________________________________________//
 
-
     public LectureIModel(String nameOfLecture, Calendar lectureDate, String lectorName, LectureType type, int durationOfTheLesson) {
         this.nameOfLecture = nameOfLecture;
         this.lectureDate = lectureDate;
@@ -48,7 +44,8 @@ public class LectureIModel implements Lecture,Serializable {
         this.durationOfTheLesson = durationOfTheLesson;
     }
 
-    public LectureIModel() {}
+    public LectureIModel() {
+    }
 
     public LectureIModel(String nameOfLecture) {
         this.nameOfLecture = nameOfLecture;
@@ -118,7 +115,7 @@ public class LectureIModel implements Lecture,Serializable {
     }
 
     @Override
-    public Calendar  getLectureDate() {
+    public Calendar getLectureDate() {
         return lectureDate;
     }
 
@@ -160,7 +157,6 @@ public class LectureIModel implements Lecture,Serializable {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-
     @Override
     public String toString() {
         return "LectureIModel{" +
@@ -176,8 +172,12 @@ public class LectureIModel implements Lecture,Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         LectureIModel that = (LectureIModel) o;
         return id == that.id &&
                 durationOfTheLesson == that.durationOfTheLesson &&

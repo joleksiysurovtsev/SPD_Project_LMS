@@ -45,17 +45,17 @@ class Point4Menu implements ITerminal {
                 showContext();
                 break;
             case 2://  2. --> view the list of literature
-                point4_2ViewListOfLit();
+                point42ViewListOfLit();
                 break;
             case 3://  3. --> add new literature
-                point4_3AddLit();
+                point43AddLit();
                 subMenu2Point4();
                 break;
             case 4://  4. --> remove literature
-                point4_4DeleteLit();
+                point44DeleteLit();
                 break;
             case 5://  4. --> show lecture info
-                point4_5showLectureInfo();
+                point45ShowLectureInfo();
                 break;
             case 6:
                 LMSTerminal.startLMS();
@@ -68,27 +68,27 @@ class Point4Menu implements ITerminal {
     }
 
     /*✅*/
-    private void point4_2ViewListOfLit() {
+    private void point42ViewListOfLit() {
         int id = lectureServiceImpl.getSelectedItem().getId();
         print.printListLit(literatureServiceImpl.getLiteraturesBYLectureID(id));
         ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();
         subMenu2Point4();
     }
 
-    private void point4_3AddLit() {
+    private void point43AddLit() {
         List<Literature> newLiteratureArr = new ArrayList<>();
         newLiteratureArr.add(literatureServiceImpl.addItem(literatureValidator.createLiterature()));
         List<Integer> integers = newLiteratureArr.stream().map(Literature::getId).collect(Collectors.toList());
         lectureServiceImpl.addLinkLiteratureLectures(lectureServiceImpl.getSelectedItem().getId(), integers);
         ConsoleMassage.MESSAGE_Q_BOOK_ADDED_WHAT_DO_NEXT.printMassage();
-        point4_3Navigate();
+        point43Navigate();
     }
 
-    private void point4_3Navigate() {
+    private void point43Navigate() {
         ConsoleMassage.MESSAGE_Q_ADD_MORE_LIT_NAV.printMassage();
         switch (ConsoleInputValidator.readString().toUpperCase()) {
             case "+":
-                point4_3AddLit();
+                point43AddLit();
                 break;
             case "-":
                 showContext();
@@ -98,37 +98,37 @@ class Point4Menu implements ITerminal {
                 break;
             default:
                 ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
-                point4_3Navigate();
+                point43Navigate();
                 break;
         }
     }
 
-    private void point4_4DeleteLit() {
+    private void point44DeleteLit() {
         ConsoleMassage.MESSAGE_ENTER_NUMBERS_DEL_BOOK.printMassage();
         int[] indexLit = Util.getStringsNumberLecture(ConsoleInputValidator.readString());
         literatureServiceImpl.removeItems(indexLit);
         ConsoleMassage.MESSAGE_Q_DELETE_AGAIN.printMassage();
         ConsoleMassage.MESSAGE_Q_YES_OR_NO.printMassage();
-        subMenuPoint4_4DeleteLit();
+        subMenuPoint44DeleteLit();
     }
 
-    private void subMenuPoint4_4DeleteLit() {
+    private void subMenuPoint44DeleteLit() {
         ConsoleMassage.MESSAGE_Q_YES_OR_NO.printMassage();
         switch (ConsoleInputValidator.readString()) {
             case "+":
-                point4_4DeleteLit();
+                point44DeleteLit();
                 break;
             case "-":
                 showContext();
                 break;
             default:
                 ConsoleMassage.MESSAGE_ERR_NO_SUCH_ITEM.printMassage();
-                subMenuPoint4_4DeleteLit();
+                subMenuPoint44DeleteLit();
                 break;
         }
     }
 
-    private void point4_5showLectureInfo() {
+    private void point45ShowLectureInfo() {
         Lecture selectedItem = lectureServiceImpl.getSelectedItem();
         print.showAllLectureInfo(selectedItem);
         ConsoleMassage.MESSAGE_MENU_POINT_4.printMassage();

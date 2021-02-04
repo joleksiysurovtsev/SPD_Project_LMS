@@ -7,14 +7,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 
-
-/**
- * The cache is implemented according to the Singelton pattern.
- * The Singleton pattern ensures that a class has only one
- * instance and provides a global access point to it.
- */
 public class LecturesCache {
-
     private static LecturesCache instance;
     private static List<Lecture> cashedLectureList = new CopyOnWriteArrayList<>();
     private IRepository<Lecture> lectureRepository;
@@ -68,7 +61,6 @@ public class LecturesCache {
                 .forEach(i -> cashedLectureList.set(i, lectureUpdate));
         return lectureRepository.update(lectureUpdate);
     }
-
 
     public List<Lecture> getCashedLectureList() {
         return cashedLectureList;

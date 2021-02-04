@@ -8,8 +8,6 @@ import java.util.List;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@ class")
 public interface Lecture {
-
-
     void setNameOfLecture(String nameOfLecture);
 
     String getNameOfLecture();

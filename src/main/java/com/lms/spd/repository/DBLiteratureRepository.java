@@ -19,7 +19,6 @@ public class DBLiteratureRepository implements IRepository<Literature> {
     private Connection connection;
 
     public DBLiteratureRepository() {
-
     }
 
     public DBLiteratureRepository(Connection connection) {
@@ -40,7 +39,6 @@ public class DBLiteratureRepository implements IRepository<Literature> {
         }
         return customerList;
     }
-
 
     @Override
     public Literature getByID(int id) {
@@ -89,7 +87,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
 
     @Override
     public Literature create(Literature item) {
-        int result = -1;
+        int result;
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO literature ( type, title, author, date_was_added, genre, published_in_year, url_address, issue_of_journal, title_of_article) VALUES ( (?), (?), (?),(?),(?),(?),(?),(?),(?)) RETURNING id")) {
             statement.setString(1, item.getType().toString());
@@ -161,7 +159,6 @@ public class DBLiteratureRepository implements IRepository<Literature> {
         List<Integer> idLitList = getListLectureId(id);
         return idLitList.stream().map(this::getByID).collect(Collectors.toList());
     }
-
 
     private List<Integer> getListLectureId(int id) {
         List<Integer> idLitList = new ArrayList<>();

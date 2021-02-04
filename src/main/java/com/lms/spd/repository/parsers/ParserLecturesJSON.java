@@ -13,19 +13,19 @@ import java.util.TimeZone;
 
 public class ParserLecturesJSON {
 
-    private static String DIR_NAME = "src/main/resources/json/";
-    private static String FILE_NAME = "Lectures.json";
-    private static ObjectMapper mapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
+    private static String dirName = "src/main/resources/json/";
+    private static String fileName = "Lectures.json";
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().setTimeZone(TimeZone.getDefault());
 
     public static String getDirName() {
-        return DIR_NAME;
+        return dirName;
     }
 
     /**
      * set the path to the file directory with which we will work
      */
     public static void seturl(String url) {
-        ParserLecturesJSON.DIR_NAME = url;
+        ParserLecturesJSON.dirName = url;
     }
 
     /**
@@ -36,10 +36,10 @@ public class ParserLecturesJSON {
         checkDirectoryAndFileExist();
 
         //creating a stream from a file
-        try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DIR_NAME + FILE_NAME), StandardCharsets.UTF_8))) {
+        try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirName + fileName), StandardCharsets.UTF_8))) {
             StringBuilder stringBuilderEntity = new StringBuilder("");
-            for (Lecture lect : lectures) {
-                stringBuilderEntity.append(mapper.writeValueAsString(lect) + "\n");
+            for (Lecture lecture : lectures) {
+                stringBuilderEntity.append(OBJECT_MAPPER.writeValueAsString(lecture)).append("\n");
             }
             myWriter.write(stringBuilderEntity.toString());
             myWriter.flush();
@@ -54,7 +54,7 @@ public class ParserLecturesJSON {
             return new ArrayList<>();
         }
         List<Lecture> lectures = new ArrayList<>();
-        try (var stream = Files.lines(Path.of(DIR_NAME + FILE_NAME))) {
+        try (var stream = Files.lines(Path.of(dirName + fileName))) {
             stream.forEach(lines -> readLectures(lectures, lines));
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class ParserLecturesJSON {
 
     private static void readLectures(List<Lecture> lect, String s) {
         try {
-            lect.add(mapper.readValue(s, Lecture.class));
+            lect.add(OBJECT_MAPPER.readValue(s, Lecture.class));
         } catch (IOException e) {
             System.out.println("It is impossible to count lectures");
         }
@@ -73,17 +73,20 @@ public class ParserLecturesJSON {
     private static boolean checkDirectoryAndFileExist() {
         boolean ifDirorFileNotExist = true;
         try {
-            if (Files.notExists(Path.of(DIR_NAME))) {
-                Files.createDirectories(Path.of(DIR_NAME));
+            if (Files.notExists(Path.of(dirName))) {
+                Files.createDirectories(Path.of(dirName));
                 ifDirorFileNotExist = false;
             }
-            if (Files.notExists(Path.of(DIR_NAME + FILE_NAME))) {
-                Files.createFile(Path.of(DIR_NAME + FILE_NAME));
+            if (Files.notExists(Path.of(dirName + fileName))) {
+                Files.createFile(Path.of(dirName + fileName));
                 ifDirorFileNotExist = false;
             }
         } catch (IOException e) {
             System.out.println("unable to create file");
         }
         return ifDirorFileNotExist;
+    }
+
+    private ParserLecturesJSON() {
     }
 }

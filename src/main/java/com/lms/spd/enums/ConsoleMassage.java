@@ -1,8 +1,6 @@
 package com.lms.spd.enums;
 
-
 public enum ConsoleMassage {
-
     MESSAGE_HEAD_START_MENU("\u001B[34m" + "Main menu " + "\"\u001B[32mL\u001B[35mM\u001B[31mS\u001B[34m" +
             "\"" + ": learning management system" + "\u001B[0m\n" +
             "\"Please make your choice from the offered options\"\n"
@@ -16,7 +14,8 @@ public enum ConsoleMassage {
             + "\u001B[34m\"TYPE AND DATE\"\u001B[0m Display lectures by curend date\n"
             + "\u001B[31m\"EXIT\"\u001B[0m To go to the main menu"),
     MESSAGE_HEAD_MENU_POINT_3("Please enter the ID of the lecture if you want to delete one or more comma separated "),
-    MESSAGE_HEAD_MENU_POINT_4("Enter the number of the lecture, " + "information about which you want to see " + "if you change your mind to exit to the menu enter " + "\u001B[32m" + "0" + "\u001B[0m"),
+    MESSAGE_HEAD_MENU_POINT_4("Enter the number of the lecture, information about which you want to see " +
+            "if you change your mind to exit to the menu enter " + "\u001B[32m" + "0" + "\u001B[0m"),
     MESSAGE_MENU_POINT_4("\"1. --> choose another lecture\n" + "\"2. --> view the list of literature\n" + "\"3. --> add new literature\n" + "\"4. --> remove literature\n" + "\"5. --> view all lecture information\n" + "\"6. --> exit to the main menu"),
 
     MESSAGE_ENTER_TITLE("Please enter a title:"),
@@ -49,7 +48,8 @@ public enum ConsoleMassage {
     MESSAGE_ERR_LITERATURE_UNDER_THIS_NUMBER("Literature under this number do not exist \n try again"),
     MESSAGE_ERR_LITERATURE_ALREADY("This literature is already there"),
 
-    MESSAGE_Q_WHAT_TO_DO_NEXT_2("What to do next: add another one? entering \"+\"" + "\u001B[32m" + " \"-\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program"),
+    MESSAGE_Q_WHAT_TO_DO_NEXT_2("What to do next: add another one? entering " +
+            "\"+\"" + "\u001B[32m" + " \"-\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program"),
     MESSAGE_Q_DELETE_ANOTHER_ONE("Do you want to delete another one? \n" + "if yes then enter " + "\u001B[31m" + "\"+\" " + "\u001B[0m" + "if you wont return to the menu " + "\u001B[32m" + "\"-\"" + "\u001B[0m" + "" + " or \u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program"),
     MESSAGE_Q_WHAT_TO_DO_NEXT("What to do next:" + "\u001B[32m" + " \"0\"" + "\u001B[0m" + " go to the main menu or " + "\u001B[31m" + "\"EXIT\"" + "\u001B[0m" + " end the program "),
     MESSAGE_Q_ENTER_LECTURE("Entering a new lecture?"),

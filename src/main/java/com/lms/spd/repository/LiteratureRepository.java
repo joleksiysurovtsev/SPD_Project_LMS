@@ -15,5 +15,4 @@ public class LiteratureRepository implements LiteratureRepositoryInterface {
     public void setAll(List<Literature> literatures) {
         ParserLiteraturesJSON.parseLiteraturesInJSON(literatures);
     }
-
 }

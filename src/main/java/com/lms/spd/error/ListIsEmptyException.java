@@ -22,8 +22,7 @@ public class ListIsEmptyException extends Exception {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Error. You are trying to get something from an empty array.";
     }
 }

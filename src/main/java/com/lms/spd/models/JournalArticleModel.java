@@ -2,7 +2,6 @@ package com.lms.spd.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
@@ -30,7 +29,8 @@ public class JournalArticleModel implements Literature, Serializable {
     @JsonProperty("Issue of the journal")
     private int issueOfTheJournal;
 
-    public JournalArticleModel() { }
+    public JournalArticleModel() {
+    }
 
     public JournalArticleModel(String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String titleOfArticle, int issueOfTheJournal) {
         this.title = title;
@@ -122,7 +122,6 @@ public class JournalArticleModel implements Literature, Serializable {
 
     @Override
     public void setUrlAddress(String urlAddress) {
-
     }
 
     @Override
@@ -132,9 +131,7 @@ public class JournalArticleModel implements Literature, Serializable {
 
     @Override
     public void setPublishedInYear(int publishedInYear) {
-
     }
-
 
     @Override
     public int getId() {
@@ -153,7 +150,6 @@ public class JournalArticleModel implements Literature, Serializable {
 
     @Override
     public void setGenre(String genre) {
-
     }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -184,8 +180,12 @@ public class JournalArticleModel implements Literature, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof JournalArticleModel)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof JournalArticleModel)) {
+            return false;
+        }
         JournalArticleModel that = (JournalArticleModel) o;
         return getIssueOfTheJournal() == that.getIssueOfTheJournal() &&
                 getTitle().equals(that.getTitle()) &&

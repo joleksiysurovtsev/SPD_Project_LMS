@@ -1,6 +1,5 @@
 package com.lms.spd.servlets;
 
-
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.BookModel;
 import com.lms.spd.models.InternetArticleModel;
@@ -20,11 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @WebServlet(urlPatterns = {"/addLiterature"})
 public class AddLiteratureServlet extends HttpServlet {
-    private LiteratureServiceImpl service = new LiteratureServiceImpl();
-    private LectureServiceImpl serviceLecture = new LectureServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -57,7 +53,7 @@ public class AddLiteratureServlet extends HttpServlet {
         }
         Lecture lecture = updateDB(request, literature);
         request.setAttribute("lecture", lecture);
-        RequestDispatcher requestDispatcher= request.getRequestDispatcher("views/choiseupdate.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/choiseupdate.jsp");
 
         try {
             requestDispatcher.forward(request, response);
@@ -67,6 +63,8 @@ public class AddLiteratureServlet extends HttpServlet {
     }
 
     private Lecture updateDB(HttpServletRequest request, Literature literature) {
+        LiteratureServiceImpl service = new LiteratureServiceImpl();
+        LectureServiceImpl serviceLecture = new LectureServiceImpl();
         Literature addingLit = service.addItem(literature);
         Lecture lecture = serviceLecture.getByID(Integer.parseInt(request.getParameter("id")));
         List<Literature> literatures = lecture.getLiteratures();

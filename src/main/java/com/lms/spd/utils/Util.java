@@ -1,15 +1,8 @@
 package com.lms.spd.utils;
 
-import com.lms.spd.cashes.LecturesCache;
-import com.lms.spd.cashes.LiteratureCache;
 import com.lms.spd.enums.ConsoleMassage;
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.interfaces.Lecture;
-import com.lms.spd.models.interfaces.Literature;
-import com.lms.spd.pgsql.JDBCConnector;
-import com.lms.spd.repository.DBLectureRepository;
-import com.lms.spd.repository.DBLiteratureRepository;
-import com.lms.spd.repository.interfaces.IRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,11 +28,10 @@ public class Util {
     }
 
     /**
-     *  <b>A method that returns a map in which the key is true / false and the value is List <Lecture>.
-     *      * </b> <p>According to the entered date, lectures are grouped into those that have already passed (false)
-     *      * and those that still need to be given (true). List is sorted relative to the date of the event.
+     * <b>A method that returns a map in which the key is true / false and the value is List <Lecture>.
+     * * </b> <p>According to the entered date, lectures are grouped into those that have already passed (false)
+     * * and those that still need to be given (true). List is sorted relative to the date of the event.
      **/
-
     public static Map<Boolean, List<Lecture>> getCollectByDate(LectureType selectLectureType, Map<LectureType, List<Lecture>> mapSortedByType, Calendar currentdate) {
         LectureCollectorByDate collectorByDate = new LectureCollectorByDate(currentdate);
         return mapSortedByType.get(selectLectureType).stream().collect(collectorByDate);
@@ -67,9 +59,6 @@ public class Util {
         return lectureDate;
     }
 
-
     private Util() {
     }
-
-
 }

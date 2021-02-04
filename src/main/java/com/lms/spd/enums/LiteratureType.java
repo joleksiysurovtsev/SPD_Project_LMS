@@ -8,21 +8,19 @@ public enum LiteratureType {
     JOURNAL_ARTICLE,
     INTERNET_ARTICLE;
 
-
     public static Stream<LiteratureType> stream() {
         return Arrays.stream(LiteratureType.values());
     }
 
-    public static LiteratureType getValueByNumber(int order){
+    public static LiteratureType getValueByNumber(int order) {
         return order - 1 <= LectureType.values().length ? LiteratureType.values()[order - 1] : null;
     }
 
     public static String toListString() {
-        String list = "";
+        StringBuilder list = new StringBuilder();
         for (int i = 0; i < LiteratureType.values().length; i++) {
-            list += (i+1)+ ". " + LiteratureType.values()[i] +"\n";
+            list.append(i + 1).append(". ").append(LiteratureType.values()[i]).append("\n");
         }
-        return list;
+        return list.toString();
     }
-
 }

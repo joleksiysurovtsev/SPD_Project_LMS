@@ -11,13 +11,13 @@ public interface LectureService {
 
     Lecture getSelectedLecture();
 
-    void setLectures(List<Lecture> lectures) ;
+    void setLectures(List<Lecture> lectures);
 
-    void setSelectedLecture(int selected) ;
+    void setSelectedLecture(int selected);
 
-    void addLecture(Lecture lecture) ;
+    void addLecture(Lecture lecture);
 
-    void removeLectures(int[] lectureRemove) ;
+    void removeLectures(int[] lectureRemove);
 
     Map<LectureType, List<Lecture>> getMapSortedByType();
 }

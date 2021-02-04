@@ -6,23 +6,14 @@ import com.lms.spd.repository.interfaces.IRepository;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
-/**
- * The cache is implemented according to the Singelton pattern.
- * The Singleton pattern ensures that a class has only one
- * instance and provides a global access point to it.
- */
 public class LiteratureCache {
-
-    private static volatile LiteratureCache instance;
-    public static List<Literature> cashedLiteratureList = new CopyOnWriteArrayList<>();
+    private static LiteratureCache instance;
+    private static List<Literature> cashedLiteratureList = new CopyOnWriteArrayList<>();
+    private IRepository<Literature> literatureRepository;
 
     public void setLiteratureRepository(IRepository<Literature> literatureRepository) {
         this.literatureRepository = literatureRepository;
     }
-
-    private IRepository<Literature> literatureRepository;
-
 
     public LiteratureCache(IRepository<Literature> literatureRepository) {
         this.literatureRepository = literatureRepository;
@@ -44,10 +35,6 @@ public class LiteratureCache {
         return localInstance;
     }
 
-    private void cashInit() {
-        cashedLiteratureList = literatureRepository.readAll();
-    }
-
     public Literature getByID(int selected) {
         return cashedLiteratureList.get(selected);
     }
@@ -60,7 +47,7 @@ public class LiteratureCache {
 
     public boolean removeLecturesByID(int lectureRemove) {
         cashedLiteratureList.removeIf(lecture -> lecture.getId() == lectureRemove);
-       return literatureRepository.delete(lectureRemove);
+        return literatureRepository.delete(lectureRemove);
     }
 
     public List<Literature> getLiteraturesBYLectureID(int id) {
@@ -71,7 +58,7 @@ public class LiteratureCache {
         return cashedLiteratureList;
     }
 
-    public void updateCashedLiteratures(){
+    public void updateCashedLiteratures() {
         cashedLiteratureList = literatureRepository.readAll();
     }
 }

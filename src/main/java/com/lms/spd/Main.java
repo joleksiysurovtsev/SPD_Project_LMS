@@ -11,15 +11,10 @@ import com.lms.spd.repository.interfaces.IRepository;
 import com.lms.spd.terminal.LMSTerminal;
 
 public class Main {
-
-
     public static void main(String[] args) {
         initCashes();
         LMSTerminal.startLMS();
-
     }
-
-
 
     public static void initCashes() {
         IRepository<Lecture> dbPostgresLectureRepository = new DBLectureRepository(JDBCConnector.getConnection());
@@ -31,5 +26,4 @@ public class Main {
         LecturesCache.getInstance().updateCashedLectures();
         LiteratureCache.getInstance().updateCashedLiteratures();
     }
-
 }

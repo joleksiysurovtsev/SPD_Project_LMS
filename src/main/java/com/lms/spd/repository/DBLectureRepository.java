@@ -122,7 +122,10 @@ public class DBLectureRepository implements IRepository<Lecture> {
     public boolean update(Lecture item) {
         boolean result = false;
         try (PreparedStatement statement = connection.prepareStatement(
-                "UPDATE lectures SET name_of_lecture = (?), lecture_date= (?), lector_name= (?), lecture_type= (?),duration_of_lesson= (?) WHERE id = (?) RETURNING id")) {
+                "UPDATE lectures SET name_of_lecture = (?), " +
+                        "lecture_date= (?), lector_name= (?), " +
+                        "lecture_type= (?),duration_of_lesson= (?)" +
+                        " WHERE id = (?) RETURNING id")) {
             getCreateUpdateLectureStatement(item, statement);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -178,17 +181,11 @@ public class DBLectureRepository implements IRepository<Lecture> {
         return result;
     }
 
-    /**
-     * Method returns the collection of products from the first collection
-     * that are not in the second collection
-     */
     public static List<Literature> getListDifferences(List<Literature> litList, List<Integer> idLitList) {
-
         List<Literature> collect = litList.stream().filter(literature -> idLitList.contains(literature.getId()))
                 .collect(Collectors.toList());
         return collect.isEmpty() ? new ArrayList<Literature>() : collect;
     }
-
 
     @Override
     @Deprecated

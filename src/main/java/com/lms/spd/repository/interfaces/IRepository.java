@@ -1,10 +1,8 @@
 package com.lms.spd.repository.interfaces;
 
-
-
 import java.util.List;
 
-public interface IRepository<T> extends AutoCloseable{
+public interface IRepository<T> extends AutoCloseable {
 
     List<T> readAll();
 

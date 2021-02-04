@@ -2,7 +2,6 @@ package com.lms.spd.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.interfaces.Literature;
 
@@ -70,7 +69,6 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public void setPublishedInYear(int publishedInYear) {
-
     }
 
     @Override
@@ -103,7 +101,6 @@ public class InternetArticleModel implements Literature, Serializable {
         this.type = type;
     }
 
-
     @Override
     public int getId() {
         return id;
@@ -121,7 +118,6 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public void setGenre(String genre) {
-
     }
 
     @Override
@@ -131,7 +127,6 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public void setTitleOfArticle(String titleOfArticle) {
-
     }
 
     @Override
@@ -141,7 +136,6 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public void setIssueOfTheJournal(int issueOfTheJournal) {
-
     }
 
     @Override
@@ -173,8 +167,12 @@ public class InternetArticleModel implements Literature, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InternetArticleModel)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof InternetArticleModel)) {
+            return false;
+        }
         InternetArticleModel that = (InternetArticleModel) o;
         return getTitle().equals(that.getTitle()) &&
                 getAuthor().equals(that.getAuthor()) &&

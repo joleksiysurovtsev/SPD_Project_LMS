@@ -42,7 +42,8 @@ class Point1Menu implements ITerminal {
                     print.printAllLectureTable(lectureServiceImpl.getLectureListByDate(ConsoleInputValidator.enterTheDate()));
                     break;
                 case "type and date"://✅
-                    List<Lecture> lectureListByTypeAndDate = lectureServiceImpl.getLectureListByTypeAndDate(lectureValidator.selectLectureType(), ConsoleInputValidator.enterTheDate());
+                    List<Lecture> lectureListByTypeAndDate = lectureServiceImpl.getLectureListByTypeAndDate(
+                            lectureValidator.selectLectureType(), ConsoleInputValidator.enterTheDate());
                     print.printAllLectureTable(lectureListByTypeAndDate);
                     break;
                 case "exit"://✅

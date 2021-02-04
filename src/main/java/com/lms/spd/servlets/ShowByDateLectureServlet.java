@@ -16,13 +16,11 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/date"})
 public class ShowByDateLectureServlet extends HttpServlet {
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         LectureServiceImpl service = new LectureServiceImpl();
 
-        Calendar calendar =  Util.enterTheDateWithoutTime(req.getParameter("calendar"));
+        Calendar calendar = Util.enterTheDateWithoutTime(req.getParameter("calendar"));
         System.out.println(calendar.getTime());
         List<Lecture> lectures = service.getLectureListByDate(calendar);
         RequestDispatcher requestDispatcher;

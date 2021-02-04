@@ -49,5 +49,4 @@ public interface Literature {
     int getPublishedInYear();
 
     void setPublishedInYear(int publishedInYear);
-
 }

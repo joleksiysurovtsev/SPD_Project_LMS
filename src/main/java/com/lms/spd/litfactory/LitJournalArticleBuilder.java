@@ -19,7 +19,7 @@ public class LitJournalArticleBuilder implements LitBuilder {
         String titleJournal = ConsoleInputValidator.readString();
         ConsoleMassage.MESSAGE_ENTER_ISSUE_OF_THE_JOURNAL.printMassage();
         int issueOfTheJour = ConsoleInputValidator.readInt();
-        return   new JournalArticleModel(title, author, LiteratureType.JOURNAL_ARTICLE, Calendar.getInstance(), titleJournal, issueOfTheJour );
+        return new JournalArticleModel(title, author, LiteratureType.JOURNAL_ARTICLE, Calendar.getInstance(), titleJournal, issueOfTheJour);
     }
 }
 

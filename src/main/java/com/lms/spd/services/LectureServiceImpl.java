@@ -74,14 +74,12 @@ public class LectureServiceImpl implements IService<Lecture> {
         return lectureListByType.stream().filter(lectureListByDate::contains).collect(Collectors.toList());
     }
 
-
     public void addLinkLiteratureLectures(int id, List<Integer> integers) {
         integers.forEach(integer -> LecturesCache.getInstance().addLinkLiteratureLectures(id, integer));
     }
 
     public void addLinkLiteratureLectures(int id, int idLit) {
         LecturesCache.getInstance().addLinkLiteratureLectures(id, idLit);
-
     }
 
     public boolean updateLecture(Lecture updateLecture) {

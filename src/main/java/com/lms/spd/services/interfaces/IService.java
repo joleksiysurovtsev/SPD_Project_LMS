@@ -1,7 +1,5 @@
 package com.lms.spd.services.interfaces;
 
-import com.lms.spd.models.interfaces.Lecture;
-
 import java.util.*;
 
 public interface IService<T> {
@@ -12,10 +10,9 @@ public interface IService<T> {
 
     void setSelectedItem(int selected);
 
-    T addItem (T lecture);
+    T addItem(T lecture);
 
     boolean removeItems(int[] lectureRemove);
 
-     T getByID(int id);
-
+    T getByID(int id);
 }

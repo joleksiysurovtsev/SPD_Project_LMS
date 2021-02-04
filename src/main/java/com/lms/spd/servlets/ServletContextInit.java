@@ -12,10 +12,12 @@ import java.util.Objects;
 @WebServlet
 public class ServletContextInit implements ServletContextListener {
 
+    public static final int TIMEOUT = 3;
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            if (Objects.requireNonNull(JDBCConnector.getConnection()).isValid(3)) {
+            if (Objects.requireNonNull(JDBCConnector.getConnection()).isValid(TIMEOUT)) {
                 Main.initCashes();
                 System.out.println("Connection started");
             }

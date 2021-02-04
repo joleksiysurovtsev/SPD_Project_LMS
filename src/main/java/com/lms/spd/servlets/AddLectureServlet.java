@@ -1,6 +1,5 @@
 package com.lms.spd.servlets;
 
-
 import com.lms.spd.enums.LectureType;
 import com.lms.spd.models.LectureIModel;
 import com.lms.spd.models.interfaces.Lecture;
@@ -17,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-
 @WebServlet(urlPatterns = {"/addLecture"})
 public class AddLectureServlet extends HttpServlet {
 
@@ -25,7 +23,6 @@ public class AddLectureServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         this.process(request, response);
     }
-
 
     private void process(HttpServletRequest request, HttpServletResponse response) {
         LectureServiceImpl service = new LectureServiceImpl();

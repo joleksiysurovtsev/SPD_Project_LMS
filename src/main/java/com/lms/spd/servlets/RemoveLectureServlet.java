@@ -12,6 +12,9 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = {"/dell"})
 public class RemoveLectureServlet extends HttpServlet {
 
+    public static final int STATUS_THRUE = 200;
+    public static final int STATUS_FALSE = 404;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         this.process(request, response);
@@ -29,14 +32,14 @@ public class RemoveLectureServlet extends HttpServlet {
         LectureServiceImpl service = new LectureServiceImpl();
         boolean resultByDellete = service.removeItem(Integer.parseInt(request.getParameter("number")));
         response.setContentType("text");
-        if (!resultByDellete){
+        if (!resultByDellete) {
             try {
-                response.sendError(404);
+                response.sendError(STATUS_FALSE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
-            response.setStatus(200);
+        } else {
+            response.setStatus(STATUS_THRUE);
             response.setContentType("text");
             try {
                 PrintWriter writer = response.getWriter();

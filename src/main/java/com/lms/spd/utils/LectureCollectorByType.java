@@ -9,7 +9,6 @@ import java.util.stream.Collector;
 
 public class LectureCollectorByType implements Collector<Lecture, Map<LectureType, List<Lecture>>, Map<LectureType, List<Lecture>>> {
 
-
     public static LectureCollectorByType collectToSortedMapByType() {
         return new LectureCollectorByType();
     }
@@ -27,9 +26,9 @@ public class LectureCollectorByType implements Collector<Lecture, Map<LectureTyp
      * method returns a function that is used for adding a new element to an existing accumulator object
      */
     public BiConsumer<Map<LectureType, List<Lecture>>, Lecture> accumulator() {
-        return (map, s) ->  {
+        return (map, s) -> {
             List<Lecture> lectureList = new ArrayList<>();
-            if(map.containsKey(s.getType())) {
+            if (map.containsKey(s.getType())) {
                 lectureList = map.get(s.getType());
             }
             lectureList.add(s);
@@ -42,7 +41,7 @@ public class LectureCollectorByType implements Collector<Lecture, Map<LectureTyp
      */
     @Override
     public BinaryOperator<Map<LectureType, List<Lecture>>> combiner() {
-        return (map1, map2) ->  {
+        return (map1, map2) -> {
             map2.forEach((k, v) -> map1.merge(k, v, (v1, v2) -> {
                 v1.addAll(v2);
                 return v1;

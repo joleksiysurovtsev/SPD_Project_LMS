@@ -10,14 +10,14 @@ import java.util.*;
 
 public class LiteratureValidator {
     private LiteratureServiceImpl literatureServiceImpl = new LiteratureServiceImpl();
-    private static final Map<LiteratureType,LitFactory> factories = Map.of(
+    private static final Map<LiteratureType, LitFactory> FACTORIES = Map.of(
             LiteratureType.BOOK, new LBookFactory(),
             LiteratureType.INTERNET_ARTICLE, new LInternetArticleFactory(),
             LiteratureType.JOURNAL_ARTICLE, new LJournalFactory()
     );
 
     private static LitFactory createLitFactory(LiteratureType type) {
-        return factories.get(type);
+        return FACTORIES.get(type);
     }
 
     public Literature createLiterature() {
@@ -46,7 +46,7 @@ public class LiteratureValidator {
         List<Literature> newLiteratureArr = new ArrayList<>();
         switch (ConsoleInputValidator.readString()) {
             case "+":
-                newLiteratureArr.add( literatureServiceImpl.addItem(createLiterature()));
+                newLiteratureArr.add(literatureServiceImpl.addItem(createLiterature()));
                 ConsoleMassage.MESSAGE_Q_ADD_MORE_LIT.printMassage();
                 while (!ConsoleInputValidator.readString().equals("-")) {
                     newLiteratureArr.add(literatureServiceImpl.addItem(createLiterature()));

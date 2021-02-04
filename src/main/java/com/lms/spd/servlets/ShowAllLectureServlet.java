@@ -25,17 +25,15 @@ public class ShowAllLectureServlet extends HttpServlet {
         this.process(request, response);
     }
 
-
     protected void process(HttpServletRequest req, HttpServletResponse resp) {
         LectureServiceImpl service = new LectureServiceImpl();
         List<Lecture> lectures = service.getItems();
-         RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/viewall.jsp");
-        req.setAttribute("lectures",lectures);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/viewall.jsp");
+        req.setAttribute("lectures", lectures);
         try {
             requestDispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
     }
-
 }

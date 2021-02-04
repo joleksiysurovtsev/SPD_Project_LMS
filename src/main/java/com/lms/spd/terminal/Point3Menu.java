@@ -13,8 +13,9 @@ class Point3Menu implements ITerminal {
     public void showContext() {
         ConsoleMassage.MESSAGE_HEAD_MENU_POINT_3.printMassage();
         int[] arr = Util.getStringsNumberLecture(ConsoleInputValidator.readString());
-        if (arr == null) subMenuRemovalLecture();
-        else {
+        if (arr == null) {
+            subMenuRemovalLecture();
+        } else {
             lectureServiceImpl.removeItems(arr);
         }
         subMenuRemovalLecture();
@@ -22,7 +23,7 @@ class Point3Menu implements ITerminal {
 
     private void subMenuRemovalLecture() {
         ConsoleMassage.MESSAGE_Q_DELETE_ANOTHER_ONE.printMassage();
-                switch (ConsoleInputValidator.readString().toUpperCase()) {
+        switch (ConsoleInputValidator.readString().toUpperCase()) {
             case "+":
                 showContext();
                 break;

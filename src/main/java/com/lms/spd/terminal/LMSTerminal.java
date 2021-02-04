@@ -5,10 +5,9 @@ import com.lms.spd.enums.ConsoleMassage;
 
 import java.util.Map;
 
+public class LMSTerminal {
 
-public class LMSTerminal  {
-    private static final Map<Integer, StartMenuStrategyConstructor> menuPoints = Map.of(
-            1, new StartMenuStrategyConstructor(new Point1Menu()),
+    private static final Map<Integer, StartMenuStrategyConstructor> MENU_POINTS = Map.of(1, new StartMenuStrategyConstructor(new Point1Menu()),
             2, new StartMenuStrategyConstructor(new Point2Menu()),
             3, new StartMenuStrategyConstructor(new Point3Menu()),
             4, new StartMenuStrategyConstructor(new Point4Menu()),
@@ -19,7 +18,7 @@ public class LMSTerminal  {
         StartMenuStrategyConstructor menu;
         while (true) {
             ConsoleMassage.MESSAGE_HEAD_START_MENU.printMassage();
-            menu = menuPoints.get(ConsoleInputValidator.readInt());
+            menu = MENU_POINTS.get(ConsoleInputValidator.readInt());
             if (menu != null) {
                 menu.executeMenu();
             } else {

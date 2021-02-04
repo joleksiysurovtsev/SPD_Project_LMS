@@ -15,7 +15,7 @@ import java.util.TimeZone;
 
 public class ConsoleInputValidator {
 
-    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private static final BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
     private static final String LECTURE_DATE_REG_EXP = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-((20|2[0-9])[0-9]{2}) ([01]?[0-9]|2[0-3]):[0-5][0-9]$";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
@@ -23,7 +23,7 @@ public class ConsoleInputValidator {
         int number;
         while (true) {
             try {
-                number = Integer.parseInt(reader.readLine());
+                number = Integer.parseInt(BUFFERED_READER.readLine());
                 break;
             } catch (NumberFormatException | IOException e) {
                 ConsoleMassage.MESSAGE_ERR_INCORRECT_INPUT.printMassage();
@@ -35,12 +35,11 @@ public class ConsoleInputValidator {
     public static String readString() {
         String line = "";
         try {
-            line = reader.readLine();
+            line = BUFFERED_READER.readLine();
         } catch (IOException ioException) {
             ConsoleMassage.MESSAGE_ERR_INCORRECT_INPUT.printMassage();
         }
-        if (line.isEmpty()) return "Unknown";
-        return line;
+        return line.isEmpty() ? "Unknown" : line;
     }
 
     public static Calendar enterTheDate() {
@@ -69,19 +68,23 @@ public class ConsoleInputValidator {
         if (validate.equals("lectureName")) {
             ConsoleMassage.MESSAGE_ENTER_TITLE_LECTURE.printMassage();
         }
-        String line ;
+        String line;
         while (true) {
             try {
-                line = reader.readLine();
+                line = BUFFERED_READER.readLine();
                 if (validate.equals("lectureName") && line.isEmpty()) {
                     throw new ValidateInputException("The lecture must have a title");
-                } else break;
+                } else {
+                    break;
+                }
             } catch (IOException | ValidateInputException exception) {
                 System.out.println(exception.getMessage());
             }
         }
         assert line != null;
-        if (line.isEmpty()) return "Unknown";
-        return line;
+        return line.isEmpty() ? "Unknown" : line;
+    }
+
+    private ConsoleInputValidator() {
     }
 }

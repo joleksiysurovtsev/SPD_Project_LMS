@@ -17,8 +17,6 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/type_and_date"})
 public class ShowByTypeAndDateLectureServlet extends HttpServlet {
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -28,8 +26,8 @@ public class ShowByTypeAndDateLectureServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LectureServiceImpl service = new LectureServiceImpl();
         LectureType type = LectureType.valueOf(req.getParameter("type"));
-        Calendar calendar =  Util.enterTheDateWithoutTime(req.getParameter("calendar"));
-        List<Lecture> lectures = service.getLectureListByTypeAndDate(type,calendar);
+        Calendar calendar = Util.enterTheDateWithoutTime(req.getParameter("calendar"));
+        List<Lecture> lectures = service.getLectureListByTypeAndDate(type, calendar);
         RequestDispatcher requestDispatcher;
         if (lectures.isEmpty()) {
             requestDispatcher = req.getRequestDispatcher("views/viewemptyerr.jsp");

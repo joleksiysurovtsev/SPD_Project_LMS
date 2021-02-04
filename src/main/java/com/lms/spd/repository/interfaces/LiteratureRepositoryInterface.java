@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface LiteratureRepositoryInterface {
-
-
     List<Literature> getAll();
 
     void setAll(List<Literature> literature) throws IOException;

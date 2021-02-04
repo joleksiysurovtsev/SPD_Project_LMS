@@ -13,8 +13,7 @@ public enum LectureType {
     TECH_SKILLS,
     CAREER;
 
-
-    public static LectureType getValueByNumber(int order){
+    public static LectureType getValueByNumber(int order) {
         return order - 1 <= LectureType.values().length ? LectureType.values()[order - 1] : null;
     }
 
@@ -25,7 +24,7 @@ public enum LectureType {
     public static String toListString() {
         String list = "";
         for (int i = 0; i < LectureType.values().length; i++) {
-            list += (i+1)+ ". " + LectureType.values()[i] +"\n";
+            list += (i + 1) + ". " + LectureType.values()[i] + "\n";
         }
         return list;
     }

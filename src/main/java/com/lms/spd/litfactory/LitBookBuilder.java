@@ -10,7 +10,7 @@ import com.lms.spd.models.interfaces.Literature;
 import java.util.Calendar;
 
 public class LitBookBuilder implements LitBuilder {
-    LMSConsolePrinter print = new LMSConsolePrinter();
+    private LMSConsolePrinter print = new LMSConsolePrinter();
 
     @Override
     public Literature createLiterature() {
@@ -22,7 +22,7 @@ public class LitBookBuilder implements LitBuilder {
         String genre = ConsoleInputValidator.readString();
         ConsoleMassage.MESSAGE_ENTER_YEAR_OF_PUBLICATION.printMassage();
         int year = ConsoleInputValidator.readInt();
-        return new BookModel(title, author, LiteratureType.BOOK, Calendar.getInstance(),genre, year);
+        return new BookModel(title, author, LiteratureType.BOOK, Calendar.getInstance(), genre, year);
     }
 }
 

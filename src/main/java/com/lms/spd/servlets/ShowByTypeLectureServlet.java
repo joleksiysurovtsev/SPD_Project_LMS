@@ -15,8 +15,6 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/type"})
 public class ShowByTypeLectureServlet extends HttpServlet {
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         LectureServiceImpl service = new LectureServiceImpl();

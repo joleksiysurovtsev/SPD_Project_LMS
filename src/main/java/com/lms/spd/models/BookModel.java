@@ -22,7 +22,7 @@ public class BookModel implements Literature, Serializable {
     private LiteratureType type = LiteratureType.BOOK;
     @JsonProperty("Date resource was added")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Calendar dateResourceWasAdded= GregorianCalendar.getInstance();
+    private Calendar dateResourceWasAdded = GregorianCalendar.getInstance();
 
     @JsonProperty("Genre")
     private String genre;
@@ -30,7 +30,6 @@ public class BookModel implements Literature, Serializable {
     private int publishedInYear;
 
     public BookModel() {
-
     }
 
     public BookModel(String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String genre, int publishedInYear) {
@@ -60,7 +59,6 @@ public class BookModel implements Literature, Serializable {
         this.dateResourceWasAdded = GregorianCalendar.getInstance();
         this.id = id;
     }
-
 
     public BookModel(String title, String author, String genre, int publishedInYear) {
         this.genre = genre;
@@ -135,7 +133,6 @@ public class BookModel implements Literature, Serializable {
 
     @Override
     public void setTitleOfArticle(String titleOfArticle) {
-
     }
 
     @Override
@@ -145,7 +142,6 @@ public class BookModel implements Literature, Serializable {
 
     @Override
     public void setIssueOfTheJournal(int issueOfTheJournal) {
-
     }
 
     @Override
@@ -155,7 +151,6 @@ public class BookModel implements Literature, Serializable {
 
     @Override
     public void setUrlAddress(String urlAddress) {
-
     }
 
     public int getPublishedInYear() {
@@ -163,10 +158,8 @@ public class BookModel implements Literature, Serializable {
     }
 
     public void setPublishedInYear(int publishedInYear) {
-
         this.publishedInYear = publishedInYear;
     }
-
 
     @Override
     public String print() {
@@ -185,9 +178,11 @@ public class BookModel implements Literature, Serializable {
 
     @Override
     public String toString() {
-        String publishedInYearStr = "N/A";
+        String publishedInYearStr;
         if (this.publishedInYear != 0) {
             publishedInYearStr = String.valueOf(publishedInYear);
+        } else {
+            publishedInYearStr = "N/A";
         }
         return "Book: " + getTitle() + ", author: '" + getAuthor() + '\'' + " genre '" + genre + '\'' +
                 ", published in year " + publishedInYearStr;
@@ -195,8 +190,12 @@ public class BookModel implements Literature, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BookModel)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof BookModel)) {
+            return false;
+        }
         BookModel bookModel = (BookModel) o;
         return getPublishedInYear() == bookModel.getPublishedInYear() &&
                 getTitle().equals(bookModel.getTitle()) &&
