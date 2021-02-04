@@ -10,6 +10,7 @@ import java.nio.file.Files;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -53,7 +54,7 @@ public final class ParserLiteraturesJSON {
         try (var stream = Files.lines(Path.of(dirName + FILENAME))) {
             stream.forEach(lines -> readLectures(readLectures, lines));
         } catch (IOException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return readLectures;
     }

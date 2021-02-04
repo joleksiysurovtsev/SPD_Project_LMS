@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/addLecture"})
@@ -39,7 +40,7 @@ public class AddLectureServlet extends HttpServlet {
         try {
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -64,7 +65,7 @@ public class AddLectureServlet extends HttpServlet {
                 try {
                     requestDispatcher.forward(request, response);
                 } catch (ServletException | IOException e) {
-                    e.printStackTrace();
+                    Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
                 }
             }
         });

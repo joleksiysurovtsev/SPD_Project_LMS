@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -59,7 +60,7 @@ public final class ParserLecturesJSON {
         try (var stream = Files.lines(Path.of(dirName + FILE_NAME))) {
             stream.forEach(lines -> readLectures(lectures, lines));
         } catch (IOException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return lectures;
     }

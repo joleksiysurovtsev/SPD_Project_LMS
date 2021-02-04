@@ -44,7 +44,7 @@ public final class Util {
         try {
             lectureDate.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateAndTime));
         } catch (ParseException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return lectureDate;
     }
@@ -55,7 +55,7 @@ public final class Util {
         try {
             lectureDate.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(dateAndTime));
         } catch (ParseException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return lectureDate;
     }

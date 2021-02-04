@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ShowByTypeAndDateLectureServlet extends HttpServlet {
         try {
             requestDispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
     }
 }

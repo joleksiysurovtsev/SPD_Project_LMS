@@ -6,12 +6,11 @@ import com.lms.spd.models.InternetArticleModel;
 import com.lms.spd.models.JournalArticleModel;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.interfaces.IRepository;
+import com.lms.spd.utils.Util;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DBLiteratureRepository implements IRepository<Literature> {
@@ -35,7 +34,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
                 customerList.add(literature);
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(throwables.getStackTrace()));
         }
         return customerList;
     }
@@ -51,7 +50,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
                 result = getItem(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return result;
     }
@@ -125,7 +124,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
                 item.setId(result);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return item;
     }
@@ -155,7 +154,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
 
             result = statement.executeQuery().next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return result;
     }
@@ -168,7 +167,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
             statement.setInt(1, id);
             result = statement.executeQuery().next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return result;
     }
@@ -189,7 +188,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
                 idLitList.add(rs.getInt(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return idLitList;
     }

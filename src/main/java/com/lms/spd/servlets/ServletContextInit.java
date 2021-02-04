@@ -8,6 +8,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebServlet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Objects;
 
 @WebServlet
@@ -23,7 +24,7 @@ public class ServletContextInit implements ServletContextListener {
                 Util.GLOBAL_LOGGER.info("Connection started");
             }
         } catch (SQLException throwable) {
-            throwable.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(throwable.getStackTrace()));
         }
         Util.GLOBAL_LOGGER.info("ServletContextListener init db connection for cashes ");
     }
@@ -33,7 +34,7 @@ public class ServletContextInit implements ServletContextListener {
         try {
             Objects.requireNonNull(JDBCConnector.getConnection()).close();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(throwables.getStackTrace()));
         }
         Util.GLOBAL_LOGGER.info("ServletContextListener destroyed");
     }

@@ -3,6 +3,7 @@ package com.lms.spd.servlets;
 import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.services.LectureServiceImpl;
+import com.lms.spd.utils.Util;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/dell_literature"})
@@ -44,7 +46,7 @@ public class RemoveLiteratureByChosenLectureServlet extends HttpServlet {
         try {
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
     }
 }
