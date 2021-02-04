@@ -31,8 +31,8 @@ class InternetArticleModelTest {
         InternetArticleModel internetArticles = new InternetArticleModel("Java", "Aleksey", "google");
         InternetArticleModel internetArticles2 = new InternetArticleModel("Java", "Aleksey", "google");
         InternetArticleModel internetArticles3 = new InternetArticleModel("Java2", "Aleksey", "google");
-        assertTrue(internetArticles.equals(internetArticles2));
-        assertFalse(internetArticles.equals(internetArticles3));
+        assertEquals(true, internetArticles.equals(internetArticles2));
+        assertEquals(false, internetArticles.equals(internetArticles3));
     }
 
     @Test

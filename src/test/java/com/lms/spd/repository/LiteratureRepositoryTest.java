@@ -34,7 +34,7 @@ class LiteratureRepositoryTest {
     @Order(29)
     void setAllTest() {
         LiteratureRepository lR = new LiteratureRepository();
-        Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
+        Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999);
         booktest.setDateResourceWasAdded(new GregorianCalendar(2020, 02, 19));
 
         List<Literature> literature = new ArrayList<>();
@@ -50,7 +50,7 @@ class LiteratureRepositoryTest {
     @Test
     @Order(30)
     void getAllTests() {
-        Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999, 1);
+        Literature booktest = new BookModel("testTitle", "testAuthor", "testGenre", 1999);
         Calendar calendar = new GregorianCalendar(2020, 02, 19);
         booktest.setDateResourceWasAdded(calendar);
         List<Literature> literature = new ArrayList<>();

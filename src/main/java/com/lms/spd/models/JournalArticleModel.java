@@ -31,11 +31,9 @@ public class JournalArticleModel implements Literature, Serializable {
     public JournalArticleModel() {
     }
 
-    public JournalArticleModel(String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String titleOfArticle, int issueOfTheJournal) {
+    public JournalArticleModel(String title, String author, String titleOfArticle, int issueOfTheJournal) {
         this.title = title;
         this.author = author;
-        this.type = type;
-        this.dateResourceWasAdded = dateResourceWasAdded;
         this.titleOfArticle = titleOfArticle;
         this.issueOfTheJournal = issueOfTheJournal;
     }
@@ -48,24 +46,6 @@ public class JournalArticleModel implements Literature, Serializable {
     @Override
     public void setDateResourceWasAdded(Calendar dateResourceWasAdded) {
         this.dateResourceWasAdded = dateResourceWasAdded;
-    }
-
-    public JournalArticleModel(int id, String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String titleOfArticle, int issueOfTheJournal) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.type = type;
-        this.dateResourceWasAdded = dateResourceWasAdded;
-        this.titleOfArticle = titleOfArticle;
-        this.issueOfTheJournal = issueOfTheJournal;
-    }
-
-    public JournalArticleModel(String titleOfArticle, String author, String titleJournal, int issueOfTheJournal) {
-        setAuthor(author);
-        setTitle(titleJournal);
-        this.titleOfArticle = titleOfArticle;
-        this.issueOfTheJournal = issueOfTheJournal;
-        this.dateResourceWasAdded = Calendar.getInstance();
     }
 
     @Override

@@ -32,9 +32,9 @@ public class DBLiteratureRepositoryMock extends DBLiteratureRepository {
     private static List<Literature> initLectLists() {
         Calendar calendar = new GregorianCalendar(2020, 1, 16);
         List<Literature> literatures = new ArrayList<>();
-        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 1));
-        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 2));
-        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2020, 3));
+        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015));
+        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015));
+        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2020));
         return literatures;
     }
 
@@ -90,9 +90,9 @@ public class DBLiteratureRepositoryMock extends DBLiteratureRepository {
     public void updates() {
         Calendar calendar = new GregorianCalendar(2020, 1, 16);
         List<Literature> literatures = new ArrayList<>();
-        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 1));
-        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 2));
-        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2020, 3));
+        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015));
+        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015));
+        literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2020));
         literatureList = literatures;
 
     }

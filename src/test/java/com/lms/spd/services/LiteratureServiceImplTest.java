@@ -35,16 +35,16 @@ class LiteratureServiceImplTest {
     @Test
     void getSelectedItem() {
         IService<Literature> service = new LiteratureServiceImpl();
-        BookModel bookModel = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 1);
+        BookModel bookModel = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
         service.setSelectedItem(1);
-        assertEquals(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 1), service.getSelectedItem());
+        assertEquals(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015), service.getSelectedItem());
     }
 
     @Test
     void addItem() {
         IService<Literature> service = new LiteratureServiceImpl();
         BookModel bookModel1 = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
-        BookModel bookModel2 = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015, 4);
+        BookModel bookModel2 = new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015);
         assertEquals(bookModel2, service.addItem(bookModel1));
     }
 }

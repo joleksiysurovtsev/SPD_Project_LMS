@@ -2,6 +2,7 @@ package com.lms.spd.repository.parsers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lms.spd.models.interfaces.Literature;
+import com.lms.spd.utils.Util;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +16,7 @@ import java.util.TimeZone;
 public final class ParserLiteraturesJSON {
 
     private static String dirName = "src/main/resources/json/";
-    private static String filename = "Literatures.json";
+    private static final String FILENAME = "Literatures.json";
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().setTimeZone(TimeZone.getDefault());
 
@@ -30,7 +31,8 @@ public final class ParserLiteraturesJSON {
         //if there is no file then create it
         checkDirectoryAndFileExist();
 
-        try (BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirName + filename), StandardCharsets.UTF_8))) {
+        try (BufferedWriter myWriter = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(dirName + FILENAME), StandardCharsets.UTF_8))) {
             StringBuilder stringBuilderEntity = new StringBuilder("");
             for (Literature lit : literature) {
                 stringBuilderEntity.append(OBJECT_MAPPER.writeValueAsString(lit)).append("\n");
@@ -38,7 +40,7 @@ public final class ParserLiteraturesJSON {
             myWriter.write(stringBuilderEntity.toString());
             myWriter.flush();
         } catch (IOException e) {
-            System.out.println("Failed to write to file");
+            Util.GLOBAL_LOGGER.info("Failed to write to file");
         }
     }
 
@@ -48,7 +50,7 @@ public final class ParserLiteraturesJSON {
             return new ArrayList<>();
         }
         List<Literature> readLectures = new ArrayList<>();
-        try (var stream = Files.lines(Path.of(dirName + filename))) {
+        try (var stream = Files.lines(Path.of(dirName + FILENAME))) {
             stream.forEach(lines -> readLectures(readLectures, lines));
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,7 +62,7 @@ public final class ParserLiteraturesJSON {
         try {
             literature.add(OBJECT_MAPPER.readValue(s, Literature.class));
         } catch (IOException e) {
-            System.out.println("It is impossible to count lectures");
+            Util.GLOBAL_LOGGER.info("It is impossible to count lectures");
         }
     }
 
@@ -71,12 +73,12 @@ public final class ParserLiteraturesJSON {
                 Files.createDirectories(Path.of(dirName));
                 flag = false;
             }
-            if (Files.notExists(Path.of(dirName + filename))) {
-                Files.createFile(Path.of(dirName + filename));
+            if (Files.notExists(Path.of(dirName + FILENAME))) {
+                Files.createFile(Path.of(dirName + FILENAME));
                 flag = false;
             }
         } catch (IOException e) {
-            System.out.println("unable to create file");
+            Util.GLOBAL_LOGGER.info("unable to create file");
         }
         return flag;
     }

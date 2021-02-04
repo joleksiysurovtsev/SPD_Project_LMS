@@ -31,40 +31,11 @@ public class BookModel implements Literature, Serializable {
     public BookModel() {
     }
 
-    public BookModel(String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String genre, int publishedInYear) {
-        this.title = title;
-        this.author = author;
-        this.type = type;
-        this.dateResourceWasAdded = dateResourceWasAdded;
-        this.genre = genre;
-        this.publishedInYear = publishedInYear;
-    }
-
-    public BookModel(int id, String title, String author, LiteratureType type, Calendar dateResourceWasAdded, String genre, int publishedInYear) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.type = type;
-        this.dateResourceWasAdded = dateResourceWasAdded;
-        this.genre = genre;
-        this.publishedInYear = publishedInYear;
-    }
-
-    public BookModel(String title, String author, String genre, int publishedInYear, int id) {
-        this.genre = genre;
-        this.publishedInYear = publishedInYear;
-        setTitle(title);
-        setAuthor(author);
-        this.dateResourceWasAdded = Calendar.getInstance();
-        this.id = id;
-    }
-
     public BookModel(String title, String author, String genre, int publishedInYear) {
+        this.title = title;
+        this.author = author;
         this.genre = genre;
         this.publishedInYear = publishedInYear;
-        setTitle(title);
-        setAuthor(author);
-        this.dateResourceWasAdded = Calendar.getInstance();
     }
 
     @Override

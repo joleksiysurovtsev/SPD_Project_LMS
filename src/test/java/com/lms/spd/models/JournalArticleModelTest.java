@@ -12,22 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class JournalArticleModelTest {
 
     @Test
-    @Order(14)
-    void print() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-        JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        assertEquals(" Article: This keyword {in examples} In the journal java world Journal №: 5 " + sdf.format(journalArticle.getDateResourceWasAdded().getTime()) + " ID 0", journalArticle.print());
-    }
-
-    @Test
-    @Order(15)
-    void testToString() {
-        JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);
-        String expected = "Journal article: \"This keyword {in examples}\", in the journal \"java world\", issue of the journal: 5, author:'Dmitry Denisov'";
-        assertEquals(expected, journalArticle.toString());
-    }
-
-    @Test
     @Order(16)
     void testEquals() {
         JournalArticleModel journalArticle = new JournalArticleModel("This keyword {in examples}", "Dmitry Denisov", "java world", 5);

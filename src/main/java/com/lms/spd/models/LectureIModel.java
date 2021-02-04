@@ -17,7 +17,7 @@ public class LectureIModel implements Lecture, Serializable {
     private String nameOfLecture;
 
     @JsonProperty("List literatures")
-    private List<Literature> literatures;
+    private transient List<Literature> literatures;
 
     @JsonProperty("Date of lecture")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")

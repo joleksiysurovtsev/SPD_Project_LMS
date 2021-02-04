@@ -6,6 +6,7 @@ import com.lms.spd.models.interfaces.Lecture;
 import com.lms.spd.models.interfaces.Literature;
 import com.lms.spd.repository.interfaces.IRepository;
 import com.lms.spd.services.LiteratureServiceImpl;
+import com.lms.spd.utils.Util;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
                 customerList.add(lecture);
             }
         } catch (SQLException throwable) {
-            throwable.printStackTrace();
+            Util.GLOBAL_LOGGER.info(throwable.getSQLState());
         }
         return customerList;
     }
@@ -159,7 +160,6 @@ public class DBLectureRepository implements IRepository<Lecture> {
             statement.setInt(1, id);
             deleteFromLitToLectures(id);
             result = statement.executeQuery().next();
-            System.out.println(result);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -184,12 +184,12 @@ public class DBLectureRepository implements IRepository<Lecture> {
     public static List<Literature> getListDifferences(List<Literature> litList, List<Integer> idLitList) {
         List<Literature> collect = litList.stream().filter(literature -> idLitList.contains(literature.getId()))
                 .collect(Collectors.toList());
-        return collect.isEmpty() ? new ArrayList<Literature>() : collect;
+        return collect.isEmpty() ? new ArrayList<>() : collect;
     }
 
     @Override
     public List<Lecture> literaturesBYLectureID(int id) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

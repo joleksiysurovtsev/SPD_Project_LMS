@@ -57,7 +57,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
     }
 
     private Literature getItem(ResultSet rs) throws SQLException {
-        Literature literature = null;
+        Literature literature = new BookModel();
         int litid = rs.getInt("id");
         String title = rs.getString("title");
         String author = rs.getString("author");
@@ -66,18 +66,35 @@ public class DBLiteratureRepository implements IRepository<Literature> {
         dateResourceWasAdded.setTime(rs.getDate("date_was_added"));
         switch (type) {
             case BOOK:
+                literature = new BookModel();
                 String genre = rs.getString("genre");
                 int publishedInYear = rs.getInt("published_in_year");
-                literature = new BookModel(litid, title, author, type, dateResourceWasAdded, genre, publishedInYear);
+                literature.setId(litid);
+                literature.setTitle(title);
+                literature.setAuthor(author);
+                literature.setDateResourceWasAdded(dateResourceWasAdded);
+                literature.setGenre(genre);
+                literature.setPublishedInYear(publishedInYear);
                 break;
             case JOURNAL_ARTICLE:
+                literature = new JournalArticleModel();
                 String titleOfArticle = rs.getString("title_of_article");
                 int issueOfTheJournal = rs.getInt("issue_of_journal");
-                literature = new JournalArticleModel(litid, title, author, type, dateResourceWasAdded, titleOfArticle, issueOfTheJournal);
+                literature.setId(litid);
+                literature.setTitle(title);
+                literature.setAuthor(author);
+                literature.setDateResourceWasAdded(dateResourceWasAdded);
+                literature.setTitleOfArticle(titleOfArticle);
+                literature.setIssueOfTheJournal(issueOfTheJournal);
                 break;
             case INTERNET_ARTICLE:
+                literature = new InternetArticleModel();
                 String urlAddress = rs.getString("url_address");
-                literature = new InternetArticleModel(litid, title, author, type, dateResourceWasAdded, urlAddress);
+                literature.setId(litid);
+                literature.setTitle(title);
+                literature.setAuthor(author);
+                literature.setDateResourceWasAdded(dateResourceWasAdded);
+                literature.setUrlAddress(urlAddress);
                 break;
             default:
                 break;

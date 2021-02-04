@@ -2,24 +2,23 @@ package com.lms.spd.litfactory;
 
 import com.lms.spd.ConsoleInputValidator;
 import com.lms.spd.enums.ConsoleMassage;
-import com.lms.spd.enums.LiteratureType;
 import com.lms.spd.models.JournalArticleModel;
-
-import java.util.Calendar;
+import com.lms.spd.models.interfaces.Literature;
 
 public class LitJournalArticleBuilder implements LitBuilder {
 
     @Override
-    public JournalArticleModel createLiterature() {
+    public Literature createLiterature() {
+        Literature journalArticle = new JournalArticleModel();
         ConsoleMassage.MESSAGE_ENTER_TITLE.printMassage();
-        String title = ConsoleInputValidator.readString();
+        journalArticle.setTitle(ConsoleInputValidator.readString());
         ConsoleMassage.MESSAGE_ENTER_AUTHOR.printMassage();
-        String author = ConsoleInputValidator.readString();
+        journalArticle.setAuthor(ConsoleInputValidator.readString());
         ConsoleMassage.MESSAGE_ENTER_TITLE_JOURNAL.printMassage();
-        String titleJournal = ConsoleInputValidator.readString();
+        journalArticle.setTitleOfArticle(ConsoleInputValidator.readString());
         ConsoleMassage.MESSAGE_ENTER_ISSUE_OF_THE_JOURNAL.printMassage();
-        int issueOfTheJour = ConsoleInputValidator.readInt();
-        return new JournalArticleModel(title, author, LiteratureType.JOURNAL_ARTICLE, Calendar.getInstance(), titleJournal, issueOfTheJour);
+        journalArticle.setIssueOfTheJournal(ConsoleInputValidator.readInt());
+        return journalArticle;
     }
 }
 

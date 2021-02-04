@@ -1,5 +1,6 @@
 package com.lms.spd.pgsql;
 
+import com.lms.spd.utils.Util;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.flywaydb.core.Flyway;
@@ -18,7 +19,7 @@ public final class JDBCConnector {
         try {
             connection = dataSource.getConnection();
         } catch (SQLException throwables) {
-            System.err.println("connection failed");
+            Util.GLOBAL_LOGGER.info("connection failed");
         }
         return connection;
     }

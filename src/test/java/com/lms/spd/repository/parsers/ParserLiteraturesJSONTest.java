@@ -30,7 +30,7 @@ class ParserLiteraturesJSONTest {
     @Order(25)
     void parseLiteratureJSON() {
 
-        Literature literature = new BookModel("testBook", "testautor", "testgenre", 1999, 1);
+        Literature literature = new BookModel("testBook", "testautor", "testgenre", 1999);
         List<Literature> testListL = new ArrayList<>();
         testListL.add(literature);
         ParserLiteraturesJSON.parseLiteraturesInJSON(testListL);
