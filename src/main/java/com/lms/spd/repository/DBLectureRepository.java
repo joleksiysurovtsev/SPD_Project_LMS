@@ -9,10 +9,7 @@ import com.lms.spd.services.LiteratureServiceImpl;
 import com.lms.spd.utils.Util;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DBLectureRepository implements IRepository<Lecture> {
@@ -36,7 +33,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
                 customerList.add(lecture);
             }
         } catch (SQLException throwable) {
-            Util.GLOBAL_LOGGER.info(throwable.getSQLState());
+            Util.GLOBAL_LOGGER.info(Arrays.toString(throwable.getStackTrace()));
         }
         return customerList;
     }
@@ -52,7 +49,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
                 result = getItem(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return result;
     }
@@ -98,7 +95,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
             }
             item.setId(id);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return item;
     }
@@ -111,7 +108,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
             statement.setInt(2, litIDInteger);
             result = statement.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(throwables.getStackTrace()));
         }
         return result;
     }
@@ -129,7 +126,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
                         " WHERE id = (?) RETURNING id")) {
             getCreateUpdateLectureStatement(item, statement);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return result;
     }
@@ -161,7 +158,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
             deleteFromLitToLectures(id);
             result = statement.executeQuery().next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return result;
     }
@@ -176,7 +173,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
             statement.setInt(1, id);
             result = statement.executeQuery().next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Util.GLOBAL_LOGGER.info(Arrays.toString(e.getStackTrace()));
         }
         return result;
     }
