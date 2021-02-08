@@ -22,10 +22,10 @@
         <div class="header__inner">
             <div class="header__logo"><img src="img/logo.png" alt="" width=50%;></div>
             <nav class="nav">
-                <a class="navlink" href="lectnav.html">Display lectures</a>
-                <a class="navlink" href="add.html">Add a new lecture</a>
-                <a class="navlink" href="remove_lecture.html">Delete a lecture by its ID</a>
-                <a class="navlink" href="choose.html">Choose a lecture by its ID</a>
+                <a class="navlink" href="../view_lectures.html">Display lectures</a>
+                <a class="navlink" href="../add_lecture.html">Add a new lecture</a>
+                <a class="navlink" href="../remove_lecture.html">Delete a lecture by its ID</a>
+                <a class="navlink" href="../choose.html">Choose a lecture by its ID</a>
             </nav>
         </div>
     </div>

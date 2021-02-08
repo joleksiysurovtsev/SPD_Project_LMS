@@ -3,4 +3,4 @@
 
 Project: SPD - LMS
 
-![MyTerminal](Terminal.JPG)
+![MyTerminal](Terminal.gif)
