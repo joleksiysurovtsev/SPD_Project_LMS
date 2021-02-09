@@ -101,6 +101,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
         return literature;
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     @Override
     public Literature create(Literature item) {
         int result;
@@ -129,6 +130,7 @@ public class DBLiteratureRepository implements IRepository<Literature> {
         return item;
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     @Override
     public boolean update(Literature item) {
         boolean result = false;

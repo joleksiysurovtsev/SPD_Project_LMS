@@ -68,14 +68,14 @@ public enum ConsoleMassage {
     MESSAGE_Q_ADD_MORE_LIT_NAV("Add more ? if YES then enter \"+\" if NOT then \"-\" you will return to the lecture selection menu, to complete the work, exit "),
     MESSAGE_Q_BOOK_ADDED_WHAT_DO_NEXT("Book added what to do next?");
 
-    private static String massage;
+    private String massage;
 
     ConsoleMassage(String massage) {
         setMassage(massage);
     }
 
-    private static void setMassage(String massage) {
-        ConsoleMassage.massage = massage;
+    private void setMassage(String massage) {
+        this.massage = massage;
     }
 
     public void printMassage() {

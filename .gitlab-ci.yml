@@ -16,3 +16,9 @@ checkstyle:
   image: openjdk:11-jdk-slim
   script:
     -/gradlew checkstyleMain checkstyleTest
+
+sonar:
+    stage: test
+    image: openjdk:11-jdk-slim
+    script:
+      - ./gradlew sonarqube

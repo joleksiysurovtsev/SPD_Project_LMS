@@ -14,7 +14,9 @@ public class LMSConsolePrinter {
 
     public static final int MIN = 60;
     public static final String TABLE_LINE = "+-------------------------------------------------------------------------------------------------------------------------+";
-    public static final String TABLE_HEAD = "|\u1005|       Date       |  Lecture type      | Lecture number | Lecture ID  |                   Lecture title              |  Lecturer name    | Duration   |";
+    public static final String TABLE_HEAD = "|\u1005|       Date       |  Lecture type      |" +
+            " Lecture number | Lecture ID  |                   Lecture title              |" +
+            "  Lecturer name    | Duration   |";
     public static final String HOURS = " hours ";
     public static final String MINUTES = " minutes";
     private String tabulator = "|%-1s| %-12s | %-19s|№: %-13d|№: %-10d|%-46.46s| %-18.18s|%-4.4s minutes|";

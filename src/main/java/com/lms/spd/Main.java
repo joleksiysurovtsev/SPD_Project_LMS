@@ -10,7 +10,7 @@ import com.lms.spd.repository.DBLiteratureRepository;
 import com.lms.spd.repository.interfaces.IRepository;
 import com.lms.spd.terminal.LMSTerminal;
 
-public class Main {
+public final class Main {
     public static void main(String[] args) {
         initCashes();
         LMSTerminal.startLMS();
@@ -25,5 +25,8 @@ public class Main {
 
         LecturesCache.getInstance().updateCashedLectures();
         LiteratureCache.getInstance().updateCashedLiteratures();
+    }
+
+    private Main() {
     }
 }

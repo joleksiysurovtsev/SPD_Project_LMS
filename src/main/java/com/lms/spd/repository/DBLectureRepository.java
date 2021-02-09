@@ -75,6 +75,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
         return lecture;
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     @Override
     public Lecture create(Lecture item) {
         try (PreparedStatement statement = connection.prepareStatement(
@@ -131,6 +132,7 @@ public class DBLectureRepository implements IRepository<Lecture> {
         return result;
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     private int getCreateUpdateLectureStatement(Lecture item, PreparedStatement statement) throws SQLException {
         statement.setString(1, item.getNameOfLecture());
         statement.setTimestamp(2, new Timestamp(item.getLectureDate().getTimeInMillis()));

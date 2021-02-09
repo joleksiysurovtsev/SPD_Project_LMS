@@ -16,11 +16,31 @@ test {
     finalizedBy jacocoTestReport {
         afterEvaluate {
             classDirectories.from = files(classDirectories.files.collect {
-                fileTree(dir: it, exclude: ['com/lms/spd/terminal/**','com/lms/spd/litfactory/**','com/lms/spd/pgsql/**','com/lms/spd/repository/DBPostgresLectureRepository.java','com/lms/spd/repository/DBPostgresLiteratureRepository.java'])
+                fileTree(dir: it, exclude: ['com/lms/spd/terminal/**', 'com/lms/spd/litfactory/**', 'com/lms/spd/pgsql/**',
+                                            'com/lms/spd/terminal/**', 'com/lms/spd/servlets/**',
+                                            'com/lms/spd/repository/DBPostgresLectureRepository.java'
+                                            , 'com/lms/spd/repository/DBPostgresLiteratureRepository.java'])
             })
         }
     }
 }
+
+project.tasks["sonarqube"].dependsOn "test"
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "o-surovtsev-lms"
+        property "sonar.host.url", "http://ec2-3-250-75-205.eu-west-1.compute.amazonaws.com:9000"
+        property "sonar.login", "5c3249e2ac2fcafffcb81da732cd4bb0ffc5de29"
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
 
 dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
