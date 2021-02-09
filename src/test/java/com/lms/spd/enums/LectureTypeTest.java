@@ -10,13 +10,13 @@ class LectureTypeTest {
     @Test
     @Order(1)
     void getValueByNumberTest1() {
-        assertEquals(LectureType.JAVA_CORE,LectureType.getValueByNumber(1));
+        assertEquals(LectureType.JAVA_CORE, LectureType.getValueByNumber(1));
     }
 
     @Test
     @Order(2)
     void getValueByNumberTest2() {
-        assertEquals(LectureType.JAVA_CONCURRENCY,LectureType.getValueByNumber(2));
+        assertEquals(LectureType.JAVA_CONCURRENCY, LectureType.getValueByNumber(2));
     }
 
     @Test

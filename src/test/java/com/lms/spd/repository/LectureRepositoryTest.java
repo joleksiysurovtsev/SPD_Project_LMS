@@ -35,6 +35,6 @@ class LectureRepositoryTest {
         testListL.add(lectureIModel);
         LectureRepository lre = new LectureRepository();
         lre.setAll(testListL);
-        assertEquals(testListL,lre.getAll());
+        assertEquals(testListL, lre.getAll());
     }
 }

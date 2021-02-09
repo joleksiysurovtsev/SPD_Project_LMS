@@ -29,7 +29,6 @@ class ParserLiteraturesJSONTest {
     @Test
     @Order(25)
     void parseLiteratureJSON() {
-
         Literature literature = new BookModel("testBook", "testautor", "testgenre", 1999);
         List<Literature> testListL = new ArrayList<>();
         testListL.add(literature);
@@ -41,7 +40,6 @@ class ParserLiteraturesJSONTest {
     @Test
     @Order(26)
     void parseLiteratureJSON3() {
-
         List<Literature> resultListL = ParserLiteraturesJSON.parseLiteraturesFromJSON();
         List<Literature> testListL = new ArrayList<>();
         assertEquals(testListL, resultListL);

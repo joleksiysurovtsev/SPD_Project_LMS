@@ -29,7 +29,6 @@ class LiteratureRepositoryTest {
         ParserLiteraturesJSON.seturl("src/test/resources/json/");
     }
 
-
     @Test
     @Order(29)
     void setAllTest() {

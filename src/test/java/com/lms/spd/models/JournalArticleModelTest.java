@@ -3,11 +3,8 @@ package com.lms.spd.models;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import java.text.SimpleDateFormat;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class JournalArticleModelTest {
 

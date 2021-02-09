@@ -9,8 +9,6 @@ import java.util.*;
 public class DBLiteratureRepositoryMock extends DBLiteratureRepository {
 
     private static List<Literature> literatureList = initLectLists();
-    private static Map<Integer, Integer> lect_litMaps = initMap();
-
 
     public DBLiteratureRepositoryMock() {
     }
@@ -94,6 +92,5 @@ public class DBLiteratureRepositoryMock extends DBLiteratureRepository {
         literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2015));
         literatures.add(new BookModel("Философия Java", "Брюс Эккель", "Computer Science", 2020));
         literatureList = literatures;
-
     }
 }

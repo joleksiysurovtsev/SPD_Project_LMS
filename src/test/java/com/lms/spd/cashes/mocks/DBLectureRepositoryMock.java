@@ -26,7 +26,7 @@ public class DBLectureRepositoryMock extends DBLectureRepository {
         return lectureTestList;
     }
 
-    public void updates(){
+    public void updates() {
         Calendar calendar = new GregorianCalendar(2020, 1, 16);
         List<Literature> literatures = new ArrayList<>();
         List<Lecture> lectureList = new ArrayList<>();
@@ -61,10 +61,10 @@ public class DBLectureRepositoryMock extends DBLectureRepository {
 
     @Override
     public boolean update(Lecture item) {
-        if(lectureTestList.stream().noneMatch(lecture -> lecture.getId()== item.getId())){
+        if (lectureTestList.stream().noneMatch(lecture -> lecture.getId() == item.getId())) {
             Optional<Lecture> first = lectureTestList.stream().filter(lecture -> lecture.getId() == item.getId()).findFirst();
             int i = lectureTestList.indexOf(first.get());
-            lectureTestList.set(i,item);
+            lectureTestList.set(i, item);
             return true;
         }
         return false;

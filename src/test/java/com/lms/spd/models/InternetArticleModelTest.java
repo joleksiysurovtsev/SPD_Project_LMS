@@ -14,14 +14,18 @@ class InternetArticleModelTest {
     void print() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         InternetArticleModel internetArticles = new InternetArticleModel("Java", "Aleksey", "Unknown");
-        assertEquals(" Internet articles: Java Author: Aleksey Date the resource was added: " + sdf.format(internetArticles.getDateResourceWasAdded().getTime()) + " ID 0", internetArticles.print());
+        assertEquals(" Internet articles: Java Author: Aleksey Date the resource was added: "
+                + sdf.format(internetArticles.getDateResourceWasAdded().getTime()) + " ID 0", internetArticles.print());
     }
 
     @Test
     @Order(11)
     void testToString() {
-        InternetArticleModel internetArticles = new InternetArticleModel("Caracteres de escape em Java", "Oleksandr Klymenko", "https://javarush.ru/groups/posts/614-----ehkranirovanie-simvolov-v-java");
-        String expected = " Internet articles:  Caracteres de escape em Java, author= Oleksandr Klymenko URL https://javarush.ru/groups/posts/614-----ehkranirovanie-simvolov-v-java";
+        InternetArticleModel internetArticles = new InternetArticleModel("Caracteres de escape em Java",
+                "Oleksandr Klymenko",
+                "https://javarush.ru/groups/posts/614-----ehkranirovanie-simvolov-v-java");
+        String expected = " Internet articles:  Caracteres de escape em Java," +
+                " author= Oleksandr Klymenko URL https://javarush.ru/groups/posts/614-----ehkranirovanie-simvolov-v-java";
         assertEquals(expected, internetArticles.toString());
     }
 

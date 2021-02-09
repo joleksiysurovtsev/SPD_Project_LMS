@@ -26,7 +26,6 @@ class ParserLecturesJSONTest {
     @Test
     @Order(21)
     void parseLecturesJSON() {
-
         LectureIModel lectureIModel = new LectureIModel("testLect");
         List<Lecture> testListL = new ArrayList<>();
         testListL.add(lectureIModel);
@@ -35,7 +34,6 @@ class ParserLecturesJSONTest {
         //what we recorded what we got
         assertEquals(resultListL, testListL);
     }
-
 
     @Test
     @Order(22)
@@ -47,7 +45,6 @@ class ParserLecturesJSONTest {
 
         assertEquals(testListL, ParserLecturesJSON.parseLecturesFromJSON());
     }
-
 
     @Test
     @Order(23)
@@ -62,7 +59,6 @@ class ParserLecturesJSONTest {
     @Order(24)
     @DisplayName("check if the file is lit")
     void parseLecturesJSON4() {
-
         String url = "src/test/resources/json/";
         assertEquals(url, ParserLecturesJSON.getDirName());
     }

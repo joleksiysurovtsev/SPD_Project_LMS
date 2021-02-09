@@ -31,11 +31,10 @@ class LecturesCacheTest {
         LiteratureCache.getInstance().updateCashedLiteratures();
     }
 
-
     @Test
     void getInstance() {
         LecturesCache cache = new LecturesCache(new DBLectureRepositoryMock());
-        LecturesCache instance1 = cache.getInstance();
+        LecturesCache instance1 = LecturesCache.getInstance();
         LecturesCache instance = LecturesCache.getInstance();
         assertEquals(instance1, instance);
     }
@@ -63,11 +62,8 @@ class LecturesCacheTest {
     @Test
     void removeLecturesByID() {
         LecturesCache cache = new LecturesCache(new DBLectureRepositoryMock());
-
         assertEquals(cache.getCashedLectureList().size(), DBLectureRepositoryMock.getLectureTestList().size());
-
         cache.removeLecturesByID(1);
-
         assertEquals(cache.getCashedLectureList().size(), DBLectureRepositoryMock.getLectureTestList().size());
     }
 
@@ -79,5 +75,4 @@ class LecturesCacheTest {
         List<Lecture> lectureList = dbPostgresLectureRepositoryMock.readAll();
         assertEquals(cashedLectureList, lectureList);
     }
-
 }

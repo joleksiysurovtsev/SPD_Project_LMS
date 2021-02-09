@@ -54,19 +54,16 @@ class LiteratureCacheTest {
         DBLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBLiteratureRepositoryMock();
         LiteratureCache cache = new LiteratureCache(dbPostgresLiteratureRepositoryMock);
         //проверили размер кеша и базы
-        assertEquals(cache.getCashedLiteratureList().size(), dbPostgresLiteratureRepositoryMock.getLiteratureList().size());
-
+        assertEquals(cache.getCashedLiteratureList().size(), DBLiteratureRepositoryMock.getLiteratureList().size());
         //удалили одну
         cache.removeLecturesByID(1);
-
-        assertEquals(cache.getCashedLiteratureList().size(), dbPostgresLiteratureRepositoryMock.getLiteratureList().size());
-
+        assertEquals(cache.getCashedLiteratureList().size(), DBLiteratureRepositoryMock.getLiteratureList().size());
     }
 
     @Test
     void getCashedLiteratureList() {
         DBLiteratureRepositoryMock dbPostgresLiteratureRepositoryMock = new DBLiteratureRepositoryMock();
         LiteratureCache cache = new LiteratureCache(dbPostgresLiteratureRepositoryMock);
-        assertEquals(cache.getCashedLiteratureList(), dbPostgresLiteratureRepositoryMock.getLiteratureList());
+        assertEquals(cache.getCashedLiteratureList(), DBLiteratureRepositoryMock.getLiteratureList());
     }
 }
